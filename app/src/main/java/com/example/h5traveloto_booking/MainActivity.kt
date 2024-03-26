@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     Greeting("Hoang")
                 }
             }*/
-            LoginScreen();
+            SignupScreen()
         }
     }
 }
