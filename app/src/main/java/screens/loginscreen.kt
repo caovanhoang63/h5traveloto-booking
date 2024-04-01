@@ -1,24 +1,26 @@
 // Main Screen
-package com.example.h5traveloto_booking
+package screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.h5traveloto_booking.R
+import common.PrimaryColor
+import components.PrimaryButton
+import components.TextBox
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -41,12 +43,10 @@ fun LoginScreen() {
             Text(text = "Please login to continue", fontSize = 12.sp)
             Spacer(modifier = Modifier.height(30.dp))
 
-            Text(text = "Email", fontSize = 12.sp)
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text("Enter your email") },
-                modifier = Modifier.fillMaxWidth()
+            TextBox(
+                modifier = Modifier.fillMaxWidth(),
+                lable = "Email",
+                placeHolder = "Enter your email"
             )
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -70,17 +70,11 @@ fun LoginScreen() {
             )
             Spacer(modifier = Modifier.height(40.dp))
 
-            Button(
+            PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {},
-                modifier = Modifier
-                    .height(52.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-
-                ) {
-
-                Text(text = "Login")
-            }
+                text = "Login"
+            )
         }
         Spacer(modifier = Modifier.height(128.dp))
         Column(
@@ -91,8 +85,9 @@ fun LoginScreen() {
             Text(
                 text = "Create Account Here",
                 fontSize = 14.sp,
-                color = Color.Blue,
-                modifier = Modifier.clickable { }
+                color = PrimaryColor,
+                modifier = Modifier.clickable { navController.navigate("signup") {
+                } }
             )
         }
     }

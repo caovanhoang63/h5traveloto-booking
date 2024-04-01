@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking
+package screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -9,23 +9,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.h5traveloto_booking.R
+import common.PrimaryColor
+import components.PrimaryButton
+import components.TextBox
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignupScreen() {
+fun SignupScreen(navController: NavController) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(start = 21.dp, end = 21.dp, top = 40.dp),
@@ -46,50 +47,36 @@ fun SignupScreen() {
         }
         Spacer(modifier = Modifier.height(62.dp))
         Column {
-            Text(text = "First Name", fontSize = 12.sp)
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text("Enter your first name") },
-                modifier = Modifier.fillMaxWidth()
+            TextBox(
+                modifier = Modifier.fillMaxWidth(),
+                lable = "First Name",
+                placeHolder = "Enter your first name"
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+            TextBox(
+                modifier = Modifier.fillMaxWidth(),
+                lable = "Last Name",
+                placeHolder = "Enter your last name"
             )
             Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Last Name", fontSize = 12.sp)
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text("Enter your last name") },
-                modifier = Modifier.fillMaxWidth()
+            TextBox(
+                modifier = Modifier.fillMaxWidth(),
+                lable = "Email Name",
+                placeHolder = "Enter your email"
             )
             Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Email", fontSize = 12.sp)
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text("Enter your email") },
-                modifier = Modifier.fillMaxWidth()
+            TextBox(
+                modifier = Modifier.fillMaxWidth(),
+                lable = "Password",
+                placeHolder = "Enter your password"
             )
             Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Password", fontSize = 12.sp)
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                label = { Text("Enter your password") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(modifier = Modifier.height(30.dp))
-            Button(
+            PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {},
-                modifier = Modifier
-                    .height(52.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-
-                ) {
-
-                Text(text = "Create Account")
-            }
-
+                text = "Sign up"
+            )
         }
         Spacer(modifier = Modifier.height(22.dp))
         Column(
@@ -100,8 +87,8 @@ fun SignupScreen() {
             Text(
                 text = "Login",
                 fontSize = 14.sp,
-                color = Color.Blue,
-                modifier = Modifier.clickable { }
+                color = PrimaryColor,
+                modifier = Modifier.clickable { navController.navigate("login")}
             )
         }
     }
