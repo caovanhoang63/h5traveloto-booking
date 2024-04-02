@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.ui.theme
+package com.example.h5traveloto_booking.theme
 
 import androidx.compose.ui.graphics.Color
 

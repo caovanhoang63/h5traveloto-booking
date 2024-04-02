@@ -1,14 +1,8 @@
-package screens
+package com.example.h5traveloto_booking.auth.presentation.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,9 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
-import common.PrimaryColor
-import components.PrimaryButton
-import components.TextBox
+import com.example.h5traveloto_booking.theme.PrimaryColor
+import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
+import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,27 +43,35 @@ fun SignupScreen(navController: NavController) {
         Column {
             TextBox(
                 modifier = Modifier.fillMaxWidth(),
-                lable = "First Name",
-                placeHolder = "Enter your first name"
+                label= "First Name",
+                placeholder = "Enter your first name",
+                value = "",
+                onValueChange = {}
             )
 
             Spacer(modifier = Modifier.height(30.dp))
             TextBox(
                 modifier = Modifier.fillMaxWidth(),
-                lable = "Last Name",
-                placeHolder = "Enter your last name"
+                label= "First Name",
+                placeholder = "Enter your first name",
+                value = "",
+                onValueChange = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
             TextBox(
                 modifier = Modifier.fillMaxWidth(),
-                lable = "Email Name",
-                placeHolder = "Enter your email"
+                label= "First Name",
+                placeholder = "Enter your first name",
+                value = "",
+                onValueChange = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
             TextBox(
                 modifier = Modifier.fillMaxWidth(),
-                lable = "Password",
-                placeHolder = "Enter your password"
+                label= "First Name",
+                placeholder = "Enter your first name",
+                value = "",
+                onValueChange = {}
             )
             Spacer(modifier = Modifier.height(30.dp))
             PrimaryButton(

@@ -1,22 +1,15 @@
-package com.example.h5traveloto_booking
-
+package com.example.h5traveloto_booking.navigation
 import NavGraph
-import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.h5traveloto_booking.navigation.NavHostActivity
-
-class MainActivity : ComponentActivity() {
-    private lateinit var navController: NavHostController
+import android.os.Bundle
+class NavHostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            navController = rememberNavController()
+            val navController = rememberNavController()
             NavGraph(navController = navController)
         }
     }
-
 }
-

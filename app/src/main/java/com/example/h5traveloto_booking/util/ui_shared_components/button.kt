@@ -1,4 +1,4 @@
-package components
+package com.example.h5traveloto_booking.util.ui_shared_components
 
 import android.widget.Button
 import androidx.compose.foundation.background
@@ -12,8 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import common.PrimaryColor
-import java.lang.reflect.Modifier
+import com.example.h5traveloto_booking.theme.PrimaryColor
 
 @Composable
 fun PrimaryButton(onClick : ()->Unit ,modifier : androidx.compose.ui.Modifier, text : String) {
