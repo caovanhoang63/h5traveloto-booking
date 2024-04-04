@@ -1,6 +1,7 @@
 package com.example.h5traveloto_booking
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.h5traveloto_booking.navigate.AppNavigation
@@ -13,10 +14,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             H5travelotobookingTheme {
-              H5travelotobookingTheme {
-                  AppNavigation()
-              }
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                AppNavigation()
             }
+
+
         }
     }
 }

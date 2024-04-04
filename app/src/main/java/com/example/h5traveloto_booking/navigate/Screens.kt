@@ -2,6 +2,10 @@ package com.example.h5traveloto_booking.navigate
 
 enum class Screens {
     SignUpScreen ,
-    LoginScreen
+    LoginScreen,
+    MainScreen,
+    HomeScreen,
+    ChatScreen,
+    SettingScreen
 
 }

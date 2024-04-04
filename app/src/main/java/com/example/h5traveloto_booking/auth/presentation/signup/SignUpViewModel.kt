@@ -39,9 +39,26 @@ class SignUpViewModel @Inject constructor(
 
     }
 
+
+
+
     // Day ne
     // java.lang.IllegalStateException: Given component holder class com.example.h5traveloto_booking.MainActivity does not implement interface dagger.hilt.internal.GeneratedComponent or interface dagger.hilt.internal.GeneratedComponentManager
     var  registerRequest : SignUpRequestDTO = SignUpRequestDTO("","","","")
+
+
+//    fun register(registerRequest : SignUpRequestDTO)  {
+//        viewModelScope.launch {
+//            try {
+//                val result =  registerApi.register(registerRequest)
+//                Log.d("result" , result.id )
+//            } catch (e : Exception ) {
+//                Log.e("Api error", "error : ${e.message}")
+//            }
+//        }
+//
+//    }
+
 
 
     fun register(

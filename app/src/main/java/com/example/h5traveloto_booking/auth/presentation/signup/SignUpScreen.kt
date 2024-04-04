@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.PrimaryColor
+import com.example.h5traveloto_booking.ui_shared_components.PasswordBox
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 
@@ -31,18 +33,21 @@ fun SignupScreen(navController: NavController,
                 viewModel : SignUpViewModel = hiltViewModel()
 ) {
 
+
+
+    var firstName by rememberSaveable { mutableStateOf("") }
+    var lastName by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var confirmPassword by rememberSaveable {mutableStateOf("")}
+    var  currentStep by rememberSaveable { mutableStateOf(0) }
+    var keyboardController = LocalSoftwareKeyboardController.current
+
+
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(start = 21.dp, end = 21.dp, top = 40.dp),
     ) {
-
-        var firstName by rememberSaveable { mutableStateOf("") }
-        var lastName by rememberSaveable { mutableStateOf("") }
-        var email by rememberSaveable { mutableStateOf("") }
-        var password by rememberSaveable { mutableStateOf("") }
-        var confirmPassword by rememberSaveable {mutableStateOf("")}
-        var keyboardController = LocalSoftwareKeyboardController.current
-
 
         Column(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -60,44 +65,84 @@ fun SignupScreen(navController: NavController,
         }
         Spacer(modifier = Modifier.height(62.dp))
         Column {
-            TextBox(
-                modifier = Modifier.fillMaxWidth(),
-                label= "First Name",
-                placeholder = "Enter your first name",
-                value = firstName,
-                onValueChange = {firstName = it}
-            )
 
             Spacer(modifier = Modifier.height(30.dp))
-            TextBox(
-                modifier = Modifier.fillMaxWidth(),
-                label= "Last Name",
-                placeholder = "Enter your last name",
-                value = lastName,
-                onValueChange = {lastName = it}
-            )
-            Spacer(modifier = Modifier.height(30.dp))
-            TextBox(
-                modifier = Modifier.fillMaxWidth(),
-                label= "Email",
-                placeholder = "Enter your email",
-                value = email,
-                onValueChange = {email = it}
-            )
-            Spacer(modifier = Modifier.height(30.dp))
-            TextBox(
-                modifier = Modifier.fillMaxWidth(),
-                label= "Password",
-                placeholder = "Enter your password",
-                value = password,
-                onValueChange = {password = it}
-            )
-            Spacer(modifier = Modifier.height(30.dp))
-            PrimaryButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {viewModel.LoadDataToObject(email, firstName, lastName, password)},
-                text = "Sign up"
-            )
+
+
+
+            when (currentStep) {
+                0 -> {
+                    TextBox(
+                        modifier = Modifier.fillMaxWidth(),
+                        label= "Email",
+                        placeholder = "Enter your email",
+                        value = email,
+                        onValueChange = {email = it}
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    PrimaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { currentStep++ },
+                        text = "Next"
+                    )
+                }
+                1 -> {
+
+                    TextBox(
+                        modifier = Modifier.fillMaxWidth(),
+                        label= "First Name",
+                        placeholder = "Enter your first name",
+                        value = firstName,
+                        onValueChange = {firstName = it}
+                    )
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    TextBox(
+                        modifier = Modifier.fillMaxWidth(),
+                        label= "Last Name",
+                        placeholder = "Enter your last name",
+                        value = lastName,
+                        onValueChange = {lastName = it}
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    PrimaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = { currentStep++ },
+                        text = "Next"
+                    )
+                }
+                2 -> {
+                    PasswordBox(
+                        modifier = Modifier.fillMaxWidth(),
+                        label= "Password",
+                        placeholder = "Enter your password",
+                        value = password,
+                        onValueChange = {password = it}
+                    )
+                    Spacer(modifier = Modifier.height(30.dp))
+                    PasswordBox(
+                        modifier = Modifier.fillMaxWidth(),
+                        label= "Password confirm",
+                        placeholder = "Enter your password",
+                        value = confirmPassword,
+                        onValueChange = {confirmPassword = it}
+                    )
+
+                    Spacer(modifier = Modifier.height(30.dp))
+                    PrimaryButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {viewModel.LoadDataToObject(email, firstName, lastName, password)},
+                        text = "Sign up"
+                    )
+                }
+            }
+
+
+
+
         }
         Spacer(modifier = Modifier.height(22.dp))
         Column(
@@ -109,7 +154,7 @@ fun SignupScreen(navController: NavController,
                 text = "Login",
                 fontSize = 14.sp,
                 color = PrimaryColor,
-                modifier = Modifier.clickable { navController.navigate("login")}
+                modifier = Modifier.clickable { navController.navigate(Screens.LoginScreen.name)}
             )
         }
     }
