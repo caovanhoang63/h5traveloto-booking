@@ -33,8 +33,6 @@ fun SignupScreen(navController: NavController,
                 viewModel : SignUpViewModel = hiltViewModel()
 ) {
 
-
-
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -134,7 +132,7 @@ fun SignupScreen(navController: NavController,
                     Spacer(modifier = Modifier.height(30.dp))
                     PrimaryButton(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = {viewModel.LoadDataToObject(email, firstName, lastName, password)},
+                        onClick = {viewModel.register(email, firstName, lastName, password)},
                         text = "Sign up"
                     )
                 }

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.data.dto.SignUpRequestDTO
-import com.example.h5traveloto_booking.auth.data.remote.api.response
+import com.example.h5traveloto_booking.auth.data.dto.SignUpResponseDTO
 import com.example.h5traveloto_booking.auth.domain.use_case.RegisterUseCases
 import com.example.h5traveloto_booking.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,65 +20,27 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val useCases: RegisterUseCases
 )  :ViewModel(){
-    private val _registerResponse = MutableStateFlow<Result<response>>(Result.Idle)
-
+    private val _registerResponse = MutableStateFlow<Result<SignUpResponseDTO>>(Result.Idle)
 
     val registerResponse = _registerResponse.asStateFlow()
 
-   fun LoadDataToObject(email : String, firstName: String, lastName : String, password : String )  {
-       Log.d("SignUp","Email: ${email},Firstname: ${firstName},Lastname: ${lastName},Password: ${password}")
-       val data = SignUpRequestDTO(firstName, lastName, email, password)
-       Log.d("SignUp", data.email.toString())
-
-       registerRequest = data
-
-
-       register(registerRequest)
-
-
-
-    }
-
-
-
-
-    // Day ne
-    // java.lang.IllegalStateException: Given component holder class com.example.h5traveloto_booking.MainActivity does not implement interface dagger.hilt.internal.GeneratedComponent or interface dagger.hilt.internal.GeneratedComponentManager
-    var  registerRequest : SignUpRequestDTO = SignUpRequestDTO("","","","")
-
-
-//    fun register(registerRequest : SignUpRequestDTO)  {
-//        viewModelScope.launch {
-//            try {
-//                val result =  registerApi.register(registerRequest)
-//                Log.d("result" , result.id )
-//            } catch (e : Exception ) {
-//                Log.e("Api error", "error : ${e.message}")
-//            }
-//        }
-//
-//    }
 
 
 
     fun register(
-        registerRequest : SignUpRequestDTO
+        email: String, firstName: String, lastName: String, password: String
     ) = viewModelScope.launch {
+            val registerRequest  = SignUpRequestDTO(firstName, lastName, email, password)
 
-        useCases.registerUseCase(registerRequest).onStart {
+            useCases.registerUseCase(registerRequest).onStart {
 
-        }.catch {
-                e ->
-            e.printStackTrace()
-            Log.d("api error:", "Error: ${e.message}")
+            }.catch {e ->
+                e.printStackTrace()
+                Log.d("api error:", "Error: ${e.message}")
 
-        }.collect{
-            res -> res.id
+            }.collect{
+                    res -> res.id
+            }
         }
-    }
-
-
-
-
 
 }

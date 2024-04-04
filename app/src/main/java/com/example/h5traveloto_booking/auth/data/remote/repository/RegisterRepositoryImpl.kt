@@ -19,12 +19,6 @@ class RegisterRepositoryImpl @Inject constructor(
             Log.d("api", "signup")
             Log.d("SignUp1",body.email)
 
-
-
-
-
-
-
             api.register(body)
         }
     }

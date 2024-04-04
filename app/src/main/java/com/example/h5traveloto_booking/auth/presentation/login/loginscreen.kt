@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.navigate.Screens
@@ -28,7 +29,12 @@ import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController,
+                viewModel: LoginViewModel =  hiltViewModel(),
+
+) {
+
+    viewModel.setNavController(navController)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,7 +97,7 @@ fun LoginScreen(navController: NavController) {
 
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {navController.navigate(Screens.MainScreen.name)},
+                onClick = {viewModel.authenticate(email,password)},
                 text = "Login"
             )
         }
