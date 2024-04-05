@@ -66,8 +66,6 @@ fun SignupScreen(navController: NavController,
 
             Spacer(modifier = Modifier.height(30.dp))
 
-
-
             when (currentStep) {
                 0 -> {
                     TextBox(

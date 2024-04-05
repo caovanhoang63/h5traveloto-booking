@@ -8,3 +8,6 @@ interface AuthenticateRepository {
     suspend fun authenticate(login : LoginRequestDTO): LoginResponseDTO
     suspend fun renewToken(token : RefreshToken) :LoginResponseDTO
 }
+// api, database, local, cache
+// input --> out 
+

@@ -30,8 +30,7 @@ import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController,
-                viewModel: LoginViewModel =  hiltViewModel(),
-
+                viewModel: LoginViewModel = hiltViewModel(),
 ) {
 
     viewModel.setNavController(navController)

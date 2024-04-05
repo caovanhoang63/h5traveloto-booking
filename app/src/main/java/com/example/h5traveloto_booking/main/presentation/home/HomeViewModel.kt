@@ -46,7 +46,6 @@ class HomeViewModel @Inject constructor(
             Log.d("Success",it.data.size.toString())
             if (it == null ){
                 Log.d("Success","NULL")
-
             }
 //            Log.d("Success",it.paging.total.toString())
             _listHotelDataResponse.value = Result.Success(it)

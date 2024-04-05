@@ -23,7 +23,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val useCases: AuthenticateUseCases,
     private val sharedPrefManager: SharedPrefManager ,
-)  : ViewModel(){
+)  : ViewModel() {
 
     private lateinit var navController: NavController
 
@@ -42,6 +42,7 @@ class LoginViewModel @Inject constructor(
     ) = viewModelScope.launch {
 
         val request = LoginRequestDTO(email,password )
+
         useCases.authenticateUseCase(request).onStart {
 
         }
@@ -60,7 +61,6 @@ class LoginViewModel @Inject constructor(
                     token -> sharedPrefManager.saveRefreshToken(token.Token)
                 }
                 navController.navigate(Screens.MainScreen.name)
-
 
         }
     }

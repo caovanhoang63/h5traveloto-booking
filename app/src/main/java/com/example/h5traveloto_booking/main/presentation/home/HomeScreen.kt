@@ -40,9 +40,15 @@ import com.example.h5traveloto_booking.util.Result
 fun HomeScreen (navController: NavController,
                 viewModel: HomeViewModel = hiltViewModel()) {
 
+
+
+    //
     LaunchedEffect(Unit){
         viewModel.getListHotel()
     }
+
+
+
 
 
     val listHotelDataResponse = viewModel.listHotelDataResponse.collectAsState().value
@@ -102,11 +108,14 @@ fun HomeScreen (navController: NavController,
             when (listHotelDataResponse) {
                 is Result.Loading -> {
                     Log.d("Home ", "dang load")
+
+                    // Hieu ung load
                 }
 
                 is Result.Error -> {
                     Log.d("Home ", "loi roi")
                 }
+
                 is Result.Success -> {
 //                    Log.d("Home Screen", result.data.data.size.toString())
                     val hotels = listHotelDataResponse.data.data

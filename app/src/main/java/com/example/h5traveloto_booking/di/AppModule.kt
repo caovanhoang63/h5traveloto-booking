@@ -114,9 +114,6 @@ object AppModule {
     }
 
 
-
-
-
     @Provides
     @Singleton
     fun provideSharedPrefManager(@ApplicationContext context: Context): SharedPrefManager {
@@ -124,5 +121,16 @@ object AppModule {
     }
 
 
+    /*
+    * 
+    * 
+    * 
+    * 
+    * 
+    * 
+    * 
+    * 
+    * 
+    * */
 
 }

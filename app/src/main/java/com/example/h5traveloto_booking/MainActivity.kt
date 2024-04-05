@@ -23,10 +23,7 @@ class MainActivity : ComponentActivity(
         setContent {
             H5travelotobookingTheme {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
-
-
-
+                
                 AppNavigation(Screens.LoginScreen.name)
             }
 

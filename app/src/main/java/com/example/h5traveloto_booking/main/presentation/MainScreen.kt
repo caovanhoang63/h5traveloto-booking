@@ -24,7 +24,6 @@ import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
 import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 data class BottomNavigationItem(
@@ -39,7 +38,7 @@ data class BottomNavigationItem(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun ScaffoldExample(
+fun MainScreen(
     navController: NavController,
     viewModel: MainViewModel = hiltViewModel()
 ) {
