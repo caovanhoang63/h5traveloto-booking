@@ -12,6 +12,10 @@ val Pink40 = Color(0xFF7D5260)
 
 val PrimaryColor = Color(0xFF4C4DDC)
 val SecondaryColor = Color(0xFF3334CC)
+val Grey500Color = Color(0xFF878787)
+val Grey100Color = Color(0xFFDFE0F3)
+val Grey50Color = Color(0xFFF5F5FF)
+
 
 val BorderStroke = Color(0xFFEDEDED)
 val ScreenBackGround = Color(0xFFE8EDFF)
