@@ -7,14 +7,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.auth.presentation.login.LoginScreen
 import com.example.h5traveloto_booking.auth.presentation.signup.SignupScreen
 import com.example.h5traveloto_booking.main.presentation.ScaffoldExample
+import com.example.h5traveloto_booking.util.SharedPrefManager
+import javax.inject.Inject
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(startDestination : String ) {
+
     val navController = rememberNavController()
+
 
     NavHost (
         navController = navController,
-        startDestination = Screens.LoginScreen.name
+        startDestination = Screens.MainScreen.name
 
     ) {
         composable(route = Screens.SignUpScreen.name) {

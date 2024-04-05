@@ -53,14 +53,13 @@ class LoginViewModel @Inject constructor(
             res ->
                 res.data.access_token?.let {
                     token -> sharedPrefManager.saveToken(token.Token)
+                    Log.d("Login TOKEN", token.Token)
+
                 }
                 res.data.refresh_token.let{
                     token -> sharedPrefManager.saveRefreshToken(token.Token)
                 }
                 navController.navigate(Screens.MainScreen.name)
-
-
-
 
 
         }

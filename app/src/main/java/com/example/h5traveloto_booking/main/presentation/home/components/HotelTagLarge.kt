@@ -11,12 +11,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.HotelDTO
 import com.example.h5traveloto_booking.ui_shared_components.*
 
 
 @Composable
 fun HotelTagLarge(
-
+    hotelDTO: HotelDTO
 ) {
     Card (
         modifier = Modifier
@@ -34,7 +35,7 @@ fun HotelTagLarge(
             Column (modifier = Modifier.padding(16.dp).fillMaxWidth().background(Color.White)) {
                 Row (horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()) {
-                    BoldText("The Aston Vill Hotel")
+                    BoldText(hotelDTO.name)
                     Row {
                         AppLogo()
                         BoldText("5.0")

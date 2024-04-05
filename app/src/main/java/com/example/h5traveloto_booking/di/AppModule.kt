@@ -7,10 +7,12 @@ import com.example.h5traveloto_booking.auth.data.remote.repository.AuthenticateR
 import com.example.h5traveloto_booking.auth.data.remote.repository.RegisterRepositoryImpl
 import com.example.h5traveloto_booking.auth.domain.repository.AuthenticateRepository
 import com.example.h5traveloto_booking.auth.domain.repository.RegisterRepository
-import com.example.h5traveloto_booking.auth.domain.use_case.AuthenticateUseCase
-import com.example.h5traveloto_booking.auth.domain.use_case.AuthenticateUseCases
-import com.example.h5traveloto_booking.auth.domain.use_case.RegisterUseCases
-import com.example.h5traveloto_booking.auth.domain.use_case.RegisterUsesCase
+import com.example.h5traveloto_booking.auth.domain.use_case.*
+import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
+import com.example.h5traveloto_booking.main.presentation.data.api.repository.HotelRepositoryImpl
+import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.ListHotelUseCase
 import com.example.h5traveloto_booking.util.Constants
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.squareup.moshi.Moshi
@@ -81,9 +83,37 @@ object AppModule {
     @Singleton
     fun provideAuthenticateUsesCases(repository: AuthenticateRepository) : AuthenticateUseCases {
         return AuthenticateUseCases(
-            authenticateUseCase =  AuthenticateUseCase(repository)
+            authenticateUseCase =  AuthenticateUseCase(repository),
+            renewTokenUseCase = RenewTokenUseCase(repository)
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideHotelApi(moshi: Moshi) : HotelApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(HotelApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHotelRepository(api : HotelApi) : HotelRepository {
+        return HotelRepositoryImpl(api)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideHotelUsesCases(repository: HotelRepository) : HotelUseCases {
+        return HotelUseCases(
+            listHotelUseCase = ListHotelUseCase(repository)
+        )
+    }
+
+
 
 
 
