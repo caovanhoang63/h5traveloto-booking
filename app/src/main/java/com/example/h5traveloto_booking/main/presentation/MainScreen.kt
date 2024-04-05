@@ -2,9 +2,10 @@ package com.example.h5traveloto_booking.main.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.PermContactCalendar
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,9 +18,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.h5traveloto_booking.main.presentation.ChatScreen.ChatScreen
-import com.example.h5traveloto_booking.main.presentation.HomeScreen.HomeScreen
-import com.example.h5traveloto_booking.main.presentation.SettingScreen.SettingsScreen
+import com.example.h5traveloto_booking.main.presentation.account.AccountScreen
+import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
+import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
+import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
 
 
@@ -43,26 +45,33 @@ fun ScaffoldExample(
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Default.Home,
+            selectedIcon = Icons.Default.Home,
+            unselectedIcon =Icons.Filled.Home,
             hasNews = false,
             route = Screens.HomeScreen.name
         ),
         BottomNavigationItem(
-            title = "Chat",
-            selectedIcon = Icons.Filled.Email,
-            unselectedIcon = Icons.Default.Email,
+            title = "Schedule",
+            selectedIcon = Icons.Default.PermContactCalendar,
+            unselectedIcon = Icons.Filled.PermContactCalendar,
             hasNews = false,
-            route = Screens.ChatScreen.name
+            route = Screens.ScheduleScreen.name
 
         ),
         BottomNavigationItem(
-            title = "Setting",
-            selectedIcon = Icons.Filled.Settings,
-            unselectedIcon = Icons.Default.Settings,
+            title = "History",
+            selectedIcon = Icons.Default.History,
+            unselectedIcon = Icons.Filled.History,
             hasNews = false,
-            route = Screens.SettingScreen.name
+            route = Screens.HistoryScreen.name
 
+        ),
+        BottomNavigationItem(
+            title = "Account",
+            selectedIcon = Icons.Default.Person,
+            unselectedIcon = Icons.Filled.Person,
+            hasNews = false,
+            route = Screens.AccountScreen.name
         )
     )
     var selectedItemIndex by rememberSaveable { (mutableIntStateOf(0)) }
@@ -70,6 +79,7 @@ fun ScaffoldExample(
     Scaffold(
         bottomBar = {
                     NavigationBar (
+                        modifier = Modifier.height(72.dp)
                     ) {
                         items.forEachIndexed{index, item ->
                             NavigationBarItem(
@@ -138,11 +148,14 @@ fun ScaffoldExample(
                 composable(route = Screens.HomeScreen.name) {
                     HomeScreen(navController)
                 }
-                composable(route = Screens.ChatScreen.name) {
-                    ChatScreen(navController)
+                composable(route = Screens.ScheduleScreen.name) {
+                    ScheduleScreen(navController)
                 }
-                composable(route = Screens.SettingScreen.name) {
-                    SettingsScreen(navController)
+                composable(route = Screens.HistoryScreen.name) {
+                    HistoryScreen(navController)
+                }
+                composable(route = Screens.AccountScreen.name) {
+                    AccountScreen(navController)
                 }
             }
         }

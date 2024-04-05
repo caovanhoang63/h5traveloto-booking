@@ -78,7 +78,7 @@ fun LoginScreen(navController: NavController,
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Password", fontSize = 12.sp)
+                Text(text = "", fontSize = 12.sp)
                 Text(
                     text = "Forgot your password",
                     fontSize = 12.sp,

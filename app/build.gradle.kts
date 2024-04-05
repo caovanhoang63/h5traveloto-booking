@@ -93,6 +93,7 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation ("io.coil-kt:coil-svg:2.5.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     //Gson

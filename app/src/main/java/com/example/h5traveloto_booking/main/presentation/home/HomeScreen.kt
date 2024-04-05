@@ -1,14 +1,17 @@
-package com.example.h5traveloto_booking.main.presentation.HomeScreen
+package com.example.h5traveloto_booking.main.presentation.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,10 +68,68 @@ fun HomeScreen (navController: NavController) {
                     Text(
                         text = "See all",
                         fontSize = 16.sp,
+                         color = PrimaryColor,
+                        modifier = Modifier.clickable { navController.navigate(Screens.LoginScreen.name)}
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            LazyRow(modifier = Modifier.padding(16.dp,0.dp,0.dp,0.dp)) {
+                item {
+                    Row (modifier = Modifier.padding(0.dp,0.dp,16.dp,0.dp)){
+                        Box(modifier = Modifier.height(257.dp).width(309.dp).background(Color.Red))
+
+                    }
+
+                }
+                item {
+                    Row (modifier = Modifier.padding(0.dp,0.dp,16.dp,0.dp)){
+                        Box(modifier = Modifier.height(257.dp).width(309.dp).background(Color.Blue))
+
+                    }
+
+                }
+                item {
+                    Row (modifier = Modifier.padding(0.dp,0.dp,16.dp,0.dp)){
+                        Box(modifier = Modifier.height(257.dp).width(309.dp).background(Color.Gray))
+
+                    }
+                }
+                item {
+                    Row (modifier = Modifier.padding(0.dp,0.dp,16.dp,0.dp)) {
+                        Box(modifier = Modifier.height(257.dp).width(309.dp).background(Color.Green))
+
+                    }
+
+                }
+            }
+
+            Spacer(modifier = Modifier.height(22.dp))
+            Column {
+                Row (modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(
+                        fontSize = 16.sp,
+                        fontWeight =  FontWeight.Bold,
+                        text ="Địa điểm nổi bật"
+                    )
+                    Text(
+                        text = "See all",
+                        fontSize = 16.sp,
                         color = PrimaryColor,
                         modifier = Modifier.clickable { navController.navigate(Screens.LoginScreen.name)}
                     )
                 }
+            }
+
+            Spacer(modifier = Modifier.height(10 .dp))
+
+            Column {
+                Box (modifier = Modifier.padding(16.dp,0.dp).height(108.dp).fillMaxWidth().background(Color.Black,
+                    RoundedCornerShape(12.dp)))
+
             }
 
 

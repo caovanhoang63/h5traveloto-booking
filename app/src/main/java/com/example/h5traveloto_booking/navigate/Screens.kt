@@ -5,7 +5,8 @@ enum class Screens {
     LoginScreen,
     MainScreen,
     HomeScreen,
-    ChatScreen,
-    SettingScreen
+    ScheduleScreen,
+    HistoryScreen,
+    AccountScreen,
 
 }

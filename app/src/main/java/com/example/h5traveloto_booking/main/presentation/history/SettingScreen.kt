@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.main.presentation.SettingScreen
+package com.example.h5traveloto_booking.main.presentation.history
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,8 +10,8 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun HistoryScreen(navController: NavController) {
     Column {
-        Text(text = "this is setting")
+        Text(text = "this is history")
     }
 }
