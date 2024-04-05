@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import com.example.h5traveloto_booking.navigate.AppNavigation
 import com.example.h5traveloto_booking.theme.H5travelotobookingTheme
 import dagger.hilt.android.AndroidEntryPoint
+import getUserLocation
+import kotlinx.coroutines.Dispatchers
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

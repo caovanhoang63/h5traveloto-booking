@@ -11,6 +11,7 @@ import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import getUserLocation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -57,6 +58,11 @@ class LoginViewModel @Inject constructor(
                     token -> sharedPrefManager.saveRefreshToken(token.Token)
                 }
                 navController.navigate(Screens.MainScreen.name)
+
+
+
+
+
         }
     }
 
