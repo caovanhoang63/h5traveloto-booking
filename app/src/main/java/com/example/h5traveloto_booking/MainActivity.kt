@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity(
             H5travelotobookingTheme {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-                AppNavigation(Screens.HotelDetails.name)
+                AppNavigation(Screens.RoomDetailsScreen.name)
 
             }
 

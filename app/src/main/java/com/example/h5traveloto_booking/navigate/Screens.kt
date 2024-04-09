@@ -9,5 +9,6 @@ enum class Screens {
     HistoryScreen,
     AccountScreen,
     HotelDetails,
+    RoomDetailsScreen,
 
 }

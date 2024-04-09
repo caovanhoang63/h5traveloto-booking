@@ -34,25 +34,27 @@ fun DetailsScreen(navController: NavController) {
     )
     Scaffold(
         topBar = {
+            Column(modifier = Modifier.fillMaxWidth().height(121.dp).background(Grey50Color),) {
+                Column( modifier = Modifier.padding(top = 21.dp, start = 27.dp, end = 27.dp )) {
+                    Row(modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,) {
+                        PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {},alt = "",)
 
-            Column(modifier = Modifier.fillMaxWidth().padding(top = 21.dp, start = 27.dp, end = 27.dp ).height(121.dp).background(Grey50Color),) {
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,) {
-                    PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {},alt = "",)
-
-                    Column { //Current location
-                        Text(text = "Khách sạn gần tôi", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp))
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng", style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp))
+                        Column { //Current location
+                            Text(text = "Khách sạn gần tôi", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp))
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng", style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp))
+                        }
+                        PrimaryIconButton(DrawableId = R.drawable.search, onClick = {},alt = "",)
                     }
-                    PrimaryIconButton(DrawableId = R.drawable.search, onClick = {},alt = "",)
+                    YSpacer(15)
+                    Row(modifier = Modifier.fillMaxWidth(),) {
+                        PrimaryIconButton(DrawableId = R.drawable.filter, onClick = {},alt = "",)
+                        XSpacer(25)
+                        PrimaryIconButton(DrawableId = R.drawable.sort, onClick = {},alt = "",)
+                    }
                 }
-                YSpacer(15)
-                Row(modifier = Modifier.fillMaxWidth(),) {
-                    PrimaryIconButton(DrawableId = R.drawable.filter, onClick = {},alt = "",)
-                    XSpacer(25)
-                    PrimaryIconButton(DrawableId = R.drawable.sort, onClick = {},alt = "",)
-                }
+
 
 
             }
