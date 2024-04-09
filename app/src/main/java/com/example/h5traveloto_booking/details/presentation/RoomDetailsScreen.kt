@@ -26,6 +26,7 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 
 import com.example.h5traveloto_booking.details.presentation.components.MultiColorText
+import com.example.h5traveloto_booking.details.presentation.components.RoomServiceTag
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -84,10 +85,12 @@ fun RoomDetailsScreen(navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(36.dp)
-                            .background(Color.Black)
+                            .height(36.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-
+                        RoomServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
+                        RoomServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                        RoomServiceTag(DrawableId = R.drawable.star , alt = "rating", text = "5.0")
                     }
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
