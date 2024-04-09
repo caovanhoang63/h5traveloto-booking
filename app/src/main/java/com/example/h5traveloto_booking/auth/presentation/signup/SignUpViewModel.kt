@@ -31,6 +31,7 @@ class SignUpViewModel @Inject constructor(
         email: String, firstName: String, lastName: String, password: String
     ) = viewModelScope.launch {
             val registerRequest  = SignUpRequestDTO(firstName, lastName, email, password)
+            Log.d("SignUpViewModel", "firstName: $firstName, lastName: $lastName, email: $email, password: $password")
 
             useCases.registerUseCase(registerRequest).onStart {
 
