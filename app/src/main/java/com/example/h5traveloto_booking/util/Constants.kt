@@ -6,7 +6,4 @@ object Constants {
 
     const val REQUEST_LOCATION_PERMISSION = 1
 
-
-
-
 }

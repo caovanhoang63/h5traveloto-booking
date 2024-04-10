@@ -100,8 +100,8 @@ fun SignupScreen(navController: NavController,
                                 }
                                 else{
                                     messageEmailError = ValidationError(email, listOf(
-                                        Validate(::isNotEmpty, "Email is required"),
-                                        Validate(::isValidEmail, "Invalid email")
+                                        Validate(::isNotEmpty, "Vui lòng nhập Email!"),
+                                        Validate(::isValidEmail, "Email không hợp lệ")
                                     ))
                                     if(isFocused){
                                         isVisibleEmailError = true
@@ -115,8 +115,8 @@ fun SignupScreen(navController: NavController,
                             email = it
                             isVisibleEmailError = false
                             messageEmailError = ValidationError(it, listOf(
-                                Validate(::isNotEmpty, "Email is required"),
-                                Validate(::isValidEmail, "Invalid email")
+                                Validate(::isNotEmpty, "Vui lòng nhập Email!"),
+                                Validate(::isValidEmail, "Email không hợp lệ")
                             ))
                         }
                     )
@@ -160,8 +160,8 @@ fun SignupScreen(navController: NavController,
                                         isVisibleFirstNameError = true
                                     }
                                     messageFirstNameError = ValidationError(firstName, listOf(
-                                        Validate(::isNotEmpty, "First name is required"),
-                                        Validate(::isValidName, "Invalid first name")
+                                        Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                        Validate(::isValidName, "Tên chỉ bao gồm chữ cái")
                                     ))
                                 }
                             },
@@ -172,8 +172,8 @@ fun SignupScreen(navController: NavController,
                             firstName = it
                             isVisibleFirstNameError = false
                             messageFirstNameError = ValidationError(it, listOf(
-                                Validate(::isNotEmpty, "First name is required"),
-                                Validate(::isValidName, "Invalid first name")
+                                Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                Validate(::isValidName, "Tên chỉ bao gồm chữ cái")
                             ))
                         }
                     )
@@ -195,8 +195,8 @@ fun SignupScreen(navController: NavController,
                                         isVisibleLastNameError = true
                                     }
                                     messageLastNameError = ValidationError(lastName, listOf(
-                                        Validate(::isNotEmpty, "Last name is required"),
-                                        Validate(::isValidName, "Invalid last name")
+                                        Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                        Validate(::isValidName, "Tên chỉ bao gồm chữ cái")
                                     ))
                                 }
                             },
@@ -207,8 +207,8 @@ fun SignupScreen(navController: NavController,
                             lastName = it
                             isVisibleLastNameError = false
                             messageLastNameError = ValidationError(it, listOf(
-                                Validate(::isNotEmpty, "Last name is required"),
-                                Validate(::isValidName, "Invalid last name")
+                                Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                Validate(::isValidName, "Tên chỉ bao gồm chữ cái")
                             ))
                         }
                     )
@@ -254,8 +254,8 @@ fun SignupScreen(navController: NavController,
                                         isVisiblePasswordError = true
                                     }
                                     messagePasswordError = ValidationError(password, listOf(
-                                        Validate(::isNotEmpty, "Password is required"),
-                                        Validate(::isValidPassword, "Password must contain at least 8 characters, one letter and one number")
+                                        Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                        Validate(::isValidPassword, "Mật khẩu ít nhất 8 ký tự, bao gồm chữ cái, số và ký tự đặc biệt")
                                     ))
                                 }
                             },
@@ -266,8 +266,8 @@ fun SignupScreen(navController: NavController,
                             password = it
                             isVisiblePasswordError = false
                             messagePasswordError = ValidationError(it, listOf(
-                                Validate(::isNotEmpty, "Password is required"),
-                                Validate(::isValidPassword, "Password must contain at least 8 characters, one letter and one number")
+                                Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                Validate(::isValidPassword, "Mật khẩu ít nhất 8 ký tự, bao gồm chữ cái, số và ký tự đặc biệt")
                             ))
                         }
                     )
@@ -289,8 +289,8 @@ fun SignupScreen(navController: NavController,
                                         isVisibleConfirmPasswordError = true
                                     }
                                     messageConfirmPasswordError = ValidationError(confirmPassword, listOf(
-                                        Validate(::isNotEmpty, "Password confirm is required"),
-                                        Validate({isValidConfirmPassword(password, it)}, "Password confirm must match password")
+                                        Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                        Validate({isValidConfirmPassword(password, it)}, "Mật khẩu xác nhận phải trùng với mật khẩu")
                                     ))
                                 }
                             },
@@ -301,8 +301,8 @@ fun SignupScreen(navController: NavController,
                             confirmPassword = it
                             isVisibleConfirmPasswordError = false
                             messageConfirmPasswordError = ValidationError(it, listOf(
-                                Validate(::isNotEmpty, "Password confirm is required"),
-                                Validate({isValidConfirmPassword(password, it)}, "Password confirm must match password")
+                                Validate(::isNotEmpty, "Vui lòng nhập trường này!"),
+                                Validate({isValidConfirmPassword(password, it)}, "Mật khẩu xác nhận phải trùng với mật khẩu")
                             ))
                         }
                     )
@@ -372,7 +372,7 @@ fun isValidEmail(value: String): Boolean {
 }
 
 fun isValidPassword(value: String): Boolean {
-    val passwordPattern = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$"
+    val passwordPattern = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^\\w\\s]).{8,}$"
     return value.matches(passwordPattern.toRegex())
 }
 

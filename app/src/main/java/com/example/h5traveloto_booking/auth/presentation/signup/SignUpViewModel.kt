@@ -40,7 +40,8 @@ class SignUpViewModel @Inject constructor(
                 Log.d("api error:", "Error: ${e.message}")
 
             }.collect{
-                    res -> res.id
+                res -> res.id
+                Log.d("SignUpViewModel", "register: $res")
             }
         }
 
