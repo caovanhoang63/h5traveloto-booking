@@ -82,7 +82,7 @@ fun HomeScreen (navController: NavController,
 
             Spacer(modifier = Modifier.height(10.dp))
             Column {
-                PrimaryButton(onClick = {},text = "Search", modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp))
+                PrimaryButton(onClick = {navController.navigate(Screens.HomeSearchScreen.name)},text = "Search", modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp))
                 Spacer(modifier = Modifier.height(24.dp))
                 Row (modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
                     horizontalArrangement = Arrangement.SpaceBetween) {

@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.main.presentation.account.AccountScreen
 import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
 import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
+import com.example.h5traveloto_booking.main.presentation.homenavigate.HomeNavigation
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
 
@@ -50,7 +51,7 @@ fun MainScreen(
             selectedIcon = Icons.Default.Home,
             unselectedIcon =Icons.Filled.Home,
             hasNews = false,
-            route = Screens.HomeScreen.name
+            route = Screens.HomeNavigation.name
         ),
         BottomNavigationItem(
             title = "Schedule",
@@ -144,11 +145,11 @@ fun MainScreen(
 
             NavHost (
                 navController = mainNavController,
-                startDestination = Screens.HomeScreen.name,
+                startDestination = Screens.HomeNavigation.name,
 
             ) {
-                composable(route = Screens.HomeScreen.name) {
-                    HomeScreen(navController)
+                composable(route = Screens.HomeNavigation.name) {
+                    HomeNavigation(navController)
                 }
                 composable(route = Screens.ScheduleScreen.name) {
                     ScheduleScreen(navController)

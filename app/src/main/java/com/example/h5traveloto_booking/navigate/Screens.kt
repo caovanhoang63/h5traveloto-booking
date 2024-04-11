@@ -8,5 +8,6 @@ enum class Screens {
     ScheduleScreen,
     HistoryScreen,
     AccountScreen,
-
+    HomeNavigation,
+    HomeSearchScreen,
 }

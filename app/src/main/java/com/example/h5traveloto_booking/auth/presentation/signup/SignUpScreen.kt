@@ -367,12 +367,12 @@ fun isNotEmpty(value: String): Boolean {
 }
 
 fun isValidEmail(value: String): Boolean {
-    val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+    val emailPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$"
     return value.matches(emailPattern.toRegex())
 }
 
 fun isValidPassword(value: String): Boolean {
-    val passwordPattern = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^\\w\\s]).{8,}$"
+    val passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{8,}\$"
     return value.matches(passwordPattern.toRegex())
 }
 
