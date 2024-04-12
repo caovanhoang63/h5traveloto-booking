@@ -104,6 +104,8 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
     implementation("com.google.accompanist:accompanist-permissions:0.31.0-alpha")
 
+    // Material 3
+    implementation("androidx.compose.material3:material3:1.2.1")
 }
 
 
