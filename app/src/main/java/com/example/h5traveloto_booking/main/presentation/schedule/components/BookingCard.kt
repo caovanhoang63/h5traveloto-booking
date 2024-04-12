@@ -1,11 +1,8 @@
 package com.example.h5traveloto_booking.main.presentation.schedule.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,11 +18,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
-import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 
 @Composable
-public fun HotelCard(
+public fun BookingCard(
 //    hotelName: String,
 //    location: String,
 //    date: String,
@@ -42,7 +38,7 @@ public fun HotelCard(
             .padding(horizontal = 15.dp)
 //            .clip(shape = RoundedCornerShape(8.dp))
             .shadow(
-                elevation = 10.dp,
+                elevation = 5.dp,
                 shape = RoundedCornerShape(8.dp)
             )
     ) {
