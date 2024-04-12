@@ -46,14 +46,17 @@ import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AccountScreen(navController: NavController) {
-    Spacer(modifier = Modifier.height(10.dp))
-    Spacer(modifier = Modifier.height(10.dp))
+
     Scaffold(
-        modifier = Modifier.background(ScreenBackGround),
+        modifier = Modifier
+            .background(ScreenBackGround)
+            .fillMaxSize(),
         topBar = {
             Row (Modifier.padding(24.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,) {
@@ -61,153 +64,42 @@ fun AccountScreen(navController: NavController) {
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp)
             }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-         //       .verticalScroll(rememberScrollState())
-        ) {
-            Card(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(4.dp),
-                colors = CardDefaults.cardColors(Color.White)
-            ){
-                InformationAccount(test)
-
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "Manage Profile",
-                modifier = Modifier
-                    .padding(start = 15.dp),
-                fontWeight = FontWeight.SemiBold,
-                color = colorResource(id=R.color.third_font)
-                )
-            Card(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .wrapContentWidth(),
-                elevation = CardDefaults.cardElevation(4.dp),
-                colors = CardDefaults.cardColors(Color.White)
-
+        },
+        content = { innerPadding ->
+            LazyColumn(
+                modifier = Modifier.padding(innerPadding)
             )
             {
-                LazyColumn(
-                    modifier = Modifier
-                        //.fillMaxSize()
-                        .padding(10.dp),
-                ) {
-                    item{
-                        AccountItem(
-                            title = "Personal Information",{},null
-                        )
+                item {
+                    Card(
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth(),
+                        elevation = CardDefaults.cardElevation(4.dp),
+                        colors = CardDefaults.cardColors(Color.White)
+                    )
+                    {
+                        InformationAccount(test)
                     }
-
-                    item {
-                        AccountItem(
-                            title = "Change Password",{},null
-                        )
-                    }
-                    item {
-                        AccountItem(
-                            title = "Payment Information",{},"Add a credit card"
-                        )
-                    }
-
                 }
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "Manage Profile",
-                modifier = Modifier
-                    .padding(start = 15.dp),
-                fontWeight = FontWeight.SemiBold,
-                color = colorResource(id=R.color.third_font)
-            )
-            Card(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .wrapContentWidth(),
-                elevation = CardDefaults.cardElevation(4.dp),
-                colors = CardDefaults.cardColors(Color.White)
-            )
-            {
-                LazyColumn(
-                    modifier = Modifier
-                        //.fillMaxSize()
-                        .padding(10.dp),
-                ) {
-                    item{
-                        AccountItem(
-                            title = "Total point",{},null
-                        )
-                    }
-
-                    item {
-                        AccountItem(
-                            title = "My promotions",{},null
-                        )
-                    }
-                    item {
-                        AccountItem(
-                            title = "Program benefits",{},"Add a credit card"
-                        )
-                    }
-
+                item {
+                    ManageProfile()
                 }
-            }
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "Support and information",
-                modifier = Modifier
-                    .padding(start = 15.dp),
-                fontWeight = FontWeight.SemiBold,
-                color = colorResource(id=R.color.third_font)
-            )
-            Card(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .wrapContentWidth(),
-                elevation = CardDefaults.cardElevation(4.dp),
-                colors = CardDefaults.cardColors(Color.White)
-            )
-            {
-                LazyColumn(
-                    modifier = Modifier
-                        //.fillMaxSize()
-                        .padding(10.dp),
-                ) {
-                    item{
-                        AccountItem(
-                            title = "Visit help center",{},null
-                        )
-                    }
-
-                    item {
-                        AccountItem(
-                            title = "Give us feedback",{},null
-                        )
-                    }
-                    item {
-                        AccountItem(
-                            title = "Term and conditions",{},null
-                        )
-                    }
-                    item{
-                        AccountItem(
-                            title = "Data privacy center",{},null
-                        )
-                    }
-                    item{
-                        AccountItem(
-                            title = "About us",{},null
-                        )
-                    }
+                item{
+                    AppSetting()
+                }
+                item {
+                    ManagePoint()
+                }
+                item{
+                    SupportAndInformation()
+                }
+                item{
+                    PrimaryButton(onClick = {},"Sign Out",modifier = Modifier.fillMaxWidth().padding(16.dp))
                 }
             }
         }
-
-    }
+    )
 
 }
 
@@ -215,10 +107,12 @@ fun AccountScreen(navController: NavController) {
 fun AccountItem(
     title: String,
     onClick: () -> Unit,
-    description: String?
+    description: String?,
+    isLastChild: Boolean
 ) {
-    Column (modifier = Modifier.clickable { onClick() }) {
-
+    Column (modifier = Modifier
+        .clickable { onClick() }
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -245,14 +139,17 @@ fun AccountItem(
                     .padding(start = 27.dp, bottom = 8.dp),
             )
         }
-        Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
-            drawLine(
-                color = Color.LightGray,
-                start = Offset(0f, 0f),
-                end = Offset(size.width, 0f),
-                strokeWidth = 1.dp.toPx(),
-                cap = StrokeCap.Butt,
-            )
+        if(!isLastChild) {
+
+            Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
+                drawLine(
+                    color = Color.LightGray,
+                    start = Offset(0f, 0f),
+                    end = Offset(size.width, 0f),
+                    strokeWidth = 1.dp.toPx(),
+                    cap = StrokeCap.Butt,
+                )
+            }
         }
     }
 }
@@ -266,23 +163,12 @@ fun InformationAccount(acc: Account) {
             painter = painterResource(R.drawable.onlylogo),
             contentDescription = null,
             modifier = Modifier
-                //set image size to 60dp
                 .size(60.dp)
-                //clip image to be shape circle
                 .clip(CircleShape)
                 .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape)
         )
-        // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(20.dp))
-        // We keep track if the message is expanded or not in this
-        // variable
-        //var isExpanded by remember { mutableStateOf(false) }
-        // surfaceColor will be updated gradually from one color to the other
-        //val surfaceColor by animateColorAsState(
-        //    if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-        //)
-        // We toggle the isExpanded variable when we click on this Column
-        Column() {
+        Column {
             Text(text = acc.name,
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.bodyLarge,
@@ -292,11 +178,206 @@ fun InformationAccount(acc: Account) {
             Text(text = acc.email,
                 modifier = Modifier.padding(all = 4.dp),
                 color = colorResource(id= R.color.secondary_font),
-                // If the message is expanded, we display all its content
-                // otherwise we only display the first line
-                //maxLines = if (isExpanded) Int.MAX_VALUE else 1,
                 style = MaterialTheme.typography.bodyLarge,)
+        }
+    }
+}
+@Composable
+fun ManageProfile(){
+    Spacer(modifier = Modifier.height(5.dp))
+    Text(
+        text = "Manage Profile",
+        modifier = Modifier
+            .padding(start = 15.dp),
+        fontWeight = FontWeight.SemiBold,
+        color = colorResource(id = R.color.third_font)
+    )
 
+    Card(
+        modifier = Modifier
+            .padding(10.dp)
+            .wrapContentWidth(),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(Color.White)
+    )
+    {
+        Column(
+            modifier = Modifier
+                //.fillMaxSize()
+                //.padding(10.dp)
+                .wrapContentSize(),
+        ) {
+                AccountItem(
+                    title = "Personal Information",
+                    {},
+                    null,
+                    false
+                )
+                AccountItem(
+                    title = "Change Password",
+                    {},
+                    null,
+                    false
+                )
+                AccountItem(
+                    title = "Payment Information",
+                    {},
+                    "Add a credit card",
+                    true
+                )
+
+
+        }
+    }
+}
+
+@Composable
+fun ManagePoint(){
+    Spacer(modifier = Modifier.height(5.dp))
+    Text(
+        text = "Manage Point",
+        modifier = Modifier
+            .padding(start = 15.dp),
+        fontWeight = FontWeight.SemiBold,
+        color = colorResource(id = R.color.third_font)
+    )
+    Card(
+        modifier = Modifier
+            .padding(10.dp)
+            .wrapContentWidth(),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(Color.White)
+    )
+    {
+        Column(
+            modifier = Modifier
+                //.fillMaxSize()
+                //.padding(10.dp)
+                .wrapContentSize(),
+
+        ) {
+
+                AccountItem(
+                    title = "Total point",
+                    {},
+                    null,
+                    false
+                )
+
+                AccountItem(
+                    title = "My promotions",
+                    {},
+                    null,
+                    false
+                )
+
+                AccountItem(
+                    title = "Program benefits",
+                    {},
+                    "Add a credit card",
+                    true
+                )
+
+
+        }
+    }
+}
+
+@Composable
+fun AppSetting(){
+    Spacer(modifier = Modifier.height(5.dp))
+    Text(
+        text = "App setting",
+        modifier = Modifier
+            .padding(start = 15.dp),
+        fontWeight = FontWeight.SemiBold,
+        color = colorResource(id = R.color.third_font)
+    )
+    Card(
+        modifier = Modifier
+            .padding(10.dp)
+            .wrapContentWidth(),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(Color.White)
+    )
+    {
+        Column(
+            modifier = Modifier
+                //.fillMaxSize()
+                //.padding(10.dp)
+                .wrapContentSize(),
+        ) {
+
+            AccountItem(
+                title = "Stay notification",
+                {},
+                "Get room ready, check in, check out",
+                true
+            )
+
+        }
+    }
+}
+@Composable
+fun SupportAndInformation (){
+    Spacer(modifier = Modifier.height(5.dp))
+    Text(
+        text = "Support and information",
+        modifier = Modifier
+            .padding(start = 15.dp),
+        fontWeight = FontWeight.SemiBold,
+        color = colorResource(id = R.color.third_font)
+    )
+    Card(
+        modifier = Modifier
+            .padding(10.dp)
+            .wrapContentWidth(),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(Color.White)
+    )
+    {
+        Column(
+            modifier = Modifier
+                //.fillMaxSize()
+                //.padding(10.dp)
+                .wrapContentSize(),
+        ) {
+
+                AccountItem(
+                    title = "Visit help center",
+                    {},
+                    null,
+                    false
+                )
+
+
+                AccountItem(
+                    title = "Give us feedback",
+                    {},
+                    null,
+                    false
+                )
+
+                AccountItem(
+                    title = "Term and conditions",
+                    {},
+                    null,
+                    false
+                )
+
+                AccountItem(
+                    title = "Data privacy center",
+                    {},
+                    null,
+                    false
+                )
+
+                AccountItem(
+                    title = "About us",
+                    {},
+                    null,
+                    true
+                )
 
         }
     }
