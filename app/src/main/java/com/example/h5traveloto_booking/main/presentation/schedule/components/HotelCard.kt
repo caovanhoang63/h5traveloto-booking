@@ -39,7 +39,7 @@ public fun HotelCard(
         modifier = Modifier
             .height(120.dp)
             .fillMaxWidth()
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 15.dp)
 //            .clip(shape = RoundedCornerShape(8.dp))
             .shadow(
                 elevation = 10.dp,
@@ -48,7 +48,7 @@ public fun HotelCard(
     ) {
         Row (
             modifier = Modifier
-                .padding(10.dp)
+                .padding(horizontal = 15.dp)
                 .fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp)
@@ -72,11 +72,12 @@ public fun HotelCard(
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     Text(
+                        modifier = Modifier.
+                            fillMaxWidth(0.55f),
                         text = "Asteria Hotel",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    XSpacer(width = 15)
                     Row {
                         Text(
                             text = "$" + 164,
