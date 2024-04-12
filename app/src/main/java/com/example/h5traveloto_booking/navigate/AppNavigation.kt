@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.auth.presentation.login.LoginScreen
 import com.example.h5traveloto_booking.auth.presentation.signup.SignupScreen
 import com.example.h5traveloto_booking.main.presentation.MainScreen
-
+import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 @Composable
 fun AppNavigation(startDestination : String ) {
 
@@ -27,6 +27,9 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.MainScreen.name  ) {
             MainScreen(navController =navController)
+        }
+        composable(route = Screens.PersonalInformationScreen.name) {
+            PersonalInformationScreen(navController = navController)
         }
     }
 }

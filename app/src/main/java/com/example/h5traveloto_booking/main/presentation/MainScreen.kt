@@ -19,7 +19,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.h5traveloto_booking.main.presentation.account.AccountScreen
+import com.example.h5traveloto_booking.account.AccountScreen
 import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
 import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen

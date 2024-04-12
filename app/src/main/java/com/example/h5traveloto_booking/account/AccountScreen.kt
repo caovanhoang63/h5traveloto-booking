@@ -1,5 +1,6 @@
-package com.example.h5traveloto_booking.main.presentation.account
+package com.example.h5traveloto_booking.account
 
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.*
@@ -42,27 +43,29 @@ import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.ScreenBackGround
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import androidx.navigation.NavHostController
+import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AccountScreen(navController: NavController) {
 
+
     Scaffold(
         modifier = Modifier
             .background(ScreenBackGround)
             .fillMaxSize(),
         topBar = {
-            Row (Modifier.padding(24.dp).fillMaxWidth(),
+            Row (Modifier.padding(10.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,) {
-                Text(text = "Account",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp)
+                BoldText(text = "Account",
+                  //  fontWeight = FontWeight.Bold,
+                   // fontSize = 20.sp)
+                )
             }
         },
         content = { innerPadding ->
@@ -75,7 +78,7 @@ fun AccountScreen(navController: NavController) {
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth(),
-                        elevation = CardDefaults.cardElevation(4.dp),
+                        elevation = CardDefaults.cardElevation(1.dp),
                         colors = CardDefaults.cardColors(Color.White)
                     )
                     {
@@ -83,13 +86,13 @@ fun AccountScreen(navController: NavController) {
                     }
                 }
                 item {
-                    ManageProfile()
+                    ManageProfile(navController)
                 }
                 item{
-                    AppSetting()
+                    ManagePoint()
                 }
                 item {
-                    ManagePoint()
+                    AppSetting()
                 }
                 item{
                     SupportAndInformation()
@@ -108,19 +111,22 @@ fun AccountItem(
     title: String,
     onClick: () -> Unit,
     description: String?,
-    isLastChild: Boolean
+    isLastChild: Boolean,
 ) {
     Column (modifier = Modifier
-        .clickable { onClick() }
+        .wrapContentSize()
+        .clickable {
+            onClick()
+        }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 27.dp),
+                .padding(vertical = 16.dp, horizontal = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(title, fontWeight = FontWeight.SemiBold)
+            BoldText14(title)
             Image(
                 painter = painterResource(id = R.drawable.arrowright48),
                 contentDescription = "Next",
@@ -129,14 +135,14 @@ fun AccountItem(
             )
         }
         if (!description.isNullOrEmpty()) {
-            Text(
+            GreyText(
                 text = description,
-                fontWeight = FontWeight.Light,
-                color = colorResource(id = R.color.third_font),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
+            //    fontWeight = FontWeight.Light,
+            //    color = colorResource(id = R.color.third_font),
+             //   overflow = TextOverflow.Ellipsis,
+            //    maxLines = 1,
                 modifier = Modifier
-                    .padding(start = 27.dp, bottom = 8.dp),
+                    .padding(start = 20.dp, bottom = 8.dp),
             )
         }
         if(!isLastChild) {
@@ -159,45 +165,48 @@ data class Account(val name: String, val email: String)
 @Composable
 fun InformationAccount(acc: Account) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
+        XSpacer(12)
         Image(
             painter = painterResource(R.drawable.onlylogo),
             contentDescription = null,
             modifier = Modifier
-                .size(60.dp)
+                .size(50.dp)
                 .clip(CircleShape)
                 .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape)
         )
         Spacer(modifier = Modifier.width(20.dp))
         Column {
-            Text(text = acc.name,
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 4.dp,top = 8.dp,)
+            PrimaryText(text = acc.name,
+                //color = MaterialTheme.colorScheme.primary,
+               // style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(start = 4.dp,top = 8.dp,)
             )
             Spacer(modifier = Modifier.height(5.dp))
-            Text(text = acc.email,
+            GreyText(text = acc.email,
                 modifier = Modifier.padding(all = 4.dp),
-                color = colorResource(id= R.color.secondary_font),
-                style = MaterialTheme.typography.bodyLarge,)
+               // color = colorResource(id= R.color.secondary_font),
+               // style = MaterialTheme.typography.bodyLarge,)
+            )
         }
     }
 }
 @Composable
-fun ManageProfile(){
+fun ManageProfile(navController: NavController){
     Spacer(modifier = Modifier.height(5.dp))
-    Text(
+    GreyText(
         text = "Manage Profile",
         modifier = Modifier
             .padding(start = 15.dp),
-        fontWeight = FontWeight.SemiBold,
-        color = colorResource(id = R.color.third_font)
+       // fontWeight = FontWeight.SemiBold,
+       // color = colorResource(id = R.color.third_font)
     )
 
     Card(
         modifier = Modifier
             .padding(10.dp)
             .wrapContentWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(Color.White)
     )
     {
@@ -209,21 +218,25 @@ fun ManageProfile(){
         ) {
                 AccountItem(
                     title = "Personal Information",
-                    {},
+                    onClick =
+                    {
+                        Log.d("personal:", "click")
+                        navController.navigate(Screens.PersonalInformationScreen.name)
+                    },
                     null,
-                    false
+                    false,
                 )
                 AccountItem(
                     title = "Change Password",
                     {},
                     null,
-                    false
+                    false,
                 )
                 AccountItem(
                     title = "Payment Information",
                     {},
                     "Add a credit card",
-                    true
+                    true,
                 )
 
 
@@ -234,18 +247,18 @@ fun ManageProfile(){
 @Composable
 fun ManagePoint(){
     Spacer(modifier = Modifier.height(5.dp))
-    Text(
+    GreyText(
         text = "Manage Point",
         modifier = Modifier
             .padding(start = 15.dp),
-        fontWeight = FontWeight.SemiBold,
-        color = colorResource(id = R.color.third_font)
+        //fontWeight = FontWeight.SemiBold,
+       // color = colorResource(id = R.color.third_font)
     )
     Card(
         modifier = Modifier
             .padding(10.dp)
             .wrapContentWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(Color.White)
     )
     {
@@ -261,21 +274,21 @@ fun ManagePoint(){
                     title = "Total point",
                     {},
                     null,
-                    false
+                    false,
                 )
 
                 AccountItem(
                     title = "My promotions",
                     {},
                     null,
-                    false
+                    false,
                 )
 
                 AccountItem(
                     title = "Program benefits",
                     {},
-                    "Add a credit card",
-                    true
+                    null,
+                    true,
                 )
 
 
@@ -286,18 +299,18 @@ fun ManagePoint(){
 @Composable
 fun AppSetting(){
     Spacer(modifier = Modifier.height(5.dp))
-    Text(
+    GreyText(
         text = "App setting",
         modifier = Modifier
             .padding(start = 15.dp),
-        fontWeight = FontWeight.SemiBold,
-        color = colorResource(id = R.color.third_font)
+        //fontWeight = FontWeight.SemiBold,
+        //color = colorResource(id = R.color.third_font)
     )
     Card(
         modifier = Modifier
             .padding(10.dp)
             .wrapContentWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(Color.White)
     )
     {
@@ -312,7 +325,7 @@ fun AppSetting(){
                 title = "Stay notification",
                 {},
                 "Get room ready, check in, check out",
-                true
+                true,
             )
 
         }
@@ -321,18 +334,18 @@ fun AppSetting(){
 @Composable
 fun SupportAndInformation (){
     Spacer(modifier = Modifier.height(5.dp))
-    Text(
+    GreyText(
         text = "Support and information",
         modifier = Modifier
             .padding(start = 15.dp),
-        fontWeight = FontWeight.SemiBold,
-        color = colorResource(id = R.color.third_font)
+       // fontWeight = FontWeight.SemiBold,
+        //color = colorResource(id = R.color.third_font)
     )
     Card(
         modifier = Modifier
             .padding(10.dp)
             .wrapContentWidth(),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(1.dp),
         colors = CardDefaults.cardColors(Color.White)
     )
     {
@@ -347,7 +360,7 @@ fun SupportAndInformation (){
                     title = "Visit help center",
                     {},
                     null,
-                    false
+                    false,
                 )
 
 
@@ -355,28 +368,28 @@ fun SupportAndInformation (){
                     title = "Give us feedback",
                     {},
                     null,
-                    false
+                    false,
                 )
 
                 AccountItem(
                     title = "Term and conditions",
                     {},
                     null,
-                    false
+                    false,
                 )
 
                 AccountItem(
                     title = "Data privacy center",
                     {},
                     null,
-                    false
+                    false,
                 )
 
                 AccountItem(
                     title = "About us",
                     {},
                     null,
-                    true
+                    true,
                 )
 
         }

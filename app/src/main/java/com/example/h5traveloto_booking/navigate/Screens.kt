@@ -8,5 +8,5 @@ enum class Screens {
     ScheduleScreen,
     HistoryScreen,
     AccountScreen,
-
+    PersonalInformationScreen,
 }

@@ -13,3 +13,12 @@ fun BoldText(text : String ) {
         text = text
     )
 }
+
+@Composable
+fun BoldText14(text: String ) {
+    Text(
+        fontSize = 14.sp,
+        fontWeight =  FontWeight.Bold,
+        text = text
+    )
+}
