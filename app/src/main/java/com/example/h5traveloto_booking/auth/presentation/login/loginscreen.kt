@@ -114,7 +114,7 @@ fun LoginScreen(navController: NavController,
                 text = "Create Account Here",
                 fontSize = 14.sp,
                 color = PrimaryColor,
-                modifier = Modifier.clickable { navController.navigate(Screens.SignUpScreen.name) {
+                modifier = Modifier.clickable { navController.navigate(Screens.SignUpNavigation.name) {
                 } }
             )
         }

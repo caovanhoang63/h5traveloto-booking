@@ -24,25 +24,44 @@ class SignUpViewModel @Inject constructor(
 
     val registerResponse = _registerResponse.asStateFlow()
 
+    private var email: String = ""
+    private var firstName: String = ""
+    private var lastName: String = ""
+    private var password: String = ""
 
-
+    public fun setEmail(newEmail: String){
+        this.email = newEmail
+    }
+    public fun setFirstName(newFirstName: String){
+        this.firstName = newFirstName
+    }
+    public fun setLastName(newLastName: String){
+        this.lastName = newLastName
+    }
+    public fun setPassword(newPassword: String){
+        this.password = newPassword
+    }
 
     fun register(
         email: String, firstName: String, lastName: String, password: String
     ) = viewModelScope.launch {
-            val registerRequest  = SignUpRequestDTO(firstName, lastName, email, password)
-            Log.d("SignUpViewModel", "firstName: $firstName, lastName: $lastName, email: $email, password: $password")
+        val registerRequest  = SignUpRequestDTO(firstName, lastName, email, password)
+        Log.d("SignUpViewModel", "firstName: $firstName, lastName: $lastName, email: $email, password: $password")
 
-            useCases.registerUseCase(registerRequest).onStart {
+        useCases.registerUseCase(registerRequest).onStart {
 
-            }.catch {e ->
-                e.printStackTrace()
-                Log.d("api error:", "Error: ${e.message}")
+        }.catch {e ->
+            e.printStackTrace()
+            Log.d("api error:", "Error: ${e.message}")
 
-            }.collect{
-                res -> res.id
-                Log.d("SignUpViewModel", "register: $res")
-            }
+        }.collect{
+            res -> res.id
+            Log.d("SignUpViewModel", "register: $res")
         }
+    }
+
+    public  fun getForm(){
+        Log.d("SignUpViewModel", "Email: $email, FirstName: $firstName, LastName: $lastName, Password: $password")
+    }
 
 }

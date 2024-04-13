@@ -10,4 +10,8 @@ enum class Screens {
     AccountScreen,
     HomeNavigation,
     HomeSearchScreen,
+    EmailForm,
+    NameForm,
+    PasswordForm,
+    SignUpNavigation,
 }
