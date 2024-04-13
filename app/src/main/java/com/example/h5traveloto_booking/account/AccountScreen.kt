@@ -145,9 +145,12 @@ fun AccountItem(
                     .padding(start = 20.dp, bottom = 8.dp),
             )
         }
-        if(!isLastChild) {
 
-            Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
+        //dung divider nhanh hon
+        Divider(thickness = 0.8.dp, color = Color.LightGray)
+
+        if(!isLastChild) {
+            /*Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
                 drawLine(
                     color = Color.LightGray,
                     start = Offset(0f, 0f),
@@ -155,7 +158,7 @@ fun AccountItem(
                     strokeWidth = 1.dp.toPx(),
                     cap = StrokeCap.Butt,
                 )
-            }
+            }*/
         }
     }
 }
@@ -220,7 +223,7 @@ fun ManageProfile(navController: NavController){
                     title = "Personal Information",
                     onClick =
                     {
-                        Log.d("personal:", "click")
+                        Log.d("personal:", "hehe")
                         navController.navigate(Screens.PersonalInformationScreen.name)
                     },
                     null,

@@ -9,4 +9,5 @@ enum class Screens {
     HistoryScreen,
     AccountScreen,
     PersonalInformationScreen,
+    UpdateInformationScreen,
 }
