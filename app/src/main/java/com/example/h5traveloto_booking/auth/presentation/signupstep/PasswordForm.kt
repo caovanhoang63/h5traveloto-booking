@@ -18,7 +18,9 @@ import androidx.navigation.NavController
 import com.example.h5traveloto_booking.auth.presentation.signup.*
 import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUpBottom
 import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUpHeader
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.ui_shared_components.PasswordBox
+import com.example.h5traveloto_booking.ui_shared_components.PopupRegisterSuccess
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,6 +32,7 @@ fun PasswordForm(
 ) {
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
+    var isSuccess by rememberSaveable { mutableStateOf(false) }
 
     var messagePasswordError by rememberSaveable { mutableStateOf("") }
     var isVisiblePasswordError by rememberSaveable { mutableStateOf(false) }
@@ -121,19 +124,30 @@ fun PasswordForm(
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    if(messagePasswordError.isNotEmpty()){
-                        isVisiblePasswordError = true
-                    }
-                    else if(messageConfirmPasswordError.isNotEmpty()){
-                        isVisibleConfirmPasswordError = true
+                    if(messagePasswordError.isNotEmpty() || messageConfirmPasswordError.isNotEmpty()){
+                        if(messagePasswordError.isNotEmpty()){
+                            isVisiblePasswordError = true
+                        }
+                        if(messageConfirmPasswordError.isNotEmpty()){
+                            isVisibleConfirmPasswordError = true
+                        }
                     }
                     else{
-                        viewModel.getForm()
+                        viewModel.register(IsSuccess = { isSuccess = it })
                     }
                 },
                 text = "Sign up"
             )
         }
+        if(isSuccess){
+            PopupRegisterSuccess(
+                onDismissRequest = { },
+                onConfirmation = { navLogin.navigate(Screens.LoginScreen.name) },
+                dialogTitle = "Đăng ký thành công",
+                dialogText = "Chúc mừng bạn đã tạo tài khoản thành công."
+            )
+        }
+
         Spacer(modifier = Modifier.height(22.dp))
         SignUpBottom(navController = navLogin)
     }

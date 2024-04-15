@@ -42,9 +42,8 @@ class SignUpViewModel @Inject constructor(
         this.password = newPassword
     }
 
-    fun register(
-        email: String, firstName: String, lastName: String, password: String
-    ) = viewModelScope.launch {
+
+    fun register(IsSuccess: (b: Boolean) -> Unit) = viewModelScope.launch {
         val registerRequest  = SignUpRequestDTO(firstName, lastName, email, password)
         Log.d("SignUpViewModel", "firstName: $firstName, lastName: $lastName, email: $email, password: $password")
 
@@ -53,10 +52,11 @@ class SignUpViewModel @Inject constructor(
         }.catch {e ->
             e.printStackTrace()
             Log.d("api error:", "Error: ${e.message}")
-
+            IsSuccess(false)
         }.collect{
             res -> res.id
             Log.d("SignUpViewModel", "register: $res")
+            IsSuccess(true)
         }
     }
 

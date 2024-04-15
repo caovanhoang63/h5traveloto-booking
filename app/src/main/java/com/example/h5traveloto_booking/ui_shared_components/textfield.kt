@@ -25,6 +25,7 @@ fun TextFieldIconLeading(modifier: Modifier,value: String, onValueChange: (Strin
             focusedIndicatorColor = PrimaryColor,
             containerColor = Color.Transparent,
         ),
+        readOnly = true,
         maxLines = 1,
         textStyle = TextStyle(
             color = Color.Black,

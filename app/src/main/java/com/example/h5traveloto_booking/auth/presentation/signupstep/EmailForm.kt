@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.auth.presentation.signupstep
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
@@ -22,8 +24,10 @@ import com.example.h5traveloto_booking.auth.presentation.signup.*
 import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUpBottom
 import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUpHeader
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.ui_shared_components.PopupRegisterSuccess
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
+import com.example.h5traveloto_booking.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

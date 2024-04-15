@@ -1,7 +1,7 @@
 package com.example.h5traveloto_booking.navigate
 
 enum class Screens {
-    SignUpScreen ,
+    SignUpNavigation ,
     LoginScreen,
     MainScreen,
     HomeScreen,
@@ -13,5 +13,4 @@ enum class Screens {
     EmailForm,
     NameForm,
     PasswordForm,
-    SignUpNavigation,
 }

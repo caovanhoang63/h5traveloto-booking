@@ -129,10 +129,14 @@ fun NameForm(
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    if (messageFirstNameError.isNotEmpty()) {
-                        isVisibleFirstNameError = true
-                    } else if (messageLastNameError.isNotEmpty()) {
-                        isVisibleLastNameError = true
+                    if(messageFirstNameError.isNotEmpty() || messageLastNameError.isNotEmpty())
+                    {
+                        if(messageFirstNameError.isNotEmpty()){
+                            isVisibleFirstNameError = true
+                        }
+                        if (messageLastNameError.isNotEmpty()){
+                            isVisibleLastNameError = true
+                        }
                     } else {
                         navController.navigate(Screens.PasswordForm.name)
                     }
