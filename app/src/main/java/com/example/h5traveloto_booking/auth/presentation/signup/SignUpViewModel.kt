@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.data.dto.SignUpRequestDTO
 import com.example.h5traveloto_booking.auth.data.dto.SignUpResponseDTO
+import com.example.h5traveloto_booking.auth.data.remote.api.response
+import com.example.h5traveloto_booking.auth.domain.use_case.CheckExistedUseCases
 import com.example.h5traveloto_booking.auth.domain.use_case.RegisterUseCases
 import com.example.h5traveloto_booking.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val useCases: RegisterUseCases
-)  :ViewModel(){
+    private val useCases: RegisterUseCases,
+    private val useCaseCheck: CheckExistedUseCases
+)  :ViewModel() {
     private val _registerResponse = MutableStateFlow<Result<SignUpResponseDTO>>(Result.Idle)
 
     val registerResponse = _registerResponse.asStateFlow()
@@ -29,39 +32,59 @@ class SignUpViewModel @Inject constructor(
     private var lastName: String = ""
     private var password: String = ""
 
-    public fun setEmail(newEmail: String){
+    public fun setEmail(newEmail: String) {
         this.email = newEmail
     }
-    public fun setFirstName(newFirstName: String){
+
+    public fun setFirstName(newFirstName: String) {
         this.firstName = newFirstName
     }
-    public fun setLastName(newLastName: String){
+
+    public fun setLastName(newLastName: String) {
         this.lastName = newLastName
     }
-    public fun setPassword(newPassword: String){
+
+    public fun setPassword(newPassword: String) {
         this.password = newPassword
     }
 
 
     fun register(IsSuccess: (b: Boolean) -> Unit) = viewModelScope.launch {
-        val registerRequest  = SignUpRequestDTO(firstName, lastName, email, password)
+        val registerRequest = SignUpRequestDTO(firstName, lastName, email, password)
         Log.d("SignUpViewModel", "firstName: $firstName, lastName: $lastName, email: $email, password: $password")
 
         useCases.registerUseCase(registerRequest).onStart {
 
-        }.catch {e ->
+        }.catch { e ->
             e.printStackTrace()
             Log.d("api error:", "Error: ${e.message}")
             IsSuccess(false)
-        }.collect{
-            res -> res.id
+        }.collect { res ->
+            res.id
             Log.d("SignUpViewModel", "register: $res")
             IsSuccess(true)
         }
     }
 
-    public  fun getForm(){
-        Log.d("SignUpViewModel", "Email: $email, FirstName: $firstName, LastName: $lastName, Password: $password")
+    fun checkExisted( Navigate: () -> Unit, Existed: () -> Unit) = viewModelScope.launch {
+        useCaseCheck.checkExistedUseCase(email).onStart {
+
+        }.catch { e ->
+            e.printStackTrace()
+            Log.d("api error:", "Error: ${e.message}")
+            Existed()
+        }.collect { response ->
+            response.isExisted
+            Log.d("SignUpViewModel", "checkExisted: $response")
+            if (response.isExisted != null)
+                Navigate()
+            else {
+                Existed()
+            }
+        }
     }
 
+    public fun getForm() {
+        Log.d("SignUpViewModel", "Email: $email, FirstName: $firstName, LastName: $lastName, Password: $password")
+    }
 }

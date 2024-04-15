@@ -98,7 +98,15 @@ fun EmailForm(
                     if (messageEmailError.isNotEmpty()) {
                         isVisibleEmailError = true
                     } else {
-                        navController.navigate(Screens.NameForm.name)
+                        viewModel.checkExisted(
+                            Navigate = {
+                                navController.navigate(Screens.NameForm.name)
+                            },
+                            Existed = {
+                                messageEmailError = "Email đã tồn tại"
+                                isVisibleEmailError = true
+                            }
+                        )
                     }
                 },
                 text = "Next"

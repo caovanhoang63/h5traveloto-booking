@@ -2,10 +2,13 @@ package com.example.h5traveloto_booking.di
 
 import android.content.Context
 import com.example.h5traveloto_booking.auth.data.remote.api.AuthenticateApi
+import com.example.h5traveloto_booking.auth.data.remote.api.CheckExistedApi
 import com.example.h5traveloto_booking.auth.data.remote.api.RegisterApi
 import com.example.h5traveloto_booking.auth.data.remote.repository.AuthenticateRepositoryImpl
+import com.example.h5traveloto_booking.auth.data.remote.repository.CheckExistedRepositoryImpl
 import com.example.h5traveloto_booking.auth.data.remote.repository.RegisterRepositoryImpl
 import com.example.h5traveloto_booking.auth.domain.repository.AuthenticateRepository
+import com.example.h5traveloto_booking.auth.domain.repository.CheckExistedRepository
 import com.example.h5traveloto_booking.auth.domain.repository.RegisterRepository
 import com.example.h5traveloto_booking.auth.domain.use_case.*
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
@@ -118,6 +121,30 @@ object AppModule {
     @Singleton
     fun provideSharedPrefManager(@ApplicationContext context: Context): SharedPrefManager {
         return SharedPrefManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCheckExistedApi(moshi: Moshi) : CheckExistedApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(CheckExistedApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCheckExistedRepository(api : CheckExistedApi) : CheckExistedRepository {
+        return CheckExistedRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCheckExistedUsesCases(repository: CheckExistedRepository) : CheckExistedUseCases {
+        return CheckExistedUseCases(
+            checkExistedUseCase =  CheckExistedUseCase(repository)
+        )
     }
 
 
