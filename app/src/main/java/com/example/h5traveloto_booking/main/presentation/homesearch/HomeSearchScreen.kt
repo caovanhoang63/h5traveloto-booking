@@ -1,13 +1,13 @@
 package com.example.h5traveloto_booking.main.presentation.homesearch
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -25,6 +25,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
+import com.example.h5traveloto_booking.main.presentation.homesearch.screens.ChoosePersonScreen
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -35,6 +36,10 @@ import kotlinx.coroutines.launch
 fun HomeSearchScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
+    var showChosePerson by remember { mutableStateOf(false) }
+    var adult by remember { mutableStateOf(1) }
+    var child by remember { mutableStateOf(0) }
+    var room by remember { mutableStateOf(1) }
 
     Scaffold (
         topBar = {
@@ -98,7 +103,7 @@ fun HomeSearchScreen(navController: NavController) {
                 ){
                     Box(
                         modifier = Modifier
-                            .height(280.dp)
+                            .height(260.dp)
                             .fillMaxWidth()
                             .padding(30.dp, 0.dp)
                             .shadow(4.dp, shape = RoundedCornerShape(8.dp))
@@ -114,20 +119,20 @@ fun HomeSearchScreen(navController: NavController) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
-                                    .fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .height(52.dp),
                             ){
-                                TextFieldIconLeading(
-                                    value = "",
-                                    onValueChange = {},
-                                    placeholder = "Khách sạn gần",
-                                    leadingIcon = {
+                                TextButtonDialog(
+                                    modifier = Modifier
+                                        .height(52.dp)
+                                        .weight(1f)
+                                        .clickable { },
+                                    content = "Khách sạn gần tôi",
+                                    icon = {
                                         Image(painterResource(id = R.drawable.location1),
                                             contentDescription = "",
-                                            modifier = Modifier.size(28.dp))
+                                            modifier = Modifier.size(20.dp))
                                     },
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .fillMaxWidth()
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Button(
@@ -146,39 +151,50 @@ fun HomeSearchScreen(navController: NavController) {
                                     )
                                 }
                             }
-                            TextFieldIconLeading(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = "Ngày tháng",
-                                leadingIcon = {
+                            TextButtonDialog(
+                                modifier = Modifier
+                                    .height(52.dp)
+                                    .fillMaxWidth()
+                                    .clickable { },
+                                content = "Ngày Tháng",
+                                icon = {
                                     Image(painterResource(id = R.drawable.calendar),
                                         contentDescription = "",
-                                        modifier = Modifier.size(24.dp))
+                                        modifier = Modifier.size(20.dp))
                                 },
+                            )
+                            TextButtonDialog(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                            )
-                            TextFieldIconLeading(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = "1 người lớn,0 trẻ em, 1 phòng",
-                                leadingIcon = {
+                                    .height(52.dp)
+                                    .clickable { showChosePerson = true },
+                                content = "$adult người lớn, $child trẻ em, $room phòng",
+                                icon = {
                                     Image(painterResource(id = R.drawable.useralt),
                                         contentDescription = "",
-                                        modifier = Modifier.size(28.dp))
+                                        modifier = Modifier.size(22.dp))
                                 },
-                                modifier = Modifier
-                                    .fillMaxWidth()
                             )
+                            if(showChosePerson){
+                                ChoosePersonScreen(
+                                    onDismiss = { showChosePerson = false },
+                                    onConfirm = { adults, childs, rooms ->
+                                        adult = adults
+                                        child = childs
+                                        room = rooms
+                                        showChosePerson = false
+                                    },
+                                )
+                            }
                             Spacer(modifier = Modifier.height(24.dp))
                             Button(
                                 onClick = {},
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(52.dp),
-                                shape = RoundedCornerShape(12.dp),
+                                shape = RoundedCornerShape(8.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFFF5E1F)
+                                    containerColor = OrangeColor
                                 )
                             ) {
                                 Text(text = "Booking Now",
@@ -210,3 +226,5 @@ fun HomeSearchScreen(navController: NavController) {
         }
     }
 }
+
+
