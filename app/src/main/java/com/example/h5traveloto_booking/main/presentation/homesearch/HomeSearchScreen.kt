@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Backup
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.main.presentation.homesearch.screens.ChoosePersonScreen
+import com.example.h5traveloto_booking.main.presentation.homesearch.screens.SearchLocationScreen
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -37,9 +39,10 @@ fun HomeSearchScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
     var showChosePerson by remember { mutableStateOf(false) }
-    var adult by remember { mutableStateOf(1) }
-    var child by remember { mutableStateOf(0) }
-    var room by remember { mutableStateOf(1) }
+    var showChoseLocation by remember { mutableStateOf(false) }
+    var adult by rememberSaveable { mutableIntStateOf(1) }
+    var child by rememberSaveable { mutableIntStateOf(0) }
+    var room by rememberSaveable { mutableIntStateOf(1) }
 
     Scaffold (
         topBar = {
@@ -126,7 +129,7 @@ fun HomeSearchScreen(navController: NavController) {
                                     modifier = Modifier
                                         .height(52.dp)
                                         .weight(1f)
-                                        .clickable { },
+                                        .clickable { showChoseLocation = true},
                                     content = "Khách sạn gần tôi",
                                     icon = {
                                         Image(painterResource(id = R.drawable.location1),
@@ -134,6 +137,15 @@ fun HomeSearchScreen(navController: NavController) {
                                             modifier = Modifier.size(20.dp))
                                     },
                                 )
+                                if(showChoseLocation){
+                                    SearchLocationScreen(
+                                        onDismiss = { showChoseLocation = false },
+                                        onComplete = { location ->
+                                            Log.d("Location", location)
+                                            showChoseLocation = false
+                                        }
+                                    )
+                                }
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Button(
                                     onClick = {},
@@ -184,6 +196,7 @@ fun HomeSearchScreen(navController: NavController) {
                                         room = rooms
                                         showChosePerson = false
                                     },
+                                    adult,child,room
                                 )
                             }
                             Spacer(modifier = Modifier.height(24.dp))
@@ -191,7 +204,7 @@ fun HomeSearchScreen(navController: NavController) {
                                 onClick = {},
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(52.dp),
+                                    .height(48.dp),
                                 shape = RoundedCornerShape(8.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = OrangeColor

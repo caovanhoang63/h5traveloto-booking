@@ -29,10 +29,13 @@ import com.example.h5traveloto_booking.R
 fun ChoosePersonScreen(
     onDismiss: () -> Unit,
     onConfirm: (adult: Int,child: Int, room: Int) -> Unit,
+    adults: Int,
+    childs: Int,
+    rooms: Int
 ) {
-    var adult by rememberSaveable { mutableStateOf(1) }
-    var child by rememberSaveable { mutableStateOf(0) }
-    var room by rememberSaveable { mutableStateOf(1) }
+    var adult by rememberSaveable { mutableStateOf(adults) }
+    var child by rememberSaveable { mutableStateOf(childs) }
+    var room by rememberSaveable { mutableStateOf(rooms) }
 
     Dialog(
         onDismissRequest = { onDismiss() },
