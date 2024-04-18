@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.homesearch.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,6 +19,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +35,7 @@ import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.OrangeColor
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.InputIncrease
+import com.example.h5traveloto_booking.ui_shared_components.ItemSearch
 import com.example.h5traveloto_booking.ui_shared_components.TextSearchBasic
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -42,9 +45,16 @@ fun SearchLocationScreen(
     onComplete: (String) -> Unit,
     viewModel: SearchLocationViewModel = hiltViewModel()
 ) {
-    var textSearch by remember { mutableStateOf("") }
     val searchQuery by viewModel.searchQuery.collectAsState()
     val searchResults by viewModel.filteredCities.collectAsState()
+    val searchPopular = CreateSearchPopular()
+
+    Log.d("SearchLocationScreen", "render")
+
+    LaunchedEffect(key1 = Unit) {
+
+    }
+
     Dialog(
         onDismissRequest = { onDismiss() },
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -75,17 +85,17 @@ fun SearchLocationScreen(
                     TextSearchBasic(
                         value = searchQuery,
                         onValueChange = { query -> viewModel.updateSearchQuery(query) },
-                        placeholder = "Tìm kiếm",
+                        placeholder = "Thành phố, khách sạn, điểm đến",
                         modifier = Modifier
                             .weight(1f)
                             .height(40.dp)
                             .padding(16.dp, 0.dp)
                     )
                     TextButton(
-                        onClick = { onComplete("Ha Noi") },
+                        onClick = { onDismiss() },
                         content = {
                             Text(
-                                "Hoàn tất",
+                                "HOÀN TẤT",
                                 color = Color.White,
                                 fontWeight = FontWeight.Normal,
                                 fontSize = 16.sp
@@ -93,33 +103,61 @@ fun SearchLocationScreen(
                         }
                     )
                 }
+                if(!searchQuery.isNotEmpty()) {
+                    ItemSearch(
+                        icon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.targeticon),
+                                contentDescription = "Clear",
+                                colorFilter = ColorFilter.tint(PrimaryColor),
+                                modifier = Modifier.size(36.dp)
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                        },
+                        title = "Khách sạn gần tôi",
+                        detail = "",
+                        type = "",
+                        onClick = {
+                            onComplete("Khách sạn gần tôi")
+                        },
+                        isFirst = true
+                    )
+                    Text(
+                        text = "Điểm đến phổ biến",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(20.dp, 32.dp)
+                    )
+                    searchPopular.forEach { item ->
+                        ItemSearch(
+                            title = item.title,
+                            detail = item.detail,
+                            type = item.type,
+                            onClick = {
+                                onComplete(item.title)
+                            },
+                            icon = {},
+                        )
+                    }
+                }
+
+                // When Search
                 Box(
                     modifier = Modifier.weight(1f)
                         .fillMaxSize()
                 ){
                     LazyColumn {
                         items(searchResults) { city ->
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(48.dp)
-                                    .clickable {
-                                        onComplete(city)
-                                    },
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    city,
-                                    fontSize = 16.sp,
-                                    color = Color.Black,
-                                    modifier = Modifier.padding(16.dp, 0.dp)
-                                )
-                            }
-                            Divider(
-                                color = Grey100Color,
-                                thickness = 1.dp
+                            ItemSearch(
+                                title = city,
+                                detail = "Việt Nam",
+                                onClick = {
+                                    onComplete(city)
+                                },
+                                icon = {},
+                                type = "Thành phố"
                             )
+
                         }
                     }
                 }

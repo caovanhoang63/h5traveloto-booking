@@ -45,12 +45,12 @@ fun TextSearchBasic(
                 .background(Color.Transparent),
             textStyle = TextStyle(
                 color = Color.Black,
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 lineHeight = 16.sp,
             ),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
-                    Text(placeholder, color = Color.Gray)
+                    Text(placeholder, color = Color.Gray, fontSize = 14.sp)
                 }
                 innerTextField()
             }

@@ -43,6 +43,8 @@ fun HomeSearchScreen(navController: NavController) {
     var adult by rememberSaveable { mutableIntStateOf(1) }
     var child by rememberSaveable { mutableIntStateOf(0) }
     var room by rememberSaveable { mutableIntStateOf(1) }
+    var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
+    var isMyLocation by rememberSaveable { mutableStateOf(true) }
 
     Scaffold (
         topBar = {
@@ -130,7 +132,7 @@ fun HomeSearchScreen(navController: NavController) {
                                         .height(52.dp)
                                         .weight(1f)
                                         .clickable { showChoseLocation = true},
-                                    content = "Khách sạn gần tôi",
+                                    content = location,
                                     icon = {
                                         Image(painterResource(id = R.drawable.location1),
                                             contentDescription = "",
@@ -140,15 +142,18 @@ fun HomeSearchScreen(navController: NavController) {
                                 if(showChoseLocation){
                                     SearchLocationScreen(
                                         onDismiss = { showChoseLocation = false },
-                                        onComplete = { location ->
-                                            Log.d("Location", location)
+                                        onComplete = { locations ->
+                                            location = locations
                                             showChoseLocation = false
                                         }
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Button(
-                                    onClick = {},
+                                    onClick = {
+                                        isMyLocation = true
+                                        location = "Khách sạn gần tôi"
+                                    },
                                     modifier = Modifier.size(40.dp),
                                     contentPadding = PaddingValues(0.dp),
                                     colors = ButtonDefaults.buttonColors(
