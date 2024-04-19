@@ -1,16 +1,35 @@
 package com.example.h5traveloto_booking.main.presentation.homesearch.screens
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.h5traveloto_booking.auth.data.remote.api.response
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
+import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import java.text.Normalizer
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchLocationViewModel @Inject constructor() : ViewModel() {
+class SearchLocationViewModel @Inject constructor(
+    private val useCases: SearchUseCases
+) : ViewModel() {
     var searchQuery = MutableStateFlow("")
     private val allCities = listOf("Hanoi", "Ho Chi Minh", "Da Nang", "Hoi An", "Nha Trang", "Phu Quoc", "Vung Tau", "Da Lat", "Hue", "Sapa")
+    private var _districtsVN: List<District> = listOf()
 
+
+    fun String.unaccent(): String {
+        val regex = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+        val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+        return regex.replace(temp, "")
+            .replace("đ", "d")
+            .replace("Đ", "D")
+
+    }
 
     var filteredCities = searchQuery
         .debounce(300)
@@ -18,15 +37,36 @@ class SearchLocationViewModel @Inject constructor() : ViewModel() {
             if(query.isEmpty()) {
                 listOf()
             } else {
-                allCities.filter { it.contains(query, ignoreCase = true) }
+                _districtsVN.filter { it.name.unaccent().contains(query.unaccent(), ignoreCase = true) }
             }
         }
-        .stateIn(viewModelScope, SharingStarted.Lazily , listOf())
+        .stateIn(viewModelScope, SharingStarted.Lazily, listOf())
+
 
     fun updateSearchQuery(query: String) {
         searchQuery.value = query
     }
+
+    suspend fun fetchDistrictsVN(){
+        useCases.listDistrictsUseCase().onStart {
+
+        }
+        .catch { e ->
+            e.printStackTrace()
+            Log.d("api error:", "Error: ${e.message}")
+        }
+        .collect{ response ->
+            Log.d("SearchLocationViewModel", "Fetch Districts VN: $response")
+            _districtsVN = response.districts
+            Log.d("SearchLocationViewModel", "Districts VN: ${_districtsVN[0].name}")
+        }
+    }
 }
+
+
+
+
+
 
 class ItemSearchPopular(
     val title: String,

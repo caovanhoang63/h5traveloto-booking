@@ -52,7 +52,7 @@ fun SearchLocationScreen(
     Log.d("SearchLocationScreen", "render")
 
     LaunchedEffect(key1 = Unit) {
-
+        viewModel.fetchDistrictsVN()
     }
 
     Dialog(
@@ -149,10 +149,10 @@ fun SearchLocationScreen(
                     LazyColumn {
                         items(searchResults) { city ->
                             ItemSearch(
-                                title = city,
+                                title = city.name,
                                 detail = "Việt Nam",
                                 onClick = {
-                                    onComplete(city)
+                                    onComplete(city.name)
                                 },
                                 icon = {},
                                 type = "Thành phố"
