@@ -31,6 +31,8 @@ import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 import java.time.LocalDate
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateInformationScreen(navController: NavController) {
@@ -108,7 +110,7 @@ fun MyDropdownMenu(
             OutlinedTextField(
                 //moi doi value
                 value = searchText,
-                // moi them trong on valuechange
+                // moi them trong on
                 onValueChange = {searchText=it},
                 readOnly = true,
                 trailingIcon = {
@@ -159,10 +161,12 @@ fun DatePickerDialog(
 ): Unit
 */
 
+/*
 @Composable
 fun DatePickerComponent(selectedDate: MutableState<LocalDate>) {
     var expanded by remember { mutableStateOf(false) }
 
+    Column(modifier = Modifier.padding(16.dp)) {
     // Khi nhấn vào văn bản, hiển thị hoặc ẩn DatePickerDialog
     Text(
         text = selectedDate.value.toString(),
@@ -171,13 +175,9 @@ fun DatePickerComponent(selectedDate: MutableState<LocalDate>) {
 
     // DatePickerDialog chỉ hiển thị khi expanded là true
     if (expanded) {
-    /*    DatePickerDialog()
-        (
-            onDismissRequest = { expanded = false }, // Đóng DatePickerDialog khi người dùng bấm ra ngoài
-            selectedDate = selectedDate.value, // Ngày được chọn
-            onDateChange = { selectedDate.value = it } // Khi ngày được chọn thay đổi, cập nhật giá trị trong selectedDate
-        )*/
+    }
     }
 }
+*/
 
 

@@ -10,4 +10,5 @@ enum class Screens {
     AccountScreen,
     PersonalInformationScreen,
     UpdateInformationScreen,
+    FavoriteScreen,
 }

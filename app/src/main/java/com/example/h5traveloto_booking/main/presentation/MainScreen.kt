@@ -2,10 +2,7 @@ package com.example.h5traveloto_booking.main.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PermContactCalendar
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.account.AccountScreen
+import com.example.h5traveloto_booking.main.presentation.favorite.FavoriteScreen
 import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
 import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
@@ -60,13 +58,20 @@ fun MainScreen(
             route = Screens.ScheduleScreen.name
 
         ),
-        BottomNavigationItem(
+        /*BottomNavigationItem(
             title = "History",
             selectedIcon = Icons.Default.History,
             unselectedIcon = Icons.Filled.History,
             hasNews = false,
             route = Screens.HistoryScreen.name
 
+        ),*/
+        BottomNavigationItem(
+            title = "Favorites",
+            selectedIcon = Icons.Default.Favorite,
+            unselectedIcon = Icons.Filled.Favorite,
+            hasNews = false,
+            route = Screens.FavoriteScreen.name
         ),
         BottomNavigationItem(
             title = "Account",
@@ -153,11 +158,14 @@ fun MainScreen(
                 composable(route = Screens.ScheduleScreen.name) {
                     ScheduleScreen(navController)
                 }
-                composable(route = Screens.HistoryScreen.name) {
-                    HistoryScreen(navController)
+                composable(route= Screens.FavoriteScreen.name) {
+                    FavoriteScreen(navController)
                 }
                 composable(route = Screens.AccountScreen.name) {
                     AccountScreen(navController)
+                }
+                composable(route = Screens.HistoryScreen.name) {
+                    HistoryScreen(navController)
                 }
             }
         }
