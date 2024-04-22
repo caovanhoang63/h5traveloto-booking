@@ -18,7 +18,7 @@ fun AppNavigation(startDestination : String ) {
 
     NavHost (
         navController = navController,
-        startDestination = Screens.RoomDetailsScreen.name
+        startDestination = Screens.HotelDetails.name
 
     ) {
         composable(route = Screens.SignUpScreen.name) {

@@ -28,9 +28,9 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 @Composable
 fun DetailsScreen(navController: NavController) {
     val hotels = listOf( //dummy data
-        HotelDetailCard(),
-        HotelDetailCard(),
-        HotelDetailCard()
+        HotelDetailCard(navController),
+        HotelDetailCard(navController),
+        HotelDetailCard(navController)
     )
     Scaffold(
         topBar = {
@@ -38,7 +38,7 @@ fun DetailsScreen(navController: NavController) {
                 Column( modifier = Modifier.padding(top = 21.dp, start = 27.dp, end = 27.dp )) {
                     Row(modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,) {
-                        PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {},alt = "",)
+                        PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()},alt = "",)
 
                         Column { //Current location
                             Text(text = "Khách sạn gần tôi", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp))
@@ -72,7 +72,7 @@ fun DetailsScreen(navController: NavController) {
             ) {
                 hotels.forEachIndexed() { index, hotel ->
                     item {
-                        HotelDetailCard()
+                        HotelDetailCard(navController)
 
                     }
                 }

@@ -54,7 +54,7 @@ fun RoomDetailsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {}, alt = "")
+                PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()}, alt = "")
                 BoldText(text = "Detail")
                 PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "")
 

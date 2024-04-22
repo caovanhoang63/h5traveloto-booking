@@ -19,15 +19,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun StarRatingBar(
     maxStars: Int = 5,
-    rating: Float,
-    onRatingChanged: (Float) -> Unit
+    rating: Int,
 ) {
     val density = LocalDensity.current.density
     val starSize = (12f * density).dp
     val starSpacing = (0.5f * density).dp
 
     Row(
-        modifier = Modifier.selectableGroup(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 1..maxStars) {
@@ -39,12 +37,7 @@ fun StarRatingBar(
                 contentDescription = null,
                 tint = iconTintColor,
                 modifier = Modifier
-                    .selectable(
-                        selected = isSelected,
-                        onClick = {
-                            onRatingChanged(i.toFloat())
-                        }
-                    )
+
                     .width(starSize).height(starSize)
             )
 
