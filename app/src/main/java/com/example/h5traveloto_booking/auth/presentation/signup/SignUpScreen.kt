@@ -15,7 +15,7 @@ import com.example.h5traveloto_booking.navigate.Screens
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SignUpNavigation(
+fun SignUpScreen(
     navController: NavController,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
