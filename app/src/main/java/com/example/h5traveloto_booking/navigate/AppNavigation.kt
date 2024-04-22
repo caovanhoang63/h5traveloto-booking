@@ -20,7 +20,7 @@ fun AppNavigation(startDestination : String ) {
 
     NavHost (
         navController = navController,
-        startDestination = Screens.HotelDetails.name
+        startDestination = Screens.ListHotels.name
 
     ) {
         composable(route = Screens.SignUpScreen.name) {
@@ -33,7 +33,8 @@ fun AppNavigation(startDestination : String ) {
             MainScreen(navController =navController)
         }
         composable(route = Screens.ListHotels.name  ) {
-            ListHotels(navController =navController)
+            ListHotels(navController = navController)
+        }
         composable(route = Screens.PersonalInformationScreen.name) {
             PersonalInformationScreen(navController = navController)
         }
