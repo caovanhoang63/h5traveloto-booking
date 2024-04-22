@@ -29,6 +29,7 @@ import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 import java.time.LocalDate
 
@@ -38,6 +39,10 @@ import java.time.LocalDate
 fun UpdateInformationScreen(navController: NavController) {
     var fullName by rememberSaveable { mutableStateOf("Hoang Huy") }
     var gender by remember { mutableStateOf("Male") }
+    var birthDate by rememberSaveable { mutableStateOf("20/12/2004") }
+    var phoneNumber by rememberSaveable { mutableStateOf("0372527661") }
+    var email by rememberSaveable { mutableStateOf("22520533@gm.uit.edu.vn") }
+    var city by rememberSaveable { mutableStateOf("Not Set") }
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -79,6 +84,15 @@ fun UpdateInformationScreen(navController: NavController) {
                         onItemSelected = { gender = it },
                     )
                 }
+                TextBox(label = "Birthdate", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                //YSpacer(16)
+                TextBox(label = "Phone", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                YSpacer(16)
+                TextBox(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                YSpacer(16)
+                TextBox(label = "City of Residence", value = city, onValueChange = { city = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                YSpacer(32)
+                PrimaryButton(onClick = {}, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp, horizontal = 20.dp),text = "Done",)
             }
         }
     )

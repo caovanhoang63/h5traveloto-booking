@@ -125,7 +125,7 @@ fun PersonalData(navController: NavController) {
 
             PersonalItem("Full Name",false,"Hoàng Huy")
             PersonalItem("Gender",false,"Male")
-            PersonalItem("Birthdate",false,"20/12/19")
+            PersonalItem("Birthdate",false,"20/12/2004")
             PersonalItem("Phone",false,"0xxxxxxx")
             PersonalItem("Email",false,"22520533@gm.uit.edu.vn")
             PersonalItem("City of Residence",true)
