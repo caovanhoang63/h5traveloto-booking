@@ -1,64 +1,32 @@
 package com.example.h5traveloto_booking.account.personal_information
 
 import android.util.Log
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PermContactCalendar
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.R
-import com.example.h5traveloto_booking.main.presentation.BottomNavigationItem
-import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
-import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
-import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.theme.ScreenBackGround
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import com.example.h5traveloto_booking.account.AccountItem
 import com.example.h5traveloto_booking.ui_shared_components.*
-import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
-import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 
 
 @OptIn(ExperimentalMaterial3Api::class,ExperimentalComposeUiApi::class)
 @Composable
 fun PersonalInformationScreen(navController: NavController) {
-    var name by rememberSaveable() { mutableStateOf("Hoàng Huy")}
-    var email by rememberSaveable() { mutableStateOf("22520533@gm.uit.edu.vn")}
-    var phone by rememberSaveable() { mutableStateOf("0xxxxxxx")}
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +49,7 @@ fun PersonalInformationScreen(navController: NavController) {
                         contentDescription = "Back",
                     )
                 }*/
-                PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp()},"", modifier = Modifier )
+                PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() /*navController.popBackStack*/},"", modifier = Modifier )
                 XSpacer(60)
                 BoldText(text = "Personal Information",
                   //  fontWeight = FontWeight.Bold,
@@ -96,14 +64,14 @@ fun PersonalInformationScreen(navController: NavController) {
                     .padding(innerPadding)
             )
             {
-                PersonalData()
+                PersonalData(navController = navController)
                 DeleteAccount()
             }
         }
     )
 }
 @Composable
-fun PersonalData(){
+fun PersonalData(navController: NavController) {
     YSpacer(20)
     Row(modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
@@ -132,7 +100,13 @@ fun PersonalData(){
             //fontWeight = FontWeight.SemiBold,
             //color = colorResource(id = R.color.third_font)
         )
-        ClickableText(text = "Update", onClick = {})
+        /*Text(
+            text = "Update",
+            fontSize =16.sp,
+            color = PrimaryColor,
+            modifier = Modifier.clickable { navController.navigate(Screens.UpdateInformationScreen.name)}
+        )*/
+        ClickableText("Update", onClick = {navController.navigate(Screens.UpdateInformationScreen.name) })
     }
     Card(
         modifier = Modifier
@@ -151,7 +125,7 @@ fun PersonalData(){
 
             PersonalItem("Full Name",false,"Hoàng Huy")
             PersonalItem("Gender",false,"Male")
-            PersonalItem("Birthdate",false,"20/12/19")
+            PersonalItem("Birthdate",false,"20/12/2004")
             PersonalItem("Phone",false,"0xxxxxxx")
             PersonalItem("Email",false,"22520533@gm.uit.edu.vn")
             PersonalItem("City of Residence",true)
@@ -181,9 +155,11 @@ fun PersonalItem(
             PrimaryText(label)
             GreyText(value)
         }
-        if(!isLastChild) {
 
-            Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
+        //dung divider nhanh hon
+        Divider(thickness = 0.8.dp, color = Color.LightGray)
+        if(!isLastChild) {
+            /*Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
                 drawLine(
                     color = Color.LightGray,
                     start = Offset(0f, 0f),
@@ -191,7 +167,7 @@ fun PersonalItem(
                     strokeWidth = 1.dp.toPx(),
                     cap = StrokeCap.Butt,
                 )
-            }
+            }*/
         }
     }
 }

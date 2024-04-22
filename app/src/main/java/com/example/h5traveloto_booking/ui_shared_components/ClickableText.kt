@@ -16,6 +16,6 @@ fun ClickableText(text : String, onClick : () -> Unit) {
         text = text,
         fontSize = 16.sp,
         color = PrimaryColor,
-        modifier = Modifier.clickable { onClick}
+        modifier = Modifier.clickable { onClick()}
     )
 }

@@ -10,6 +10,8 @@ import com.example.h5traveloto_booking.details.presentation.DetailsScreen
 import com.example.h5traveloto_booking.details.presentation.RoomDetailsScreen
 import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
+import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
+
 @Composable
 fun AppNavigation(startDestination : String ) {
 
@@ -38,6 +40,9 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.RoomDetailsScreen.name  ) {
             RoomDetailsScreen(navController =navController)
+        }
+        composable(route = Screens.UpdateInformationScreen.name ) {
+            UpdateInformationScreen(navController = navController)
         }
     }
 }

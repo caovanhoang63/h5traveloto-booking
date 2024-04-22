@@ -12,4 +12,6 @@ enum class Screens {
     RoomDetailsScreen,
 
     PersonalInformationScreen,
+    UpdateInformationScreen,
+    FavoriteScreen,
 }
