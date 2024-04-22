@@ -15,7 +15,7 @@ fun AppNavigation(startDestination : String ) {
 
     NavHost (
         navController = navController,
-        startDestination = Screens.MainScreen.name
+        startDestination = Screens.LoginScreen.name
 
     ) {
         composable(route = Screens.SignUpNavigation.name) {
