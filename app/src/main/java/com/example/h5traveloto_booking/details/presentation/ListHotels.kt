@@ -1,7 +1,5 @@
 package com.example.h5traveloto_booking.details.presentation
 
-import android.widget.ImageButton
-import android.widget.RatingBar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,8 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -18,7 +14,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.details.presentation.components.HotelDetailCard
-import com.example.h5traveloto_booking.details.presentation.components.MultiColorText
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
@@ -26,7 +21,7 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(navController: NavController) {
+fun ListHotels(navController: NavController) {
     val hotels = listOf( //dummy data
         HotelDetailCard(navController),
         HotelDetailCard(navController),

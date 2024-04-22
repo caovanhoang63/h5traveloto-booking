@@ -1,7 +1,6 @@
 package com.example.h5traveloto_booking.details.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,12 +17,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 
 @Composable
-fun RoomServiceTag(DrawableId: Int, alt: String, modifier: Modifier = Modifier, text: String) {
+fun HotelServiceTag(DrawableId: Int, alt: String, modifier: Modifier = Modifier, text: String) {
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
