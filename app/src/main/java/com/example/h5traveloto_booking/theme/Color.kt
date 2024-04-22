@@ -19,3 +19,5 @@ val Grey50Color = Color(0xFFF5F5FF)
 
 val BorderStroke = Color(0xFFEDEDED)
 val ScreenBackGround = Color(0xFFE8EDFF)
+
+val OrangeColor = Color(0xFFFF5E1F)

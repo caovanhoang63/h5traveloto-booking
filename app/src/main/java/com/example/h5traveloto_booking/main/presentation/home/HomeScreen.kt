@@ -1,19 +1,21 @@
 package com.example.h5traveloto_booking.main.presentation.home
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,12 +27,8 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHote
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.navigate.Screens
-import com.example.h5traveloto_booking.theme.PrimaryColor
-import com.example.h5traveloto_booking.theme.ScreenBackGround
-import com.example.h5traveloto_booking.ui_shared_components.BoldText
-import com.example.h5traveloto_booking.ui_shared_components.ClickableText
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
-import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.theme.*
+import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.Result
 
@@ -47,8 +45,8 @@ fun HomeScreen (navController: NavController,
         viewModel.getListHotel()
     }
 
-
-
+    var selectedItemIndex by remember { mutableStateOf(0) }
+    val items = listOf("Ha Noi", "TP HCM", "Da Nang", "Hue", "Hoi An", "Nha Trang", "Da Lat", "Vung Tau", "Phu Quoc", "Can Tho")
 
 
     val listHotelDataResponse = viewModel.listHotelDataResponse.collectAsState().value
@@ -63,7 +61,10 @@ fun HomeScreen (navController: NavController,
                 Column {
                     Text(text = "Current location")
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = "Wallace, Australiaaaa")
+                    MenuDown(items = items,
+                        selectedItemIndex = selectedItemIndex,
+                        onItemSelected = {index -> selectedItemIndex = index})
+
                 }
                 Column {
                     PrimaryIconButton(DrawableId = R.drawable.notifyicon, onClick = {},alt = "",)
@@ -82,7 +83,29 @@ fun HomeScreen (navController: NavController,
 
             Spacer(modifier = Modifier.height(10.dp))
             Column {
-                PrimaryButton(onClick = {},text = "Search", modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp))
+                Button(
+                    onClick = { navController.navigate(Screens.HomeSearchScreen.name) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp,0.dp)
+                        .border(2.dp, BorderStroke, RoundedCornerShape(8.dp))
+                        .height(52.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                    ),
+                ){
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Image(painterResource(id = R.drawable.search), contentDescription = "search", modifier = Modifier.size(20.dp))
+                        Text(text = "Search Hotels", fontSize = 14.sp, color = Grey500Color, modifier = Modifier.weight(1f).padding(8.dp,0.dp))
+                        Image(painterResource(id = R.drawable.searchfilter), contentDescription = "search", modifier = Modifier.size(28.dp))
+                    }
+
+                }
+
                 Spacer(modifier = Modifier.height(24.dp))
                 Row (modifier = Modifier.fillMaxWidth().padding(24.dp,0.dp),
                     horizontalArrangement = Arrangement.SpaceBetween) {
@@ -143,9 +166,6 @@ fun HomeScreen (navController: NavController,
                 YSpacer(10)
                 HotelTagSmall()
             }
-
-
-
         }
     }
 }
