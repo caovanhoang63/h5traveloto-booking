@@ -2,31 +2,26 @@ package com.example.h5traveloto_booking.details.presentation
 
 import ExpandingText
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 
 import com.example.h5traveloto_booking.details.presentation.components.MultiColorText
-import com.example.h5traveloto_booking.details.presentation.components.RoomServiceTag
+import com.example.h5traveloto_booking.details.presentation.components.HotelServiceTag
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -34,7 +29,7 @@ import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RoomDetailsScreen(navController: NavController) {
+fun HotelDetailsScreen(navController: NavController) {
     val imgURL =
         "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI="
     Scaffold(
@@ -57,7 +52,6 @@ fun RoomDetailsScreen(navController: NavController) {
                 PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()}, alt = "")
                 BoldText(text = "Detail")
                 PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "")
-
             }
         },
 
@@ -88,9 +82,9 @@ fun RoomDetailsScreen(navController: NavController) {
                             .height(36.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        RoomServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
-                        RoomServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
-                        RoomServiceTag(DrawableId = R.drawable.star , alt = "rating", text = "5.0")
+                        HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
+                        HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                        HotelServiceTag(DrawableId = R.drawable.star , alt = "rating", text = "5.0")
                     }
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {

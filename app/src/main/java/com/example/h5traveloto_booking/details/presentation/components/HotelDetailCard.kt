@@ -52,7 +52,7 @@ fun HotelDetailCard(navController: NavController) { //default rating will be 1
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color, //Card background color
         ),
-        onClick = {navController.navigate(Screens.RoomDetailsScreen.name)},
+        onClick = {navController.navigate(Screens.HotelDetailsScreen.name)},
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
             LazyRow(
