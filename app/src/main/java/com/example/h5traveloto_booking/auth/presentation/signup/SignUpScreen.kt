@@ -29,8 +29,8 @@ import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SignupScreen(navController: NavController,
-                viewModel : SignUpViewModel = hiltViewModel()
+fun SignUpScreen(navController: NavController,
+                 viewModel : SignUpViewModel = hiltViewModel()
 ) {
 
     var firstName by rememberSaveable { mutableStateOf("") }
