@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Money
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +29,8 @@ import androidx.wear.compose.material.Colors
 import androidx.wear.compose.material.Text
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.details.presentation.components.HotelDetailFeedback
+import com.example.h5traveloto_booking.details.presentation.components.HotelDetailPolicyCard
 
 import com.example.h5traveloto_booking.details.presentation.components.MultiColorText
 import com.example.h5traveloto_booking.details.presentation.components.HotelServiceTag
@@ -48,8 +51,8 @@ fun HotelDetailsScreen(navController: NavController) {
                 text = "Booking Now",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(53.dp)
-                    .padding(horizontal = 24.dp)
+                    .height(65.dp)
+                    .padding(horizontal = 24.dp, vertical = 10.dp)
             )
         },
         topBar = {
@@ -139,13 +142,30 @@ fun HotelDetailsScreen(navController: NavController) {
                         GreyText(text = "Alice Springs NT 0870, Australia")
                     }
                     YSpacer(height = 16)
-                    BoldText(text = "Description")
+                    BoldText(text = "Mô Tả Khách Sạn")
                     YSpacer(height = 12)
                     ExpandingText(
                         longText = "The Aston Vill Hotel is a 5-star hotel located assadjshgfkhajsdgfhjasgdhjkfgwegrughksdbfmansbdnmvzxhjcgfahksjdbgfjahdsgkfbacewkhjgfjhgakshjdgfkjahsdggfhjakgsdfjgasjdhgfakjsgdfkjqgwekrytuyadshjfgakshdfvbnzvxcmnbzxcjhasdgkfjhagsd in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks."
                     )
                     YSpacer(height = 16)
-                    BoldText(text = "Preview")
+                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                    YSpacer(height = 8)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        BoldText(text = "Đánh Giá")
+                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable { })
+                    }
+                    YSpacer(height = 12)
+                    HotelDetailFeedback(
+                        text = "The Aston Vill Hotel is a 5-star hotel located in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.",
+                        author = "John Doe"
+                    )
+                    YSpacer(height = 16)
+                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                    YSpacer(height = 8)
+                    BoldText(text = "Hình Ảnh Xem Trước")
                     YSpacer(height = 8)
                     LazyRow(modifier = Modifier.fillMaxWidth()) {
                         item {
@@ -202,6 +222,22 @@ fun HotelDetailsScreen(navController: NavController) {
                         }
 
                     }
+                    YSpacer(height = 16)
+                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                    YSpacer(height = 8)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        BoldText(text = "Chính Sách Lưu Trú")
+                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable { })
+                    }
+                    YSpacer(height = 8)
+                    HotelDetailPolicyCard(
+                        icon = Icons.Default.Money,
+                        text = "Tiền cọc",
+                        description = "Bạn phải đóng tiền cọc 0 khi nhận phòng. Cơ sở lưu trú chấp nhận tiền mặt, thẻ ghi nợ hoặc thẻ tín dụng"
+                    )
                     YSpacer(height = 10)
 
                 }
