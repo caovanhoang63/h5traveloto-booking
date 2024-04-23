@@ -1,22 +1,31 @@
 package com.example.h5traveloto_booking.details.presentation
 
 import ExpandingText
+import android.widget.ImageButton
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.wear.compose.material.Colors
+import androidx.wear.compose.material.Text
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 
@@ -35,7 +44,9 @@ fun HotelDetailsScreen(navController: NavController) {
     Scaffold(
         bottomBar = {
             PrimaryButton(
-                onClick = {}, text = "Booking Now", modifier = Modifier
+                onClick = {},
+                text = "Booking Now",
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(53.dp)
                     .padding(horizontal = 24.dp)
@@ -49,7 +60,9 @@ fun HotelDetailsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()}, alt = "")
+                PrimaryIconButton(
+                    DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = ""
+                )
                 BoldText(text = "Detail")
                 PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "")
             }
@@ -57,8 +70,7 @@ fun HotelDetailsScreen(navController: NavController) {
 
         ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -66,15 +78,37 @@ fun HotelDetailsScreen(navController: NavController) {
                     .padding(top = 24.dp, start = 24.dp, end = 24.dp),
             ) {
                 item {
-                    AsyncImage(
-                        model = imgURL,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(246.dp)
-                            .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Crop,
-                    )
+                    Box(
+                        contentAlignment = Alignment.TopEnd,
+                    ) {
+                        AsyncImage(
+                            model = imgURL,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(246.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop,
+                        )
+                        IconButton(modifier = Modifier
+                            .padding(8.dp)
+                            .offset(x = (-8).dp, y = 8.dp)
+                            .width(32.dp)
+                            .height(32.dp)
+                            .background(
+                                color = Color.White, shape = RoundedCornerShape(50.dp)
+                            ),
+                            onClick = { /*TODO*/ },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Default.Favorite,
+                                    contentDescription = "favourite",
+                                    tint = Color.Red,
+                                )
+                            }
+                        )
+                    }
+
                     YSpacer(height = 16)
                     Row(
                         modifier = Modifier
@@ -84,7 +118,7 @@ fun HotelDetailsScreen(navController: NavController) {
                     ) {
                         HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
                         HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
-                        HotelServiceTag(DrawableId = R.drawable.star , alt = "rating", text = "5.0")
+                        HotelServiceTag(DrawableId = R.drawable.star, alt = "rating", text = "5.0")
                     }
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -107,11 +141,13 @@ fun HotelDetailsScreen(navController: NavController) {
                     YSpacer(height = 16)
                     BoldText(text = "Description")
                     YSpacer(height = 12)
-                    ExpandingText(longText = "The Aston Vill Hotel is a 5-star hotel located assadjshgfkhajsdgfhjasgdhjkfgwegrughksdbfmansbdnmvzxhjcgfahksjdbgfjahdsgkfbacewkhjgfjhgakshjdgfkjahsdggfhjakgsdfjgasjdhgfakjsgdfkjqgwekrytuyadshjfgakshdfvbnzvxcmnbzxcjhasdgkfjhagsd in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.")
+                    ExpandingText(
+                        longText = "The Aston Vill Hotel is a 5-star hotel located assadjshgfkhajsdgfhjasgdhjkfgwegrughksdbfmansbdnmvzxhjcgfahksjdbgfjahdsgkfbacewkhjgfjhgakshjdgfkjahsdggfhjakgsdfjgasjdhgfakjsgdfkjqgwekrytuyadshjfgakshdfvbnzvxcmnbzxcjhasdgkfjhagsd in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks."
+                    )
                     YSpacer(height = 16)
                     BoldText(text = "Preview")
                     YSpacer(height = 8)
-                    LazyRow(modifier = Modifier.fillMaxWidth()){
+                    LazyRow(modifier = Modifier.fillMaxWidth()) {
                         item {
                             AsyncImage(
                                 model = imgURL,
