@@ -19,4 +19,7 @@ enum class Screens {
     PersonalInformationScreen,
     UpdateInformationScreen,
     FavoriteScreen,
+
+    ScheduleCalendarScreen,
+    ScheduleBookingScreen
 }

@@ -13,9 +13,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.h5traveloto_booking.theme.GreenColor
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
@@ -98,7 +100,16 @@ public fun BookingCard(
                 Row {
                     Text(
                         text = "19 October 2022",
-                        color = Grey500Color
+                        color = Grey500Color,
+                        modifier = Modifier
+                            .fillMaxWidth(0.7f)
+                    )
+                    Text(
+                        text = "Success",
+                        color = GreenColor,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier
+                            .fillMaxWidth()
                     )
                 }
             }
