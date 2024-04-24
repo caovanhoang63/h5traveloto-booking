@@ -157,9 +157,9 @@ fun PersonalItem(
         }
 
         //dung divider nhanh hon
-        Divider(thickness = 0.8.dp, color = Color.LightGray)
-        if(!isLastChild) {
-            /*Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
+        HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
+   /*     if(!isLastChild) {
+            *//*Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
                 drawLine(
                     color = Color.LightGray,
                     start = Offset(0f, 0f),
@@ -167,8 +167,8 @@ fun PersonalItem(
                     strokeWidth = 1.dp.toPx(),
                     cap = StrokeCap.Butt,
                 )
-            }*/
-        }
+            }*//*
+        }*/
     }
 }
 
