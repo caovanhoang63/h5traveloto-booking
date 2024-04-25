@@ -24,7 +24,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
-import com.example.h5traveloto_booking.main.presentation.schedule.components.DateRangePicker
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.ui_shared_components.ClickableText
