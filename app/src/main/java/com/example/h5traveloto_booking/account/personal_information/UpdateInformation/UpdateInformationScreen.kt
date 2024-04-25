@@ -31,6 +31,7 @@ import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
+import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 import java.time.LocalDate
 
 
@@ -69,7 +70,7 @@ fun UpdateInformationScreen(navController: NavController) {
                 Text(text = "For your profile name, we will shorten your full name. Get the chance to receive special offers by filling out your birthdate.",
                     modifier = Modifier.padding(vertical = 16.dp,horizontal = 20.dp))
 
-                TextBox(label = "Full Name", value = fullName, onValueChange = { fullName = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Full Name", value = fullName, onValueChange = { fullName = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -84,15 +85,15 @@ fun UpdateInformationScreen(navController: NavController) {
                         onItemSelected = { gender = it },
                     )
                 }
-                TextBox(label = "Birthdate", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Birthdate", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 //YSpacer(16)
-                TextBox(label = "Phone", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Phone", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 YSpacer(16)
-                TextBox(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 YSpacer(16)
-                TextBox(label = "City of Residence", value = city, onValueChange = { city = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "City of Residence", value = city, onValueChange = { city = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 YSpacer(32)
-                PrimaryButton(onClick = {}, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp, horizontal = 20.dp),text = "Done",)
+                PrimaryButton(onClick = { navController.navigateUp()}, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp, horizontal = 20.dp),text = "Done",)
             }
         }
     )

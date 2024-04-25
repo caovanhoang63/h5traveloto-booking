@@ -6,6 +6,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -46,15 +47,24 @@ import com.example.h5traveloto_booking.theme.ScreenBackGround
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
+import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.ui_shared_components.*
+import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun AccountScreen(navController: NavController) {
-
-
+fun AccountScreen(navController: NavController,
+                  viewModel: AccountViewModel = hiltViewModel()
+)
+{
+    LaunchedEffect(Unit){
+        viewModel.getProfile()
+    }
+    val ProfileDataResponse = viewModel.ProfileDataResponse.collectAsState().value
     Scaffold(
         modifier = Modifier
             .background(ScreenBackGround)
@@ -82,7 +92,7 @@ fun AccountScreen(navController: NavController) {
                         colors = CardDefaults.cardColors(Color.White)
                     )
                     {
-                        InformationAccount(test)
+                        InformationAccount(ProfileDataResponse)
                     }
                 }
                 item {
@@ -147,7 +157,7 @@ fun AccountItem(
         }
 
         //dung divider nhanh hon
-        Divider(thickness = 0.8.dp, color = Color.LightGray)
+        HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
 
         if(!isLastChild) {
             /*Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
@@ -163,11 +173,55 @@ fun AccountItem(
     }
 }
 
-val test = Account("Hoang Huy","22520533@gm.uit.edu.vn")
 data class Account(val name: String, val email: String)
 @Composable
-fun InformationAccount(acc: Account) {
-    Row(modifier = Modifier.padding(all = 8.dp)) {
+fun InformationAccount(acc: Result<ProfileDTO>) {
+
+    when (acc) {
+        is Result.Loading -> {
+            Log.d("Home ", "dang load")
+
+            // Hieu ung load
+        }
+
+        is Result.Error -> {
+            Log.d("Home ", "loi roi")
+        }
+
+        is Result.Success -> {
+//                    Log.d("Home Screen", result.data.data.size.toString())
+            val Profile = acc.data
+            Row(modifier = Modifier.padding(all = 8.dp)) {
+                XSpacer(12)
+                Image(
+                    painter = painterResource(R.drawable.onlylogo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(50.dp)
+                        .clip(CircleShape)
+                        .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape)
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                Column {
+                    PrimaryText(text = Profile.data.lastName,
+                        //color = MaterialTheme.colorScheme.primary,
+                        // style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .padding(start = 4.dp,top = 8.dp,)
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    GreyText(text = Profile.data.email,
+                        modifier = Modifier.padding(all = 4.dp),
+                        // color = colorResource(id= R.color.secondary_font),
+                        // style = MaterialTheme.typography.bodyLarge,)
+                    )
+                }
+            }
+        }
+
+        else -> Unit
+    }
+    /*Row(modifier = Modifier.padding(all = 8.dp)) {
         XSpacer(12)
         Image(
             painter = painterResource(R.drawable.onlylogo),
@@ -179,20 +233,20 @@ fun InformationAccount(acc: Account) {
         )
         Spacer(modifier = Modifier.width(20.dp))
         Column {
-            PrimaryText(text = acc.name,
+            PrimaryText(text = "",
                 //color = MaterialTheme.colorScheme.primary,
                // style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .padding(start = 4.dp,top = 8.dp,)
             )
             Spacer(modifier = Modifier.height(5.dp))
-            GreyText(text = acc.email,
+            GreyText(text = "",
                 modifier = Modifier.padding(all = 4.dp),
                // color = colorResource(id= R.color.secondary_font),
                // style = MaterialTheme.typography.bodyLarge,)
             )
         }
-    }
+    }*/
 }
 @Composable
 fun ManageProfile(navController: NavController){
@@ -223,7 +277,6 @@ fun ManageProfile(navController: NavController){
                     title = "Personal Information",
                     onClick =
                     {
-                        Log.d("personal:", "hehe")
                         navController.navigate(Screens.PersonalInformationScreen.name)
                     },
                     null,
@@ -231,7 +284,9 @@ fun ManageProfile(navController: NavController){
                 )
                 AccountItem(
                     title = "Change Password",
-                    {},
+                    onClick = {
+                      navController.navigate(Screens.ChangePasswordScreen.name)
+                    },
                     null,
                     false,
                 )

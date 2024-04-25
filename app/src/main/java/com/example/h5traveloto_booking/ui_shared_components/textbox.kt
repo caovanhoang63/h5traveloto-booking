@@ -25,3 +25,21 @@ fun TextBox(modifier: Modifier,placeholder: String,label: String, value: String,
         )
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextBoxSingle(modifier: Modifier,placeholder: String,label: String, value: String, onValueChange: (String) -> Unit) {
+    OutlinedTextField(
+        singleLine = true,
+        placeholder = { Text(placeholder) },
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier =    modifier,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = PrimaryColor,
+            containerColor = Color.Transparent,
+            focusedLabelColor = PrimaryColor
+        )
+    )
+}
