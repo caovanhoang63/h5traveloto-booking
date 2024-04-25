@@ -1,7 +1,6 @@
-package com.example.h5traveloto_booking.details.presentation
+package com.example.h5traveloto_booking.details.presentation.hoteldeatails
 
 import ExpandingText
-import android.widget.ImageButton
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,23 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.wear.compose.material.Colors
-import androidx.wear.compose.material.Text
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
-import com.example.h5traveloto_booking.details.presentation.components.HotelDetailFeedback
-import com.example.h5traveloto_booking.details.presentation.components.HotelDetailPolicyCard
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailFeedback
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailPolicyCard
 
-import com.example.h5traveloto_booking.details.presentation.components.MultiColorText
-import com.example.h5traveloto_booking.details.presentation.components.HotelServiceTag
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.MultiColorText
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelServiceTag
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -47,7 +43,7 @@ fun HotelDetailsScreen(navController: NavController) {
     Scaffold(
         bottomBar = {
             PrimaryButton(
-                onClick = {},
+                onClick = {navController.navigate(Screens.ListRooms.name)},
                 text = "Booking Now",
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.details.presentation.components
+package com.example.h5traveloto_booking.details.presentation.hoteldeatails.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
