@@ -45,7 +45,7 @@ public fun CalendarScreen (
                 ),
                 title = {
                     Text(
-                        text = "Schedule",
+                        text = "Lịch Trình",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
@@ -76,13 +76,13 @@ public fun CalendarScreen (
                     .padding(10.dp)
             ) {
                 Text(
-                    text = "My Bookings",
+                    text = "Danh sách đặt phòng",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .fillMaxWidth(0.85f)
+                        .fillMaxWidth(0.75f)
                 )
-                ClickableText(text = "See all") {
+                ClickableText(text = "Xem thêm") {
                     navController.navigate(Screens.ScheduleBookingScreen.name)
                 }
             }

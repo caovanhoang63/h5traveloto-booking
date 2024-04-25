@@ -84,7 +84,7 @@ public fun BookingCard(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = " /night",
+                            text = " /đêm",
                             color = Grey500Color
                         )
                     }
@@ -102,11 +102,12 @@ public fun BookingCard(
                         text = "19 October 2022",
                         color = Grey500Color,
                         modifier = Modifier
-                            .fillMaxWidth(0.7f)
+                            .fillMaxWidth(0.6f)
                     )
                     Text(
-                        text = "Success",
+                        text = "Thành công",
                         color = GreenColor,
+                        fontSize = 14.sp,
                         textAlign = TextAlign.End,
                         modifier = Modifier
                             .fillMaxWidth()
