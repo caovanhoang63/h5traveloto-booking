@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.navigate
 
+import ListRooms
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,6 +39,9 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.PersonalInformationScreen.name) {
             PersonalInformationScreen(navController = navController)
+        }
+        composable(route = Screens.ListRooms.name) {
+            ListRooms(navController = navController)
         }
         composable(route = Screens.HotelDetailsScreen.name  ) {
             HotelDetailsScreen(navController =navController)
