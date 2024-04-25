@@ -6,4 +6,5 @@ import retrofit2.http.GET
 interface SearchApi {
     @GET("provinces")
     suspend fun listDistricts() : DistrictsDTO
+
 }

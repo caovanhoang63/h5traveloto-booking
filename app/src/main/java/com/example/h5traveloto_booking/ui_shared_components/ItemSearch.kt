@@ -33,7 +33,7 @@ fun ItemSearch(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
-            .height(60.dp)
+            .height(64.dp)
             .fillMaxWidth()
             .padding(20.dp,8.dp)
             .clickable { onClick() }
