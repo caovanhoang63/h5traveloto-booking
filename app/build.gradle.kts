@@ -111,6 +111,11 @@ dependencies {
     implementation ("io.github.wojciechosak:calendar:0.0.8")
     implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
     implementation ("com.himanshoe:kalendar:1.3.2")
+
+    // Google Maps
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.maps.android:maps-compose:2.14.0")
 }
 
 

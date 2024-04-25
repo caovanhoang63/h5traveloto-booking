@@ -1,14 +1,13 @@
 package com.example.h5traveloto_booking.navigate
 
-import ListRooms
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.auth.presentation.login.LoginScreen
 import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.HotelDetailsScreen
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.ListHotels
+import com.example.h5traveloto_booking.details.presentation.HotelDetailsScreen
+import com.example.h5traveloto_booking.details.presentation.ListHotels
 import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
@@ -21,7 +20,7 @@ fun AppNavigation(startDestination : String ) {
 
     NavHost (
         navController = navController,
-        startDestination = Screens.ListHotels.name
+        startDestination = Screens.LoginScreen.name
 
     ) {
         composable(route = Screens.SignUpScreen.name) {
@@ -45,9 +44,5 @@ fun AppNavigation(startDestination : String ) {
         composable(route = Screens.UpdateInformationScreen.name ) {
             UpdateInformationScreen(navController = navController)
         }
-        composable(route = Screens.ListRooms.name ) {
-            ListRooms(navController = navController)
-        }
-
     }
 }

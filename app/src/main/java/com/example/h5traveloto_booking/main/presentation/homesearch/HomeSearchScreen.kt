@@ -23,19 +23,27 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.main.presentation.homesearch.screens.ChoosePersonScreen
 import com.example.h5traveloto_booking.main.presentation.homesearch.screens.SearchLocationScreen
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.ShareHotelDataViewModel
+import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun HomeSearchScreen(navController: NavController) {
+fun HomeSearchScreen(
+    navController: NavController,
+    navAppNavController: NavController,
+    homeSearchViewModel: HomeSearchViewModel = hiltViewModel(),
+) {
+
 
     val scrollState = rememberScrollState()
     var showChosePerson by remember { mutableStateOf(false) }
@@ -45,6 +53,7 @@ fun HomeSearchScreen(navController: NavController) {
     var room by rememberSaveable { mutableIntStateOf(1) }
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
     var isMyLocation by rememberSaveable { mutableStateOf(true) }
+
 
     Scaffold (
         topBar = {
@@ -143,7 +152,14 @@ fun HomeSearchScreen(navController: NavController) {
                                     SearchLocationScreen(
                                         onDismiss = { showChoseLocation = false },
                                         onComplete = { locations ->
-                                            location = locations
+                                            if(locations.isNotEmpty()){
+                                                location = locations
+                                                isMyLocation = false
+                                            }
+                                            else{
+                                                location = "Khách sạn gần tôi"
+                                                isMyLocation = true
+                                            }
                                             showChoseLocation = false
                                         }
                                     )
@@ -206,7 +222,9 @@ fun HomeSearchScreen(navController: NavController) {
                             }
                             Spacer(modifier = Modifier.height(24.dp))
                             Button(
-                                onClick = {},
+                                onClick = {
+                                    navAppNavController.navigate(Screens.ListHotels.name)
+                                          },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(48.dp),

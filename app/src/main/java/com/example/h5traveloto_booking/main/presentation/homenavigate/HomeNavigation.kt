@@ -21,7 +21,7 @@ fun HomeNavigation(navController: NavController) {
             HomeScreen(navController = homeNavController)
         }
         composable(route = Screens.HomeSearchScreen.name) {
-            HomeSearchScreen(navController = homeNavController)
+            HomeSearchScreen(navController = homeNavController, navAppNavController = navController)
         }
     }
 }
