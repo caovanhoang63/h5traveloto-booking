@@ -9,4 +9,5 @@ class LocalDateProgression (
     override fun iterator(): Iterator<LocalDate> = LocalDateIterator(start, endInclusive)
 }
 
-// operator fun LocalDate.rangeTo(other: LocalDate) = LocalDateProgression(this, other)
+// LocalDate CloseRange Operator
+operator fun LocalDate.rangeTo(other: LocalDate) = LocalDateProgression(this, other)
