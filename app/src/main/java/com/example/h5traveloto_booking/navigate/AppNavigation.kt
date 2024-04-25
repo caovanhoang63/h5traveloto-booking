@@ -7,11 +7,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.account.ChangePassword.ChangePasswordScreen
 import com.example.h5traveloto_booking.auth.presentation.login.LoginScreen
 import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
-import com.example.h5traveloto_booking.details.presentation.HotelDetailsScreen
-import com.example.h5traveloto_booking.details.presentation.ListHotels
 import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.HotelDetailsScreen
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.ListHotels
 
 @Composable
 fun AppNavigation(startDestination : String ) {
