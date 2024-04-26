@@ -56,7 +56,7 @@ fun UpdateInformationScreen(navController: NavController) {
             ) {
                 PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() /*navController.popBackStack*/},"", modifier = Modifier )
                 XSpacer(60)
-                BoldText(text = "Update Information",
+                BoldText(text = "Cập nhật thông tin",
                     //  fontWeight = FontWeight.Bold,
                     // fontSize = 20.sp)
                 )
@@ -67,10 +67,10 @@ fun UpdateInformationScreen(navController: NavController) {
             Column(
                 modifier = Modifier.padding(innerPadding),
             ) {
-                Text(text = "For your profile name, we will shorten your full name. Get the chance to receive special offers by filling out your birthdate.",
+                Text(text = "Đối với tên hồ sơ của bạn, chúng tôi sẽ rút ngắn tên đầy đủ của bạn. Có cơ hội nhận được ưu đãi đặc biệt bằng cách điền ngày sinh của bạn.",
                     modifier = Modifier.padding(vertical = 16.dp,horizontal = 20.dp))
 
-                TextBoxSingle(label = "Full Name", value = fullName, onValueChange = { fullName = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Họ tên", value = fullName, onValueChange = { fullName = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -79,21 +79,21 @@ fun UpdateInformationScreen(navController: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween,) {
 
                     MyDropdownMenu(
-                        label = "Gender",
-                        items = listOf("Male","Female","Other"),
+                        label = "Giới tính",
+                        items = listOf("Nam","Nữ","Khác"),
                         selectedItem = gender,
                         onItemSelected = { gender = it },
                     )
                 }
-                TextBoxSingle(label = "Birthdate", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Ngày sinh", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 //YSpacer(16)
-                TextBoxSingle(label = "Phone", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Số điện thoại", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 YSpacer(16)
                 TextBoxSingle(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 YSpacer(16)
-                TextBoxSingle(label = "City of Residence", value = city, onValueChange = { city = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Thành phố đang ở", value = city, onValueChange = { city = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
                 YSpacer(32)
-                PrimaryButton(onClick = { navController.navigateUp()}, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp, horizontal = 20.dp),text = "Done",)
+                PrimaryButton(onClick = { navController.navigateUp()}, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
             }
         }
     )

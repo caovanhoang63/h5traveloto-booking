@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,8 +24,10 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.PasswordBox
+import com.example.h5traveloto_booking.ui_shared_components.PasswordBoxSingle
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
+import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,6 +44,7 @@ fun LoginScreen(navController: NavController,
     ) {
         var email by rememberSaveable { mutableStateOf("") }
         var password by rememberSaveable { mutableStateOf("") }
+        var check by rememberSaveable { mutableStateOf(false) }
 
 
         // Logo and Welcome Text
@@ -64,14 +68,40 @@ fun LoginScreen(navController: NavController,
         Column {
             Text(text = "Please login to continue", fontSize = 12.sp)
             Spacer(modifier = Modifier.height(30.dp))
-            TextBox(
+            TextBoxSingle(
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = "Enter your email",
                 label = "Email",
                 value = email,
-                onValueChange = { email = it }
+                onValueChange = { email = it ;
+                check=false }
             )
             Spacer(modifier = Modifier.height(40.dp))
+
+        /*    Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "", fontSize = 12.sp)
+                Text(
+                    text = "Forgot your password",
+                    fontSize = 12.sp,
+                    modifier = Modifier.clickable { }
+                )
+            }*/
+
+            PasswordBoxSingle(
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = "Enter your password",
+                label = "Password",
+                value = password,
+                onValueChange = { password = it; check = false  }
+            )
+
+            if (check){
+                Text(text = "Thông tin tài khoản hoặc mật khẩu không chính xác", color = Color.Red, fontSize = 16.sp)
+            }
+
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -84,19 +114,11 @@ fun LoginScreen(navController: NavController,
                     modifier = Modifier.clickable { }
                 )
             }
-
-            PasswordBox(
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = "Enter your password",
-                label = "Password",
-                value = password,
-                onValueChange = { password = it  }
-            )
             Spacer(modifier = Modifier.height(40.dp))
 
             PrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {viewModel.authenticate(email,password)},
+                onClick = {viewModel.authenticate(email,password, checkLogin = { isSuccess -> check = isSuccess })},
                 text = "Login"
             )
         }
