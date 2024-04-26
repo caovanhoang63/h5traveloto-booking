@@ -11,8 +11,8 @@ import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
 import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.HotelDetailsScreen
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.ListHotels
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
 
 @Composable
 fun AppNavigation(startDestination : String ) {
@@ -22,7 +22,7 @@ fun AppNavigation(startDestination : String ) {
 
     NavHost (
         navController = navController,
-        startDestination = Screens.SignUpScreen.name
+        startDestination = Screens.ListHotels.name
 
     ) {
         composable(route = Screens.SignUpScreen.name) {

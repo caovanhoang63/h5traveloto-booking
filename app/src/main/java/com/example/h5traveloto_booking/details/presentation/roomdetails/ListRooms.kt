@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailCard
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
@@ -35,7 +34,7 @@ fun ListRooms(navController: NavController) {
                         PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()},alt = "",)
 
                         Column { //Current location
-                            Text(text = "The Aston Vil Hotel", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp))
+                            Text(text = "Khách sạn Palce Sài Gòn", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp))
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng", style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp))
                         }

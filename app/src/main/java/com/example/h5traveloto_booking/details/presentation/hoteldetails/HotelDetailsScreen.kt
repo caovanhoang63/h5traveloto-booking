@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.details.presentation.hoteldeatails
+package com.example.h5traveloto_booking.details.presentation.hoteldetails
 
 import ExpandingText
 import androidx.compose.foundation.Image
@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailFeedback
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailPolicyCard
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailFeedback
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailPolicyCard
 
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.MultiColorText
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelServiceTag
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.MultiColorText
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelServiceTag
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
@@ -44,7 +44,7 @@ fun HotelDetailsScreen(navController: NavController) {
         bottomBar = {
             PrimaryButton(
                 onClick = {navController.navigate(Screens.ListRooms.name)},
-                text = "Booking Now",
+                text = "Chọn Phòng",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(65.dp)
@@ -62,7 +62,7 @@ fun HotelDetailsScreen(navController: NavController) {
                 PrimaryIconButton(
                     DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = ""
                 )
-                BoldText(text = "Detail")
+                BoldText(text = "Chi tiết khách sạn")
                 PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "")
             }
         },
@@ -121,10 +121,10 @@ fun HotelDetailsScreen(navController: NavController) {
                     }
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        BoldText(text = "The Aston Vill Hotel")
+                        BoldText(text = "Khách sạn Palace Sài Gòn")
                         MultiColorText(
                             Triple("$165.3", PrimaryColor, FontWeight.Bold),
-                            Triple(" /night", Grey500Color, FontWeight.Normal)
+                            Triple(" /đêm", Grey500Color, FontWeight.Normal)
                         )
                     }
                     YSpacer(height = 8)
@@ -135,13 +135,13 @@ fun HotelDetailsScreen(navController: NavController) {
                             contentScale = ContentScale.Crop
                         )
                         XSpacer(width = 10)
-                        GreyText(text = "Alice Springs NT 0870, Australia")
+                        GreyText(text = "56 - 66 Nguyễn Huệ, Bến Nghé, Quận 1")
                     }
                     YSpacer(height = 16)
                     BoldText(text = "Mô Tả Khách Sạn")
                     YSpacer(height = 12)
                     ExpandingText(
-                        longText = "The Aston Vill Hotel is a 5-star hotel located assadjshgfkhajsdgfhjasgdhjkfgwegrughksdbfmansbdnmvzxhjcgfahksjdbgfjahdsgkfbacewkhjgfjhgakshjdgfkjahsdggfhjakgsdfjgasjdhgfakjsgdfkjqgwekrytuyadshjfgakshdfvbnzvxcmnbzxcjhasdgkfjhagsd in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks."
+                        longText = "Palace Hotel Saigon là khách sạn sở hữu đầy đủ tiện nghi và dịch vụ xuất sắc theo nhận định của hầu hết khách lưu trú. Hãy sẵn sàng đón nhận những giây phút vô giá khó phai trong suốt kỳ nghỉ của quý khách tại Palace Hotel Saigon."
                     )
                     YSpacer(height = 16)
                     HorizontalDivider(color = Color.Black, thickness = 0.1.dp)

@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.details.presentation.hoteldeatails
+package com.example.h5traveloto_booking.details.presentation.hoteldetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailCard
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer

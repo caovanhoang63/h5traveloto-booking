@@ -1,11 +1,9 @@
-package com.example.h5traveloto_booking.details.presentation.hoteldeatails.components
+package com.example.h5traveloto_booking.details.presentation.hoteldetails.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
