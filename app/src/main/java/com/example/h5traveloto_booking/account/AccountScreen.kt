@@ -72,7 +72,7 @@ fun AccountScreen(navController: NavController,
         topBar = {
             Row (Modifier.padding(10.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,) {
-                BoldText(text = "Account",
+                BoldText(text = "Tài khoản",
                   //  fontWeight = FontWeight.Bold,
                    // fontSize = 20.sp)
                 )
@@ -108,7 +108,7 @@ fun AccountScreen(navController: NavController,
                     SupportAndInformation()
                 }
                 item{
-                    PrimaryButton(onClick = {},"Sign Out",modifier = Modifier.fillMaxWidth().padding(16.dp))
+                    PrimaryButton(onClick = {},"Đăng xuất",modifier = Modifier.fillMaxWidth().padding(16.dp))
                 }
             }
         }
@@ -197,13 +197,14 @@ fun InformationAccount(acc: Result<ProfileDTO>) {
                     painter = painterResource(R.drawable.onlylogo),
                     contentDescription = null,
                     modifier = Modifier
+                        .padding(top = 8.dp)
                         .size(50.dp)
                         .clip(CircleShape)
                         .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape)
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Column {
-                    PrimaryText(text = Profile.data.lastName,
+                    PrimaryText(text = Profile.data.lastName +" "+ Profile.data.firstName,
                         //color = MaterialTheme.colorScheme.primary,
                         // style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
@@ -252,7 +253,7 @@ fun InformationAccount(acc: Result<ProfileDTO>) {
 fun ManageProfile(navController: NavController){
     Spacer(modifier = Modifier.height(5.dp))
     GreyText(
-        text = "Manage Profile",
+        text = "Quản lý hồ sơ",
         modifier = Modifier
             .padding(start = 15.dp),
        // fontWeight = FontWeight.SemiBold,
@@ -274,7 +275,7 @@ fun ManageProfile(navController: NavController){
                 .wrapContentSize(),
         ) {
                 AccountItem(
-                    title = "Personal Information",
+                    title = "Thông tin cá nhân",
                     onClick =
                     {
                         navController.navigate(Screens.PersonalInformationScreen.name)
@@ -283,7 +284,7 @@ fun ManageProfile(navController: NavController){
                     false,
                 )
                 AccountItem(
-                    title = "Change Password",
+                    title = "Đổi mật khẩu",
                     onClick = {
                       navController.navigate(Screens.ChangePasswordScreen.name)
                     },
@@ -291,9 +292,9 @@ fun ManageProfile(navController: NavController){
                     false,
                 )
                 AccountItem(
-                    title = "Payment Information",
+                    title = "Thông tin thanh toán",
                     {},
-                    "Add a credit card",
+                    "Thêm credit card",
                     true,
                 )
 
@@ -306,7 +307,7 @@ fun ManageProfile(navController: NavController){
 fun ManagePoint(){
     Spacer(modifier = Modifier.height(5.dp))
     GreyText(
-        text = "Manage Point",
+        text = "Quản lý điểm",
         modifier = Modifier
             .padding(start = 15.dp),
         //fontWeight = FontWeight.SemiBold,
@@ -329,21 +330,21 @@ fun ManagePoint(){
         ) {
 
                 AccountItem(
-                    title = "Total point",
+                    title = "Tổng điểm",
                     {},
                     null,
                     false,
                 )
 
                 AccountItem(
-                    title = "My promotions",
+                    title = "Mã giảm giá của tôi",
                     {},
                     null,
                     false,
                 )
 
                 AccountItem(
-                    title = "Program benefits",
+                    title = "Lợi ích chương trình",
                     {},
                     null,
                     true,
@@ -358,7 +359,7 @@ fun ManagePoint(){
 fun AppSetting(){
     Spacer(modifier = Modifier.height(5.dp))
     GreyText(
-        text = "App setting",
+        text = "Cài đặt chương trình",
         modifier = Modifier
             .padding(start = 15.dp),
         //fontWeight = FontWeight.SemiBold,
@@ -380,7 +381,7 @@ fun AppSetting(){
         ) {
 
             AccountItem(
-                title = "Stay notification",
+                title = "Quản lý thông báo",
                 {},
                 "Get room ready, check in, check out",
                 true,
@@ -393,7 +394,7 @@ fun AppSetting(){
 fun SupportAndInformation (){
     Spacer(modifier = Modifier.height(5.dp))
     GreyText(
-        text = "Support and information",
+        text = "Hỗ trợ và thông tin",
         modifier = Modifier
             .padding(start = 15.dp),
        // fontWeight = FontWeight.SemiBold,
@@ -415,7 +416,7 @@ fun SupportAndInformation (){
         ) {
 
                 AccountItem(
-                    title = "Visit help center",
+                    title = "Trung tâm hỗ trợ",
                     {},
                     null,
                     false,
@@ -423,21 +424,21 @@ fun SupportAndInformation (){
 
 
                 AccountItem(
-                    title = "Give us feedback",
+                    title = "Liên hệ chúng tôi",
                     {},
                     null,
                     false,
                 )
 
                 AccountItem(
-                    title = "Term and conditions",
+                    title = "Điều khoản và điều kiện",
                     {},
                     null,
                     false,
                 )
 
                 AccountItem(
-                    title = "Data privacy center",
+                    title = "Chính sách quyền riêng tư",
                     {},
                     null,
                     false,

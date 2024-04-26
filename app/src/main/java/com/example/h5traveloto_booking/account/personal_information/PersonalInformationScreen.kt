@@ -17,16 +17,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.account.PersonalInformationViewModel
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.theme.ScreenBackGround
 import com.example.h5traveloto_booking.ui_shared_components.*
+import com.example.h5traveloto_booking.util.Result
 
 
 @OptIn(ExperimentalMaterial3Api::class,ExperimentalComposeUiApi::class)
 @Composable
-fun PersonalInformationScreen(navController: NavController) {
+fun PersonalInformationScreen(navController: NavController,
+                              viewModel: PersonalInformationViewModel = hiltViewModel()
+)
+{
+
+    LaunchedEffect(Unit){
+        viewModel.getProfile()
+    }
+    val ProfileDataResponse = viewModel.ProfileDataResponse.collectAsState().value
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -51,7 +63,7 @@ fun PersonalInformationScreen(navController: NavController) {
                 }*/
                 PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() /*navController.popBackStack*/},"", modifier = Modifier )
                 XSpacer(60)
-                BoldText(text = "Personal Information",
+                BoldText(text = "Thông tín cá nhân",
                   //  fontWeight = FontWeight.Bold,
                    // fontSize = 20.sp)
                 )
@@ -64,14 +76,14 @@ fun PersonalInformationScreen(navController: NavController) {
                     .padding(innerPadding)
             )
             {
-                PersonalData(navController = navController)
+                PersonalData(navController = navController,ProfileDataResponse)
                 DeleteAccount()
             }
         }
     )
 }
 @Composable
-fun PersonalData(navController: NavController) {
+fun PersonalData(navController: NavController,acc: Result<ProfileDTO>) {
     YSpacer(20)
     Row(modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
@@ -94,7 +106,7 @@ fun PersonalData(navController: NavController) {
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         GreyText(
-            text = "Personal Data",
+            text = "Dữ liệu cá nhân",
             modifier = Modifier
                //.padding(start = 15.dp),
             //fontWeight = FontWeight.SemiBold,
@@ -106,7 +118,7 @@ fun PersonalData(navController: NavController) {
             color = PrimaryColor,
             modifier = Modifier.clickable { navController.navigate(Screens.UpdateInformationScreen.name)}
         )*/
-        ClickableText("Update", onClick = {navController.navigate(Screens.UpdateInformationScreen.name) })
+        ClickableText("Cập nhật", onClick = {navController.navigate(Screens.UpdateInformationScreen.name) })
     }
     Card(
         modifier = Modifier
@@ -122,17 +134,31 @@ fun PersonalData(navController: NavController) {
                 //.padding(10.dp)
                 .wrapContentSize(),
         ) {
+            when (acc) {
+                is Result.Loading -> {
+                    Log.d("Home ", "dang load")
 
-            PersonalItem("Full Name",false,"Hoàng Huy")
-            PersonalItem("Gender",false,"Male")
-            PersonalItem("Birthdate",false,"20/12/2004")
-            PersonalItem("Phone",false,"0xxxxxxx")
-            PersonalItem("Email",false,"22520533@gm.uit.edu.vn")
-            PersonalItem("City of Residence",true)
+                    // Hieu ung load
+                }
 
+                is Result.Error -> {
+                    Log.d("Home ", "loi roi")
+                }
 
+                is Result.Success -> {
+                    val Profile = acc.data
+                    PersonalItem("Họ tên",false,Profile.data.lastName +" " +Profile.data.firstName)
+                    PersonalItem("Giới tính",false,)
+                    PersonalItem("Ngày sinh",false,)
+                    Log.e("test",Profile.data.phone)
+                    PersonalItem("Số điện thoại",false,Profile.data.phone)
+                    PersonalItem("Email",false,Profile.data.email)
+                    PersonalItem("Thành phố đang ở",true)
 
+                }
 
+                else -> {}
+            }
         }
     }
 }
@@ -153,7 +179,13 @@ fun PersonalItem(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             PrimaryText(label)
-            GreyText(value)
+            if(value.isNullOrBlank()){
+                GreyText("Not set")
+
+            } else {
+                GreyText(value)
+
+            }
         }
 
         //dung divider nhanh hon
@@ -172,6 +204,7 @@ fun PersonalItem(
     }
 }
 
+
 @Composable
 fun DeleteAccount(){
     Card(
@@ -182,7 +215,7 @@ fun DeleteAccount(){
         colors = CardDefaults.cardColors(Color.White)
     )
     {
-        DeleteItem(title = "Delete Account",{},null,true)
+        DeleteItem(title = "Xóa tài khoản",{},null,true)
     }
 }
 @Composable
