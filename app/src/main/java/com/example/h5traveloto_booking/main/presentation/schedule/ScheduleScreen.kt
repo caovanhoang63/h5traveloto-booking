@@ -13,15 +13,20 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
-import com.example.h5traveloto_booking.main.presentation.schedule.components.DateRangePicker
+import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
-import com.example.h5traveloto_booking.main.presentation.schedule.components.CustomCalendarView
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
+import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import kotlinx.datetime.LocalDate
 
@@ -29,8 +34,8 @@ import kotlinx.datetime.LocalDate
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ScheduleScreen (navController: NavController) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val list = List(3) {}
+    val scheduleNavController = rememberNavController()
+
     val bookingList : List<BookingDTO> = listOf(
         BookingDTO(
             "1",
@@ -58,57 +63,22 @@ fun ScheduleScreen (navController: NavController) {
             LocalDate(2024,5,6)
         )
     )
-    Scaffold(
-        modifier = Modifier.
-            nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                    titleContentColor = Color.Black
-                ),
-                title = {
-                    Text(
-                        text = "Schedule",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-//                navigationIcon = {
-//                    IconButton(onClick = { /*TODO*/ }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBackIosNew,
-//                            contentDescription = "Back things"
-//                        )
-//                    }
-//                },
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            imageVector = Icons.Filled.Settings,
-                            contentDescription = "Action things"
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior
+
+    NavHost (
+        navController = scheduleNavController,
+        startDestination = Screens.ScheduleCalendarScreen.name
+    ) {
+        composable(route = Screens.ScheduleCalendarScreen.name) {
+            CalendarScreen(
+                bookingList = bookingList,
+                navController = scheduleNavController
             )
         }
-    ) { innerPadding ->
-        Column (
-            modifier = Modifier.
-                padding(innerPadding)
-        ) {
-            DateRangePicker(bookingList)
-            LazyColumn(
-                modifier = Modifier
-                    .padding(innerPadding),
-            ) {
-                items(list) {
-                    YSpacer(height = 10)
-                    BookingCard()
-                    YSpacer(height = 10)
-                }
-            }
+        composable(route = Screens.ScheduleBookingScreen.name) {
+            BookingScreen(
+                bookingList = bookingList,
+                navController = scheduleNavController
+            )
         }
     }
 }

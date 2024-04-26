@@ -27,6 +27,8 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHote
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.ShareHotelDataViewModel
+import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
@@ -36,8 +38,8 @@ import com.example.h5traveloto_booking.util.Result
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen (navController: NavController,
-                viewModel: HomeViewModel = hiltViewModel()) {
-
+                viewModel: HomeViewModel = hiltViewModel(),
+) {
 
 
     //

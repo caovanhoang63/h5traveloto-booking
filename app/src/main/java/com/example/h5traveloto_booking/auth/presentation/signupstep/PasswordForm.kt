@@ -142,7 +142,9 @@ fun PasswordForm(
         if(isSuccess){
             PopupRegisterSuccess(
                 onDismissRequest = { },
-                onConfirmation = { navLogin.navigate(Screens.LoginScreen.name) },
+                onConfirmation = {
+                    navLogin.navigate(Screens.LoginScreen.name)
+                 },
                 dialogTitle = "Đăng ký thành công",
                 dialogText = "Chúc mừng bạn đã tạo tài khoản thành công."
             )

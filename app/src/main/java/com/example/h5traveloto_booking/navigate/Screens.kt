@@ -20,4 +20,8 @@ enum class Screens {
     UpdateInformationScreen,
     FavoriteScreen,
     ChangePasswordScreen,
+    ListRooms,
+
+    ScheduleCalendarScreen,
+    ScheduleBookingScreen
 }

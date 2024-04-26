@@ -43,19 +43,23 @@ public fun MonthHeader (
                 contentDescription = "Previous Month"
             )
         }
-        XSpacer(width = 50)
-        Text(
-            text = month.toString(),
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
-        XSpacer(width = 10)
-        Text(
-            text = year.toString(),
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
-        XSpacer(width = 50)
+        Row (
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth(0.85f)
+        ) {
+            Text(
+                text = month.toString(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+            XSpacer(width = 10)
+            Text(
+                text = year.toString(),
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+        }
         IconButton(onClick = onRightClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,

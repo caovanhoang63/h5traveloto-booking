@@ -1,17 +1,22 @@
-package com.example.h5traveloto_booking.details.presentation
+package com.example.h5traveloto_booking.details.presentation.hoteldeatails
 
 import ExpandingText
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Money
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,9 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailFeedback
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelDetailPolicyCard
 
-import com.example.h5traveloto_booking.details.presentation.components.MultiColorText
-import com.example.h5traveloto_booking.details.presentation.components.HotelServiceTag
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.MultiColorText
+import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.HotelServiceTag
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -35,10 +43,12 @@ fun HotelDetailsScreen(navController: NavController) {
     Scaffold(
         bottomBar = {
             PrimaryButton(
-                onClick = {}, text = "Booking Now", modifier = Modifier
+                onClick = {navController.navigate(Screens.ListRooms.name)},
+                text = "Booking Now",
+                modifier = Modifier
                     .fillMaxWidth()
-                    .height(53.dp)
-                    .padding(horizontal = 24.dp)
+                    .height(65.dp)
+                    .padding(horizontal = 24.dp, vertical = 10.dp)
             )
         },
         topBar = {
@@ -49,7 +59,9 @@ fun HotelDetailsScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()}, alt = "")
+                PrimaryIconButton(
+                    DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = ""
+                )
                 BoldText(text = "Detail")
                 PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "")
             }
@@ -57,8 +69,7 @@ fun HotelDetailsScreen(navController: NavController) {
 
         ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
+            modifier = Modifier.padding(innerPadding)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -66,15 +77,37 @@ fun HotelDetailsScreen(navController: NavController) {
                     .padding(top = 24.dp, start = 24.dp, end = 24.dp),
             ) {
                 item {
-                    AsyncImage(
-                        model = imgURL,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(246.dp)
-                            .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Crop,
-                    )
+                    Box(
+                        contentAlignment = Alignment.TopEnd,
+                    ) {
+                        AsyncImage(
+                            model = imgURL,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(246.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            contentScale = ContentScale.Crop,
+                        )
+                        IconButton(modifier = Modifier
+                            .padding(8.dp)
+                            .offset(x = (-8).dp, y = 8.dp)
+                            .width(32.dp)
+                            .height(32.dp)
+                            .background(
+                                color = Color.White, shape = RoundedCornerShape(50.dp)
+                            ),
+                            onClick = { /*TODO*/ },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Default.Favorite,
+                                    contentDescription = "favourite",
+                                    tint = Color.Red,
+                                )
+                            }
+                        )
+                    }
+
                     YSpacer(height = 16)
                     Row(
                         modifier = Modifier
@@ -84,7 +117,7 @@ fun HotelDetailsScreen(navController: NavController) {
                     ) {
                         HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
                         HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
-                        HotelServiceTag(DrawableId = R.drawable.star , alt = "rating", text = "5.0")
+                        HotelServiceTag(DrawableId = R.drawable.star, alt = "rating", text = "5.0")
                     }
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -105,13 +138,32 @@ fun HotelDetailsScreen(navController: NavController) {
                         GreyText(text = "Alice Springs NT 0870, Australia")
                     }
                     YSpacer(height = 16)
-                    BoldText(text = "Description")
+                    BoldText(text = "Mô Tả Khách Sạn")
                     YSpacer(height = 12)
-                    ExpandingText(longText = "The Aston Vill Hotel is a 5-star hotel located assadjshgfkhajsdgfhjasgdhjkfgwegrughksdbfmansbdnmvzxhjcgfahksjdbgfjahdsgkfbacewkhjgfjhgakshjdgfkjahsdggfhjakgsdfjgasjdhgfakjsgdfkjqgwekrytuyadshjfgakshdfvbnzvxcmnbzxcjhasdgkfjhagsd in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.")
+                    ExpandingText(
+                        longText = "The Aston Vill Hotel is a 5-star hotel located assadjshgfkhajsdgfhjasgdhjkfgwegrughksdbfmansbdnmvzxhjcgfahksjdbgfjahdsgkfbacewkhjgfjhgakshjdgfkjahsdggfhjakgsdfjgasjdhgfakjsgdfkjqgwekrytuyadshjfgakshdfvbnzvxcmnbzxcjhasdgkfjhagsd in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks."
+                    )
                     YSpacer(height = 16)
-                    BoldText(text = "Preview")
+                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
                     YSpacer(height = 8)
-                    LazyRow(modifier = Modifier.fillMaxWidth()){
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        BoldText(text = "Đánh Giá")
+                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable { })
+                    }
+                    YSpacer(height = 12)
+                    HotelDetailFeedback(
+                        text = "The Aston Vill Hotel is a 5-star hotel located in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.",
+                        author = "John Doe"
+                    )
+                    YSpacer(height = 16)
+                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                    YSpacer(height = 8)
+                    BoldText(text = "Hình Ảnh Xem Trước")
+                    YSpacer(height = 8)
+                    LazyRow(modifier = Modifier.fillMaxWidth()) {
                         item {
                             AsyncImage(
                                 model = imgURL,
@@ -166,6 +218,22 @@ fun HotelDetailsScreen(navController: NavController) {
                         }
 
                     }
+                    YSpacer(height = 16)
+                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                    YSpacer(height = 8)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        BoldText(text = "Chính Sách Lưu Trú")
+                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable { })
+                    }
+                    YSpacer(height = 8)
+                    HotelDetailPolicyCard(
+                        icon = Icons.Default.Money,
+                        text = "Tiền cọc",
+                        description = "Bạn phải đóng tiền cọc 0 khi nhận phòng. Cơ sở lưu trú chấp nhận tiền mặt, thẻ ghi nợ hoặc thẻ tín dụng"
+                    )
                     YSpacer(height = 10)
 
                 }

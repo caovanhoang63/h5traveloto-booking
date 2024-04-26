@@ -92,7 +92,7 @@ fun SearchLocationScreen(
                             .padding(16.dp, 0.dp)
                     )
                     TextButton(
-                        onClick = { onDismiss() },
+                        onClick = { onComplete(searchQuery) },
                         content = {
                             Text(
                                 "HOÀN TẤT",

@@ -36,33 +36,17 @@ import io.wojciechosak.calendar.view.HorizontalCalendarView
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-public fun DateRangePicker(
-    bookingList : List<BookingDTO>
+public fun BookingCalendar (
+    bookingList: List<BookingDTO>,
 ) {
     val startDate by remember { mutableStateOf(LocalDate.today()) }
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
     val mapBookingDayState = remember { mutableStateMapOf<LocalDate, BookingDayState>() }
-    var targetDate by remember { mutableStateOf(LocalDate.today()) }
 
     var calendarAnimator by remember { mutableStateOf(CalendarAnimator(startDate)) }
     val coroutineScope = rememberCoroutineScope()
-//    var rememberCalendarStateFix = remember {
-//        mutableStateOf (
-//            CalendarConfig(
-//                minDate = LocalDate(1971, 1, 1),
-//                maxDate = startDate.plus(15, DateTimeUnit.YEAR),
-//                monthYear = startDate.plus(monthOffsetFix.intValue, DateTimeUnit.MONTH).toMonthYear(),
-//                dayOfWeekOffset = 0,
-//                showNextMonthDays = true,
-//                showPreviousMonthDays = true,
-//                showHeader = true,
-//                showWeekdays = true,
-//                selectedDates = selectedDates
-//            )
-//        )
-//    }
 
     val rangeColor = SecondaryColor
     val rangeStrokeWidth = 2
@@ -150,7 +134,7 @@ public fun DateRangePicker(
             )
         )
     }
-    
+
     for (booking in bookingList) {
         // Note start date
         if (mapBookingDayState[booking.start_date] == null)
@@ -168,9 +152,9 @@ public fun DateRangePicker(
 
         // Note middle date
         for (
-            date: LocalDate in
-            booking.start_date.plus(DatePeriod(days = 1))..
-            booking.end_date.minus(DatePeriod(days = 1))
+        date: LocalDate in
+        booking.start_date.plus(DatePeriod(days = 1))..
+                booking.end_date.minus(DatePeriod(days = 1))
         ) {
             if (mapBookingDayState[date] == null)
             {
@@ -220,8 +204,8 @@ public fun DateRangePicker(
     HorizontalCalendarView(
         modifier = Modifier
             .padding(10.dp)
-            .background(color = Grey50Color)
-            .clip(shape = RoundedCornerShape(8.dp)),
+            .clip(shape = RoundedCornerShape(8.dp))
+            .background(color = Grey50Color),
         startDate = startDate,
         calendarAnimator = calendarAnimator
     ) { monthOffset ->
