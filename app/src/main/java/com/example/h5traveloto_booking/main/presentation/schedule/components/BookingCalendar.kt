@@ -45,7 +45,7 @@ public fun BookingCalendar (
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
     val mapBookingDayState = remember { mutableStateMapOf<LocalDate, BookingDayState>() }
 
-    var calendarAnimator by remember { mutableStateOf(CalendarAnimator(startDate)) }
+    val calendarAnimator by remember { mutableStateOf(CalendarAnimator(startDate)) }
     val coroutineScope = rememberCoroutineScope()
 
     val rangeColor = SecondaryColor
@@ -283,7 +283,6 @@ public fun BookingCalendar (
             onDateSelected = {
                 selectedDates.clear()
                 selectedDates.addAll(it)
-                Log.d("SelectedDate", selectedDates.toList().toString())
             },
 //            rangeConfig =
 //                RangeConfig(

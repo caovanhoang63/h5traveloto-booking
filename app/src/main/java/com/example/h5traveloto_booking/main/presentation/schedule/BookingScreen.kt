@@ -44,7 +44,7 @@ public fun BookingScreen (
                 ),
                 title = {
                     androidx.compose.material3.Text(
-                        text = "Bookings",
+                        text = "Danh sách đặt phòng",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
