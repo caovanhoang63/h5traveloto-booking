@@ -11,12 +11,15 @@ import com.example.h5traveloto_booking.auth.domain.repository.AuthenticateReposi
 import com.example.h5traveloto_booking.auth.domain.repository.CheckExistedRepository
 import com.example.h5traveloto_booking.auth.domain.repository.RegisterRepository
 import com.example.h5traveloto_booking.auth.domain.use_case.*
+import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
+import com.example.h5traveloto_booking.main.presentation.data.api.repository.ChangePasswordRepositoryImpl
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.HotelRepositoryImpl
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.ProfileRepositoryImpl
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.SearchRepositoryImpl
+import com.example.h5traveloto_booking.main.presentation.domain.repository.ChangePasswordRepository
 import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
 import com.example.h5traveloto_booking.main.presentation.domain.repository.ProfileRepository
 import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository
@@ -199,6 +202,34 @@ object AppModule {
             getProfileUseCase = ProfileUseCase(repository)
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideChangePasswordApi(moshi: Moshi) : ChangePasswordApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(ChangePasswordApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChangePasswordRepository(api : ChangePasswordApi) : ChangePasswordRepository {
+        return ChangePasswordRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun providePasswordUseCases(repository: ChangePasswordRepository) : PasswordUseCases {
+        return PasswordUseCases(
+            changePasswordUseCases = ChangePasswordUseCase(repository)
+        )
+    }
+
+
+
+
     /*
     * 
     * 
