@@ -7,6 +7,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,15 +25,24 @@ import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.theme.SecondaryColor
 import com.example.h5traveloto_booking.util.localdate_range.LocalDateProgression
-import io.wojciechosak.calendar.animation.CalendarAnimator
-import io.wojciechosak.calendar.config.CalendarConfig
-import io.wojciechosak.calendar.config.DayState
-import io.wojciechosak.calendar.config.SelectionMode
-import io.wojciechosak.calendar.config.rememberCalendarState
-import io.wojciechosak.calendar.utils.toMonthYear
-import io.wojciechosak.calendar.utils.today
-import io.wojciechosak.calendar.view.CalendarView
-import io.wojciechosak.calendar.view.HorizontalCalendarView
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.animation.CalendarAnimator
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConfig
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.DayState
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.SelectionMode
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.rememberCalendarState
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.toMonthYear
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarView
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.HorizontalCalendarView
+//import io.wojciechosak.calendar.animation.CalendarAnimator
+//import io.wojciechosak.calendar.config.CalendarConfig
+//import io.wojciechosak.calendar.config.DayState
+//import io.wojciechosak.calendar.config.SelectionMode
+//import io.wojciechosak.calendar.config.rememberCalendarState
+//import io.wojciechosak.calendar.utils.toMonthYear
+//import io.wojciechosak.calendar.utils.today
+//import io.wojciechosak.calendar.view.CalendarView
+//import io.wojciechosak.calendar.view.HorizontalCalendarView
 import kotlinx.coroutines.launch
 import kotlinx.datetime.*
 
@@ -45,7 +55,8 @@ public fun BookingCalendar (
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
     val mapBookingDayState = remember { mutableStateMapOf<LocalDate, BookingDayState>() }
 
-    val calendarAnimator by remember { mutableStateOf(CalendarAnimator(startDate)) }
+//    val calendarAnimator by remember { mutableStateOf(CalendarAnimator(startDate)) }
+    val calendarAnimator = CalendarAnimator(startDate)
     val coroutineScope = rememberCoroutineScope()
 
     val rangeColor = SecondaryColor
@@ -207,6 +218,7 @@ public fun BookingCalendar (
             .clip(shape = RoundedCornerShape(8.dp))
             .background(color = Grey50Color),
         startDate = startDate,
+        beyondBoundsPageCount = 5,
         calendarAnimator = calendarAnimator
     ) { monthOffset ->
         CalendarView(
@@ -257,7 +269,7 @@ public fun BookingCalendar (
                                     startDate.year,
                                     startDate.month.plus(monthOffset.toLong()),
                                     startDate.dayOfMonth
-                                ).plus(-1, DateTimeUnit.MONTH)
+                                ).plus(-1, DateTimeUnit.MONTH),
                             )
                         }
                     },
@@ -290,6 +302,7 @@ public fun BookingCalendar (
 //                    rangeIllustrator = RoundedRangeIllustrator(Color.Red)
 //                )
         )
+
     }
 }
 
