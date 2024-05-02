@@ -38,7 +38,7 @@ class AccountViewModel @Inject constructor(
         }.catch {
             Log.d("Account ViewModel", "catch")
             Log.d("Account ViewModel E", it.message.toString() )
-            _profileDataResponse.value = Result.Error(it)
+            _profileDataResponse.value = Result.Error(it.message.toString())
         }.collect{
             Log.d("Success","Ok")
             Log.d("Success",it.data.email)

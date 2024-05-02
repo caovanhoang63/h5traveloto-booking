@@ -15,13 +15,18 @@ import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.google.gson.Gson
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
 import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -46,19 +51,16 @@ class ChangePasswordViewModel @Inject constructor(
             _changePasswordResponse.value = Result.Loading
             Log.d("ChangePassword ViewModel", "Loading")
         }.catch {
+            if(it is HttpException){
             Log.d("ChangePassword ViewModel", "catch")
-            Log.d("ChangePassword ViewModel E", it.message.toString() )
-            var error : ErrorResponse
-            _changePasswordResponse.value = Result.Error(it)
-            if (it is HttpException) {
-                Log.d("ChangePassword test", "sadasads")
-                val httpException = it
-                val errorBody = it.response()?.errorBody()?.string()
-                val moshi = Moshi.Builder().build()
-                val adapter = moshi.adapter(ErrorResponse::class.java)
-                val errorResponse = adapter.fromJson(errorBody)
-                Log.d("ChangePassword ViewModel", "${errorResponse?.message}")
-                _changePasswordResponse.value = Result.Error(it)
+            //Log.d("ChangePassword ViewModel E", it.message.toString())
+            Log.d("ChangePassword ViewModel", "hehe")
+                val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                Log.d("ChangePassword ViewModel Error", errorResponse.message)
+                _changePasswordResponse.value = Result.Error(errorResponse.message)
+            }
+            else if (it is Exception) {
+                Log.d("ChangePassword ViewModel", it.javaClass.name)
             }
 
         }.collect {

@@ -39,7 +39,8 @@ class HomeViewModel @Inject constructor(
         }.catch {
             Log.d("Home ViewModel", "catch")
             Log.d("Home ViewModel E", it.message.toString() )
-            _listHotelDataResponse.value = Result.Error(it)
+       //     _listHotelDataResponse.value = Result.Error(it)
+            _listHotelDataResponse.value = Result.Error(it.message.toString())
         }.collect{
 
             Log.d("Success","Ok")
