@@ -1,32 +1,50 @@
 package com.example.h5traveloto_booking.main.presentation.data.dto.Hotel
 
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class HotelDTO(
-//    val address: String,
-//    val created_at: String,
-//    val distance_to_center_city: Int,
-//    val district_code: Int,
-//    val hotel_type: String,
-//    val hotline: String,
+    @Json(name = "address")
+    val address: String,
+    @Json(name = "avg_price")
+    val avgPrice: Int,
+    @Json(name = "created_at")
+    val createdAt: String,
+    @Json(name = "district")
+    val district: District,
+    @Json(name = "hotel_type")
+    val hotelType: String,
+    @Json(name = "hotline")
+    val hotline: String,
+    @Json(name = "id")
     val id: String,
-//    val lat: Double,
-//    val lng: Double,
+    @Json(name = "images")
+    val images: List<Image>,
+    @Json(name = "lat")
+    val lat: Double,
+    @Json(name = "lng")
+    val lng: Double,
+    @Json(name = "logo")
+    val logo: Logo,
+    @Json(name = "name")
     val name: String,
-//    val number_of_floors: Int,
-//    val province_code: Int,
-//    val rating: Int,
-//    val star: Int,
-//    val status: Int,
-//    val updated_at: String,
-//    val user: Any,
-//    val ward_Code: Int
+    @Json(name = "province")
+    val province: Province,
+    @Json(name = "rating")
+    val rating: Int,
+    @Json(name = "star")
+    val star: Int,
+    @Json(name = "status")
+    val status: Int,
+    @Json(name = "total_rating")
+    val totalRating: Int,
+    @Json(name = "total_room_type")
+    val totalRoomType: Int,
+    @Json(name = "updated_at")
+    val updatedAt: String,
+
+    @Json(name = "ward")
+    val ward: Ward
 )
-
-
-
-//fun HotelDTO.toHotel() : Hotel {
-//    return Hotel(
-//        address, distance_to_center_city, district_code, hotel_type, hotline, id, name, province_code, rating, star, ward_Code
-//    )
-//}
