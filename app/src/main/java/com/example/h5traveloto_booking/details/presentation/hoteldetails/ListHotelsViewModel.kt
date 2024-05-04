@@ -38,8 +38,8 @@ class ListHotelsViewModel @Inject constructor(
 
         }.catch {
 
-            Log.d("Account ViewModel", "catch")
-            Log.d("Account ViewModel E", it.message.toString() )
+            Log.d("List Hotel ViewModel", "catch")
+            Log.d("List Hotel ViewModel E", it.message.toString() )
             _listHotelResponse.value = Result.Error(it.message.toString())
         }.collect{
             Log.d("Success","Ok")
