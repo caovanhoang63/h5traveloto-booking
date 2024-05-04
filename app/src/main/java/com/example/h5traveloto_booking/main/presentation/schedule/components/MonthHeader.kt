@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import kotlinx.datetime.Month
@@ -36,13 +37,13 @@ public fun MonthHeader (
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
-        IconButton(onClick = onLeftClick) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBackIosNew,
-                tint = Color.Black,
-                contentDescription = "Previous Month"
-            )
-        }
+//        IconButton(onClick = onLeftClick) {
+//            Icon(
+//                imageVector = Icons.Filled.ArrowBackIosNew,
+//                tint = Color.Black,
+//                contentDescription = "Previous Month"
+//            )
+//        }
         Row (
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
@@ -60,12 +61,12 @@ public fun MonthHeader (
                 fontSize = 16.sp
             )
         }
-        IconButton(onClick = onRightClick) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                tint = Color.Black,
-                contentDescription = "Continuous Month"
-            )
-        }
+//        IconButton(onClick = onRightClick) {
+//            Icon(
+//                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+//                tint = Color.Black,
+//                contentDescription = "Continuous Month"
+//            )
+//        }
     }
 }
