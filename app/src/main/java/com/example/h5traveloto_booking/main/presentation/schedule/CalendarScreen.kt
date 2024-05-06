@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -24,6 +24,7 @@ import com.example.h5traveloto_booking.main.presentation.schedule.components.Boo
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +34,9 @@ public fun CalendarScreen (
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
+    var isLoading by remember {
+        mutableStateOf(true)
+    }
 
     Scaffold(
         modifier = Modifier
@@ -68,7 +72,13 @@ public fun CalendarScreen (
                 .padding(innerPadding)
                 .padding(horizontal = 10.dp)
         ) {
-            BookingCalendar(bookingList = bookingList)
+            LaunchedEffect(key1 = true) {
+                delay(1000)
+                isLoading = false
+            }
+            if (!isLoading) {
+                BookingCalendar(bookingList = bookingList)
+            }
             YSpacer(height = 5)
             Row (
                 modifier = Modifier

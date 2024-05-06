@@ -1,9 +1,19 @@
 package com.example.h5traveloto_booking.main.presentation.data.dto.Hotel
 
+
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Paging(
-//    val cursor: String,
-    val limit: Int,
-//    val next_cursor: String,
-//    val page: Int,
-//    val total: Int
+    @Json(name = "cursor")
+    val cursor: String?,
+    @Json(name = "limit")
+    val limit: Int?,
+    @Json(name = "next_cursor")
+    val nextCursor: String?,
+    @Json(name = "page")
+    val page: Int?,
+    @Json(name = "total")
+    val total: Int?
 )
