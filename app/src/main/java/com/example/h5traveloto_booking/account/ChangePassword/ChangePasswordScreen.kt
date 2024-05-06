@@ -199,10 +199,10 @@ fun ChangePasswordScreen(navController: NavController,
                 showDialog.value = false
             },
             title = {
-                Text(text = "Success")
+                Text(text = "Thành công")
             },
             text = {
-                Text(text = "Data loaded successfully")
+                Text(text = "Đổi mật khẩu thành công")
             },
             confirmButton = {
                 TextButton(
