@@ -81,10 +81,10 @@ fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = "starRating",
-                            tint = Color.Yellow,
+                            tint = Color(0xffffe234),
                         )
                         XSpacer(width = 5)
-                        BoldText(text = hotelDTO.rating.toString()+".0")
+                        BoldText(text = hotelDTO.star.toString()+".0")
 
 
 

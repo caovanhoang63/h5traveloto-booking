@@ -98,10 +98,12 @@ fun ListHotels(navController: NavController, viewModel: ListHotelsViewModel = hi
                         is Result.Success -> {
                             Log.d("List Hotel ", "thanh cong")
                             val hotels = listHotelResponse.data.data
-                                for (i in 0..hotels.size - 1) {
-                                        HotelDetailCard(hotelDTO = hotels[i], navController = navController)
+                            hotels.forEachIndexed { index, hotelDTO ->
+                                HotelDetailCard(hotelDTO = hotelDTO, navController = navController)
+                                if (index < hotels.lastIndex) {
+                                    Spacer(modifier = Modifier.height(15.dp))
                                 }
-
+                            }
                         }
 
                         else -> Unit

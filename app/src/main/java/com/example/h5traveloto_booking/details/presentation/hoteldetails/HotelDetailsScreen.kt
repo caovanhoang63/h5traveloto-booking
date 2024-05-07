@@ -1,6 +1,7 @@
 package com.example.h5traveloto_booking.details.presentation.hoteldetails
 
 import ExpandingText
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +14,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Money
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,29 +24,55 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
-import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailFeedback
-import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailPolicyCard
+import com.example.h5traveloto_booking.account.ListHotelsViewModel
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.*
 
-import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.MultiColorText
-import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelServiceTag
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
+import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotelDetailsScreen(navController: NavController) {
+fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScreenViewModel = hiltViewModel()) {
+    LaunchedEffect(Unit) {
+        viewModel.getHotelDetails()
+    }
+    val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
+
+    when (HotelDetailsResponse) {/*is Result.Loading -> {
+            Log.d("List Hotel ", "dang load")
+
+            // Hieu ung load
+            Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator()
+
+            }
+        }*/
+
+        is Result.Error -> {
+            Log.d("HotelDetails ", "loi roi")
+        }
+
+        is Result.Success -> {
+            Log.d("HotelDetails", HotelDetailsResponse.data.data.description)
+        }
+
+        else -> Unit
+    }
+
     val imgURL =
         "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI="
     Scaffold(
         bottomBar = {
             PrimaryButton(
-                onClick = {navController.navigate(Screens.ListRooms.name)},
+                onClick = { navController.navigate(Screens.ListRooms.name) },
                 text = "Chọn Phòng",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -96,16 +125,13 @@ fun HotelDetailsScreen(navController: NavController) {
                             .height(32.dp)
                             .background(
                                 color = Color.White, shape = RoundedCornerShape(50.dp)
-                            ),
-                            onClick = { /*TODO*/ },
-                            content = {
-                                Icon(
-                                    imageVector = Icons.Default.Favorite,
-                                    contentDescription = "favourite",
-                                    tint = Color.Red,
-                                )
-                            }
-                        )
+                            ), onClick = { /*TODO*/ }, content = {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = "favourite",
+                                tint = Color.Red,
+                            )
+                        })
                     }
 
                     YSpacer(height = 16)
@@ -115,8 +141,18 @@ fun HotelDetailsScreen(navController: NavController) {
                             .height(36.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
-                        HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                        LazyRow() {
+                            item {
+                                HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
+                                HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                                HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
+                                HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                                HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
+                                HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                            }
+                        }
+//                        HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
+//                        HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
                         HotelServiceTag(DrawableId = R.drawable.star, alt = "rating", text = "5.0")
                     }
                     YSpacer(height = 16)
