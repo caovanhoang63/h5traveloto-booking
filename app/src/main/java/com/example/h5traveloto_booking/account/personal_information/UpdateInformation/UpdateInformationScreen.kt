@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.theme.ScreenBackGround
@@ -33,12 +34,158 @@ import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 import java.time.LocalDate
+import com.example.h5traveloto_booking.util.Result
+import com.example.h5traveloto_booking.util.ui_shared_components.DisableTextBoxSingle
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdateInformationScreen(navController: NavController) {
-    var fullName by rememberSaveable { mutableStateOf("Hoang Huy") }
+fun UpdateInformationScreen(navController: NavController,
+                            viewModel: UpdateInformationViewModel= hiltViewModel()
+)
+{
+    LaunchedEffect(Unit) {
+        viewModel.getProfile()
+    }
+    val ProfileResponse = viewModel.GetProfileResponse.collectAsState().value
+
+    when(ProfileResponse){
+        is Result.Idle -> {}
+        is Result.Loading ->{
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator() // Hiển thị thanh tiến trình tải
+            }
+        }
+        is Result.Success ->{
+            var fullName by rememberSaveable { mutableStateOf(ProfileResponse.data.data.lastName + " " + ProfileResponse.data.data.firstName) }
+            var gender by remember { mutableStateOf("Other") }
+            var birthDate by rememberSaveable { mutableStateOf("Not Set") }
+            var phoneNumber by rememberSaveable { mutableStateOf(ProfileResponse.data.data.phone) }
+            var email by rememberSaveable { mutableStateOf(ProfileResponse.data.data.email) }
+            var city by rememberSaveable { mutableStateOf("Not Set") }
+            var showDialog by remember { mutableStateOf(false) }
+            var showDialog2 by remember { mutableStateOf(true) }
+            var UpdateProfile = viewModel.UpdateProfileResponse.collectAsState().value
+            if (showDialog && showDialog2) {
+                AlertDialog(
+                    onDismissRequest = {
+                        // Đóng hộp thoại khi người dùng chọn bất kỳ nơi nào trên màn hình
+                        showDialog2 = false
+                    },
+                    title = {
+                        Text(text = "Thành công")
+                    },
+                    text = {
+                        Text(text = "Cập nhật thành công")
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                showDialog2 = false
+                                navController.navigateUp()
+                            }
+                        ) {
+                            Text(text = "OK")
+                        }
+                    }
+                )
+            }
+            when(UpdateProfile){
+                is Result.Idle->{}
+                is Result.Loading->{
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        CircularProgressIndicator() // Hiển thị thanh tiến trình tải
+                    }
+                }
+                is Result.Success->{
+                    showDialog=true;
+                }
+                is Result.Error->{}
+                else -> Unit
+            }
+            Scaffold(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(ScreenBackGround),
+                topBar = {
+                    Row (
+                        Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() /*navController.popBackStack*/},"", modifier = Modifier )
+                        XSpacer(60)
+                        BoldText(text = "Cập nhật thông tin",
+                            //  fontWeight = FontWeight.Bold,
+                            // fontSize = 20.sp)
+                        )
+                    }
+                },
+                content = {
+                        innerPadding ->
+                    Column(
+                        modifier = Modifier.padding(innerPadding),
+                    ) {
+                        Text(text = "Đối với tên hồ sơ của bạn, chúng tôi sẽ rút ngắn tên đầy đủ của bạn. Có cơ hội nhận được ưu đãi đặc biệt bằng cách điền ngày sinh của bạn.",
+                            modifier = Modifier.padding(vertical = 16.dp,horizontal = 20.dp))
+
+                        TextBoxSingle(label = "Họ tên", value = fullName, onValueChange = { fullName = it },modifier = Modifier
+                            .padding(vertical = 16.dp, horizontal = 20.dp)
+                            .fillMaxWidth(), placeholder = "")
+
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,) {
+
+                            MyDropdownMenu(
+                                label = "Giới tính",
+                                items = listOf("Nam","Nữ","Khác"),
+                                selectedItem = gender,
+                                onItemSelected = { gender = it },
+                            )
+                        }
+                        TextBoxSingle(label = "Ngày sinh", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier
+                            .padding(vertical = 16.dp, horizontal = 20.dp)
+                            .fillMaxWidth(), placeholder = "")
+                        //YSpacer(16)
+                        TextBoxSingle(label = "Số điện thoại", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier
+                            .padding(horizontal = 20.dp)
+                            .fillMaxWidth(), placeholder = "")
+                        YSpacer(16)
+                        DisableTextBoxSingle(label = "Email", value = email,onValueChange = {},modifier = Modifier
+                            .padding(horizontal = 20.dp)
+                            .fillMaxWidth(), placeholder = "")
+                        YSpacer(16)
+                        TextBoxSingle(label = "Thành phố đang ở", value = city, onValueChange = { city = it },modifier = Modifier
+                            .padding(horizontal = 20.dp)
+                            .fillMaxWidth(), placeholder = "")
+                        YSpacer(32)
+                        PrimaryButton(onClick = {val arr = fullName.split(" ");
+                            viewModel.updateProfile(lastName =  arr.dropLast(1).joinToString(" "), firstName = arr.last(),phone=phoneNumber) ;
+                            navController.navigateUp()},
+                            modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
+
+                    }
+                }
+            )
+        }
+        is Result.Error ->{}
+
+    }
+
+    /*var fullName by rememberSaveable { mutableStateOf("Hoang Huy") }
     var gender by remember { mutableStateOf("Male") }
     var birthDate by rememberSaveable { mutableStateOf("20/12/2004") }
     var phoneNumber by rememberSaveable { mutableStateOf("0372527661") }
@@ -50,11 +197,13 @@ fun UpdateInformationScreen(navController: NavController) {
             .background(ScreenBackGround),
         topBar = {
             Row (
-                Modifier.padding(16.dp).fillMaxWidth(),
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() /*navController.popBackStack*/},"", modifier = Modifier )
+                PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() *//*navController.popBackStack*//*},"", modifier = Modifier )
                 XSpacer(60)
                 BoldText(text = "Cập nhật thông tin",
                     //  fontWeight = FontWeight.Bold,
@@ -70,7 +219,9 @@ fun UpdateInformationScreen(navController: NavController) {
                 Text(text = "Đối với tên hồ sơ của bạn, chúng tôi sẽ rút ngắn tên đầy đủ của bạn. Có cơ hội nhận được ưu đãi đặc biệt bằng cách điền ngày sinh của bạn.",
                     modifier = Modifier.padding(vertical = 16.dp,horizontal = 20.dp))
 
-                TextBoxSingle(label = "Họ tên", value = fullName, onValueChange = { fullName = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Họ tên", value = fullName, onValueChange = { fullName = it },modifier = Modifier
+                    .padding(vertical = 16.dp, horizontal = 20.dp)
+                    .fillMaxWidth(), placeholder = "")
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -85,18 +236,28 @@ fun UpdateInformationScreen(navController: NavController) {
                         onItemSelected = { gender = it },
                     )
                 }
-                TextBoxSingle(label = "Ngày sinh", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier.padding(vertical = 16.dp, horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Ngày sinh", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier
+                    .padding(vertical = 16.dp, horizontal = 20.dp)
+                    .fillMaxWidth(), placeholder = "")
                 //YSpacer(16)
-                TextBoxSingle(label = "Số điện thoại", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Số điện thoại", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth(), placeholder = "")
                 YSpacer(16)
-                TextBoxSingle(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth(), placeholder = "")
                 YSpacer(16)
-                TextBoxSingle(label = "Thành phố đang ở", value = city, onValueChange = { city = it },modifier = Modifier.padding( horizontal = 20.dp).fillMaxWidth(), placeholder = "")
+                TextBoxSingle(label = "Thành phố đang ở", value = city, onValueChange = { city = it },modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth(), placeholder = "")
                 YSpacer(32)
-                PrimaryButton(onClick = { navController.navigateUp()}, modifier = Modifier.fillMaxWidth().padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
+                PrimaryButton(onClick = { navController.navigateUp()}, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
             }
         }
-    )
+    )*/
 }
 
 
@@ -134,7 +295,8 @@ fun MyDropdownMenu(
                 //chinh mau
                 //colors = ExposedDropdownMenuDefaults.textFieldColors(),
                 colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-                modifier = Modifier.menuAnchor()
+                modifier = Modifier
+                    .menuAnchor()
                     .fillMaxWidth(),
                 label = {Text(label)},
             )

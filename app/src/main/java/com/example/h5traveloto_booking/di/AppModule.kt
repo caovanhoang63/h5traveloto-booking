@@ -199,7 +199,8 @@ object AppModule {
     @Singleton
     fun provideAccountUseCases(repository: ProfileRepository) : AccountUseCases {
         return AccountUseCases(
-            getProfileUseCase = ProfileUseCase(repository)
+            getProfileUseCase = ProfileUseCase(repository),
+            updateProfileUseCase = UpdateProfileUseCase(repository)
         )
     }
 

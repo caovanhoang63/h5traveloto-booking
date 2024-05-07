@@ -3,6 +3,8 @@ package com.example.h5traveloto_booking.main.presentation.data.api.repository
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.UpdateProfileDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.UpdateProfileResponse
 import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
 import com.example.h5traveloto_booking.main.presentation.domain.repository.ProfileRepository
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,11 @@ class ProfileRepositoryImpl @Inject constructor(
     override suspend fun GetProfile(token : String ): ProfileDTO {
         return withContext(Dispatchers.Default) {
             api.GetProfile(token)
+        }
+    }
+    override suspend fun UpdateProfile(token : String, data: UpdateProfileDTO) : UpdateProfileResponse {
+        return withContext(Dispatchers.Default) {
+            api.UpdateProfile(token,data)
         }
     }
 

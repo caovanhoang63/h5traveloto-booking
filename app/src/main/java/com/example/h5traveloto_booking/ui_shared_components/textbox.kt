@@ -43,3 +43,22 @@ fun TextBoxSingle(modifier: Modifier,placeholder: String,label: String, value: S
         )
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DisableTextBoxSingle(modifier: Modifier,placeholder: String,label: String, value: String, onValueChange: (String) -> Unit) {
+    OutlinedTextField(
+        enabled = false,
+        singleLine = true,
+        placeholder = { Text(placeholder) },
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier =    modifier,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = PrimaryColor,
+            containerColor = Color.Transparent,
+            focusedLabelColor = PrimaryColor
+        )
+    )
+}
