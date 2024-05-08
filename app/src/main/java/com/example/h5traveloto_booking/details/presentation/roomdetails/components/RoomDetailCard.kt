@@ -5,27 +5,22 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.MultiColorText
-import com.example.h5traveloto_booking.details.presentation.hoteldeatails.components.StarRatingBar
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.MultiColorText
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.GreyText
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
@@ -77,7 +72,7 @@ fun RoomDetailCard(navController: NavController) {
                     modifier = Modifier.fillMaxHeight(), horizontalAlignment = Alignment.Start
 
                 ) {
-                    BoldText(text = "Deluxe King River View")
+                    BoldText(text = "Deluxe Double View")
                     YSpacer(5)
                     GreyText(text = "Hai người lớn")
                     YSpacer(5)
@@ -98,7 +93,7 @@ fun RoomDetailCard(navController: NavController) {
 
                     PrimaryButton(
                         onClick = { navController.navigate(Screens.HotelDetailsScreen.name) },
-                        text = "Book now",
+                        text = "Chọn Phòng",
                     )
                 }
             }

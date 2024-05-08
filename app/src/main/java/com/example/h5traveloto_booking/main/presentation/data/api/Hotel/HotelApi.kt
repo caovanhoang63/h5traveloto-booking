@@ -8,6 +8,6 @@ import retrofit2.http.Headers
 interface HotelApi {
     @GET("hotels/list")
     suspend fun ListHotel(
-        @Header("Authorization") token : String
+        @Header("Authorization") token : String,
     ) : ListHotelDTO
 }

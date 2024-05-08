@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountViewModel @Inject constructor(
+class PersonalInformationViewModel @Inject constructor(
     private val useCases : AccountUseCases,
     private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
@@ -27,16 +27,16 @@ class AccountViewModel @Inject constructor(
 
     ) = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
-        Log.d("Account ViewModel", "Get token")
-        Log.d("Account ViewModel Token", token.toString())
+        Log.d("PersonalInformation ViewModel", "Get token")
+        Log.d("PersonalInformation ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
         useCases.getProfileUseCase(bearerToken).onStart {
             _profileDataResponse.value = Result.Loading
-            Log.d("Account ViewModel", "Loading")
+            Log.d("PersonalInformation ViewModel", "Loading")
 
         }.catch {
-            Log.d("Account ViewModel", "catch")
-            Log.d("Account ViewModel E", it.message.toString() )
+            Log.d("PersonalInformation ViewModel", "catch")
+            Log.d("PersonalInformation ViewModel E", it.message.toString() )
             _profileDataResponse.value = Result.Error(it.message.toString())
         }.collect{
             Log.d("Success","Ok")

@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
 
 
     fun authenticate(
-        email: String, password :String
+        email: String, password :String, checkLogin: (isSuccess: Boolean) -> Unit
     ) = viewModelScope.launch {
 
         val request = LoginRequestDTO(email,password )
@@ -49,7 +49,7 @@ class LoginViewModel @Inject constructor(
         .catch {e ->
             e.printStackTrace()
             Log.d("api error:", "Error: ${e.message}")
-
+            checkLogin(true)
         }.collect{
             res ->
                 res.data.access_token?.let {

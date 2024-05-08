@@ -3,7 +3,6 @@ package com.example.h5traveloto_booking.main.presentation.data.api.repository
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
-import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
 import com.example.h5traveloto_booking.main.presentation.domain.repository.ProfileRepository
 import kotlinx.coroutines.Dispatchers

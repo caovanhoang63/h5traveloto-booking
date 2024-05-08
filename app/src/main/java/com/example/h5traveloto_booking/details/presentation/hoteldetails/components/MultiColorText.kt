@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.details.presentation.hoteldeatails.components
+package com.example.h5traveloto_booking.details.presentation.hoteldetails.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

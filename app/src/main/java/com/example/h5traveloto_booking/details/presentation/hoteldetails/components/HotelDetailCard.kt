@@ -1,4 +1,4 @@
-package com.example.h5traveloto_booking.details.presentation.hoteldeatails.components
+package com.example.h5traveloto_booking.details.presentation.hoteldetails.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -76,9 +76,9 @@ fun HotelDetailCard(navController: NavController) { //default rating will be 1
                     horizontalAlignment = Alignment.Start
 
                 ) {
-                    Text(text = "Asteria hotel", style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold))
+                    Text(text = "Khách sạn Palace Sài Gòn", style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold))
                     YSpacer(5)
-                    GreyText(text = "Wilora NT 0872, Australia")
+                    GreyText(text = "56 - 66 Nguyễn Huệ, Bến Nghé, Quận 1")
                     YSpacer(5)
                     StarRatingBar(
                         maxStars = 5,
@@ -92,8 +92,8 @@ fun HotelDetailCard(navController: NavController) { //default rating will be 1
                 ) {
                     PrimaryText(text = "9.1 (1000)")
                     MultiColorText(
-                        Triple("$165.3", PrimaryColor, FontWeight.Bold),
-                        Triple(" /night", Grey500Color, FontWeight.Normal)
+                        Triple("1000kVND", PrimaryColor, FontWeight.Bold),
+                        Triple("/đêm", Grey500Color, FontWeight.Normal)
                     )
 
 

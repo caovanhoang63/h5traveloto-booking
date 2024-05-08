@@ -21,6 +21,7 @@ import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUp
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
+import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +49,7 @@ fun NameForm(
         Spacer(modifier = Modifier.height(62.dp))
         Column {
             //First Name
-            TextBox(
+            TextBoxSingle(
                 modifier = Modifier.fillMaxWidth()
                     .onFocusChanged {
                         if (it.isFocused) {
@@ -87,7 +88,7 @@ fun NameForm(
             }
             Spacer(modifier = Modifier.height(30.dp))
             //Last Name
-            TextBox(
+            TextBoxSingle(
                 modifier = Modifier.fillMaxWidth()
                     .onFocusChanged {
                         if (it.isFocused) {

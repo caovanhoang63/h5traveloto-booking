@@ -27,3 +27,22 @@ fun PasswordBox(modifier: Modifier, placeholder: String, label: String, value: S
         )
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PasswordBoxSingle(modifier: Modifier, placeholder: String, label: String, value: String, onValueChange: (String) -> Unit) {
+    OutlinedTextField(
+        singleLine = true,
+        placeholder = { Text(placeholder) },
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier =    modifier,
+        visualTransformation = PasswordVisualTransformation(),
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = PrimaryColor,
+            containerColor = Color.Transparent,
+            focusedLabelColor = PrimaryColor
+        )
+    )
+}

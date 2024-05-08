@@ -28,6 +28,7 @@ import com.example.h5traveloto_booking.ui_shared_components.PopupRegisterSuccess
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +54,7 @@ fun EmailForm(
 
         Column {
             //Email
-            TextBox(
+            TextBoxSingle(
                 modifier = Modifier.fillMaxWidth()
                     .onFocusChanged {
                         if (it.isFocused) {

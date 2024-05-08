@@ -20,6 +20,7 @@ import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUp
 import com.example.h5traveloto_booking.auth.presentation.signup.component.SignUpHeader
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.ui_shared_components.PasswordBox
+import com.example.h5traveloto_booking.ui_shared_components.PasswordBoxSingle
 import com.example.h5traveloto_booking.ui_shared_components.PopupRegisterSuccess
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
@@ -51,7 +52,7 @@ fun PasswordForm(
         Column {
 
             //Password
-            PasswordBox(
+            PasswordBoxSingle(
                 modifier = Modifier.fillMaxWidth()
                     .onFocusChanged {
                         if(it.isFocused){
@@ -86,7 +87,7 @@ fun PasswordForm(
             }
             Spacer(modifier = Modifier.height(30.dp))
             //Password Confirm
-            PasswordBox(
+            PasswordBoxSingle(
                 modifier = Modifier.fillMaxWidth()
                     .onFocusChanged {
                         if(it.isFocused){

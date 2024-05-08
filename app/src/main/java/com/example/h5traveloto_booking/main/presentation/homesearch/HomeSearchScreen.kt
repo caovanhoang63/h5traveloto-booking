@@ -1,6 +1,9 @@
 package com.example.h5traveloto_booking.main.presentation.homesearch
 
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,12 +27,17 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.h5traveloto_booking.MainActivity
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.main.presentation.homesearch.screens.ChoosePersonScreen
 import com.example.h5traveloto_booking.main.presentation.homesearch.screens.SearchLocationScreen
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.ShareHotelDataViewModel
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
@@ -43,8 +52,6 @@ fun HomeSearchScreen(
     navAppNavController: NavController,
     homeSearchViewModel: HomeSearchViewModel = hiltViewModel(),
 ) {
-
-
     val scrollState = rememberScrollState()
     var showChosePerson by remember { mutableStateOf(false) }
     var showChoseLocation by remember { mutableStateOf(false) }
@@ -54,6 +61,20 @@ fun HomeSearchScreen(
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
     var isMyLocation by rememberSaveable { mutableStateOf(true) }
 
+    val permissions = arrayOf(
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+        android.Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+    val locationProvider = LocationProvider(LocalContext.current)
+    val launchMultiplePermissions = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.all { it.value }) {
+            locationProvider.startLocationUpdates()
+        } else {
+            Log.d("LocationProvider", "Permissions denied")
+        }
+    }
 
     Scaffold (
         topBar = {
@@ -66,23 +87,7 @@ fun HomeSearchScreen(
                    .padding(21.dp, 0.dp, 21.dp, 0.dp)
                    .height(64.dp)
            ){
-               Button(
-                   onClick = {navController.navigate(Screens.HomeScreen.name)},
-                   modifier = Modifier
-                       .border(2.dp, BorderStroke, RoundedCornerShape(8.dp))
-                       .size(40.dp),
-                   shape = RoundedCornerShape(8.dp),
-                   contentPadding = PaddingValues(0.dp),
-                   colors = ButtonDefaults.buttonColors(
-                       containerColor = Color(0xFFFFFFFF),
-                   ),
-               ){
-                    Image(
-                        painterResource(id = R.drawable.iconback),
-                        contentDescription = "Back",
-                        modifier = Modifier.size(24.dp)
-                    )
-               }
+               PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()},alt = "",)
                Text(text = "Accommodation", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "Back")
            }
@@ -169,6 +174,7 @@ fun HomeSearchScreen(
                                     onClick = {
                                         isMyLocation = true
                                         location = "Khách sạn gần tôi"
+                                        launchMultiplePermissions.launch(permissions)
                                     },
                                     modifier = Modifier.size(40.dp),
                                     contentPadding = PaddingValues(0.dp),
@@ -223,6 +229,9 @@ fun HomeSearchScreen(
                             Spacer(modifier = Modifier.height(24.dp))
                             Button(
                                 onClick = {
+                                    locationProvider.getCurrentLocation(setLocation = {
+                                        Log.d("LocationProvider", "Latitude: ${it?.latitude}, Longitude: ${it?.longitude} ")
+                                    })
                                     navAppNavController.navigate(Screens.ListHotels.name)
                                           },
                                 modifier = Modifier
