@@ -4,6 +4,7 @@ import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetail
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface HotelDetailsApi {
     @GET("/v1/hotels/{hotelId}/detail")

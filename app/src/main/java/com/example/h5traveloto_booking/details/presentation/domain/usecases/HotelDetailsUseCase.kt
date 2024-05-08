@@ -8,8 +8,10 @@ import kotlinx.coroutines.flow.flow
 import java.util.concurrent.Flow
 import javax.inject.Inject
 
-data class HotelDetailsUseCase @Inject constructor(private val repository: HotelDetailsRepository){
-    suspend operator fun invoke(hotelid: String) :
+data class HotelDetailsUseCase @Inject constructor(
+    private val repository: HotelDetailsRepository
+) {
+    suspend operator fun invoke(hotelid: String):
             kotlinx.coroutines.flow.Flow<HotelDetailsDTO> = flow {
         emit(repository.getHotelDetails(hotelid))
     }

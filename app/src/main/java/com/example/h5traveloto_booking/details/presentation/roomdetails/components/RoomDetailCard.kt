@@ -14,6 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.Data
+import com.example.h5traveloto_booking.details.presentation.data.dto.listRooms.ListRoomDTO
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.MultiColorText
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
@@ -25,7 +27,7 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @Composable
-fun RoomDetailCard(navController: NavController) {
+fun RoomDetailCard(navController: NavController,roomDTO: com.example.h5traveloto_booking.details.presentation.data.dto.listRooms.Data) {
     val imagelist = listOf(
         //dummy data
         "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
@@ -40,7 +42,7 @@ fun RoomDetailCard(navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(320.dp),
+            /*.height(320.dp)*/,
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color, //Card background color
         ),
@@ -72,25 +74,19 @@ fun RoomDetailCard(navController: NavController) {
                     modifier = Modifier.fillMaxHeight(), horizontalAlignment = Alignment.Start
 
                 ) {
-                    BoldText(text = "Deluxe Double View")
-                    YSpacer(5)
-                    GreyText(text = "Hai người lớn")
-                    YSpacer(5)
-                    GreyText(text = "Bồn hoa sen")
-                    YSpacer(5)
-                    GreyText(text = "Free wifi")
+                    BoldText(text = roomDTO.name)
 
                 }
                 Column(
                     modifier = Modifier.fillMaxHeight(),
-                    verticalArrangement = Arrangement.SpaceBetween,
+                    /*verticalArrangement = Arrangement.SpaceBetween,*/
                     horizontalAlignment = Alignment.End
                 ) {
                     MultiColorText(
-                        Triple("$165.3", PrimaryColor, FontWeight.Bold),
-                        Triple(" /night", Grey500Color, FontWeight.Normal)
+                        Triple(roomDTO.price.toString(), PrimaryColor, FontWeight.Bold),
+                        Triple(" /đêm", Grey500Color, FontWeight.Normal)
                     )
-
+                    YSpacer(5)
                     PrimaryButton(
                         onClick = { navController.navigate(Screens.HotelDetailsScreen.name) },
                         text = "Chọn Phòng",

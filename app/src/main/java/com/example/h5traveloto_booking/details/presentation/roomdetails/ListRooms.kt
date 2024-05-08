@@ -1,30 +1,39 @@
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.account.ListHotelsViewModel
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard
+import com.example.h5traveloto_booking.details.presentation.roomdetails.ListRoomViewModel
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.util.Result
 
 @Composable
-fun ListRooms(navController: NavController) {
-    val hotels = listOf( //dummy data
-        RoomDetailCard(navController),
-        RoomDetailCard(navController),
-        RoomDetailCard(navController)
-    )
+fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltViewModel()) {
+    LaunchedEffect(Unit){
+        viewModel.getListRooms()
+    }
+    val listRoomResponse = viewModel.ListRoomsResponse.collectAsState().value
+
     Scaffold(
         topBar = {
             Column(modifier = Modifier.fillMaxWidth().height(121.dp).background(Grey50Color),) {
@@ -63,10 +72,34 @@ fun ListRooms(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
             ) {
-                hotels.forEachIndexed() { index, hotel ->
-                    item {
-                        RoomDetailCard(navController)
+                item {
+                    when (listRoomResponse) {
+                        is Result.Loading -> {
+                            Log.d("ListRooms", "dang load")
 
+                            // Hieu ung load
+                            Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                                CircularProgressIndicator()
+
+                            }
+                        }
+
+                        is Result.Error -> {
+                            Log.d("List Hotel ", "loi roi")
+                        }
+
+                        is Result.Success -> {
+                            Log.d("ListRooms", "thanh cong")
+                            val rooms = listRoomResponse.data.data
+                            rooms.forEachIndexed { index, hotelDTO ->
+                                RoomDetailCard(roomDTO = rooms[index], navController = navController)
+                                if (index < rooms.lastIndex) {
+                                    Spacer(modifier = Modifier.height(15.dp))
+                                }
+                            }
+                        }
+
+                        else -> Unit
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.h5traveloto_booking.details.presentation.hoteldetails
 
 import ExpandingText
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,6 +39,7 @@ import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
+@SuppressLint("InvalidColorHexValue")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScreenViewModel = hiltViewModel()) {
@@ -141,19 +143,57 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
                             .height(36.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        LazyRow() {
-                            item {
-                                HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
-                                HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
-                                HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
-                                HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
-                                HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
-                                HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth(0.8f),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            items(1) {
+
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.wifi,
+                                    alt = "wifi",
+                                    text = "Free Wifi",
+                                    iconColor = Color.Black
+                                )
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.coffee,
+                                    alt = "coffee",
+                                    text = "Free Breakfast",
+                                    iconColor = Color.Black
+                                )
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.wifi,
+                                    alt = "wifi",
+                                    text = "Free Wifi",
+                                    iconColor = Color.Black
+                                )
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.coffee,
+                                    alt = "coffee",
+                                    text = "Free Breakfast",
+                                    iconColor = Color.Black
+                                )
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.wifi,
+                                    alt = "wifi",
+                                    text = "Free Wifi",
+                                    iconColor = Color.Black
+                                )
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.coffee,
+                                    alt = "coffee",
+                                    text = "Free Breakfast",
+                                    iconColor = Color.Black
+                                )
                             }
                         }
-//                        HotelServiceTag(DrawableId = R.drawable.wifi, alt = "wifi", text = "Free Wifi")
-//                        HotelServiceTag(DrawableId = R.drawable.coffee, alt = "coffee", text = "Free Breakfast")
-                        HotelServiceTag(DrawableId = R.drawable.star, alt = "rating", text = "5.0")
+//
+                        HotelServiceTag(
+                            DrawableId = R.drawable.star,
+                            alt = "rating",
+                            text = "5.0",
+                            iconColor = Color(0xffffe234)
+                        )
                     }
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {

@@ -21,7 +21,7 @@ import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 
 @Composable
-fun HotelServiceTag(DrawableId: Int, alt: String, modifier: Modifier = Modifier, text: String) {
+fun HotelServiceTag(DrawableId: Int, alt: String, modifier: Modifier = Modifier, text: String,iconColor: Color) {
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
@@ -32,7 +32,7 @@ fun HotelServiceTag(DrawableId: Int, alt: String, modifier: Modifier = Modifier,
         Icon(
             painter = painterResource(id = DrawableId),
             contentDescription = alt,
-            tint = Color.Yellow,
+            tint = iconColor,
             modifier = Modifier.size(20.dp)
         )
         XSpacer(width = 8)

@@ -8,7 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class HotelDetailsRepositoryImpl @Inject constructor(public val api: HotelDetailsApi) : HotelDetailsRepository {
+class HotelDetailsRepositoryImpl @Inject constructor(
+    private val api: HotelDetailsApi
+) : HotelDetailsRepository {
     override suspend fun getHotelDetails(hotelId: String): HotelDetailsDTO {
         return withContext(Dispatchers.Default) {
             api.getHotelDetails(hotelId)
