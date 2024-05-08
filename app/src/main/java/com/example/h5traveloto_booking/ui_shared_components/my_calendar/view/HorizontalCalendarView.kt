@@ -1,25 +1,27 @@
 package com.example.h5traveloto_booking.ui_shared_components.my_calendar.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.animation.CalendarAnimator
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.INITIAL_PAGE_INDEX
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.MAX_PAGES
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.rememberCalendarState
+import kotlinx.coroutines.delay
 //import io.wojciechosak.calendar.animation.CalendarAnimator
 //import io.wojciechosak.calendar.config.CalendarConstants.INITIAL_PAGE_INDEX
 //import io.wojciechosak.calendar.config.CalendarConstants.MAX_PAGES
 //import io.wojciechosak.calendar.config.rememberCalendarState
 import kotlinx.datetime.LocalDate
+import kotlin.math.abs
 
 /**
  * Composable function to display a horizontal calendar view.
@@ -67,12 +69,42 @@ fun HorizontalCalendarView(
         pageSize = pageSize,
         beyondBoundsPageCount = beyondBoundsPageCount,
         contentPadding = contentPadding,
-    ) {
-        val index = it - INITIAL_PAGE_INDEX
-        calendarAnimator.updatePagerState(pagerState)
-        LaunchedEffect(Unit) {
-            calendarAnimator.setAnimationMode(CalendarAnimator.AnimationMode.MONTH)
+    ) { page ->
+        @Suppress("NAME_SHADOWING")
+        val page by rememberUpdatedState(newValue = page)
+        val authorizedPage = {
+            abs(pagerState.settledPage - page) <= beyondBoundsPageCount
         }
-        Column { calendarView(index) }
+        val authorizedTiming by produceState(initialValue = false) {
+            while (pagerState.isScrollInProgress) delay(50)
+            if (abs(pagerState.settledPage - page) > 0) {
+                delay(1000)
+                while (pagerState.isScrollInProgress) delay(50)
+            }
+            value = true
+        }
+        // Conditions to show content
+        val showContent by remember {
+            derivedStateOf {
+                authorizedPage() && authorizedTiming
+            }
+        }
+
+        if (showContent) {
+            val index = page - INITIAL_PAGE_INDEX
+            calendarAnimator.updatePagerState(pagerState)
+            LaunchedEffect(Unit) {
+                calendarAnimator.setAnimationMode(CalendarAnimator.AnimationMode.MONTH)
+            }
+            Column { calendarView(index) }
+        } else {
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
     }
 }

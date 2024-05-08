@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.h5traveloto_booking.main.presentation.schedule.components.CalendarDay
 import com.example.h5traveloto_booking.main.presentation.schedule.components.MonthHeader
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
@@ -19,6 +18,7 @@ import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.r
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.range.RangeConfig
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.range.RoundedRangeIllustrator
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarDay
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarView
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.HorizontalCalendarView
 //import io.wojciechosak.calendar.animation.CalendarAnimator

@@ -6,7 +6,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -30,8 +30,13 @@ import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.C
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.DayState
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.SelectionMode
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.rememberCalendarState
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.RangeEndDay
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.RangeFullDay
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.RangeMidDay
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.RangeStartDate
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.toMonthYear
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarDay
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarView
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.HorizontalCalendarView
 //import io.wojciechosak.calendar.animation.CalendarAnimator
@@ -61,90 +66,6 @@ public fun BookingCalendar (
 
     val rangeColor = SecondaryColor
     val rangeStrokeWidth = 2
-
-    val modifier_startDay = Modifier.drawBehind {
-        val strokeWidth = rangeStrokeWidth * density
-        val yDown = size.height
-        val yUp = -(size.height - 126f)
-        drawArc(
-            color = rangeColor,
-            startAngle = -90f,
-            sweepAngle = -180f,
-            useCenter = false,
-            style = Stroke(
-                width = strokeWidth
-            )
-        )
-        drawLine(
-            color = rangeColor,
-            start =  Offset(size.width/2, yDown),
-            end =  Offset(size.width, yDown),
-            strokeWidth = strokeWidth
-        )
-        drawLine(
-            color = rangeColor,
-            Offset(size.width/2, yUp),
-            Offset(size.width, yUp),
-            strokeWidth
-        )
-    }
-    val modifier_midDay = Modifier.drawBehind {
-        val strokeWidth = rangeStrokeWidth * density
-        val yDown = size.height
-        val yUp = -(size.height - 126f)
-        drawLine(
-            color = rangeColor,
-            start =  Offset(0f, yDown),
-            end =  Offset(size.width, yDown),
-            strokeWidth = strokeWidth
-        )
-        drawLine(
-            color = rangeColor,
-            Offset(0f, yUp),
-            Offset(size.width, yUp),
-            strokeWidth
-        )
-    }
-    val modifier_endDay = Modifier.drawBehind {
-        val strokeWidth = rangeStrokeWidth * density
-        val yDown = size.height
-        val yUp = -(size.height - 126f)
-        drawArc(
-            color = rangeColor,
-            startAngle = -90f,
-            sweepAngle = 180f,
-            useCenter = false,
-            style = Stroke(
-                width = strokeWidth
-            )
-        )
-        drawLine(
-            color = rangeColor,
-            start =  Offset(0f, yDown),
-            end =  Offset(size.width/2, yDown),
-            strokeWidth = strokeWidth
-        )
-        drawLine(
-            color = rangeColor,
-            Offset(0f, yUp),
-            Offset(size.width/2, yUp),
-            strokeWidth
-        )
-    }
-    val modifier_fullDay = Modifier.drawBehind {
-        val strokeWidth = rangeStrokeWidth * density
-        val yDown = size.height
-        val yUp = -(size.height - 126f)
-        drawArc(
-            color = rangeColor,
-            startAngle = -90f,
-            sweepAngle = 360f,
-            useCenter = false,
-            style = Stroke(
-                width = strokeWidth
-            )
-        )
-    }
 
     for (booking in bookingList) {
         // Note start date
@@ -214,11 +135,12 @@ public fun BookingCalendar (
 
     HorizontalCalendarView(
         modifier = Modifier
+            .height(410.dp)
             .padding(10.dp)
             .clip(shape = RoundedCornerShape(8.dp))
             .background(color = Grey50Color),
         startDate = startDate,
-        beyondBoundsPageCount = 5,
+        beyondBoundsPageCount = 1,
         calendarAnimator = calendarAnimator
     ) { monthOffset ->
         CalendarView(
@@ -234,22 +156,22 @@ public fun BookingCalendar (
                                 Modifier
                                     .then(
                                         if (mapBookingDayState[dayState.date]!!.is_StartDate) {
-                                            modifier_startDay
+                                            Modifier.RangeStartDate(rangeStrokeWidth, rangeColor)
                                         } else Modifier
                                     )
                                     .then(
                                         if (mapBookingDayState[dayState.date]!!.is_MiddleDate) {
-                                            modifier_midDay
+                                            Modifier.RangeMidDay(rangeStrokeWidth, rangeColor)
                                         } else Modifier
                                     )
                                     .then(
                                         if (mapBookingDayState[dayState.date]!!.is_EndDate) {
-                                            modifier_endDay
+                                            Modifier.RangeEndDay(rangeStrokeWidth, rangeColor)
                                         } else Modifier
                                     )
                                     .then(
                                         if (mapBookingDayState[dayState.date]!!.is_FullDate) {
-                                            modifier_fullDay
+                                            Modifier.RangeFullDay(rangeStrokeWidth, rangeColor)
                                         } else Modifier
                                     )
                             } else {
@@ -291,6 +213,8 @@ public fun BookingCalendar (
                 monthOffset = monthOffset,
                 selectedDates = selectedDates
             ),
+            horizontalArrangement = Arrangement.spacedBy(0.dp),
+            verticalArrangement = Arrangement.spacedBy(0.dp),
 //            selectionMode = SelectionMode.Range,
             onDateSelected = {
                 selectedDates.clear()
@@ -302,7 +226,6 @@ public fun BookingCalendar (
 //                    rangeIllustrator = RoundedRangeIllustrator(Color.Red)
 //                )
         )
-
     }
 }
 
