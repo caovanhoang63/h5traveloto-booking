@@ -14,12 +14,18 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.PersonalInformationViewModel
+import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.translateGenderToVietnamese
+import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.translateGendertoEnglish
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.PrimaryColor
@@ -147,9 +153,9 @@ fun PersonalData(navController: NavController,acc: Result<ProfileDTO>) {
 
                 is Result.Success -> {
                     val Profile = acc.data
-                    PersonalItem("Họ tên",false,Profile.data.lastName +" " +Profile.data.firstName)
-                    PersonalItem("Giới tính",false,)
-                    PersonalItem("Ngày sinh",false,)
+                    PersonalItem("Họ tên",false, Profile.data.lastName +" " +Profile.data.firstName)
+                    PersonalItem("Giới tính",false, translateGenderToVietnamese(Profile.data.gender))
+                    PersonalItem("Ngày sinh",false,Profile.data.dateOfBirth)
                     Log.e("test",Profile.data.phone)
                     PersonalItem("Số điện thoại",false,Profile.data.phone)
                     PersonalItem("Email",false,Profile.data.email)
@@ -166,7 +172,7 @@ fun PersonalData(navController: NavController,acc: Result<ProfileDTO>) {
 fun PersonalItem(
     label: String,
     isLastChild: Boolean,
-    value: String="Not Set",
+    value: String?="Not Set",
 ){
     Column (modifier = Modifier
         .wrapContentSize()

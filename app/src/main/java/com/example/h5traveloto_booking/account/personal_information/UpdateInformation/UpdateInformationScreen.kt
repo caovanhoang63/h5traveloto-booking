@@ -3,6 +3,7 @@
 package com.example.h5traveloto_booking.account.personal_information.UpdateInformation
 
 import android.app.DatePickerDialog
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,8 +17,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,12 +31,9 @@ import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
-import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
-import com.example.h5traveloto_booking.util.ui_shared_components.TextBox
-import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 import java.time.LocalDate
 import com.example.h5traveloto_booking.util.Result
-import com.example.h5traveloto_booking.util.ui_shared_components.DisableTextBoxSingle
+import com.example.h5traveloto_booking.util.ui_shared_components.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,11 +58,17 @@ fun UpdateInformationScreen(navController: NavController,
             }
         }
         is Result.Success ->{
+            var date = ProfileResponse.data.data.dateOfBirth
+            if(date!=null) {
+                var arr = date.split("-")
+                date = arr[2]+arr[1]+arr[0]
+            }
             var fullName by rememberSaveable { mutableStateOf(ProfileResponse.data.data.lastName + " " + ProfileResponse.data.data.firstName) }
-            var gender by remember { mutableStateOf("Other") }
-            var birthDate by rememberSaveable { mutableStateOf("Not Set") }
+            var gender by rememberSaveable { mutableStateOf(translateGenderToVietnamese(ProfileResponse.data.data.gender)) }
+            var birthDate by rememberSaveable { mutableStateOf(date)}
             var phoneNumber by rememberSaveable { mutableStateOf(ProfileResponse.data.data.phone) }
             var email by rememberSaveable { mutableStateOf(ProfileResponse.data.data.email) }
+            var avatar by rememberSaveable { mutableStateOf(ProfileResponse.data.data.avatar)}
             var city by rememberSaveable { mutableStateOf("Not Set") }
             var showDialog by remember { mutableStateOf(false) }
             var showDialog2 by remember { mutableStateOf(true) }
@@ -88,7 +92,7 @@ fun UpdateInformationScreen(navController: NavController,
                                 navController.navigateUp()
                             }
                         ) {
-                            Text(text = "OK")
+                            Text(text = "")
                         }
                     }
                 )
@@ -154,7 +158,7 @@ fun UpdateInformationScreen(navController: NavController,
                                 onItemSelected = { gender = it },
                             )
                         }
-                        TextBoxSingle(label = "Ngày sinh", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier
+                        TextBoxSingleDate(label = "Ngày sinh", value = if(birthDate.isNullOrBlank()) "" else birthDate.toString(), onValueChange = {if (it.length <= 8) birthDate = it },modifier = Modifier
                             .padding(vertical = 16.dp, horizontal = 20.dp)
                             .fillMaxWidth(), placeholder = "")
                         //YSpacer(16)
@@ -171,11 +175,11 @@ fun UpdateInformationScreen(navController: NavController,
                             .fillMaxWidth(), placeholder = "")
                         YSpacer(32)
                         PrimaryButton(onClick = {val arr = fullName.split(" ");
-                            viewModel.updateProfile(lastName =  arr.dropLast(1).joinToString(" "), firstName = arr.last(),phone=phoneNumber) ;
+                            viewModel.updateProfile(lastName =  arr.dropLast(1).joinToString(" "), firstName = arr.last(),phone=phoneNumber,gender = translateGendertoEnglish(gender), birthDateOfBirth = birthDate, avatar = avatar) ;
                             navController.navigateUp()},
                             modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
+                                .fillMaxWidth()
+                                .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
 
                     }
                 }
@@ -185,81 +189,24 @@ fun UpdateInformationScreen(navController: NavController,
 
     }
 
-    /*var fullName by rememberSaveable { mutableStateOf("Hoang Huy") }
-    var gender by remember { mutableStateOf("Male") }
-    var birthDate by rememberSaveable { mutableStateOf("20/12/2004") }
-    var phoneNumber by rememberSaveable { mutableStateOf("0372527661") }
-    var email by rememberSaveable { mutableStateOf("22520533@gm.uit.edu.vn") }
-    var city by rememberSaveable { mutableStateOf("Not Set") }
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(ScreenBackGround),
-        topBar = {
-            Row (
-                Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() *//*navController.popBackStack*//*},"", modifier = Modifier )
-                XSpacer(60)
-                BoldText(text = "Cập nhật thông tin",
-                    //  fontWeight = FontWeight.Bold,
-                    // fontSize = 20.sp)
-                )
-            }
-        },
-        content = {
-            innerPadding ->
-            Column(
-                modifier = Modifier.padding(innerPadding),
-            ) {
-                Text(text = "Đối với tên hồ sơ của bạn, chúng tôi sẽ rút ngắn tên đầy đủ của bạn. Có cơ hội nhận được ưu đãi đặc biệt bằng cách điền ngày sinh của bạn.",
-                    modifier = Modifier.padding(vertical = 16.dp,horizontal = 20.dp))
-
-                TextBoxSingle(label = "Họ tên", value = fullName, onValueChange = { fullName = it },modifier = Modifier
-                    .padding(vertical = 16.dp, horizontal = 20.dp)
-                    .fillMaxWidth(), placeholder = "")
-
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,) {
-
-                    MyDropdownMenu(
-                        label = "Giới tính",
-                        items = listOf("Nam","Nữ","Khác"),
-                        selectedItem = gender,
-                        onItemSelected = { gender = it },
-                    )
-                }
-                TextBoxSingle(label = "Ngày sinh", value = birthDate, onValueChange = { birthDate = it },modifier = Modifier
-                    .padding(vertical = 16.dp, horizontal = 20.dp)
-                    .fillMaxWidth(), placeholder = "")
-                //YSpacer(16)
-                TextBoxSingle(label = "Số điện thoại", value = phoneNumber, onValueChange = { phoneNumber = it },modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth(), placeholder = "")
-                YSpacer(16)
-                TextBoxSingle(label = "Email", value = email, onValueChange = { email = it },modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth(), placeholder = "")
-                YSpacer(16)
-                TextBoxSingle(label = "Thành phố đang ở", value = city, onValueChange = { city = it },modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth(), placeholder = "")
-                YSpacer(32)
-                PrimaryButton(onClick = { navController.navigateUp()}, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
-            }
-        }
-    )*/
 }
 
+fun translateGenderToVietnamese(gender: String?): String {
+    return when (gender) {
+        "male" -> "Nam"
+        "female" -> "Nữ"
+        "other" -> "Khác"
+        else -> gender.toString() // Nếu không phải là male, female hoặc other, trả về giá trị ban đầu
+    }
+}
+fun translateGendertoEnglish(gender: String?): String {
+    return when(gender){
+        "Nam" -> "male"
+        "Nữ" -> "female"
+        "Khác" ->"other"
+        else -> gender.toString()
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -357,4 +304,36 @@ fun DatePickerComponent(selectedDate: MutableState<LocalDate>) {
 }
 */
 
+class DateTransformation() : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
+        return dateFilter(text)
+    }
+}
 
+fun dateFilter(text: AnnotatedString): TransformedText {
+
+    val trimmed = if (text.text.length >= 8) text.text.substring(0..7) else text.text
+    var out = ""
+    for (i in trimmed.indices) {
+        out += trimmed[i]
+        if (i % 2 == 1 && i < 4) out += "/"
+    }
+
+    val numberOffsetTranslator = object : OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int {
+            if (offset <= 1) return offset
+            if (offset <= 3) return offset +1
+            if (offset <= 8) return offset +2
+            return 10
+        }
+
+        override fun transformedToOriginal(offset: Int): Int {
+            if (offset <=2) return offset
+            if (offset <=5) return offset -1
+            if (offset <=10) return offset -2
+            return 8
+        }
+    }
+
+    return TransformedText(AnnotatedString(out), numberOffsetTranslator)
+}

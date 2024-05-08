@@ -6,5 +6,5 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Update
 
 interface ProfileRepository {
     suspend fun GetProfile(token: String): ProfileDTO
-    suspend fun UpdateProfile(token: String, data:UpdateProfileDTO): UpdateProfileResponse
+    suspend fun UpdateProfile(token: String, data: UpdateProfileDTO): UpdateProfileResponse
 }

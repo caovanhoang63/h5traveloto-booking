@@ -7,6 +7,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.DateTransformation
 import com.example.h5traveloto_booking.theme.PrimaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,5 +61,24 @@ fun DisableTextBoxSingle(modifier: Modifier,placeholder: String,label: String, v
             containerColor = Color.Transparent,
             focusedLabelColor = PrimaryColor
         )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextBoxSingleDate(modifier: Modifier,placeholder: String,label: String, value: String, onValueChange: (String) -> Unit) {
+    OutlinedTextField(
+        singleLine = true,
+        placeholder = { Text(placeholder) },
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier =    modifier,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = PrimaryColor,
+            containerColor = Color.Transparent,
+            focusedLabelColor = PrimaryColor
+        ) ,
+        visualTransformation = DateTransformation()
     )
 }

@@ -54,12 +54,27 @@ class UpdateInformationViewModel @Inject constructor(
         firstName: String,
         lastName: String,
         phone:String,
+        birthDateOfBirth:String?,
+        gender:String,
+        avatar: Avatar?,
     ) = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
         Log.d("UpdateProfile ViewModel", "Get token")
         Log.d("UpdateProfile ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        val updateProfileDTO  = UpdateProfileDTO(firstName,lastName,phone)
+        var date: String?
+        var updateProfileDTO:UpdateProfileDTO
+
+        if(birthDateOfBirth!=null){
+            date = birthDateOfBirth
+            Log.d("UpdateProfile ViewModel", "Get birthDateOfBirth")
+            Log.d("UpdateProfile ViewModel Date", date.toString())
+            var arr=date.split("")
+            date = arr[5]+arr[6]+arr[7]+arr[8]+"-"+arr[3]+arr[4]+"-"+arr[1]+arr[2]
+            Log.d("UpdateProfile ViewModel Date", date.toString())
+           updateProfileDTO = UpdateProfileDTO(firstName=firstName,lastName=lastName,phone=phone, dateOfBirth = date,gender=gender, avatar = avatar)
+        } else updateProfileDTO= UpdateProfileDTO(firstName=firstName,lastName=lastName,phone=phone, dateOfBirth = birthDateOfBirth,gender=gender, avatar = avatar)
+        Log.d("UpdateProfile ViewModel", birthDateOfBirth.toString())
         useCases.updateProfileUseCase(bearerToken,updateProfileDTO).onStart {
             _updateProfileResponse.value = Result.Loading
             Log.d("UpdateProfile ViewModel", "Loading")
@@ -70,6 +85,7 @@ class UpdateInformationViewModel @Inject constructor(
                 Log.d("UpdateProfile ViewModel", "hehe")
                 val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
                 Log.d("UpdateProfile ViewModel Error", errorResponse.message)
+                Log.d("UpdateProfile ViewModel Error", errorResponse.log)
                 _updateProfileResponse.value = Result.Error(errorResponse.message)
             }
             else if (it is Exception) {
@@ -77,8 +93,8 @@ class UpdateInformationViewModel @Inject constructor(
             }
 
         }.collect {
-            Log.d("ChangePassword ViewModel","Ok")
-            Log.d("ChangePassword ViewModel",it.data.toString())
+            Log.d("UpdateProfile ViewModel","Ok")
+            Log.d("UpdateProfile ViewModel",it.data.toString())
 //            Log.d("Success",it.paging.total.toString())
             _updateProfileResponse.value = Result.Success(it)
         }

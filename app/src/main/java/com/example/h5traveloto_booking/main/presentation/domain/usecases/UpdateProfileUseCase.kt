@@ -11,7 +11,7 @@ import javax.inject.Inject
 class UpdateProfileUseCase @Inject constructor(
     private val repository: ProfileRepository
 ) {
-    suspend operator fun invoke(token:String,data:UpdateProfileDTO): Flow<UpdateProfileResponse> = flow {
+    suspend operator fun invoke(token:String,data: UpdateProfileDTO): Flow<UpdateProfileResponse> = flow {
         emit(repository.UpdateProfile(token,data))
     }
 }
