@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.main.presentation.data.api.repository
 
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.SuggestionsDTO
 import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,6 +15,12 @@ class SearchRepositoryImpl @Inject constructor(
     override suspend fun listDistricts(): DistrictsDTO {
         return withContext(Dispatchers.Default) {
             api.listDistricts()
+        }
+    }
+
+    override suspend fun searchSuggestions(limit: Int, searchText: String): SuggestionsDTO {
+        return withContext(Dispatchers.Default) {
+            api.searchSuggestions(limit, searchText)
         }
     }
 }

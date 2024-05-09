@@ -48,6 +48,7 @@ fun TextSearchBasic(
                 fontSize = 14.sp,
                 lineHeight = 16.sp,
             ),
+            singleLine = true,
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(placeholder, color = Color.Gray, fontSize = 14.sp)

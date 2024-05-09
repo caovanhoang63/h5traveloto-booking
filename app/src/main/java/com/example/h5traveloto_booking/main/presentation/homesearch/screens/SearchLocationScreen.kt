@@ -85,11 +85,12 @@ fun SearchLocationScreen(
                     TextSearchBasic(
                         value = searchQuery,
                         onValueChange = { query -> viewModel.updateSearchQuery(query) },
-                        placeholder = "Thành phố, khách sạn, điểm đến",
+                        placeholder = "Thành phố, khách sạn",
                         modifier = Modifier
                             .weight(1f)
                             .height(40.dp)
-                            .padding(16.dp, 0.dp)
+                            .padding(16.dp, 0.dp),
+
                     )
                     TextButton(
                         onClick = { onComplete(searchQuery) },

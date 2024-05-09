@@ -175,7 +175,8 @@ object AppModule {
     @Singleton
     fun provideSearchUsesCases(repository: SearchRepository) : SearchUseCases {
         return SearchUseCases(
-            listDistrictsUseCase = ListDistrictsUseCase(repository)
+            listDistrictsUseCase = ListDistrictsUseCase(repository),
+            searchSuggestionUseCase = SearchSuggestionUseCase(repository)
         )
     }
 
