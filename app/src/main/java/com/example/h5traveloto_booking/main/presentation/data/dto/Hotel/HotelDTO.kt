@@ -9,7 +9,7 @@ data class HotelDTO(
     @Json(name = "address")
     val address: String,
     @Json(name = "avg_price")
-    val avgPrice: Int,
+    val avgPrice: Double,
     @Json(name = "created_at")
     val createdAt: String,
     @Json(name = "district")

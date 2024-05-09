@@ -1,16 +1,18 @@
 package com.example.h5traveloto_booking.details.presentation.hoteldetails.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -18,29 +20,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.HotelDTO
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
-import com.example.h5traveloto_booking.ui_shared_components.GreyText
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryText
-import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.ui_shared_components.*
+import kotlin.math.log
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotelDetailCard(navController: NavController) { //default rating will be 1
-    val imagelist = listOf( //dummy data
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-    )
+fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default rating will be 1
+    val imgURL = hotelDTO.images.map { it.url }
+
+
+
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .height(232.dp),
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color, //Card background color
@@ -52,7 +49,7 @@ fun HotelDetailCard(navController: NavController) { //default rating will be 1
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                imagelist.forEachIndexed { index, image ->
+                imgURL.forEachIndexed { index, image ->
                     item {
                         AsyncImage(
                             model = image,
@@ -76,23 +73,31 @@ fun HotelDetailCard(navController: NavController) { //default rating will be 1
                     horizontalAlignment = Alignment.Start
 
                 ) {
-                    Text(text = "Khách sạn Palace Sài Gòn", style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold))
+                    Text(text = hotelDTO.name, style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold))
                     YSpacer(5)
-                    GreyText(text = "56 - 66 Nguyễn Huệ, Bến Nghé, Quận 1")
+                    GreyText(text = hotelDTO.address)
                     YSpacer(5)
-                    StarRatingBar(
-                        maxStars = 5,
-                        rating = 5,
-                    )
+                    Row {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "starRating",
+                            tint = Color(0xffffe234),
+                        )
+                        XSpacer(width = 5)
+                        BoldText(text = hotelDTO.star.toString()+".0")
+
+
+
+                    }
                 }
                 Column(
                     modifier = Modifier.fillMaxHeight(),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.End
                 ) {
-                    PrimaryText(text = "9.1 (1000)")
+                    PrimaryText(text = "${hotelDTO.rating} (${hotelDTO.totalRating})")
                     MultiColorText(
-                        Triple("1000kVND", PrimaryColor, FontWeight.Bold),
+                        Triple("${hotelDTO.avgPrice}VND", PrimaryColor, FontWeight.Bold),
                         Triple("/đêm", Grey500Color, FontWeight.Normal)
                     )
 

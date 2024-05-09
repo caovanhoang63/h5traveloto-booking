@@ -11,8 +11,20 @@ import com.example.h5traveloto_booking.auth.domain.repository.AuthenticateReposi
 import com.example.h5traveloto_booking.auth.domain.repository.CheckExistedRepository
 import com.example.h5traveloto_booking.auth.domain.repository.RegisterRepository
 import com.example.h5traveloto_booking.auth.domain.use_case.*
+import com.example.h5traveloto_booking.details.presentation.data.api.hotelDetails.HotelDetailsApi
+import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.ListRoomsApi
+import com.example.h5traveloto_booking.details.presentation.data.api.repository.HotelDetailsRepositoryImpl
+import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListRoomsRepositoryImpl
+import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
+import com.example.h5traveloto_booking.details.presentation.domain.repository.HotelDetailsRepository
+import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.HotelDetailsUseCase
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.HotelDetailsUseCases
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.ListRoomsUseCase
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.ListRoomsUseCases
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
+import com.example.h5traveloto_booking.main.presentation.data.api.AuthInterceptor.AuthInterceptor
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.ChangePasswordRepositoryImpl
@@ -33,6 +45,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -40,6 +53,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(interceptor: AuthInterceptor): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor(interceptor).build()
+    }
 
     @Provides
     @Singleton
@@ -49,13 +68,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRegisterApi(moshi: Moshi) : RegisterApi {
+    fun provideRegisterApi(moshi: Moshi,okHttpClient: OkHttpClient) : RegisterApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
             .build()
             .create(RegisterApi::class.java)
     }
+
+
 
     @Provides
     @Singleton
@@ -225,6 +246,55 @@ object AppModule {
     fun providePasswordUseCases(repository: ChangePasswordRepository) : PasswordUseCases {
         return PasswordUseCases(
             changePasswordUseCases = ChangePasswordUseCase(repository)
+        )
+    }
+
+    //
+    @Provides
+    @Singleton
+    fun provideHotelDetailsApi(moshi: Moshi,okHttpClient: OkHttpClient) : HotelDetailsApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(HotelDetailsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHotelDetailsRepository(api : HotelDetailsApi) : HotelDetailsRepository {
+        return HotelDetailsRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHotelDetailsUseCases(repository: HotelDetailsRepository) : HotelDetailsUseCases {
+        return HotelDetailsUseCases(
+            getHotelDetailsUseCase = HotelDetailsUseCase(repository)
+        )
+    }
+    //
+    @Provides
+    @Singleton
+    fun provideListRoomsApi(moshi: Moshi) : ListRoomsApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(ListRoomsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListRoomsRepository(api : ListRoomsApi) : ListRoomsRepository {
+        return ListRoomsRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListRoomsUseCases(repository: ListRoomsRepository) : ListRoomsUseCases {
+        return ListRoomsUseCases(
+            getListRoomsUseCase = ListRoomsUseCase(repository)
         )
     }
 
