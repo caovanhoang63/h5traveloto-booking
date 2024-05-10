@@ -31,7 +31,7 @@ import kotlin.math.log
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default rating will be 1
-    val imgURL = hotelDTO.images.map { it.url }
+    val imgURL = hotelDTO.images?.map { it.url }
 
 
 
@@ -49,7 +49,7 @@ fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                imgURL.forEachIndexed { index, image ->
+                imgURL?.forEachIndexed { index, image ->
                     item {
                         AsyncImage(
                             model = image,

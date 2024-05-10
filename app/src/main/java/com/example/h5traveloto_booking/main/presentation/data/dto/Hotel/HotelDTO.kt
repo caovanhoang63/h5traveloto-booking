@@ -21,13 +21,13 @@ data class HotelDTO(
     @Json(name = "id")
     val id: String,
     @Json(name = "images")
-    val images: List<Image>,
+    val images: List<Image>?,
     @Json(name = "lat")
     val lat: Double,
     @Json(name = "lng")
     val lng: Double,
     @Json(name = "logo")
-    val logo: Logo,
+    val logo: Logo?,
     @Json(name = "name")
     val name: String,
     @Json(name = "province")
