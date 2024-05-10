@@ -108,7 +108,7 @@ fun AccountScreen(navController: NavController,
                     SupportAndInformation()
                 }
                 item{
-                    PrimaryButton(onClick = {},"Đăng xuất",modifier = Modifier.fillMaxWidth().padding(16.dp))
+                    PrimaryButton(onClick = {viewModel.signOut(navController)} ,"Đăng xuất",modifier = Modifier.fillMaxWidth().padding(16.dp))
                 }
             }
         }

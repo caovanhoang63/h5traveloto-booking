@@ -3,8 +3,10 @@ package com.example.h5traveloto_booking.account
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -55,5 +57,11 @@ class AccountViewModel @Inject constructor(
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
         }
+    }
+
+
+    fun signOut(navController: NavController) {
+        navController.navigate(Screens.LoginScreen.name)
+
     }
 }
