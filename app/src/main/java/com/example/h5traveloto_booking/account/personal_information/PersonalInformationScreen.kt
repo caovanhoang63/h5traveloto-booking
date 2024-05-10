@@ -1,6 +1,15 @@
 package com.example.h5traveloto_booking.account.personal_information
 
+import android.content.ContentResolver
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -13,6 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -21,9 +32,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toFile
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.PersonalInformationViewModel
+import com.example.h5traveloto_booking.account.PickImage
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.translateGenderToVietnamese
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.translateGendertoEnglish
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
@@ -32,6 +48,12 @@ import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.theme.ScreenBackGround
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.InputStream
+import kotlin.math.log
 
 
 @OptIn(ExperimentalMaterial3Api::class,ExperimentalComposeUiApi::class)
@@ -50,7 +72,10 @@ fun PersonalInformationScreen(navController: NavController,
             .fillMaxSize()
             .background(ScreenBackGround),
         topBar = {
-            Row (Modifier.padding(16.dp).fillMaxWidth(),
+            Row (
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -89,19 +114,52 @@ fun PersonalInformationScreen(navController: NavController,
     )
 }
 @Composable
-fun PersonalData(navController: NavController,acc: Result<ProfileDTO>) {
+fun PersonalData(navController: NavController, acc: Result<ProfileDTO>, viewModel: PersonalInformationViewModel = hiltViewModel()) {
+    val result = remember { mutableStateOf<Uri?>(null) }
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        result.value = uri
+        Log.d("personal", "uri: $uri")
+    }
+    var currentImagePainter = remember { mutableStateOf<Painter?>(null) }
     YSpacer(20)
-    Row(modifier = Modifier.fillMaxWidth(),
+    Row(
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,) {
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        result.value?.let { image ->
+            //Use Coil to display the selected image
+            currentImagePainter.value = rememberAsyncImagePainter(
+                ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(data = image)
+                    .build()
+            )
+            Log.d("personal", "image: $image")
+            //val file = uriToFile(LocalContext.current.contentResolver,image)
+            val path = getRealPathFromUri(LocalContext.current.applicationContext,image)
+            if(path != null) {
+                val file = File(path)
+                Log.d("personal", "file: $file")
+                viewModel.uploadProfile(file,"user_avatar")
+            }
+        }
         Image(
-            painter = painterResource(R.drawable.onlylogo),
-            contentDescription = null,
             modifier = Modifier
-                .size(100.dp)
                 .clip(CircleShape)
-                .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape),
+                .clickable(onClick = {
+                    launcher.launch("image/*")
+                    Log.d("personal","hehe")
+                }
+                )
+                .size(100.dp)
+                .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape)
+                .padding(8.dp),
+
+            painter =currentImagePainter.value ?:painterResource(id = R.drawable.onlylogo),
+            contentDescription = null,
         )
+
     }
     YSpacer(30)
     Row(
@@ -265,7 +323,9 @@ fun DeleteItem(
         }
         if(!isLastChild) {
 
-            Canvas(modifier = Modifier.fillMaxWidth().height(2.dp)) {
+            Canvas(modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp)) {
                 drawLine(
                     color = Color.LightGray,
                     start = Offset(0f, 0f),
@@ -276,4 +336,26 @@ fun DeleteItem(
             }
         }
     }
+}
+fun uriToFile(contentResolver: ContentResolver, uri: Uri): File? {
+    val filePath = arrayOf(android.provider.MediaStore.Images.ImageColumns.DATA)
+    val cursor = contentResolver.query(uri, filePath, null, null, null)
+    cursor?.moveToFirst()
+    val columnIndex = cursor?.getColumnIndex(filePath[0])
+    val path = cursor?.getString(columnIndex!!)
+    cursor?.close()
+    return if (path != null) File(path) else null
+}
+
+fun getRealPathFromUri(context: Context, uri: Uri): String? {
+    var realPath: String? = null
+    val projection = arrayOf(MediaStore.Images.Media.DATA)
+    val cursor = context.contentResolver.query(uri, projection, null, null, null)
+    cursor?.use {
+        if (it.moveToFirst()) {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            realPath = it.getString(columnIndex)
+        }
+    }
+    return realPath
 }

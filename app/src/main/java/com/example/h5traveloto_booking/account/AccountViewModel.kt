@@ -5,14 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
+import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,12 +38,20 @@ class AccountViewModel @Inject constructor(
             Log.d("Account ViewModel", "Loading")
 
         }.catch {
-            Log.d("Account ViewModel", "catch")
-            Log.d("Account ViewModel E", it.message.toString() )
-            _profileDataResponse.value = Result.Error(it.message.toString())
+            if(it is HttpException){
+                Log.d("Account ViewModel", "catch")
+                //Log.d("ChangePassword ViewModel E", it.message.toString())
+                Log.d("Account ViewModel", "hehe")
+                val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                Log.d("Account ViewModel Error", errorResponse.message)
+                _profileDataResponse.value = Result.Error(errorResponse.message)
+            }
+            else if (it is Exception) {
+                Log.d("ChangePassword ViewModel", it.javaClass.name)
+            }
         }.collect{
             Log.d("Success","Ok")
-            Log.d("Success",it.data.email)
+            Log.d("Success",it.data.avatar?.url.toString())
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
         }

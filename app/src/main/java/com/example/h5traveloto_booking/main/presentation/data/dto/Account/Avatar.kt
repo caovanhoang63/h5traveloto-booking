@@ -11,11 +11,11 @@ data class Avatar(
     @Json(name = "extension")
     val extension: String,
     @Json(name = "height")
-    val height: Int,
+    val height: Double,
     @Json(name = "id")
-    val id: Int,
+    val id: Double,
     @Json(name = "url")
     val url: String,
     @Json(name = "width")
-    val width: Int
+    val width: Double
 )
