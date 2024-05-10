@@ -11,6 +11,12 @@ import com.example.h5traveloto_booking.auth.domain.repository.AuthenticateReposi
 import com.example.h5traveloto_booking.auth.domain.repository.CheckExistedRepository
 import com.example.h5traveloto_booking.auth.domain.repository.RegisterRepository
 import com.example.h5traveloto_booking.auth.domain.use_case.*
+import com.example.h5traveloto_booking.chat.presentation.data.api.ChatListApi
+import com.example.h5traveloto_booking.chat.presentation.data.dto.ChatListDTO
+import com.example.h5traveloto_booking.chat.presentation.data.repository.ChatListRepositoryImpl
+import com.example.h5traveloto_booking.chat.presentation.domain.repository.ChatListRepository
+import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatListUseCase
+import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatListUseCases
 import com.example.h5traveloto_booking.details.presentation.data.api.hotelDetails.HotelDetailsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.ListRoomsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.HotelDetailsRepositoryImpl
@@ -315,6 +321,30 @@ object AppModule {
     fun provideUploadUseCases(repository: UploadRepository) : UploadUseCases {
         return UploadUseCases(
             uploadFileUseCase = UploadFileUseCase(repository)
+        )
+    }
+    //
+    @Provides
+    @Singleton
+    fun provideChatList(moshi: Moshi,okHttpClient: OkHttpClient) : ChatListApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(ChatListApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatListRepository(api : ChatListApi) : ChatListRepository {
+        return ChatListRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListChatUseCases(repository: ChatListRepository) :ChatListUseCases {
+        return ChatListUseCases(
+            getChatListUseCase = ChatListUseCase(repository)
         )
     }
 

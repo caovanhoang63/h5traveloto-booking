@@ -11,6 +11,7 @@ import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
 import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
+import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
 
@@ -51,6 +52,9 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.ChangePasswordScreen.name ) {
             ChangePasswordScreen(navController = navController)
+        }
+        composable(route = Screens.ChatScreen.name ) {
+            ChatScreen(navController = navController)
         }
     }
 }

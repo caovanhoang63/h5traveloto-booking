@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.navigate.AppNavigation
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.navigate.SplashScreen
