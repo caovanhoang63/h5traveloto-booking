@@ -60,7 +60,7 @@ class SearchLocationViewModel @Inject constructor(
             _districtsVN = response.districts
             Log.d("SearchLocationViewModel", "Districts VN: ${_districtsVN[0].name}")
         }
-        useCases.searchSuggestionUseCase(15,"Chư").onStart {
+        useCases.searchSuggestionUseCase(15,"Hà").onStart {
 
         }
         .catch { e ->

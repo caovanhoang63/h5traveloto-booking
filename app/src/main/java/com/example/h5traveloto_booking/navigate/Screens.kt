@@ -23,5 +23,8 @@ enum class Screens {
     ListRooms,
 
     ScheduleCalendarScreen,
-    ScheduleBookingScreen
+    ScheduleBookingScreen,
+
+    SplashScreen,
+    AppNavigation,
 }

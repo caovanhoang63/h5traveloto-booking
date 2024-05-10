@@ -116,7 +116,8 @@ object AppModule {
     fun provideAuthenticateUsesCases(repository: AuthenticateRepository) : AuthenticateUseCases {
         return AuthenticateUseCases(
             authenticateUseCase =  AuthenticateUseCase(repository),
-            renewTokenUseCase = RenewTokenUseCase(repository)
+            renewTokenUseCase = RenewTokenUseCase(repository),
+            refreshTokenUseCase = RefreshTokenUseCase(repository)
         )
     }
 
