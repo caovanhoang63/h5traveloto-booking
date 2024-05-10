@@ -15,7 +15,7 @@ data class HotelDTO(
     @Json(name = "district")
     val district: District,
     @Json(name = "hotel_type")
-    val hotelType: String,
+    val hotelType: Int,
     @Json(name = "hotline")
     val hotline: String,
     @Json(name = "id")

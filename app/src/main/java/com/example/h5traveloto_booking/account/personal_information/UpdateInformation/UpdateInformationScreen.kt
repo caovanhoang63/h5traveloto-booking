@@ -27,10 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.theme.ScreenBackGround
-import com.example.h5traveloto_booking.ui_shared_components.BoldText
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
-import com.example.h5traveloto_booking.ui_shared_components.XSpacer
-import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.ui_shared_components.*
 import java.time.LocalDate
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.*
@@ -100,12 +97,7 @@ fun UpdateInformationScreen(navController: NavController,
             when(UpdateProfile){
                 is Result.Idle->{}
                 is Result.Loading->{
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        CircularProgressIndicator() // Hiển thị thanh tiến trình tải
-                    }
+                    CircleLoading()
                 }
                 is Result.Success->{
                     showDialog=true;
