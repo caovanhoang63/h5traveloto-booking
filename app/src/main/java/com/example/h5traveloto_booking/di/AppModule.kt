@@ -25,16 +25,11 @@ import com.example.h5traveloto_booking.details.presentation.domain.usecases.List
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
 import com.example.h5traveloto_booking.main.presentation.data.api.AuthInterceptor.AuthInterceptor
+import com.example.h5traveloto_booking.main.presentation.data.api.Account.UploadApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
-import com.example.h5traveloto_booking.main.presentation.data.api.repository.ChangePasswordRepositoryImpl
-import com.example.h5traveloto_booking.main.presentation.data.api.repository.HotelRepositoryImpl
-import com.example.h5traveloto_booking.main.presentation.data.api.repository.ProfileRepositoryImpl
-import com.example.h5traveloto_booking.main.presentation.data.api.repository.SearchRepositoryImpl
-import com.example.h5traveloto_booking.main.presentation.domain.repository.ChangePasswordRepository
-import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
-import com.example.h5traveloto_booking.main.presentation.domain.repository.ProfileRepository
-import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository
+import com.example.h5traveloto_booking.main.presentation.data.api.repository.*
+import com.example.h5traveloto_booking.main.presentation.domain.repository.*
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.*
 import com.example.h5traveloto_booking.util.Constants
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -75,8 +70,6 @@ object AppModule {
             .build()
             .create(RegisterApi::class.java)
     }
-
-
 
     @Provides
     @Singleton
@@ -222,7 +215,8 @@ object AppModule {
     @Singleton
     fun provideAccountUseCases(repository: ProfileRepository) : AccountUseCases {
         return AccountUseCases(
-            getProfileUseCase = ProfileUseCase(repository)
+            getProfileUseCase = ProfileUseCase(repository),
+            updateProfileUseCase = UpdateProfileUseCase(repository)
         )
     }
 
@@ -300,7 +294,29 @@ object AppModule {
     }
 
 
+    @Provides
+    @Singleton
+    fun provideUploadApi(moshi: Moshi) : UploadApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(UploadApi::class.java)
+    }
 
+    @Provides
+    @Singleton
+    fun provideUploadRepository(api : UploadApi) : UploadRepository {
+        return UploadRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUploadUseCases(repository: UploadRepository) : UploadUseCases {
+        return UploadUseCases(
+            uploadFileUseCase = UploadFileUseCase(repository)
+        )
+    }
 
     /*
     * 

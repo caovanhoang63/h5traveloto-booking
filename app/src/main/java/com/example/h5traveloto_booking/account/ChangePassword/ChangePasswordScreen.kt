@@ -146,6 +146,7 @@ fun isValidConfirmPassword(password: String, confirmPassword: String): Boolean {
 
 package com.example.h5traveloto_booking.account.ChangePassword
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -154,6 +155,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -191,23 +193,25 @@ fun ChangePasswordScreen(navController: NavController,
     var test by rememberSaveable { mutableStateOf("") }
     var isTest by rememberSaveable { mutableStateOf(true) }
 
-    val showDialog = remember { mutableStateOf(false) }
-    if (showDialog.value) {
+    var showDialog by remember { mutableStateOf(false) }
+    var showDialog2 by remember { mutableStateOf(true) }
+    if (showDialog && showDialog2) {
         AlertDialog(
             onDismissRequest = {
                 // Đóng hộp thoại khi người dùng chọn bất kỳ nơi nào trên màn hình
-                showDialog.value = false
+                showDialog2 = false
             },
             title = {
-                Text(text = "Success")
+                Text(text = "Thành công")
             },
             text = {
-                Text(text = "Data loaded successfully")
+                Text(text = "Đổi mật khẩu thành công")
             },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        showDialog.value = false
+                        showDialog2 = false
+                        navController.navigateUp()
                     }
                 ) {
                     Text(text = "OK")
@@ -227,7 +231,7 @@ fun ChangePasswordScreen(navController: NavController,
             }
         }
         is Result.Success->{
-            showDialog.value = true
+            showDialog=true;
         }
         is Result.Error->{
             test = (state as Result.Error).error
