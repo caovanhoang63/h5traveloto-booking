@@ -3,6 +3,9 @@ package com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifie
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.range.RangeConfig
 //import io.wojciechosak.calendar.range.RangeConfig
 import kotlinx.datetime.LocalDate
@@ -43,5 +46,110 @@ internal fun Modifier.drawRange(
                 rangeIllustrator.drawMiddle(this@drawBehind)
             }
         }
+    }
+}
+
+fun Modifier.RangeStartDate(
+    strokeWidth: Int,
+    color: Color
+) = composed {
+    drawBehind {
+        val rangeStrokeWidth = strokeWidth * density
+        val yDown = size.height
+        val yUp = 0f
+        drawArc(
+            color = color,
+            startAngle = -90f,
+            sweepAngle = -180f,
+            useCenter = false,
+            style = Stroke(
+                width = rangeStrokeWidth
+            )
+        )
+        drawLine(
+            color = color,
+            start =  Offset(size.width/2, yDown),
+            end =  Offset(size.width, yDown),
+            strokeWidth = rangeStrokeWidth
+        )
+        drawLine(
+            color = color,
+            Offset(size.width/2, yUp),
+            Offset(size.width, yUp),
+            rangeStrokeWidth
+        )
+    }
+}
+
+fun Modifier.RangeMidDay (
+    strokeWidth: Int,
+    color: Color
+) = composed {
+    drawBehind {
+        val rangeStrokeWidth = strokeWidth * density
+        val yDown = size.height
+        val yUp = 0f
+        drawLine(
+            color = color,
+            start =  Offset(0f, yDown),
+            end =  Offset(size.width, yDown),
+            strokeWidth = rangeStrokeWidth
+        )
+        drawLine(
+            color = color,
+            Offset(0f, yUp),
+            Offset(size.width, yUp),
+            rangeStrokeWidth
+        )
+    }
+}
+
+fun Modifier.RangeEndDay (
+    strokeWidth: Int,
+    color: Color
+) = composed {
+    drawBehind {
+        val rangeStrokeWidth = strokeWidth * density
+        val yDown = size.height
+        val yUp = 0f
+        drawArc(
+            color = color,
+            startAngle = -90f,
+            sweepAngle = 180f,
+            useCenter = false,
+            style = Stroke(
+                width = rangeStrokeWidth
+            )
+        )
+        drawLine(
+            color = color,
+            start =  Offset(0f, yDown),
+            end =  Offset(size.width/2, yDown),
+            strokeWidth = rangeStrokeWidth
+        )
+        drawLine(
+            color = color,
+            Offset(0f, yUp),
+            Offset(size.width/2, yUp),
+            rangeStrokeWidth
+        )
+    }
+}
+
+fun Modifier.RangeFullDay (
+    strokeWidth: Int,
+    color: Color
+) = composed {
+    drawBehind {
+        val rangeStrokeWidth = strokeWidth * density
+        drawArc(
+            color = color,
+            startAngle = -90f,
+            sweepAngle = 360f,
+            useCenter = false,
+            style = Stroke(
+                width = rangeStrokeWidth
+            )
+        )
     }
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
+import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import kotlinx.datetime.Month
 
@@ -30,10 +31,25 @@ public fun MonthHeader (
     onLeftClick: () -> Unit,
     onRightClick: () -> Unit
 ) {
+    val months =
+        listOf(
+            "Tháng 1",
+            "Tháng 2",
+            "Tháng 3",
+            "Tháng 4",
+            "Tháng 5",
+            "Tháng 6",
+            "Tháng 7",
+            "Tháng 8",
+            "Tháng 9",
+            "Tháng 10",
+            "Tháng 11",
+            "Tháng 12",
+        )
     Row (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(0.dp,10.dp,0.dp,10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -49,17 +65,7 @@ public fun MonthHeader (
             modifier = Modifier
                 .fillMaxWidth(0.85f)
         ) {
-            Text(
-                text = month.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-            XSpacer(width = 10)
-            Text(
-                text = year.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
+            BoldText(text = "${months.getOrNull(month.ordinal)} $year")
         }
 //        IconButton(onClick = onRightClick) {
 //            Icon(

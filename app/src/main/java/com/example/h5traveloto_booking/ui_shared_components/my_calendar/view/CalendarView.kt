@@ -3,17 +3,22 @@ package com.example.h5traveloto_booking.ui_shared_components.my_calendar.view
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConfig
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.DayState
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.MonthYear
@@ -68,11 +73,33 @@ fun CalendarView(
         MonthHeader(month, year)
     },
     dayOfWeekLabel: @Composable (dayOfWeek: DayOfWeek) -> Unit = { dayOfWeek ->
-        Text(
-            dayOfWeek.name.substring(IntRange(0, 2)),
-            fontSize = 12.sp,
-            textAlign = TextAlign.Center,
+        val days = listOf(
+            "T2",
+            "T3",
+            "T4",
+            "T5",
+            "T6",
+            "T7",
+            "CN"
         )
+        Column (
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                "${days.getOrNull(dayOfWeek.ordinal)}",
+//            dayOfWeek.name.substring(IntRange(0, 2)),
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(0.dp,0.dp,0.dp,10.dp)
+            )
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(0.dp,0.dp,0.dp,2.dp),
+                thickness = 1.dp,
+                color = Grey500Color
+            )
+        }
     },
     selectionMode: SelectionMode = SelectionMode.Single,
     onDateSelected: (List<LocalDate>) -> Unit = {},
@@ -188,19 +215,21 @@ private fun Item(
     } else {
         val selectedDates = config.value.selectedDates
         Box(
-            modifier = Modifier.passTouchGesture {
-                val selectionList = selectDate(
+            modifier = Modifier
+                .passTouchGesture {
+                    val selectionList = selectDate(
+                        date = newDate,
+                        mode = selectionMode,
+                        list = config.value.selectedDates,
+                    )
+                    config.value = config.value.copy(selectedDates = selectionList)
+                    onDateSelected(selectionList)
+                }
+                .drawRange(
+                    selectedDates = selectedDates,
                     date = newDate,
-                    mode = selectionMode,
-                    list = config.value.selectedDates,
-                )
-                config.value = config.value.copy(selectedDates = selectionList)
-                onDateSelected(selectionList)
-            }.drawRange(
-                selectedDates = selectedDates,
-                date = newDate,
-                config = rangeConfig,
-            ),
+                    config = rangeConfig,
+                ),
         ) {
             day(
                 DayState(
