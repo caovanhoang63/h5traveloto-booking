@@ -70,13 +70,6 @@ public fun CalendarScreen (
                         horizontalArrangement = Arrangement.Start
                     ) {
                         BoldText(text = "Danh sách đặt phòng")
-//                        Text(
-//                            text = "Danh sách đặt phòng",
-//                            fontSize = 16.sp,
-//                            fontWeight = FontWeight.Bold,
-//                            modifier = Modifier
-//                                .fillMaxWidth(0.75f)
-//                        )
                     }
                     Row (
                         modifier = Modifier

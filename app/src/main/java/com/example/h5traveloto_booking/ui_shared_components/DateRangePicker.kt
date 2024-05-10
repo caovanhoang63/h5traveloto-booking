@@ -98,6 +98,9 @@ public fun DateRangePicker(
                                 ).plus(1, DateTimeUnit.MONTH)
                             )
                         }
+                    },
+                    onComplete = { monthSelected, yearSelected ->
+
                     }
                 )
             },

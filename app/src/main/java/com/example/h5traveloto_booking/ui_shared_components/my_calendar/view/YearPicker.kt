@@ -51,7 +51,7 @@ fun YearPicker(
     onYearSelected: (Int) -> Unit = {},
     yearView: @Composable (year: Int) -> Unit = { year ->
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-            Text(year.toString(), modifier = Modifier.padding(35.dp))
+            Text(year.toString(), modifier = Modifier.padding(10.dp))
         }
     },
 ) {
