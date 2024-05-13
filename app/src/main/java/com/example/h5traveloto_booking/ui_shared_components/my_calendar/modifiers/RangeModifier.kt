@@ -5,6 +5,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.range.RangeConfig
 //import io.wojciechosak.calendar.range.RangeConfig
@@ -19,9 +20,9 @@ import kotlinx.datetime.LocalDate
  * @return A modified modifier with the drawing behavior adjusted for illustrating date ranges.
  */
 internal fun Modifier.drawRange(
-    date: LocalDate,
-    selectedDates: List<LocalDate>,
-    config: RangeConfig? = null,
+    date : LocalDate,
+    selectedDates : List<LocalDate>,
+    config : RangeConfig? = null,
 ) = composed {
     if (config == null) return@composed this
 
@@ -50,8 +51,8 @@ internal fun Modifier.drawRange(
 }
 
 fun Modifier.RangeStartDate(
-    strokeWidth: Int,
-    color: Color
+    strokeWidth : Int,
+    color : Color
 ) = composed {
     drawBehind {
         val rangeStrokeWidth = strokeWidth * density
@@ -82,8 +83,8 @@ fun Modifier.RangeStartDate(
 }
 
 fun Modifier.RangeMidDay (
-    strokeWidth: Int,
-    color: Color
+    strokeWidth : Int,
+    color : Color
 ) = composed {
     drawBehind {
         val rangeStrokeWidth = strokeWidth * density
@@ -105,8 +106,8 @@ fun Modifier.RangeMidDay (
 }
 
 fun Modifier.RangeEndDay (
-    strokeWidth: Int,
-    color: Color
+    strokeWidth : Int,
+    color : Color
 ) = composed {
     drawBehind {
         val rangeStrokeWidth = strokeWidth * density
@@ -137,8 +138,8 @@ fun Modifier.RangeEndDay (
 }
 
 fun Modifier.RangeFullDay (
-    strokeWidth: Int,
-    color: Color
+    strokeWidth : Int,
+    color : Color
 ) = composed {
     drawBehind {
         val rangeStrokeWidth = strokeWidth * density
