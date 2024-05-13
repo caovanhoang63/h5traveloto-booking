@@ -1,15 +1,26 @@
 package com.example.h5traveloto_booking.main.presentation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,6 +34,7 @@ import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
 import com.example.h5traveloto_booking.main.presentation.homenavigate.HomeNavigation
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.theme.PrimaryColor
 
 
 data class BottomNavigationItem(
@@ -53,8 +65,8 @@ fun MainScreen(
         ),
         BottomNavigationItem(
             title = "Schedule",
-            selectedIcon = Icons.Default.PermContactCalendar,
-            unselectedIcon = Icons.Filled.PermContactCalendar,
+            selectedIcon = Icons.Default.CalendarMonth,
+            unselectedIcon = Icons.Filled.CalendarMonth,
             hasNews = false,
             route = Screens.ScheduleScreen.name
 
@@ -87,7 +99,10 @@ fun MainScreen(
     Scaffold(
         bottomBar = {
                     NavigationBar (
-                        modifier = Modifier.height(72.dp)
+                        modifier = Modifier
+                            .height(72.dp)
+                            .shadow(20.dp),
+                        containerColor = Color.White,
                     ) {
                         items.forEachIndexed{index, item ->
                             NavigationBarItem(
@@ -111,7 +126,21 @@ fun MainScreen(
 
                                 },
                                 alwaysShowLabel = false,
+                                label = {
+                                    Text(
+                                        text = item.title,
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 13.sp,
+                                        color = if(index == selectedItemIndex) {
+                                            PrimaryColor
+                                        } else {
+                                            Color.Gray
+                                        }
+                                    )
+                                },
+                                colors = NavigationBarItemDefaults.colors(
 
+                                ),
                                 icon = {
                                     BadgedBox(
                                         badge = {
@@ -122,7 +151,8 @@ fun MainScreen(
                                             } else if (item.hasNews) {
                                                 Badge()
                                             }
-                                        }
+                                        },
+                                        modifier = Modifier.padding(0.dp)
                                     ) {
                                         Icon(
                                             imageVector = if(index == selectedItemIndex )
@@ -130,7 +160,13 @@ fun MainScreen(
                                             else
                                                 item.unselectedIcon
                                             ,
-                                            contentDescription = item.title
+                                            contentDescription = item.title,
+                                            tint = if(index == selectedItemIndex) {
+                                                PrimaryColor
+                                            } else {
+                                                Color.Gray
+                                            },
+                                            modifier = Modifier.padding(0.dp)
                                         )
                                     }
                                 }

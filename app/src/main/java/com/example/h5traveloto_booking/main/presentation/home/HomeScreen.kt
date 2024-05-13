@@ -45,15 +45,14 @@ fun HomeScreen(
     //
     LaunchedEffect(Unit) {
         viewModel.getListHotel()
+        viewModel.getListDistricts()
     }
 
     var selectedItemIndex by remember { mutableStateOf(0) }
-    val items =
+    var items =
         listOf("Ha Noi", "TP HCM", "Da Nang", "Hue", "Hoi An", "Nha Trang", "Da Lat", "Vung Tau", "Phu Quoc", "Can Tho")
-
-
     val listHotelDataResponse = viewModel.listHotelDataResponse.collectAsState().value
-
+    val listDistrict = viewModel.listDistrict.collectAsState().value
     Spacer(modifier = Modifier.height(10.dp))
 
     Scaffold(

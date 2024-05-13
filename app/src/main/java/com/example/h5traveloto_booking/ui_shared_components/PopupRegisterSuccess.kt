@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.ui_shared_components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +35,12 @@ fun PopupRegisterSuccess(
             Text(text = dialogTitle)
         },
         text = {
-            Text(text = dialogText)
+            Column (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Text(text = dialogText)
+            }
         },
         onDismissRequest = {
            onDismissRequest()

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.data.remote.api.response
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Suggestion
 import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ class SearchLocationViewModel @Inject constructor(
 ) : ViewModel() {
     var searchQuery = MutableStateFlow("")
     private val allCities = listOf("Hanoi", "Ho Chi Minh", "Da Nang", "Hoi An", "Nha Trang", "Phu Quoc", "Vung Tau", "Da Lat", "Hue", "Sapa")
-    private var _districtsVN: List<District> = listOf()
+    private var _suggestSearch: List<Suggestion> = listOf()
 
 
     fun String.unaccent(): String {
@@ -37,7 +38,8 @@ class SearchLocationViewModel @Inject constructor(
             if(query.isEmpty()) {
                 listOf()
             } else {
-                _districtsVN.filter { it.name.unaccent().contains(query.unaccent(), ignoreCase = true) }
+                fetchDistrictsVN()
+                _suggestSearch.filter { it.name.unaccent().contains(query.unaccent(), ignoreCase = true) }
             }
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, listOf())
@@ -47,20 +49,10 @@ class SearchLocationViewModel @Inject constructor(
         searchQuery.value = query
     }
 
-    suspend fun fetchDistrictsVN(){
-        useCases.listDistrictsUseCase().onStart {
 
-        }
-        .catch { e ->
-            e.printStackTrace()
-            Log.d("api error:", "Error: ${e.message}")
-        }
-        .collect{ response ->
-            Log.d("SearchLocationViewModel", "Fetch Districts VN: $response")
-            _districtsVN = response.districts
-            Log.d("SearchLocationViewModel", "Districts VN: ${_districtsVN[0].name}")
-        }
-        useCases.searchSuggestionUseCase(15,"gia lai").onStart {
+
+    suspend fun fetchDistrictsVN(){
+        useCases.searchSuggestionUseCase(15,searchQuery.value).onStart {
 
         }
         .catch { e ->
@@ -68,7 +60,8 @@ class SearchLocationViewModel @Inject constructor(
             Log.d("SearchLocationViewModel", "Error: ${e.message}")
         }
         .collect{ response ->
-            Log.d("SearchLocationViewModel", "Fetch Suggestion VN: $response")
+            _suggestSearch = response.suggestions.hits
+            Log.d("SearchLocationViewModel", "Fetch Suggestion VN: $_suggestSearch")
         }
     }
 }

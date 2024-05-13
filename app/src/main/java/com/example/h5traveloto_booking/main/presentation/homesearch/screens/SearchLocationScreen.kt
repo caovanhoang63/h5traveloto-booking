@@ -30,6 +30,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.placeholder
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Suggestion
 import com.example.h5traveloto_booking.theme.Grey100Color
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.OrangeColor
@@ -42,12 +43,16 @@ import com.example.h5traveloto_booking.ui_shared_components.TextSearchBasic
 @Composable
 fun SearchLocationScreen(
     onDismiss: () -> Unit,
-    onComplete: (String) -> Unit,
+    onComplete: (String, Suggestion) -> Unit,
+    locationPre: String,
+    isCurrentLocation: Boolean,
+    setIsCurrentLocation: (Boolean) -> Unit,
     viewModel: SearchLocationViewModel = hiltViewModel()
 ) {
     val searchQuery by viewModel.searchQuery.collectAsState()
     val searchResults by viewModel.filteredCities.collectAsState()
     val searchPopular = CreateSearchPopular()
+
 
     Log.d("SearchLocationScreen", "render")
 
@@ -93,7 +98,15 @@ fun SearchLocationScreen(
 
                     )
                     TextButton(
-                        onClick = { onComplete(searchQuery) },
+                        onClick = {
+                            if(isCurrentLocation){
+                                viewModel.updateSearchQuery("")
+                                onDismiss()
+                            }else{
+                                viewModel.updateSearchQuery(locationPre)
+                                onDismiss()
+                            }
+                        },
                         content = {
                             Text(
                                 "HOÀN TẤT",
@@ -104,7 +117,7 @@ fun SearchLocationScreen(
                         }
                     )
                 }
-                if(!searchQuery.isNotEmpty()) {
+                if(searchQuery.isEmpty()) {
                     ItemSearch(
                         icon = {
                             Image(
@@ -119,7 +132,9 @@ fun SearchLocationScreen(
                         detail = "",
                         type = "",
                         onClick = {
-                            onComplete("Khách sạn gần tôi")
+                            viewModel.updateSearchQuery("")
+                            setIsCurrentLocation(true)
+                            onComplete("Khách sạn gần tôi", Suggestion("", "", "", "", 0.0, null, null, null))
                         },
                         isFirst = true
                     )
@@ -135,7 +150,9 @@ fun SearchLocationScreen(
                             detail = item.detail,
                             type = item.type,
                             onClick = {
-                                onComplete(item.title)
+                                onComplete(item.title, Suggestion("", "", "", "", 0.0, null, null, null))
+                                viewModel.updateSearchQuery(item.title)
+                                setIsCurrentLocation(false)
                             },
                             icon = {},
                         )
@@ -151,12 +168,26 @@ fun SearchLocationScreen(
                         items(searchResults) { city ->
                             ItemSearch(
                                 title = city.name,
-                                detail = "Việt Nam",
+                                detail = if(city.district != null && city.province != null){
+                                    city.district.name + ", " + city.province.name + ", Việt Nam"
+                                }else if(city.province != null){
+                                    city.province.name + ", Việt Nam"
+                                } else {
+                                    "Việt Nam"
+                                },
                                 onClick = {
-                                    onComplete(city.name)
+                                    onComplete(city.name, city)
+                                    viewModel.updateSearchQuery(city.name)
+                                    setIsCurrentLocation(false)
                                 },
                                 icon = {},
-                                type = "Thành phố"
+                                type = if(city.index == "hotels_enriched"){
+                                    "Khách sạn"
+                                } else if(city.index == "provinces"){
+                                    "Tỉnh thành"
+                                }else{
+                                    "Vùng"
+                                }
                             )
 
                         }

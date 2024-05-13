@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.navigate
 
 import ListRooms
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -13,12 +14,13 @@ import com.example.h5traveloto_booking.account.personal_information.PersonalInfo
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 
 @Composable
 fun AppNavigation(startDestination : String ) {
 
     val navController = rememberNavController()
-
+    LocationProvider.initLocationProvider(LocalContext.current)
 
     NavHost (
         navController = navController,

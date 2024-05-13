@@ -49,7 +49,7 @@ fun ItemSearch(
             )
             if(detail.isNotEmpty()) {
                 Text(
-                    text = detail,
+                    text =detail,
                     fontSize = 14.sp,
                     modifier = Modifier.padding(top = 4.dp)
                 )

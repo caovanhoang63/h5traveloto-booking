@@ -17,13 +17,15 @@ import androidx.fragment.app.FragmentActivity
 import com.example.h5traveloto_booking.MainActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import javax.inject.Singleton
 
-class LocationProvider(val context: Context) {
+
+object LocationProvider {
     private val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
-    private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
@@ -61,6 +63,10 @@ class LocationProvider(val context: Context) {
                 setLocation(currentLocation)
             }
         }
+    }
+
+    public fun initLocationProvider(context: Context) {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
     }
 
     public fun stopLocationUpdates() {

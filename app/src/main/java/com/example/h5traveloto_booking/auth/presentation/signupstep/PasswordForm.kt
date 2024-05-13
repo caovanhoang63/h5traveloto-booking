@@ -140,7 +140,7 @@ fun PasswordForm(
                 text = "Sign up"
             )
         }
-        if(isSuccess){
+        if(!isSuccess){
             PopupRegisterSuccess(
                 onDismissRequest = { },
                 onConfirmation = {

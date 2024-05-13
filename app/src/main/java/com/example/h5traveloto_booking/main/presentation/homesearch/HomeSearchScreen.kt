@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 fun HomeSearchScreen(
     navController: NavController,
     navAppNavController: NavController,
-    homeSearchViewModel: HomeSearchViewModel = hiltViewModel(),
+    viewModel: HomeSearchViewModel = hiltViewModel(),
 ) {
     val scrollState = rememberScrollState()
     var showChosePerson by remember { mutableStateOf(false) }
@@ -59,18 +59,16 @@ fun HomeSearchScreen(
     var child by rememberSaveable { mutableIntStateOf(0) }
     var room by rememberSaveable { mutableIntStateOf(1) }
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
-    var isMyLocation by rememberSaveable { mutableStateOf(true) }
 
     val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
-    val locationProvider = LocationProvider(LocalContext.current)
     val launchMultiplePermissions = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         if (permissions.all { it.value }) {
-            locationProvider.startLocationUpdates()
+            LocationProvider.startLocationUpdates()
         } else {
             Log.d("LocationProvider", "Permissions denied")
         }
@@ -141,6 +139,7 @@ fun HomeSearchScreen(
                                     .fillMaxWidth()
                                     .height(52.dp),
                             ){
+/* Choose location */
                                 TextButtonDialog(
                                     modifier = Modifier
                                         .height(52.dp)
@@ -156,25 +155,25 @@ fun HomeSearchScreen(
                                 if(showChoseLocation){
                                     SearchLocationScreen(
                                         onDismiss = { showChoseLocation = false },
-                                        onComplete = { locations ->
+                                        onComplete = { locations, suggestion ->
                                             if(locations.isNotEmpty()){
                                                 location = locations
-                                                isMyLocation = false
-                                            }
-                                            else{
-                                                location = "Khách sạn gần tôi"
-                                                isMyLocation = true
                                             }
                                             showChoseLocation = false
+                                            viewModel.setLocation(suggestion)
+                                        },
+                                        location,
+                                        viewModel.getIsCurrentLocation(),
+                                        setIsCurrentLocation = { isCurrentLocation ->
+                                            viewModel.setIsCurrentLocation(isCurrentLocation)
                                         }
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Button(
                                     onClick = {
-                                        isMyLocation = true
                                         location = "Khách sạn gần tôi"
-                                        launchMultiplePermissions.launch(permissions)
+                                        viewModel.setIsCurrentLocation(true)
                                     },
                                     modifier = Modifier.size(40.dp),
                                     contentPadding = PaddingValues(0.dp),
@@ -190,6 +189,7 @@ fun HomeSearchScreen(
                                     )
                                 }
                             }
+/* data picker range */
                             TextButtonDialog(
                                 modifier = Modifier
                                     .height(52.dp)
@@ -202,6 +202,7 @@ fun HomeSearchScreen(
                                         modifier = Modifier.size(20.dp))
                                 },
                             )
+/* Choose person */
                             TextButtonDialog(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -221,17 +222,21 @@ fun HomeSearchScreen(
                                         adult = adults
                                         child = childs
                                         room = rooms
+                                        viewModel.setPersonEndRoom(adults, childs, rooms)
                                         showChosePerson = false
                                     },
                                     adult,child,room
                                 )
                             }
                             Spacer(modifier = Modifier.height(24.dp))
+/* Button booking now */
                             Button(
                                 onClick = {
-                                    locationProvider.getCurrentLocation(setLocation = {
+                                    launchMultiplePermissions.launch(permissions)
+                                    LocationProvider.getCurrentLocation(setLocation = {
                                         Log.d("LocationProvider", "Latitude: ${it?.latitude}, Longitude: ${it?.longitude} ")
                                     })
+                                    viewModel.bookingNow()
                                     navAppNavController.navigate(Screens.ListHotels.name)
                                           },
                                 modifier = Modifier

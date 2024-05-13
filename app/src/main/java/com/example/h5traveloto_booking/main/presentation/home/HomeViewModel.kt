@@ -3,10 +3,13 @@ import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
 import com.example.h5traveloto_booking.util.Result
 
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +23,13 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCases : HotelUseCases,
+    private val useCaseLocations: SearchUseCases,
     private val sharedPrefManager: SharedPrefManager
 ) :ViewModel (){
     private val _listHotelDataResponse = MutableStateFlow<Result<ListHotelDTO>>(Result.Idle)
     val listHotelDataResponse = _listHotelDataResponse.asStateFlow()
+    private val _listDistrict = MutableStateFlow<List<District>>(listOf())
+    val listDistrict = _listDistrict.asStateFlow()
 
     fun getListHotel(
 
@@ -51,6 +57,19 @@ class HomeViewModel @Inject constructor(
 //            Log.d("Success",it.paging.total.toString())
             _listHotelDataResponse.value = Result.Success(it)
 
+        }
+    }
+
+    suspend fun getListDistricts() {
+        useCaseLocations.listDistrictsUseCase().onStart {
+
+        }
+        .catch {
+            Log.d("HomeViewModel", "getListDistricts: ${it.message}")
+        }
+        .collect {
+            Log.d("HomeViewModel", "getListDistricts: ${it.districts}")
+            _listDistrict.value = it.districts
         }
     }
 }
