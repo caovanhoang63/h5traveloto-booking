@@ -3,6 +3,7 @@ import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.h5traveloto_booking.auth.data.remote.api.response
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
@@ -28,7 +29,7 @@ class HomeViewModel @Inject constructor(
 ) :ViewModel (){
     private val _listHotelDataResponse = MutableStateFlow<Result<ListHotelDTO>>(Result.Idle)
     val listHotelDataResponse = _listHotelDataResponse.asStateFlow()
-    private val _listDistrict = MutableStateFlow<List<District>>(listOf())
+    private val _listDistrict = MutableStateFlow<Result<DistrictsDTO>>(Result.Idle)
     val listDistrict = _listDistrict.asStateFlow()
 
     fun getListHotel(
@@ -56,7 +57,6 @@ class HomeViewModel @Inject constructor(
             }
 //            Log.d("Success",it.paging.total.toString())
             _listHotelDataResponse.value = Result.Success(it)
-
         }
     }
 
@@ -67,9 +67,9 @@ class HomeViewModel @Inject constructor(
         .catch {
             Log.d("HomeViewModel", "getListDistricts: ${it.message}")
         }
-        .collect {
-            Log.d("HomeViewModel", "getListDistricts: ${it.districts}")
-            _listDistrict.value = it.districts
+        .collect { response ->
+            Log.d("HomeViewModel", "getListDistricts: ${response.districts}")
+            _listDistrict.value = Result.Success(response)
         }
     }
 }

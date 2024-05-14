@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.navigate.Screens
@@ -49,8 +50,7 @@ fun HomeScreen(
     }
 
     var selectedItemIndex by remember { mutableStateOf(0) }
-    var items =
-        listOf("Ha Noi", "TP HCM", "Da Nang", "Hue", "Hoi An", "Nha Trang", "Da Lat", "Vung Tau", "Phu Quoc", "Can Tho")
+    var items = listOf(District("Hanoi"), District("HCM"), District("Da Nang"))
     val listHotelDataResponse = viewModel.listHotelDataResponse.collectAsState().value
     val listDistrict = viewModel.listDistrict.collectAsState().value
     Spacer(modifier = Modifier.height(10.dp))
@@ -67,7 +67,12 @@ fun HomeScreen(
                 Column {
                     Text(text = "Current location")
                     Spacer(modifier = Modifier.height(4.dp))
-                    MenuDown(items = items,
+                    MenuDown(items =
+                        if (listDistrict is Result.Success) {
+                            listDistrict.data.districts
+                        } else {
+                            items
+                        },
                         selectedItemIndex = selectedItemIndex,
                         onItemSelected = { index -> selectedItemIndex = index })
 

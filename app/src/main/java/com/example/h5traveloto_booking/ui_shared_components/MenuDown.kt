@@ -27,10 +27,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuDown(items: List<String>, selectedItemIndex: Int, onItemSelected: (Int) -> Unit){
+fun MenuDown(items: List<District>, selectedItemIndex: Int, onItemSelected: (Int) -> Unit){
     var expanded by remember { mutableStateOf(false) }
     val angle: Float by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
@@ -53,7 +54,7 @@ fun MenuDown(items: List<String>, selectedItemIndex: Int, onItemSelected: (Int) 
             ) {
                 Image(painterResource(id = R.drawable.location), contentDescription = "location", modifier = Modifier.size(20.dp))
                 Text(
-                    text = items[selectedItemIndex],
+                    text = items[selectedItemIndex].name,
                     fontSize = 16.sp,
                     color = Color.Black,
                     modifier = Modifier.padding(10.dp,0.dp))
@@ -84,7 +85,7 @@ fun MenuDown(items: List<String>, selectedItemIndex: Int, onItemSelected: (Int) 
                             expanded = false
                         },
                         text = {
-                            Text(text = s)
+                            Text(text = s.name)
                         },
                         modifier = Modifier.padding(0.dp)
                             .height(35.dp)
