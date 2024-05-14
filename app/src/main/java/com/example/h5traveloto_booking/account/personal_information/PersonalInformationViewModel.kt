@@ -3,9 +3,9 @@ package com.example.h5traveloto_booking.account
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.h5traveloto_booking.main.presentation.data.dto.Account.AvatarDTO
-import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.*
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.UpdateProfileUseCase
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.UploadUseCases
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
@@ -28,7 +28,8 @@ import javax.inject.Inject
 class PersonalInformationViewModel @Inject constructor(
     private val useCases : AccountUseCases,
     private val sharedPrefManager: SharedPrefManager,
-    private val uploadUseCase: UploadUseCases
+    private val uploadUseCase: UploadUseCases,
+    private val updateUseCase: AccountUseCases
 ) : ViewModel() {
     private val _profileDataResponse = MutableStateFlow<Result<ProfileDTO>>(Result.Idle)
     val ProfileDataResponse = _profileDataResponse.asStateFlow()
@@ -88,9 +89,47 @@ class PersonalInformationViewModel @Inject constructor(
         }.collect{
             Log.d("PersonalInformation","Ok")
             Log.d("PersonalInformation",it.avatar.url.toString())
+            Log.d("PersonalInformation",it.avatar.toString())
            // Log.d("PersonalInformation",it.toString())
 //            Log.d("Success",it.paging.total.toString())
             _uploadFileResponse.value = Result.Success(it)
+            updateProfile(it.avatar)
+        }
+    }
+
+    private val _updateProfileResponse = MutableStateFlow<Result<UpdateProfileResponse>>(Result.Idle)
+    val UpdateProfileResponse = _uploadFileResponse.asStateFlow()
+    fun updateProfile(
+        avatar: Avatar?,
+    ) = viewModelScope.launch {
+        val token = sharedPrefManager.getToken()
+        Log.d("PersonalInformation ViewModel", "Get token")
+        Log.d("PersonalInformation ViewModel Token", token.toString())
+        val bearerToken = "Bearer $token"
+        var updateProfileDTO: UpdateProfileDTO
+        updateProfileDTO= UpdateProfileDTO(avatar = avatar)
+        updateUseCase.updateProfileUseCase(bearerToken,updateProfileDTO).onStart {
+            _updateProfileResponse.value = Result.Loading
+            Log.d("PersonalInformation ViewModel", "Loading")
+        }.catch {
+            if(it is HttpException){
+                Log.d("PersonalInformation ViewModel", "catch")
+                //Log.d("ChangePassword ViewModel E", it.message.toString())
+                Log.d("PersonalInformation ViewModel", "hehe")
+                val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                Log.d("PersonalInformation ViewModel Error htpp", errorResponse.message)
+                Log.d("PersonalInformation ViewModel Error htpp", errorResponse.log)
+                _updateProfileResponse.value = Result.Error(errorResponse.message)
+            }
+            else if (it is Exception) {
+                Log.d("PersonalInformation ViewModel Error", it.javaClass.name)
+            }
+
+        }.collect {
+            Log.d("PersonalInformation ViewModel","Ok")
+            Log.d("PersonalInformation ViewModel",it.data.toString())
+//            Log.d("Success",it.paging.total.toString())
+            _updateProfileResponse.value = Result.Success(it)
         }
     }
 }

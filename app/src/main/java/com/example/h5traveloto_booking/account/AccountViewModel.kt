@@ -52,7 +52,7 @@ class AccountViewModel @Inject constructor(
                 Log.d("ChangePassword ViewModel", it.javaClass.name)
             }
         }.collect{
-            Log.d("Success","Ok")
+            Log.d("Account ViewModel","Ok")
             Log.d("Success",it.data.avatar?.url.toString())
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
