@@ -75,8 +75,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-
-
+    implementation ("com.google.accompanist:accompanist-pager:0.24.13-rc")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.13-rc")
     // Extended Icons
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
 

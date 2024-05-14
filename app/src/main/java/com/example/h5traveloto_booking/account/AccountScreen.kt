@@ -47,8 +47,13 @@ import com.example.h5traveloto_booking.theme.ScreenBackGround
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.h5traveloto_booking.account.personal_information.TransparentPainter
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -65,54 +70,72 @@ fun AccountScreen(navController: NavController,
         viewModel.getProfile()
     }
     val ProfileDataResponse = viewModel.ProfileDataResponse.collectAsState().value
-    Scaffold(
-        modifier = Modifier
-            .background(ScreenBackGround)
-            .fillMaxSize(),
-        topBar = {
-            Row (Modifier.padding(10.dp).fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,) {
-                BoldText(text = "Tài khoản",
-                  //  fontWeight = FontWeight.Bold,
-                   // fontSize = 20.sp)
-                )
-            }
-        },
-        content = { innerPadding ->
-            LazyColumn(
-                modifier = Modifier.padding(innerPadding)
-            )
-            {
-                item {
-                    Card(
-                        modifier = Modifier
+    when (ProfileDataResponse){
+        is Result.Loading -> {
+            CircleLoading()
+        }
+        is Result.Success -> {
+            Scaffold(
+                modifier = Modifier
+                    .background(ScreenBackGround)
+                    .fillMaxSize(),
+                topBar = {
+                    Row (
+                        Modifier
                             .padding(10.dp)
                             .fillMaxWidth(),
-                        elevation = CardDefaults.cardElevation(1.dp),
-                        colors = CardDefaults.cardColors(Color.White)
+                        horizontalArrangement = Arrangement.Center,) {
+                        BoldText(text = "Tài khoản",
+                            //  fontWeight = FontWeight.Bold,
+                            // fontSize = 20.sp)
+                        )
+                    }
+                },
+                content = { innerPadding ->
+                    LazyColumn(
+                        modifier = Modifier.padding(innerPadding)
                     )
                     {
-                        InformationAccount(ProfileDataResponse)
+                        item {
+                            Card(
+                                modifier = Modifier
+                                    .padding(10.dp)
+                                    .fillMaxWidth(),
+                                elevation = CardDefaults.cardElevation(1.dp),
+                                colors = CardDefaults.cardColors(Color.White)
+                            )
+                            {
+                                InformationAccount(ProfileDataResponse.data)
+                            }
+                        }
+                        item {
+                            ManageProfile(navController)
+                        }
+                        item{
+                            ManagePoint()
+                        }
+                        item {
+                            AppSetting()
+                        }
+                        item{
+                            SupportAndInformation()
+                        }
+                        item{
+                            PrimaryButton(onClick = {viewModel.signOut(navController)} ,"Đăng xuất",modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp))
+                        }
                     }
                 }
-                item {
-                    ManageProfile(navController)
-                }
-                item{
-                    ManagePoint()
-                }
-                item {
-                    AppSetting()
-                }
-                item{
-                    SupportAndInformation()
-                }
-                item{
-                    PrimaryButton(onClick = {viewModel.signOut(navController)} ,"Đăng xuất",modifier = Modifier.fillMaxWidth().padding(16.dp))
-                }
-            }
+            )
         }
-    )
+        is Result.Error -> {PrimaryButton(onClick = {viewModel.signOut(navController)} ,"Đăng xuất",modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp))}
+        else ->{}
+
+    }
+
 
 }
 
@@ -175,25 +198,25 @@ fun AccountItem(
 
 data class Account(val name: String, val email: String)
 @Composable
-fun InformationAccount(acc: Result<ProfileDTO>) {
+fun InformationAccount(acc: ProfileDTO) {
 
-    when (acc) {
-        is Result.Loading -> {
-            Log.d("Home ", "dang load")
-
-            // Hieu ung load
-        }
-
-        is Result.Error -> {
-            Log.d("Home ", "loi roi")
-        }
-
-        is Result.Success -> {
 //                    Log.d("Home Screen", result.data.data.size.toString())
             val Profile = acc.data
-            Row(modifier = Modifier.padding(all = 8.dp)) {
+            Row(modifier = Modifier.padding(all = 8.dp).fillMaxHeight()) {
                 XSpacer(12)
-                Image(
+                Box(
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                        .clip(CircleShape)
+                        .clickable(onClick = {
+                        })
+                ){
+                    ProfileImageMini(url = acc.data.avatar?.url.toString(), placeholder = TransparentPainter(),
+                        error = painterResource(
+                            id = R.drawable.onlylogo
+                        ))
+                }
+
+                /*Image(
                     painter = painterResource(R.drawable.onlylogo),
                     contentDescription = null,
                     modifier = Modifier
@@ -201,27 +224,24 @@ fun InformationAccount(acc: Result<ProfileDTO>) {
                         .size(50.dp)
                         .clip(CircleShape)
                         .border(0.1.dp, MaterialTheme.colorScheme.secondary, CircleShape)
-                )
+                )*/
                 Spacer(modifier = Modifier.width(20.dp))
                 Column {
-                    PrimaryText(text = Profile.data.lastName +" "+ Profile.data.firstName,
+                    PrimaryText(text = Profile.lastName +" "+ Profile.firstName,
                         //color = MaterialTheme.colorScheme.primary,
                         // style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .padding(start = 4.dp,top = 8.dp,)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    GreyText(text = Profile.data.email,
+                    GreyText(text = Profile.email,
                         modifier = Modifier.padding(all = 4.dp),
                         // color = colorResource(id= R.color.secondary_font),
                         // style = MaterialTheme.typography.bodyLarge,)
                     )
                 }
             }
-        }
 
-        else -> Unit
-    }
     /*Row(modifier = Modifier.padding(all = 8.dp)) {
         XSpacer(12)
         Image(
@@ -248,6 +268,26 @@ fun InformationAccount(acc: Result<ProfileDTO>) {
             )
         }
     }*/
+}
+@Composable
+fun ProfileImageMini(url: String, placeholder: Painter, error: Painter) {
+    val context = LocalContext.current
+
+    // Sử dụng remember để giữ cho ImageRequest ổn định qua các lần recomposition
+    val imageRequest = remember(url) {
+        ImageRequest.Builder(context)
+            .data(url)
+            .crossfade(true)
+            .build()
+    }
+
+    AsyncImage(
+        model = imageRequest,
+        placeholder = placeholder,
+        error = error,
+        contentDescription = null, // Cung cấp mô tả nội dung phù hợp
+        modifier = Modifier.size(50.dp)
+    )
 }
 @Composable
 fun ManageProfile(navController: NavController){
