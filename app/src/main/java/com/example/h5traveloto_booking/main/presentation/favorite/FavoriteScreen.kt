@@ -14,20 +14,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
 import androidx.compose.material.icons.filled.AllInbox
+import androidx.compose.material.icons.filled.Android
+import androidx.compose.material.icons.outlined.Android
 import androidx.compose.material.icons.sharp.AllInbox
 import androidx.compose.material.icons.sharp.Home
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.*
 import com.example.h5traveloto_booking.navigate.Screens
@@ -73,7 +80,7 @@ fun FavoriteScreen(navController: NavController) {
                             .padding(10.dp)
                             .fillMaxWidth()
                             .height(150.dp)
-                            .clickable(onClick = {}),
+                            .clickable(onClick = {navController.navigate(Screens.AllFavoriteScreen.name)}),
 
                         elevation = CardDefaults.cardElevation(5.dp),
                         colors = CardDefaults.cardColors(Color.White)
@@ -101,9 +108,112 @@ fun FavoriteScreen(navController: NavController) {
                         }
 
                     }
-                    Album()
-                    HotelSeen()
+                val hotelList = listOf(
+                    HotelTag(
+                        id = 1,
+                        hotelName = "Khách sạn Ánh Dương",
+                        rating = 4.5f,
+                        reviewCount = 200,
+                        star = 4,
+                        isFavorite = false,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a2.jpg",
+                        price = 1200000,
+                    ),
+                    HotelTag(
+                        id = 2,
+                        hotelName = "Khách sạn Biển Xanh",
+                        rating = 4.2f,
+                        reviewCount = 300,
+                        star = 5,
+                        isFavorite = true,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a1.jpg",
+                        price = 1440000,
+                    ),
+                    // Add more HotelTag objects
+                   HotelTag(
+                        id = 3,
+                        hotelName = "Khách sạn Thiên Đường",
+                        rating = 4.8f,
+                        reviewCount = 450,
+                        star = 5,
+                        isFavorite = false,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a3.jpg",
+                       price = 2440000,
+                    ),
+                    HotelTag(
+                        id = 4,
+                        hotelName = "Khách sạn Hạ Long",
+                        rating = 3.9f,
+                        reviewCount = 180,
+                        star = 4,
+                        isFavorite = true,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Lobby/a1.jpg",
+                        price = 3240000,
+                    ),
+                    HotelTag(
+                        id = 5,
+                        hotelName = "Khách sạn Cát Bà",
+                        rating = 4.3f,
+                        reviewCount = 320,
+                        star = 4,
+                        isFavorite = false,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Deluxe/Deluxe-Double-1.jpg",
+                        price = 4240000,
+                    ),
+                    HotelTag(
+                        id = 6,
+                        hotelName = "Khách sạn Sapa",
+                        rating = 4.6f,
+                        reviewCount = 290,
+                        star = 5,
+                        isFavorite = true,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Deluxe/Deluxe-Twin-1.jpg",
+                        price = 4350000,
+                    ),
+                    HotelTag(
+                        id = 7,
+                        hotelName = "Khách sạn Đà Lạt",
+                        rating = 4.1f,
+                        reviewCount = 210,
+                        star = 4,
+                        isFavorite = false,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Superior/Superior-Twin-2.jpg",
+                        price = 1230000,
+                    ),
+                    HotelTag(
+                        id = 8,
+                        hotelName = "Khách sạn Bình Dương",
+                        rating = 4.4f,
+                        reviewCount = 350,
+                        star = 4,
+                        isFavorite = true,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Restaurant/a2.jpg",
+                        price = 1940000,
+                    ),
+                    HotelTag(
+                        id = 9,
+                        hotelName = "Khách sạn Hội An",
+                        rating = 4.7f,
+                        reviewCount = 420,
+                        star = 5,
+                        isFavorite = false,
+                        onFavoriteClick = { /* handle favorite click */ },
+                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Restaurant/a11.jpg",
+                        price = 1540000,
+                    )
+                )
                 Album()
+                HotelSeen(hotelList)
+
+
             }
         }
     )
@@ -184,7 +294,9 @@ private fun RowItem(rowItems: List<Bookmark>, onClick: (Any) -> Unit) {
     }
 }
 @Composable
-fun HotelSeen() {
+fun HotelSeen(
+    hotelList: List<HotelTag>,
+    ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -198,6 +310,7 @@ fun HotelSeen() {
         XSpacer(width = 3)
             BoldText20(text = "Khách sạn đã xem gần đây")
     }
+    ImageCarousel(images =hotelList )
 }
 @Composable
 fun FavoriteItem(
@@ -242,7 +355,7 @@ fun FavoriteItem(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ImageCarousel(
-    images: List<Int>,
+    images: List<HotelTag>,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState()
@@ -250,7 +363,6 @@ fun ImageCarousel(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(200.dp)
     ) {
         HorizontalPager(
             count = images.size,
@@ -258,31 +370,19 @@ fun ImageCarousel(
             contentPadding = PaddingValues(horizontal = 48.dp),
             itemSpacing = 16.dp
         ) { page ->
-            Image(
-                painter = painterResource(id = images[page]),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .graphicsLayer {
-                        val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+            Column {
+                HotelItemTag(
+                    hotelName = images[page].hotelName,
+                    rating = images[page].rating,
+                    reviewCount = images[page].reviewCount,
+                    isFavorite =images[page].isFavorite,
+                    onFavoriteClick = { /*TODO*/ },
+                    imagePainter =images[page].imageRes,
+                    star = images[page].star,
+                    price = images[page].price
+                )
+            }
 
-                        lerp(
-                            start = 0.85f,
-                            stop = 1f,
-                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                        ).also { scale ->
-                            scaleX = scale
-                            scaleY = scale
-                        }
-
-                        alpha = lerp(
-                            start = 0.5f,
-                            stop = 1f,
-                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                        )
-                    }
-                    .clip(RoundedCornerShape(16.dp))
-            )
         }
     }
 }
@@ -380,3 +480,105 @@ data class Bookmark(
     val name: String,
     val imageRes: Int
 )
+data class HotelTag(
+    val id: Int,
+    val hotelName: String,
+    val rating: Float,
+    val reviewCount: Int,
+    val isFavorite: Boolean,
+    val onFavoriteClick: () -> Unit,
+    val imageRes: String,
+    val star:Int,
+    val price: Long
+)
+@Composable
+fun HotelItemTag(
+    hotelName: String,
+    rating: Float,
+    reviewCount: Int,
+    star:Int,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
+    imagePainter: String,
+    price: Long,
+
+) {
+    var favoriteState by remember { mutableStateOf(isFavorite) }
+
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .background(Color.White, shape = RoundedCornerShape(8.dp))
+            .padding(16.dp)
+            .fillMaxWidth()
+    ) {
+        Box(modifier = Modifier.height(180.dp)) {
+            AsyncImage(
+                model = imagePainter,
+                contentDescription = "Hotel Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.FillBounds
+            )
+            IconButton(
+                onClick = {
+                    favoriteState = !favoriteState
+                    onFavoriteClick()
+                },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(
+                        id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                    ),
+                    contentDescription = "Favorite Icon",
+                    tint = if (favoriteState) Color.Red else Color.White
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = hotelName,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+       // Spacer(modifier = Modifier.height(4.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            repeat(5) { index ->
+                Icon(
+                    imageVector = ImageVector.vectorResource(
+                        id = if (index < star.toInt()) R.drawable.baseline_star_16
+                        else R.drawable.baseline_star_outline_16
+                    ),
+                    contentDescription = "Star Rating",
+                    tint = if (index < star.toInt()) Color.Yellow else Color.Transparent,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically){
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(text = "%.1f/10".format(rating), color = Color.Blue, fontSize = 14.sp,fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(text = "($reviewCount)", color = Color.Gray, fontSize = 14.sp)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Spacer(modifier = Modifier.width(4.dp))
+
+            Text(
+                text = "${price.formatPrice()} VND",
+                color = Color.Red,
+                fontSize = 14.sp
+            ) // Sử dụng hàm mở rộng để định dạng giá tiền
+        }
+    }
+}
+fun Long.formatPrice(): String {
+    val formatter = java.text.DecimalFormat("#,###")
+    return formatter.format(this)
+}
