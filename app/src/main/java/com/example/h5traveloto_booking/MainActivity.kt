@@ -3,6 +3,7 @@ package com.example.h5traveloto_booking
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,11 +19,15 @@ import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.navigate.SplashScreen
 import com.example.h5traveloto_booking.theme.H5travelotobookingTheme
 import dagger.hilt.android.AndroidEntryPoint
-
+import websocket.SocketHandler
+import websocket.setupEvent
+import websocket.socketHandler1
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity(
+class MainActivity @Inject constructor(
+) : ComponentActivity (
 ) {
 
 
@@ -31,8 +36,10 @@ class MainActivity : ComponentActivity(
         setContent {
             H5travelotobookingTheme {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                setupEvent(socketHandler1)
                 NavigationOnApp()
                 //AppNavigation("MainScreen")
+
             }
         }
     }

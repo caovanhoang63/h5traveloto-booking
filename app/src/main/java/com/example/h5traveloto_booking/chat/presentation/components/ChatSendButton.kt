@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.chat.presentation.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -20,10 +21,13 @@ import com.example.h5traveloto_booking.theme.SecondaryColor
 
 @Composable
 fun ChatSendButton(
-    icon: ImageVector
+    icon: ImageVector,
+    onClick: () -> Unit
 ) {
     Box(
+
         modifier = Modifier
+            .clickable { onClick }
             .background(PrimaryColor, CircleShape)
             .size(33.dp), contentAlignment = Alignment.Center
     ) {

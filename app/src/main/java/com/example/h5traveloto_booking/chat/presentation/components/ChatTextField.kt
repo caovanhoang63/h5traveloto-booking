@@ -42,7 +42,11 @@ fun ChatTextField(
             containerColor = Color.Transparent,
             focusedLabelColor = Color.White
         ),
-        trailingIcon = { ChatSendButton(Icons.Default.Send) },
+        trailingIcon = {
+            ChatSendButton(Icons.Default.Send,
+                onClick = {},
+            )
+        },
         modifier = Modifier.fillMaxWidth(),
     )
 

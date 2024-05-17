@@ -41,7 +41,7 @@ fun ChatScreen(
         containerColor = Color.White,
         topBar = {
             PrimaryIconButton(
-                DrawableId = R.drawable.backbutton, onClick = { /*navController.popBackStack()*/ }, alt = "",
+                DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = "",
                 modifier = Modifier.padding(start = 15.dp, top = 15.dp)
             )
         },

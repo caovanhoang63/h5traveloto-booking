@@ -347,6 +347,12 @@ object AppModule {
             getChatListUseCase = ChatListUseCase(repository)
         )
     }
+    @Provides
+    @Singleton
+    fun provideSocketHandler() : websocket.SocketHandler {
+        return websocket.SocketHandler()
+    }
+
 
     /*
     * 

@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import websocket.socketHandler1
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,6 +55,7 @@ class LoginViewModel @Inject constructor(
             res ->
                 res.data.access_token?.let {
                     token -> sharedPrefManager.saveToken(token.Token)
+                    socketHandler1.setToken(token.Token)
                     Log.d("Login TOKEN", token.Token)
 
                 }

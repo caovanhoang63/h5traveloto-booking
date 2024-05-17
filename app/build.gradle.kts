@@ -116,6 +116,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.maps.android:maps-compose:2.14.0")
+
+    //socketio
+    implementation("io.socket:socket.io-client:1.0.2")
+
+
 }
 
 
