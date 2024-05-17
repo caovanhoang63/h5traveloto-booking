@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.data.remote.api.response
-import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Suggestion
 import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository

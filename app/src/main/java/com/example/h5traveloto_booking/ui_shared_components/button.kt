@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.theme.PrimaryColor
 
 @Composable
@@ -18,6 +19,6 @@ fun PrimaryButton(onClick : ()->Unit,  text : String = "", modifier : Modifier =
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(PrimaryColor)
     ) {
-        Text(text)
+        Text(text, fontSize = 16.sp)
     }
 }

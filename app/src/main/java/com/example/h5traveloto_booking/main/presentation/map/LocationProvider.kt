@@ -2,22 +2,11 @@ package com.example.h5traveloto_booking.main.presentation.map
 
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Looper
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
-import com.example.h5traveloto_booking.MainActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
-import javax.inject.Singleton
 
 
 object LocationProvider {
@@ -26,7 +15,7 @@ object LocationProvider {
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private var locationCallback: LocationCallback = object : LocationCallback() {
+    private val locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
             Log.d("LocationProvider", "Location received")
@@ -34,6 +23,7 @@ object LocationProvider {
                 Log.d("LocationProvider", "Callback set Latitude: ${location.latitude}, Longitude: ${location.longitude}")
                 currentLocation = LatLng(location.latitude, location.longitude)
             }
+            stopLocationUpdates()
         }
     }
     private var currentLocation: LatLng? = null

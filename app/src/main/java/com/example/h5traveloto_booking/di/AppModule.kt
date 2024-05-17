@@ -191,7 +191,8 @@ object AppModule {
     fun provideSearchUsesCases(repository: SearchRepository) : SearchUseCases {
         return SearchUseCases(
             listDistrictsUseCase = ListDistrictsUseCase(repository),
-            searchSuggestionUseCase = SearchSuggestionUseCase(repository)
+            searchSuggestionUseCase = SearchSuggestionUseCase(repository),
+            searchHotelUseCase = SearchHotelUseCase(repository)
         )
     }
 

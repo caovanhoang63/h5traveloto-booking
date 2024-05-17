@@ -4,37 +4,57 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelParams
+import com.example.h5traveloto_booking.main.presentation.homesearch.DataApiSearch
 import javax.inject.Inject
 import javax.inject.Singleton
 
 class ShareHotelDataViewModel @Inject constructor(
 
 ): ViewModel(){
-    private val _hotelId = MutableLiveData<Int?>()
-    private val _hotelName = MutableLiveData<String?>()
-    private val _hotelAddress = MutableLiveData<String?>()
-    private val _hotelPrice = MutableLiveData<Int?>()
+    private val searchHotelParams = SearchHotelParams()
 
-
-    fun setHotelData(hotelId: Int, hotelName: String, hotelAddress: String, hotelPrice: Int){
-        _hotelId.value = hotelId
-        _hotelName.value = hotelName
-        _hotelAddress.value = hotelAddress
-        _hotelPrice.value = hotelPrice
+    fun getSearchHotelParams(): SearchHotelParams{
+        Log.d("List Hotel ViewModel", searchHotelParams.toMap().toString())
+        return searchHotelParams
     }
 
-    fun clearHotelData(){
-        _hotelId.value = null
-        _hotelName.value = null
-        _hotelAddress.value = null
-        _hotelPrice.value = null
+    fun isCurrentLocation(): Boolean{
+        return searchHotelParams.isCurrentLocation
     }
 
-    fun logHotelData(){
-        Log.d("ShareHotelDataViewModel", "Hotel ID: ${_hotelId.value}")
-        Log.d("ShareHotelDataViewModel", "Hotel Name: ${_hotelName.value}")
-        Log.d("ShareHotelDataViewModel", "Hotel Address: ${_hotelAddress.value}")
-        Log.d("ShareHotelDataViewModel", "Hotel Price: ${_hotelPrice.value}")
+    fun setSearchHotelParams(dataApiSearch: DataApiSearch){
+        searchHotelParams.searchTerm = dataApiSearch.location.index
+        searchHotelParams.startDate = "\"29-06-2024\""
+        searchHotelParams.endDate = "\"30-06-2024\""
+        searchHotelParams.adults = dataApiSearch.adult
+        searchHotelParams.children = dataApiSearch.child
+        searchHotelParams.roomQuantity = dataApiSearch.room
+        if(dataApiSearch.isCurrentLocation){
+            searchHotelParams.searchTerm = "location"
+            searchHotelParams.lat = dataApiSearch.latCurrent
+            searchHotelParams.lng = dataApiSearch.lngCurrent
+
+            searchHotelParams.isCurrentLocation = true
+        }
+        else if(dataApiSearch.location.index == "provinces" || dataApiSearch.location.index == "districts" || dataApiSearch.location.index == "wards"){
+            searchHotelParams.searchTerm = dataApiSearch.location.index.dropLast(1)
+            searchHotelParams.id = dataApiSearch.location.id
+
+            searchHotelParams.isCurrentLocation = false
+        }else{
+            searchHotelParams.searchTerm = "location"
+            searchHotelParams.id = dataApiSearch.location.province?.code
+            searchHotelParams.lat = dataApiSearch.location.location?.lat
+            searchHotelParams.lng = dataApiSearch.location.location?.lon
+
+            searchHotelParams.isCurrentLocation = false
+        }
+        Log.d("HomeSearchViewModel", searchHotelParams.toMap().toString())
+    }
+    fun setCurrentLocation(lat: Double, lng: Double){
+        searchHotelParams.lat = lat
+        searchHotelParams.lng = lng
     }
 }
 

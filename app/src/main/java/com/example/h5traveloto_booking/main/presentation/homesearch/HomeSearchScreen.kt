@@ -232,10 +232,7 @@ fun HomeSearchScreen(
 /* Button booking now */
                             Button(
                                 onClick = {
-                                    launchMultiplePermissions.launch(permissions)
-                                    LocationProvider.getCurrentLocation(setLocation = {
-                                        Log.d("LocationProvider", "Latitude: ${it?.latitude}, Longitude: ${it?.longitude} ")
-                                    })
+                                    //launchMultiplePermissions.launch(permissions)
                                     viewModel.bookingNow()
                                     navAppNavController.navigate(Screens.ListHotels.name)
                                           },

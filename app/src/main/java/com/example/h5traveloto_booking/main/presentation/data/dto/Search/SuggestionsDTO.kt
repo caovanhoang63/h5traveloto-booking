@@ -20,7 +20,7 @@ data class Suggestion(
     @Json(name = "name")
     val name: String,
     @Json(name = "full_name")
-    val fullName: String,
+    val fullName: String?,
     @Json(name = "score")
     val score: Double,
     @Json(name = "location")

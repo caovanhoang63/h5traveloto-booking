@@ -2,8 +2,10 @@ package com.example.h5traveloto_booking.main.presentation.data.api.Hotel
 
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.SuggestionsDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 interface SearchApi {
     @GET("provinces")
@@ -14,4 +16,9 @@ interface SearchApi {
         @Query("limit") limit: Int,
         @Query("search_text") searchText: String,
     ) : SuggestionsDTO
+
+    @GET("search/hotels")
+    suspend fun searchHotels(
+        @QueryMap params: Map<String, String>?,
+    ) : SearchHotelDTO
 }
