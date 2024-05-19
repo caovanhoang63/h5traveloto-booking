@@ -8,4 +8,8 @@ fun setupEvent(socketHandler: websocket.SocketHandler) {
     socketHandler.ping()
     socketHandler.onPing()
     socketHandler.onConnect()
+    socketHandler.onAuthenticateFail()
+    socketHandler.onMessageSent()
+    socketHandler.onCannotSendMessage()
+    socketHandler.onNewMessage()
 }

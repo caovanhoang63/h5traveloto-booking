@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.chat.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
@@ -15,8 +16,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.chat.presentation.data.dto.SendMessageDTO
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
+import websocket.socketHandler1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,8 +46,16 @@ fun ChatTextField(
             focusedLabelColor = Color.White
         ),
         trailingIcon = {
-            ChatSendButton(Icons.Default.Send,
-                onClick = {},
+            ChatSendButton(
+                Icons.Default.Send,
+                onClick = {
+                    Log.d("ChatTextField", "Send message: $text")
+                    socketHandler1.sendMessage(
+                        SendMessageDTO(
+                            "66472bbdf70ec79d3c5d6709", text
+                        )
+                    )
+                },
             )
         },
         modifier = Modifier.fillMaxWidth(),

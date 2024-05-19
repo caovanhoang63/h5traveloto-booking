@@ -25,9 +25,8 @@ fun ChatSendButton(
     onClick: () -> Unit
 ) {
     Box(
-
         modifier = Modifier
-            .clickable { onClick }
+            .clickable { onClick() }
             .background(PrimaryColor, CircleShape)
             .size(33.dp), contentAlignment = Alignment.Center
     ) {

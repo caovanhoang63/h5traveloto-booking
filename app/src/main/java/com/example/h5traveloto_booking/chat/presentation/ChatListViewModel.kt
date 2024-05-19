@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import websocket.setupEvent
+import websocket.socketHandler1
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +34,8 @@ class ChatListViewModel @Inject constructor(
         Log.d("ChatList ViewModel", "Get token")
         Log.d("ChatList ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        useCases.getChatListUseCase("663e3b15006afb1b99b8bfc6",1,2).onStart {
+
+        useCases.getChatListUseCase("66472bbdf70ec79d3c5d6709",0,0).onStart {
             _chatListResponse.value = Result.Loading
             Log.d("ChatList ViewModel", "Loading")
 
