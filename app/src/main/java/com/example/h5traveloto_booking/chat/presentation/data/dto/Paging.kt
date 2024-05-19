@@ -7,13 +7,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Paging(
     @Json(name = "cursor")
-    val cursor: String,
+    val cursor: String?,
     @Json(name = "limit")
-    val limit: Int,
+    val limit: Int?,
     @Json(name = "next_cursor")
-    val nextCursor: String,
+    val nextCursor: String?,
     @Json(name = "page")
-    val page: Int,
+    val page: Int?,
     @Json(name = "total")
-    val total: Int
+    val total: Int?
 )
