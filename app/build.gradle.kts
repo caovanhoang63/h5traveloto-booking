@@ -119,6 +119,11 @@ dependencies {
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    //socketio
+    implementation("io.socket:socket.io-client:1.0.2")
+
+
 }
 
 

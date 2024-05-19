@@ -25,7 +25,7 @@ class ListRoomViewModel @Inject constructor(
 ) : ViewModel() {
     private val _ListRoomsResponse = MutableStateFlow<Result<ListRoomDTO>>(Result.Idle)
     val ListRoomsResponse = _ListRoomsResponse.asStateFlow()
-    val test = ListRoomsParams();
+    val test = ListRoomsParams(max_customer = 2);
     fun getListRooms(
 
     ) = viewModelScope.launch {

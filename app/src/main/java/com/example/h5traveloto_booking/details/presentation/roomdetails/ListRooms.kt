@@ -29,36 +29,49 @@ import com.example.h5traveloto_booking.util.Result
 
 @Composable
 fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltViewModel()) {
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.getListRooms()
     }
     val listRoomResponse = viewModel.ListRoomsResponse.collectAsState().value
 
     Scaffold(
         topBar = {
-            Column(modifier = Modifier.fillMaxWidth().height(121.dp).background(Grey50Color),) {
-                Column( modifier = Modifier.padding(top = 21.dp, start = 27.dp, end = 27.dp )) {
-                    Row(modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,) {
-                        PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()},alt = "",)
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .height(121.dp)
+                .background(Grey50Color)
+            ) {
+                Column(modifier = Modifier.padding(top = 21.dp, start = 27.dp, end = 27.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        PrimaryIconButton(
+                            DrawableId = R.drawable.backbutton,
+                            onClick = { navController.popBackStack() },
+                            alt = "",
+                        )
 
                         Column { //Current location
-                            Text(text = "Khách sạn Palce Sài Gòn", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp))
+                            Text(
+                                text = "Khách sạn Palce Sài Gòn",
+                                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            )
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng", style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp))
+                            Text(
+                                text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng",
+                                style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp)
+                            )
                         }
-                        PrimaryIconButton(DrawableId = R.drawable.search, onClick = {},alt = "",)
+                        PrimaryIconButton(DrawableId = R.drawable.search, onClick = {}, alt = "")
                     }
                     YSpacer(15)
-                    Row(modifier = Modifier.fillMaxWidth(),) {
-                        PrimaryIconButton(DrawableId = R.drawable.filter, onClick = {},alt = "",)
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        PrimaryIconButton(DrawableId = R.drawable.filter, onClick = {}, alt = "")
                         XSpacer(25)
-                        PrimaryIconButton(DrawableId = R.drawable.sort, onClick = {},alt = "",)
+                        PrimaryIconButton(DrawableId = R.drawable.sort, onClick = {}, alt = "")
                     }
                 }
-
-
-
             }
 
         }
@@ -68,7 +81,9 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
                 .padding(innerPadding)
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(vertical = 54.dp, horizontal = 15.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 54.dp, horizontal = 15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
             ) {
@@ -78,7 +93,7 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
                             Log.d("ListRooms", "dang load")
 
                             // Hieu ung load
-                            Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                                 CircularProgressIndicator()
 
                             }

@@ -94,7 +94,11 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
                     DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = ""
                 )
                 BoldText(text = "Chi tiết khách sạn")
-                PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "")
+                PrimaryIconButton(
+                    DrawableId = R.drawable.message_circle,
+                    onClick = { navController.navigate(Screens.ChatScreen.name) },
+                    alt = ""
+                )
             }
         },
 
