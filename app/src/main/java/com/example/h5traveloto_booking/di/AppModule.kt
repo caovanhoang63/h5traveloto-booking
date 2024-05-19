@@ -192,7 +192,8 @@ object AppModule {
         return SearchUseCases(
             listDistrictsUseCase = ListDistrictsUseCase(repository),
             searchSuggestionUseCase = SearchSuggestionUseCase(repository),
-            searchHotelUseCase = SearchHotelUseCase(repository)
+            searchHotelUseCase = SearchHotelUseCase(repository),
+            searchRoomTypeUseCase = SearchRoomTypeUseCase(repository)
         )
     }
 

@@ -3,6 +3,7 @@ package com.example.h5traveloto_booking.main.presentation.data.api.Hotel
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.SuggestionsDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
@@ -21,4 +22,9 @@ interface SearchApi {
     suspend fun searchHotels(
         @QueryMap params: Map<String, String>?,
     ) : SearchHotelDTO
+
+    @GET("search/room-types")
+    suspend fun searchRoomTypes(
+        @QueryMap params: Map<String, String>?,
+    ) : SearchRoomTypeDTO
 }

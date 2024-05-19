@@ -5,6 +5,8 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Distric
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.SuggestionsDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelParams
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeParams
 import com.example.h5traveloto_booking.main.presentation.domain.repository.SearchRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,6 +31,12 @@ class SearchRepositoryImpl @Inject constructor(
     override suspend fun searchHotels(params: SearchHotelParams): SearchHotelDTO {
         return withContext(Dispatchers.Default) {
             api.searchHotels(params.toMap())
+        }
+    }
+
+    override suspend fun searchRoomTypes(params: SearchRoomTypeParams): SearchRoomTypeDTO {
+        return withContext(Dispatchers.Default) {
+            api.searchRoomTypes(params.toMap())
         }
     }
 }
