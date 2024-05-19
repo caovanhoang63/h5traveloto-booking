@@ -25,8 +25,8 @@ class ShareHotelDataViewModel @Inject constructor(
 
     fun setSearchHotelParams(dataApiSearch: DataApiSearch){
         searchHotelParams.searchTerm = dataApiSearch.location.index
-        searchHotelParams.startDate = "\"29-06-2024\""
-        searchHotelParams.endDate = "\"30-06-2024\""
+        searchHotelParams.startDate = dataApiSearch.startDate
+        searchHotelParams.endDate = dataApiSearch.endDate
         searchHotelParams.adults = dataApiSearch.adult
         searchHotelParams.children = dataApiSearch.child
         searchHotelParams.roomQuantity = dataApiSearch.room
@@ -50,7 +50,7 @@ class ShareHotelDataViewModel @Inject constructor(
 
             searchHotelParams.isCurrentLocation = false
         }
-        Log.d("HomeSearchViewModel", searchHotelParams.toMap().toString())
+        Log.d("Share ViewModel", searchHotelParams.toMap().toString())
     }
     fun setCurrentLocation(lat: Double, lng: Double){
         searchHotelParams.lat = lat

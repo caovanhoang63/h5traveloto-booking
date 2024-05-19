@@ -59,6 +59,7 @@ fun HomeSearchScreen(
     var child by rememberSaveable { mutableIntStateOf(0) }
     var room by rememberSaveable { mutableIntStateOf(1) }
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
+    var isShowDateRangePicker by remember { mutableStateOf(false) }
 
     val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -194,14 +195,29 @@ fun HomeSearchScreen(
                                 modifier = Modifier
                                     .height(52.dp)
                                     .fillMaxWidth()
-                                    .clickable { },
-                                content = "Ngày Tháng",
+                                    .clickable {
+                                        isShowDateRangePicker = true
+                                    },
+                                content = "${viewModel.getStartDate().dayOfMonth} Thg ${viewModel.getStartDate().monthNumber} ${viewModel.getStartDate().year} - ${viewModel.getEndDate().dayOfMonth} Thg ${viewModel.getEndDate().monthNumber} ${viewModel.getEndDate().year}",
                                 icon = {
                                     Image(painterResource(id = R.drawable.calendar),
                                         contentDescription = "",
                                         modifier = Modifier.size(20.dp))
                                 },
                             )
+                            if(isShowDateRangePicker){
+                                DateRangePicker(
+                                    start = viewModel.getStartDate(),
+                                    end = viewModel.getEndDate(),
+                                    onCompleted = { startDate, endDate ->
+                                        viewModel.setStartDateEndDate(startDate, endDate)
+                                        isShowDateRangePicker = false
+                                    },
+                                    onDismiss = {
+                                        isShowDateRangePicker = false
+                                    }
+                                )
+                            }
 /* Choose person */
                             TextButtonDialog(
                                 modifier = Modifier
