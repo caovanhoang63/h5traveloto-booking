@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.data.dto.Booking
 
+import com.squareup.moshi.JsonClass
 import kotlinx.datetime.LocalDate
 
 data class BookingDTO(
