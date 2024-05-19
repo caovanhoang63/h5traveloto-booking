@@ -54,7 +54,6 @@ android {
 
 }
 
-
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
@@ -116,6 +115,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.maps.android:maps-compose:2.14.0")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+    implementation ("androidx.webkit:webkit:1.4.0")
 }
-
-

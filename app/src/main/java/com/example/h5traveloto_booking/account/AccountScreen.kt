@@ -1,5 +1,7 @@
 package com.example.h5traveloto_booking.account
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -56,9 +58,11 @@ import coil.request.ImageRequest
 import com.example.h5traveloto_booking.account.personal_information.TransparentPainter
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
+import com.example.h5traveloto_booking.payment.openSdk
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
+import createPayment
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -121,9 +125,8 @@ fun AccountScreen(navController: NavController,
                             SupportAndInformation()
                         }
                         item{
-                            PrimaryButton(onClick = {viewModel.signOut(navController)} ,"Đăng xuất",modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp))
+                            val context = LocalContext.current
+                            SignOut(navController = navController, context = context)
                         }
                     }
                 }
@@ -202,10 +205,13 @@ fun InformationAccount(acc: ProfileDTO) {
 
 //                    Log.d("Home Screen", result.data.data.size.toString())
             val Profile = acc.data
-            Row(modifier = Modifier.padding(all = 8.dp).fillMaxHeight()) {
+            Row(modifier = Modifier
+                .padding(all = 8.dp)
+                .fillMaxHeight()) {
                 XSpacer(12)
                 Box(
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
                         .clip(CircleShape)
                         .clickable(onClick = {
                         })
@@ -493,4 +499,15 @@ fun SupportAndInformation (){
 
         }
     }
+}
+@Composable
+fun SignOut(navController: NavController, viewModel: AccountViewModel= hiltViewModel(),context: Context){
+        PrimaryButton(onClick = {viewModel.signOut(navController)
+          // val url = createPayment(id = "1", amount = "100000", navController = navController, context = context)
+           // navController.navigate("webview/${Uri.encode(url)}")
+           // openSdk(context = context)
+        } ,"Đăng xuất",modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+        )
 }
