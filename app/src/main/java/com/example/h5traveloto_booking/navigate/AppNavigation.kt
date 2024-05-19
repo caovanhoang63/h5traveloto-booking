@@ -1,6 +1,8 @@
 package com.example.h5traveloto_booking.navigate
 
 import ListRooms
+import WebViewScreen
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
@@ -16,6 +18,8 @@ import com.example.h5traveloto_booking.account.personal_information.UpdateInform
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
+import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
+import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 
 @Composable
@@ -58,6 +62,16 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.ChatScreen.name ) {
             ChatScreen(navController = navController)
+        }
+        composable(route = Screens.AllFavoriteScreen.name ) {
+            AllFavoriteScreen(navController = navController)
+        }
+        composable("webview/{url}"){
+            backStackEntry ->
+            val url = backStackEntry.arguments?.getString("url")?:""
+            Log.d("hehe",url.toString())
+         //  WebViewScreen2(url = url, tmnCode = "CXE5IZGS",scheme="resultactivity",isSandbox = true)
+          WebViewScreen(url = url)
         }
     }
 }

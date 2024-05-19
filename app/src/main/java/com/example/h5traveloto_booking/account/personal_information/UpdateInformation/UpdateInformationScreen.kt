@@ -58,7 +58,7 @@ fun UpdateInformationScreen(navController: NavController,
             var date = ProfileResponse.data.data.dateOfBirth
             if(date!=null) {
                 var arr = date.split("-")
-                date = arr[2]+arr[1]+arr[0]
+                date = arr[0]+arr[1]+arr[2]
             }
             var fullName by rememberSaveable { mutableStateOf(ProfileResponse.data.data.lastName + " " + ProfileResponse.data.data.firstName) }
             var gender by rememberSaveable { mutableStateOf(translateGenderToVietnamese(ProfileResponse.data.data.gender)) }

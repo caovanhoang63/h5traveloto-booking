@@ -70,13 +70,13 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.06.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-
-
+    implementation ("com.google.accompanist:accompanist-pager:0.24.13-rc")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.13-rc")
     // Extended Icons
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
 
@@ -116,6 +116,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.maps.android:maps-compose:2.14.0")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
+    implementation ("androidx.webkit:webkit:1.4.0")
 
     // Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")

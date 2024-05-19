@@ -4,18 +4,22 @@ package com.example.h5traveloto_booking.main.presentation.data.dto.Account
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
 data class UpdateProfileDTO(
-    @Json(name = "avatar")
-    val avatar: Avatar?,
-    @Json(name = "date_of_birth")
-    val dateOfBirth: String?,
-    @Json(name = "first_name")
-    val firstName: String,
-    @Json(name = "gender")
-    val gender: String,
-    @Json(name = "last_name")
-    val lastName: String,
-    @Json(name = "phone")
-    val phone: String
-)
+    val avatar: Avatar? =null,
+    val dateOfBirth: String?=null,
+    val firstName: String?=null,
+    val gender: String?=null,
+    val lastName: String?=null,
+    val phone: String?=null
+){
+    fun toMap(): Map<String, Any> {
+        val map = mutableMapOf<String, Any>()
+        if (avatar != null) map["avatar"] = avatar
+        if (dateOfBirth != null) map["date_of_birth"] = dateOfBirth
+        if (firstName != null) map["first_name"] = firstName.toString()
+        if (gender != null) map["gender"] = gender.toString()
+        if (lastName != null) map["last_name"] = lastName.toString()
+        if (phone != null) map["phone"] = phone.toString()
+        return map
+    }
+}

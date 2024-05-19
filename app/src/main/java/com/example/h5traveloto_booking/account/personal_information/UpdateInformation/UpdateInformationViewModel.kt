@@ -51,12 +51,12 @@ class UpdateInformationViewModel @Inject constructor(
     }
 
     fun updateProfile(
-        firstName: String,
-        lastName: String,
-        phone:String,
-        birthDateOfBirth:String?,
-        gender:String,
-        avatar: Avatar?,
+        firstName: String?=null,
+        lastName: String?=null,
+        phone:String?=null,
+        birthDateOfBirth:String?=null,
+        gender:String?=null,
+        avatar: Avatar?=null,
     ) = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
         Log.d("UpdateProfile ViewModel", "Get token")
@@ -70,7 +70,7 @@ class UpdateInformationViewModel @Inject constructor(
             Log.d("UpdateProfile ViewModel", "Get birthDateOfBirth")
             Log.d("UpdateProfile ViewModel Date", date.toString())
             var arr=date.split("")
-            date = arr[5]+arr[6]+arr[7]+arr[8]+"-"+arr[3]+arr[4]+"-"+arr[1]+arr[2]
+            date =arr[1]+arr[2] +"-"+arr[3]+arr[4]+"-"+arr[5]+arr[6]+arr[7]+arr[8]
             Log.d("UpdateProfile ViewModel Date", date.toString())
            updateProfileDTO = UpdateProfileDTO(firstName=firstName,lastName=lastName,phone=phone, dateOfBirth = date,gender=gender, avatar = avatar)
         } else updateProfileDTO= UpdateProfileDTO(firstName=firstName,lastName=lastName,phone=phone, dateOfBirth = birthDateOfBirth,gender=gender, avatar = avatar)

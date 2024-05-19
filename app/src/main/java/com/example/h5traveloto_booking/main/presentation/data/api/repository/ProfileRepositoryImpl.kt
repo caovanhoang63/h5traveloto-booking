@@ -7,8 +7,12 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Update
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.UpdateProfileResponse
 import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
 import com.example.h5traveloto_booking.main.presentation.domain.repository.ProfileRepository
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class ProfileRepositoryImpl @Inject constructor(
@@ -21,7 +25,17 @@ class ProfileRepositoryImpl @Inject constructor(
     }
     override suspend fun UpdateProfile(token : String, data: UpdateProfileDTO) : UpdateProfileResponse {
         return withContext(Dispatchers.Default) {
-            api.UpdateProfile(token,data)
+            val nonNullProperties = data.copy(
+                avatar = data.avatar.takeIf { it != null },
+                dateOfBirth = data.dateOfBirth.takeIf { it != null },
+                firstName = data.firstName.takeIf { it != null },
+                gender = data.gender.takeIf { it != null },
+                lastName = data.lastName.takeIf { it != null },
+                phone = data.phone.takeIf { it != null }
+            )
+            val requestBody = Gson().toJson(nonNullProperties.toMap())
+                .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+            api.UpdateProfile(token,requestBody)
         }
     }
 

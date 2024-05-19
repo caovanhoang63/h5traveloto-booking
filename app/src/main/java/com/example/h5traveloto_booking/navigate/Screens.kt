@@ -28,4 +28,5 @@ enum class Screens {
     SplashScreen,
     AppNavigation,
     ChatScreen,
+    AllFavoriteScreen,
 }
