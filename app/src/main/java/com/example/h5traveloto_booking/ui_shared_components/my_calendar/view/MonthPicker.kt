@@ -1,16 +1,16 @@
 package com.example.h5traveloto_booking.ui_shared_components.my_calendar.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.passTouchGesture
 //import io.wojciechosak.calendar.modifiers.passTouchGesture
 import kotlinx.datetime.Month
@@ -38,14 +38,30 @@ fun MonthPicker(
     monthCount: Int = 12,
     onMonthSelected: (Month) -> Unit = {},
     monthView: @Composable (month: Month) -> Unit = { month ->
+        val months = listOf(
+            "Tháng 1",
+            "Tháng 2",
+            "Tháng 3",
+            "Tháng 4",
+            "Tháng 5",
+            "Tháng 6",
+            "Tháng 7",
+            "Tháng 8",
+            "Tháng 9",
+            "Tháng 10",
+            "Tháng 11",
+            "Tháng 12",
+        )
+
         Column(
             verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalArrangement,
             modifier = Modifier.aspectRatio(1f),
         ) {
             Text(
-                month.name,
-                textAlign = TextAlign.Center,
+                text = "${months.getOrNull(month.ordinal)}",
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
             )
         }
     },

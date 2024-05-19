@@ -26,6 +26,7 @@ import com.example.h5traveloto_booking.main.presentation.data.api.Account.Change
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
 import com.example.h5traveloto_booking.main.presentation.data.api.AuthInterceptor.AuthInterceptor
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.UploadApi
+import com.example.h5traveloto_booking.main.presentation.data.api.Booking.BookingApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.*
@@ -317,6 +318,31 @@ object AppModule {
     fun provideUploadUseCases(repository: UploadRepository) : UploadUseCases {
         return UploadUseCases(
             uploadFileUseCase = UploadFileUseCase(repository)
+        )
+    }
+
+    //
+    @Provides
+    @Singleton
+    fun provideBookingApi(moshi: Moshi,okHttpClient: OkHttpClient) : BookingApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(BookingApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookingRepository(api : BookingApi) : BookingRepository {
+        return BookingRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListUserBookingUseCases(repository: BookingRepository) : ListUserBookingUseCases {
+        return ListUserBookingUseCases(
+            getListUserBookingUseCase = ListUserBookingUseCase(repository)
         )
     }
 

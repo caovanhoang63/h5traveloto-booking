@@ -60,7 +60,6 @@ public fun BookingCalendar (
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
     val mapBookingDayState = remember { mutableStateMapOf<LocalDate, BookingDayState>() }
 
-//    val calendarAnimator by remember { mutableStateOf(CalendarAnimator(startDate)) }
     val calendarAnimator = CalendarAnimator(startDate)
     val coroutineScope = rememberCoroutineScope()
 
@@ -135,7 +134,7 @@ public fun BookingCalendar (
 
     HorizontalCalendarView(
         modifier = Modifier
-            .height(410.dp)
+            .height(435.dp)
             .padding(10.dp)
             .clip(shape = RoundedCornerShape(8.dp))
             .background(color = Grey50Color),
@@ -203,6 +202,17 @@ public fun BookingCalendar (
                                     startDate.month.plus(monthOffset.toLong()),
                                     startDate.dayOfMonth
                                 ).plus(1, DateTimeUnit.MONTH)
+                            )
+                        }
+                    },
+                    onComplete = { monthSelected, yearSelected ->
+                        coroutineScope.launch {
+                            calendarAnimator.animateTo(
+                                target = LocalDate(
+                                    yearSelected,
+                                    monthSelected,
+                                    startDate.dayOfMonth
+                                )
                             )
                         }
                     }

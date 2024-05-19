@@ -23,7 +23,13 @@ import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.ui_shared_components.DateRangePicker
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.MIN_DATE
+import io.wojciechosak.calendar.utils.today
 import kotlinx.coroutines.delay
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +39,16 @@ public fun CalendarScreen (
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
+
+    val showDialog = remember {
+        mutableStateOf(false)
+    }
+    val dialogVal0 = remember {
+        mutableStateOf(LocalDate.today())
+    }
+    val dialogVal1 = remember {
+        mutableStateOf(LocalDate.today().plus(1, DateTimeUnit.DAY))
+    }
 
     Scaffold(
         modifier = Modifier
@@ -55,6 +71,29 @@ public fun CalendarScreen (
                 .padding(horizontal = 10.dp)
         ) {
             item {
+                Button(onClick = {
+                    showDialog.value = true
+                }) {
+                    Text(
+                        text = "${dialogVal0.value}   ${dialogVal1.value}",
+                        color = Color.White
+                    )
+                }
+                if (showDialog.value) {
+                    DateRangePicker(
+                        start = dialogVal0.value,
+                        end = dialogVal1.value,
+                        onCompleted = { startDate, endDate ->
+                            dialogVal0.value = startDate
+                            dialogVal1.value = endDate
+                            showDialog.value = false
+                        },
+                        onDismiss = {
+                            showDialog.value = false
+                        }
+                    )
+                }
+
                 BookingCalendar(bookingList = bookingList)
                 YSpacer(height = 5)
             }
@@ -70,13 +109,6 @@ public fun CalendarScreen (
                         horizontalArrangement = Arrangement.Start
                     ) {
                         BoldText(text = "Danh sách đặt phòng")
-//                        Text(
-//                            text = "Danh sách đặt phòng",
-//                            fontSize = 16.sp,
-//                            fontWeight = FontWeight.Bold,
-//                            modifier = Modifier
-//                                .fillMaxWidth(0.75f)
-//                        )
                     }
                     Row (
                         modifier = Modifier
