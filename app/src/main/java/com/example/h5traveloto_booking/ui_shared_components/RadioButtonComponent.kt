@@ -14,8 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RadioButtonComponent(radioOptions: List<String>) {
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
+fun RadioButtonComponent(
+    radioOptions: List<String>,
+    onOptionSelected: (String) -> Unit
+) {
+    val (selectedOption, onOptionChangedInternal) = remember { mutableStateOf(radioOptions[0]) }
     Column {
         radioOptions.forEach { text ->
             Row(
@@ -24,7 +27,8 @@ fun RadioButtonComponent(radioOptions: List<String>) {
                     .selectable(
                         selected = (text == selectedOption),
                         onClick = {
-                            onOptionSelected(text)
+                            onOptionChangedInternal(text)
+                            onOptionSelected(text) // Gọi hàm callback
                         }
                     )
                     .padding(horizontal = 16.dp),
@@ -32,19 +36,18 @@ fun RadioButtonComponent(radioOptions: List<String>) {
             ) {
                 RadioButton(
                     selected = (text == selectedOption),
-                    onClick = { onOptionSelected(text) }
+                    onClick = {
+                        onOptionChangedInternal(text)
+                        onOptionSelected(text) // Gọi hàm callback
+                    }
                 )
                 Text(
                     text = text,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                    modifier = Modifier.padding(start = 16.dp),
-
-
+                    modifier = Modifier.padding(start = 16.dp)
                 )
-
             }
             HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-
         }
     }
 }

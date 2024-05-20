@@ -115,4 +115,27 @@ class ListHotelsViewModel @Inject constructor(
     fun setStateHotelSearchError(){
         _listHotelSearch.value = Result.Error("Error")
     }
+    fun sortHotelList(selectedOption: String) {
+        viewModelScope.launch {
+            _listHotelSearch.value.let { result ->
+                when (result) {
+                    is Result.Success -> {
+                        val hotelList = result.data.data
+                        val sortedHotelList = when (selectedOption) {
+                            "Giá thấp đến cao" -> hotelList?.sortedBy { it.displayPrice }
+                            "Giá cao đến thấp" -> hotelList?.sortedByDescending { it.displayPrice }
+                            "Xếp hạng cao đến thấp" -> hotelList?.sortedByDescending { it.star }
+                            "Xếp hạng thấp đến cao" -> hotelList?.sortedBy { it.star }
+                            else -> hotelList
+                        }
+                        _listHotelSearch.value = Result.Success(result.data.copy(data = sortedHotelList))
+                    }
+
+                    else -> {
+                        // Xử lý trường hợp Result.Error hoặc Result.Loading nếu cần
+                    }
+                }
+            }
+        }
+    }
 }

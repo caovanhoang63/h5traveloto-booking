@@ -14,15 +14,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Money
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,6 +47,8 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
         viewModel.getHotelDetails()
     }
     val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
+
+    var favoriteState by remember { mutableStateOf(false) }
 
     when (HotelDetailsResponse) {/*is Result.Loading -> {
             Log.d("List Hotel ", "dang load")
@@ -131,11 +133,13 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
                             .height(32.dp)
                             .background(
                                 color = Color.White, shape = RoundedCornerShape(50.dp)
-                            ), onClick = { /*TODO*/ }, content = {
+                            ), onClick = { favoriteState = !favoriteState }, content = {
                             Icon(
-                                imageVector = Icons.Default.Favorite,
-                                contentDescription = "favourite",
-                                tint = Color.Red,
+                                imageVector = ImageVector.vectorResource(
+                                    id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                                ),
+                                contentDescription = "Favorite Icon",
+                                tint = if (favoriteState) Color.Red else Color.Gray
                             )
                         })
                     }

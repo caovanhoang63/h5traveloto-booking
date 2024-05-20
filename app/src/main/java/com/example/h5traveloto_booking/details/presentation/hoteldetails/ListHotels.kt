@@ -23,23 +23,29 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.ListHotelsViewModel
+import com.example.h5traveloto_booking.details.presentation.data.`class`.HotelClass
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard2
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.StarFilter
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
+import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListHotels(
     navController: NavController,
     viewModel: ListHotelsViewModel = hiltViewModel()
+
 ) {
     val radioOption = listOf("Giá thấp đến cao", "Giá cao đến thấp", "Xếp hạng cao đến thấp", "Xếp hạng thấp đến cao")
     var isSortSheetOpened by remember { mutableStateOf(false) }
     var isFilterSheetOpened by remember { mutableStateOf(false) }
+
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOption[0]) }
 
     val sortSheetState = rememberModalBottomSheetState()
     val filterSheetState = rememberModalBottomSheetState()
@@ -56,6 +62,7 @@ fun ListHotels(
         if (permissions.all { it.value }) {
             viewModel.startLocationUpdates()
         } else {
+            Log.d("LocationProvider", "Permissions denied")
             Log.d("LocationProvider", "Permissions denied")
         }
     }
@@ -97,7 +104,7 @@ fun ListHotels(
                 StarFilter()
             }
             PrimaryButton(
-                onClick = { isFilterSheetOpened = false },
+                onClick = { isFilterSheetOpened = false; },
                 text = "Đóng",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -117,10 +124,19 @@ fun ListHotels(
             dragHandle = null
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
-                RadioButtonComponent(radioOptions = radioOption)
+                RadioButtonComponent(
+                    radioOptions = radioOption,
+                    onOptionSelected = { option ->
+                        onOptionSelected(option)
+                    }
+                )
                 HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
                 PrimaryButton(
-                    onClick = { isSortSheetOpened = false },
+                    onClick = {
+                        isSortSheetOpened = false;
+                        viewModel.sortHotelList(selectedOption)
+
+                    },
                     text = "Đóng",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -276,6 +292,12 @@ fun ListHotels(
                         item {
                             Log.d("List Hotel data ", listHotelSearch.data.data.toString())
                             if (listHotelSearch.data.data != null) {
+                                /*val hotellist = if (hotelListSorted.isNotEmpty()) {
+                                    hotelListSorted
+                                } else {
+                                    listHotelSearch.data.data
+                                }*/
+
                                 listHotelSearch.data.data.forEachIndexed { index, hotelDTO ->
                                     HotelDetailCard2(hotelDTO = hotelDTO, navController = navController)
                                     if (index < listHotelSearch.data.data.lastIndex) {
