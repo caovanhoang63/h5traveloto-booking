@@ -46,7 +46,8 @@ fun ListHotels(
     var isFilterSheetOpened by remember { mutableStateOf(false) }
 
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOption[0]) }
-
+    val (starSelected, onStarSelected) = remember { mutableStateOf(mutableListOf<Int>()) }
+    Log.d("Star selected", starSelected.toString())
     val sortSheetState = rememberModalBottomSheetState()
     val filterSheetState = rememberModalBottomSheetState()
 
@@ -101,10 +102,24 @@ fun ListHotels(
                 //Hang sao
                 PrimaryText(text = "Hạng sao")
                 YSpacer(height = 5)
-                StarFilter()
+                StarFilter(
+                    onStarSelected = { starNumber ->
+                        val starNumberInt = starNumber.toIntOrNull() ?: return@StarFilter
+                        onStarSelected(starSelected.toMutableList().apply {
+                            if (contains(starNumberInt)) {
+                                remove(starNumberInt)
+                            } else {
+                                add(starNumberInt)
+                            }
+                        })
+                    }
+                )
             }
             PrimaryButton(
-                onClick = { isFilterSheetOpened = false; },
+                onClick = {
+                    isFilterSheetOpened = false;
+                    viewModel.filterHotelList(starSelected)
+                },
                 text = "Đóng",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -297,7 +312,7 @@ fun ListHotels(
                                 } else {
                                     listHotelSearch.data.data
                                 }*/
-
+                                Log.d("Star selected", listHotelSearch.data.data.toString())
                                 listHotelSearch.data.data.forEachIndexed { index, hotelDTO ->
                                     HotelDetailCard2(hotelDTO = hotelDTO, navController = navController)
                                     if (index < listHotelSearch.data.data.lastIndex) {

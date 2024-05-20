@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Looper
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
@@ -131,6 +134,24 @@ class ListHotelsViewModel @Inject constructor(
                         _listHotelSearch.value = Result.Success(result.data.copy(data = sortedHotelList))
                     }
 
+                    else -> {
+                        // Xử lý trường hợp Result.Error hoặc Result.Loading nếu cần
+                    }
+                }
+            }
+        }
+    }
+    private val _filteredHotelList = mutableStateOf<List<Data>?>(null)
+    val filteredHotelList: State<List<Data>?> = _filteredHotelList
+    fun filterHotelList(star: List<Int>) {
+        viewModelScope.launch {
+            _listHotelSearch.value?.let { result ->
+                when (result) {
+                    is Result.Success -> {
+                        val hotelList = result.data.data
+                        val filteredList = hotelList?.filter { star.contains(it.star) }
+                        _filteredHotelList.value = filteredList
+                    }
                     else -> {
                         // Xử lý trường hợp Result.Error hoặc Result.Loading nếu cần
                     }

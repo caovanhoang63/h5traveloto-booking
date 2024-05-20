@@ -21,7 +21,9 @@ import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 
 
 @Composable
-fun StarFilter() {
+fun StarFilter(
+    onStarSelected: (String) -> Unit
+) {
     val oneStarState = remember {
         mutableStateOf(false)
     }
@@ -44,11 +46,21 @@ fun StarFilter() {
             .height(40.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        StarIconBox(oneStarState, "1")
-        StarIconBox(twoStarState, "2")
-        StarIconBox(threeStarState, "3")
-        StarIconBox(fourStarState, "4")
-        StarIconBox(fiveStarState, "5")
+        StarIconBox(oneStarState, "1") { starNumber ->
+            onStarSelected(starNumber)
+        }
+        StarIconBox(twoStarState, "2"){ starNumber ->
+            onStarSelected(starNumber)
+        }
+        StarIconBox(threeStarState, "3"){ starNumber ->
+            onStarSelected(starNumber)
+        }
+        StarIconBox(fourStarState, "4"){ starNumber ->
+            onStarSelected(starNumber)
+        }
+        StarIconBox(fiveStarState, "5"){ starNumber ->
+            onStarSelected(starNumber)
+        }
 
 
     }

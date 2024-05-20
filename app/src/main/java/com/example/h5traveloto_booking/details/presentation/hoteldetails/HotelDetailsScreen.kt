@@ -310,13 +310,13 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         BoldText(text = "Chính Sách Lưu Trú")
-                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable { })
+                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable {navController.navigate(Screens.ListPolicies.name) })
                     }
                     YSpacer(height = 8)
                     HotelDetailPolicyCard(
-                        icon = Icons.Default.Money,
-                        text = "Tiền cọc",
-                        description = "Bạn phải đóng tiền cọc 0 khi nhận phòng. Cơ sở lưu trú chấp nhận tiền mặt, thẻ ghi nợ hoặc thẻ tín dụng"
+                        icon = R.drawable.baseline_access_time_24,
+                        text = "Giờ nhận phòng/trả phòng",
+                        description = "Nhận phòng: 14:00 - Trả phòng: 12:00"
                     )
                     YSpacer(height = 10)
 

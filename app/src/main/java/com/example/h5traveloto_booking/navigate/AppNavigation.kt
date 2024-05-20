@@ -18,6 +18,7 @@ import com.example.h5traveloto_booking.account.personal_information.UpdateInform
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
+import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListPolicies
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
@@ -65,6 +66,9 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.AllFavoriteScreen.name ) {
             AllFavoriteScreen(navController = navController)
+        }
+        composable(route = Screens.ListPolicies.name ) {
+            ListPolicies(navController = navController)
         }
         composable("webview/{url}"){
             backStackEntry ->

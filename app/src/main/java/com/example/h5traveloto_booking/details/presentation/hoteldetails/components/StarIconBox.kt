@@ -17,7 +17,11 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.theme.StarColor
 
 @Composable
-fun StarIconBox(state:MutableState<Boolean>,starNumber:String) {
+fun StarIconBox(
+    state: MutableState<Boolean>,
+    starNumber: String,
+    onClick: (String) -> Unit
+) {
     Row(
         Modifier
             .width(60.dp)
@@ -25,6 +29,8 @@ fun StarIconBox(state:MutableState<Boolean>,starNumber:String) {
             .border(1.dp, if (state.value) StarColor else Color.Gray)
             .clickable {
                 state.value = !state.value
+                onClick(starNumber) // Gọi callback khi click
+
             },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically

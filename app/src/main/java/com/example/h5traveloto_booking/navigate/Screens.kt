@@ -29,4 +29,5 @@ enum class Screens {
     AppNavigation,
     ChatScreen,
     AllFavoriteScreen,
+    ListPolicies,
 }
