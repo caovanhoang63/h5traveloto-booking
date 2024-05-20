@@ -30,7 +30,7 @@ class ScheduleViewModel @Inject constructor(
         Log.d("Schedule ViewModel", "Get token")
         Log.d("Schedule ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        useCases.getListUserBookingUseCase("gGzTCUsW2BnX").onStart {
+        useCases.getListUserBookingUseCase("3mMo3jdFhPcusy").onStart {
             _UserBookingsResponse.value = Result.Loading
             Log.d("Schedule ViewModel", "Loading")
         }.catch {
@@ -38,7 +38,7 @@ class ScheduleViewModel @Inject constructor(
             Log.d("Schedule ViewModel", it.message.toString())
             _UserBookingsResponse.value = Result.Error(it.message.toString())
         }.collect {
-            Log.d("Schedule ViewModel", "UserBookings Success" + it.data[0].name)
+            Log.d("Schedule ViewModel", "UserBookings Success")
             _UserBookingsResponse.value = Result.Success(it)
         }
     }
