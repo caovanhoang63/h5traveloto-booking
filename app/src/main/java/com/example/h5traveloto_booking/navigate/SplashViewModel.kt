@@ -10,6 +10,7 @@ import com.example.h5traveloto_booking.util.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
+import websocket.socketHandler1
 import java.time.LocalDateTime
 
 import javax.inject.Inject
@@ -37,6 +38,9 @@ class SplashViewModel @Inject constructor(
             Log.d("Success","Refresh Token Success")
             res.data.Token.let {
                 token -> sharedPrefManager.saveToken(token)
+                socketHandler1.setToken(token)
+                Log.d("Refresh TOKEN", token)
+
             }
             isRefreshToken = true
             setIsRefreshToken(isRefreshToken)

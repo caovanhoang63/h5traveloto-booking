@@ -16,6 +16,7 @@ class SocketHandler {
     private var token = ""
     fun setToken(token: String) {
         this.token = token
+        Log.d("Socket token", token)
     }
 
     lateinit var mSocket: Socket
@@ -65,7 +66,7 @@ class SocketHandler {
     fun onConnect(): Socket {
         mSocket.on(Socket.EVENT_CONNECT) {
             Log.d("Socket token", token )
-            mSocket.emit("authenticate", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJfaWQiOjIwLCJyb2xlIjoib3duZXIiLCJFeHBpcnkiOjB9LCJleHAiOjE3MTg1MjI4MDEsImlhdCI6MTcxNTkzMDgwMX0.f6ucf-A9W5izbodJbAWe-aqdLbKY9LZi5w8bcGQ01Ug")
+            mSocket.emit("authenticate", token)
             mSocket.emit("user_joined", "66472bbdf70ec79d3c5d6709")
 
         }

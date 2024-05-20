@@ -17,7 +17,7 @@ val Grey100Color = Color(0xFFDFE0F3)
 val Grey50Color = Color(0xFFF5F5FF)
 val GreenColor = Color(0xFF00FF1A)
 val RedColor = Color(0xFFFF0000)
-
+val StarColor = Color(0xffffe234)
 
 val BorderStroke = Color(0xFFEDEDED)
 val ScreenBackGround = Color(0xFFE8EDFF)
