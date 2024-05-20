@@ -66,7 +66,7 @@ import createPayment
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun AccountScreen(navController: NavController,
+fun AccountScreen(navController: NavController, nav2Controller: NavController,
                   viewModel: AccountViewModel = hiltViewModel()
 )
 {
@@ -113,7 +113,7 @@ fun AccountScreen(navController: NavController,
                             }
                         }
                         item {
-                            ManageProfile(navController)
+                            ManageProfile(nav2Controller)
                         }
                         item{
                             ManagePoint()
@@ -126,7 +126,7 @@ fun AccountScreen(navController: NavController,
                         }
                         item{
                             val context = LocalContext.current
-                            SignOut(navController = navController, context = context)
+                            SignOut(navController = nav2Controller, context = context)
                         }
                     }
                 }
@@ -502,9 +502,9 @@ fun SupportAndInformation (){
 }
 @Composable
 fun SignOut(navController: NavController, viewModel: AccountViewModel= hiltViewModel(),context: Context){
-        PrimaryButton(onClick = {viewModel.signOut(navController)
-          // val url = createPayment(id = "1", amount = "100000", navController = navController, context = context)
-           // navController.navigate("webview/${Uri.encode(url)}")
+        PrimaryButton(onClick = {/*viewModel.signOut(navController)*/
+          val url = createPayment(id = "1", amount = "100000", navController = navController, context = context)
+            navController.navigate("webview/${Uri.encode(url)}")
            // openSdk(context = context)
         } ,"Đăng xuất",modifier = Modifier
             .fillMaxWidth()

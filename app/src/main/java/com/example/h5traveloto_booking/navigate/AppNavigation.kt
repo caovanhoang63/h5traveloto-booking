@@ -1,7 +1,8 @@
 package com.example.h5traveloto_booking.navigate
 
 import ListRooms
-import WebViewScreen
+import WebViewScreen3
+import WebViewScreen3
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -67,11 +68,31 @@ fun AppNavigation(startDestination : String ) {
             AllFavoriteScreen(navController = navController)
         }
         composable("webview/{url}"){
-            backStackEntry ->
+                backStackEntry ->
             val url = backStackEntry.arguments?.getString("url")?:""
-            Log.d("hehe",url.toString())
-         //  WebViewScreen2(url = url, tmnCode = "CXE5IZGS",scheme="resultactivity",isSandbox = true)
-          WebViewScreen(url = url)
+            Log.d("hehe1",url.toString())
+            //  WebViewScreen2(url = url, tmnCode = "CXE5IZGS",scheme="resultactivity",isSandbox = true)
+            val onPaymentResult: (String) -> Unit = { paymentResult ->
+                // Xử lý kết quả thanh toán tại đây
+                when (paymentResult) {
+                    "SuccessBackAction" -> {
+                        // Xử lý khi thanh toán thành công
+                        navController.navigateUp()
+                    }
+                    "FaildBackAction" -> {
+                        // Xử lý khi thanh toán thất bại
+                        Log.d("URL","hehe")
+                        //navController.navigate(Screens.AccountScreen.name)
+                        navController.navigateUp()
+                        // navController.navigate(Screens.AccountScreen.name)
+                    }
+                    "WebBackAction" -> {
+                        // Xử lý khi quay lại từ web
+                        navController.navigateUp()
+                    }
+                }
+            }
+            WebViewScreen3(url = url, scheme = "resultactivity",onPaymentResult = onPaymentResult)
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.h5traveloto_booking.main.presentation
 
+import WebViewScreen3
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
@@ -199,7 +201,7 @@ fun MainScreen(
                     FavoriteScreen(navController)
                 }
                 composable(route = Screens.AccountScreen.name) {
-                    AccountScreen(navController)
+                    AccountScreen(navController,navController)
                 }
                 composable(route = Screens.HistoryScreen.name) {
                     HistoryScreen(navController)
