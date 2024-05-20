@@ -35,20 +35,11 @@ import kotlinx.datetime.plus
 @Composable
 public fun CalendarScreen (
     bookingList: List<BookingDTO>,
-    navController: NavController
+    navController: NavController,
+    parentNavController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
-
-    val showDialog = remember {
-        mutableStateOf(false)
-    }
-    val dialogVal0 = remember {
-        mutableStateOf(LocalDate.today())
-    }
-    val dialogVal1 = remember {
-        mutableStateOf(LocalDate.today().plus(1, DateTimeUnit.DAY))
-    }
 
     Scaffold(
         modifier = Modifier
@@ -71,29 +62,13 @@ public fun CalendarScreen (
                 .padding(horizontal = 10.dp)
         ) {
             item {
-                Button(onClick = {
-                    showDialog.value = true
-                }) {
-                    Text(
-                        text = "${dialogVal0.value}   ${dialogVal1.value}",
-                        color = Color.White
-                    )
-                }
-                if (showDialog.value) {
-                    DateRangePicker(
-                        start = dialogVal0.value,
-                        end = dialogVal1.value,
-                        onCompleted = { startDate, endDate ->
-                            dialogVal0.value = startDate
-                            dialogVal1.value = endDate
-                            showDialog.value = false
-                        },
-                        onDismiss = {
-                            showDialog.value = false
-                        }
-                    )
-                }
+                Button(
+                    onClick = {
+                        parentNavController.navigate(Screens.BookingDetailsFillingScreen.name)
+                    }
+                ) {
 
+                }
                 BookingCalendar(bookingList = bookingList)
                 YSpacer(height = 5)
             }
