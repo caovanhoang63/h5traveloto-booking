@@ -11,7 +11,7 @@ data class Bed(
     @Json(name = "king")
     val king: Int,
     @Json(name = "others")
-    val others: Any,
+    val others: Any?,
     @Json(name = "queen")
     val queen: Int,
     @Json(name = "single")

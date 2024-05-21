@@ -26,6 +26,7 @@ import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.util.Result
+import kotlin.math.log
 
 @Composable
 fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltViewModel()) {
@@ -33,6 +34,7 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
         viewModel.getListRooms()
     }
     val listRoomResponse = viewModel.ListRoomsResponse.collectAsState().value
+    Log.d("ListRooms View", listRoomResponse.toString())
 
     Scaffold(
         topBar = {

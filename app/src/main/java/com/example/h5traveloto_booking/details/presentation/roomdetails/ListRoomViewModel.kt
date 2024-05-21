@@ -11,6 +11,7 @@ import com.example.h5traveloto_booking.details.presentation.domain.usecases.List
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeParams
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -31,28 +32,47 @@ class ListRoomViewModel @Inject constructor(
 ) : ViewModel() {
     private val _ListRoomsResponse = MutableStateFlow<Result<SearchRoomTypeDTO>>(Result.Idle)
     val ListRoomsResponse = _ListRoomsResponse.asStateFlow()
+    /*val listRoomTypeParams =
+        SearchRoomTypeParams(
+            startDate = "\"29-06-2024\"",
+            endDate = "\"30-06-2024\"",
+            hotelId = "\"${shareDataHotelDetail.getHotelId()}\""
+        )*/
     val listRoomTypeParams = SearchRoomTypeParams()
+    fun setListRoomTypeParams(
+        startDate: String,
+        endDate: String,
+        hotelId: String
+    ) {
+        listRoomTypeParams.startDate = startDate
+        listRoomTypeParams.endDate = endDate
+        listRoomTypeParams.hotelId = hotelId
+    }
     fun getListRooms(
 
     ) = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
         val bearerToken = "Bearer $token"
+        Log.d("ListRooms ViewModel", listRoomTypeParams.toMap().toString())
+        setListRoomTypeParams("29-06-2024", "30-06-2024", "DCWYE7tu7Da8kJd")
+        Log.d("ListRooms Params", listRoomTypeParams.toMap().toString())
         useCases.searchRoomTypeUseCase(listRoomTypeParams).onStart {
             _ListRoomsResponse.value = Result.Loading
-            Log.d("HotelDetails ViewModel", "Loading")
+            Log.d("ListRooms ViewModel", "Loading")
 
         }.catch {
-            if(it is HttpException){
+            if (it is HttpException) {
                 Log.d("ListRooms ViewModel", "catch")
-                //Log.d("ChangePassword ViewModel E", it.message.toString())
                 Log.d("ListRooms ViewModel", "hehe")
                 val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
                 Log.d("ListRooms ViewModel Error", errorResponse.message)
+                Log.d("ListRooms ViewModel Error", errorResponse.log)
                 _ListRoomsResponse.value = Result.Error(errorResponse.message)
             }
-
-            }.collect {
-            Log.d("ListRooms Success",it.data.toString())
+            _ListRoomsResponse.value = Result.Error(it.message.toString())
+        }
+        .collect {
+            Log.d("ListRooms Success", it.data.toString())
             _ListRoomsResponse.value = Result.Success(it)
         }
     }

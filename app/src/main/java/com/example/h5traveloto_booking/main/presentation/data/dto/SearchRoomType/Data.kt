@@ -17,7 +17,7 @@ data class Data(
     @Json(name = "created_at")
     val createdAt: String,
     @Json(name = "facility_list")
-    val facilityList: List<Int>,
+    val facilityList: List<Int>?,
     @Json(name = "free_cancel")
     val freeCancel: Int,
     @Json(name = "id")
