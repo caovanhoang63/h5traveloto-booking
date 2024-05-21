@@ -76,29 +76,6 @@ class ListHotelsViewModel @Inject constructor(
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
     }
 
-    fun getListHotels(
-
-    ) = viewModelScope.launch {
-        val token = sharedPrefManager.getToken()
-        Log.d("Account ViewModel", "Get token")
-        Log.d("Account ViewModel Token", token.toString())
-        val bearerToken = "Bearer $token"
-        useCases.listHotelUseCase(bearerToken).onStart {
-            _listHotelResponse.value = Result.Loading
-            Log.d("Account ViewModel", "Loading")
-
-        }.catch {
-
-            Log.d("List Hotel ViewModel", "catch")
-            Log.d("List Hotel ViewModel E", it.message.toString() )
-            _listHotelResponse.value = Result.Error(it.message.toString())
-        }.collect{
-            Log.d("Success","Ok")
-//            Log.d("Success",it.paging.total.toString())
-            _listHotelResponse.value = Result.Success(it)
-        }
-    }
-
     fun getHotelSearch() = viewModelScope.launch {
         useCaseSearch.searchHotelUseCase(shareHotelDataViewModel.getSearchHotelParams()).onStart {
             Log.d("List Hotel ViewModel", "Loading")

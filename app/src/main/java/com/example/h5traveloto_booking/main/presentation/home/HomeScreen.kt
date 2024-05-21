@@ -1,5 +1,8 @@
 package com.example.h5traveloto_booking.main.presentation.home
 
+import android.content.Context.LOCATION_SERVICE
+import android.location.LocationManager
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,12 +28,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.ShareHotelDataViewModel
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
@@ -57,7 +62,13 @@ fun HomeScreen(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         if (permissions.all { it.value }) {
-            viewModel.startLocationUpdates()
+            if(LocationProvider.isLocationEnabled(context)) {
+                viewModel.initLocationProvider(context)
+                viewModel.startLocationUpdates()
+            }
+            else{
+                LocationProvider.createLocationRequest(context)
+            }
         } else {
             Log.d("LocationProvider", "Permissions denied")
         }
@@ -74,7 +85,6 @@ fun HomeScreen(
         viewModel.initLocationProvider(context)
     }
 
-    val listHotelDataResponse = viewModel.listHotelDataResponse.collectAsState().value
     val listDistrict = viewModel.listDistrict.collectAsState().value
     Spacer(modifier = Modifier.height(10.dp))
 

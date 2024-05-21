@@ -1,0 +1,3035 @@
+package com.example.h5traveloto_booking.ui_shared_components
+
+{
+    "took": 0,
+    "timed_out": false,
+    "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+},
+    "hits": {
+    "total": {
+    "value": 45,
+    "relation": "eq"
+},
+    "max_score": 1,
+    "hits": [
+    {
+        "_index": "hotels_enriched",
+        "_id": "1",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": null,
+        "name": null,
+        "full_name": null
+    },
+        "ward": {
+        "code": null,
+        "name": null,
+        "full_name": null
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 0,
+        "created_at": "2024-05-04T09:44:26Z",
+        "updated_at": "2024-05-08T03:43:38Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "2",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": null,
+        "name": null,
+        "full_name": null
+    },
+        "ward": {
+        "code": null,
+        "name": null,
+        "full_name": null
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 0,
+        "created_at": "2024-05-04T10:00:43Z",
+        "updated_at": "2024-05-04T10:02:20Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "3",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": null,
+        "name": null,
+        "full_name": null
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 0,
+        "created_at": "2024-05-04T10:03:47Z",
+        "updated_at": "2024-05-04T15:52:41Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "41",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 24,
+        "name": "Nhà Nghỉ Đức Dũng",
+        "hotel_type": 2,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "139 Phước Thắng, Phường 12, Thành phố Vũng Tầu, Bà Rịa - Vũng Tàu, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26542",
+        "name": "12",
+        "full_name": "Phường 12"
+    },
+        "location": {
+        "lat": 10.4208413,
+        "lon": 107.1669751
+    },
+        "location_geo_point": "10.4208413,107.1669751",
+        "star": 2,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Một chút mô tả hữu ích về khách sạn",
+        "location_detail": "Đọc cái này chắc chắn biết khách sạn ở đầu luôn nè",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:56:58Z",
+        "updated_at": "2024-05-10T18:56:58Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "42",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 25,
+        "name": "Motel Đức Lộc",
+        "hotel_type": 2,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg", "width": 297, "height": 170, "extension": ".jpeg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg", "width": 297, "height": 170, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg", "width": 1600, "height": 1182, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/714120562.jpg", "width": 680, "height": 450, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg", "width": 268, "height": 188, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg", "width": 1024, "height": 768, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg", "width": 259, "height": 194, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg", "width": 2048, "height": 1535, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg", "width": 900, "height": 599, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg", "width": 272, "height": 185, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg", "width": 800, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "1514/15a Đ. 30 Tháng 4, Phường 12, Thành phố Vũng Tầu, Bà Rịa - Vũng Tàu, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26542",
+        "name": "12",
+        "full_name": "Phường 12"
+    },
+        "location": {
+        "lat": 10.4197799,
+        "lon": 107.1493662
+    },
+        "location_geo_point": "10.4197799,107.1493662",
+        "star": 2,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Một chút mô tả hữu ích về khách sạn",
+        "location_detail": "Đọc cái này chắc chắn biết khách sạn ở đầu luôn nè",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:57:55Z",
+        "updated_at": "2024-05-10T18:57:55Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "26",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 12,
+        "name": "SICON GT RICON HOTEL",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg", "width": 272, "height": 185, "extension": ".jpeg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "12Đ Số 6, Đông Hòa Dĩ An, Bình Dương",
+        "province": {
+        "code": "74",
+        "name": "Bình Dương",
+        "full_name": "Tỉnh Bình Dương"
+    },
+        "district": {
+        "code": "724",
+        "name": "Dĩ An",
+        "full_name": "Thành phố Dĩ An"
+    },
+        "ward": {
+        "code": "25957",
+        "name": "Đông Hòa",
+        "full_name": "Phường Đông Hòa"
+    },
+        "location": {
+        "lat": 10.8986119,
+        "lon": 106.7679503
+    },
+        "location_geo_point": "10.8986119,106.7679503",
+        "star": 5,
+        "hotel_details": {
+        "number_of_floor": 10,
+        "distance_to_center_city": 30,
+        "description": "Anh tôi liêm khiết một đời???",
+        "location_detail": "Khu B cổng trước quẹo phải",
+        "check_in_time": 34200000000,
+        "check_out_time": 34200000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:38:48Z",
+        "updated_at": "2024-05-10T18:38:48Z",
+        "facility_list": [
+        2,
+        4,
+        5,
+        7,
+        8,
+        11,
+        22,
+        99,
+        100,
+        119,
+        123,
+        150,
+        160,
+        191,
+        192,
+        193
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "27",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 13,
+        "name": "Khách sạn Alabama Tokuba Fukusima",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg", "width": 1600, "height": 1182, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg", "width": 1600, "height": 1182, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/714120562.jpg", "width": 680, "height": 450, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg", "width": 268, "height": 188, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg", "width": 1024, "height": 768, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg", "width": 259, "height": 194, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "220 Lê Văn Việt, Tăng Nhơn Phú B, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26845",
+        "name": "Tăng Nhơn Phú B",
+        "full_name": "Phường Tăng Nhơn Phú B"
+    },
+        "location": {
+        "lat": 10.8439259,
+        "lon": 106.780308
+    },
+        "location_geo_point": "10.8439259,106.780308",
+        "star": 5,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 3,
+        "description": "Chả biết nói gì, nhưng mà anh yêu em <3",
+        "location_detail": "Đường vào tim em ngay tâm thất rẽ phải, cẩn thận đi lạc vào tâm nhĩ",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "ban",
+        "additional_policies": "Nêu yêu em là có tội, thì anh chính là một tử tù"
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:40:35Z",
+        "updated_at": "2024-05-10T18:40:35Z",
+        "facility_list": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        119,
+        123,
+        150,
+        160,
+        191,
+        192,
+        193
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "28",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 14,
+        "name": "VietName Number One, China Number 2",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg", "width": 268, "height": 188, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg", "width": 1024, "height": 768, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg", "width": 259, "height": 194, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "2 Đường Hàn Thuyên, Phường Linh Trung, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26845",
+        "name": "Tăng Nhơn Phú B",
+        "full_name": "Phường Tăng Nhơn Phú B"
+    },
+        "location": {
+        "lat": 10.8744871,
+        "lon": 106.8015392
+    },
+        "location_geo_point": "10.8744871,106.8015392",
+        "star": 3,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 25,
+        "description": "Khánh sạn này vui lắm",
+        "location_detail": "UIT nhìn thẳng",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:41:48Z",
+        "updated_at": "2024-05-10T18:41:48Z",
+        "facility_list": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        20,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        119,
+        123,
+        150,
+        160,
+        191,
+        192,
+        193
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "29",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 15,
+        "name": "Lông ba lông bông khách sạn",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg", "width": 1600, "height": 1182, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg", "width": 1024, "height": 768, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg", "width": 259, "height": 194, "extension": ".jpeg", "cloud_name": "s3"}]""",
+        "address": " 20 Thống Nhất, Bình Thọ, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26824",
+        "name": "Bình Thọ",
+        "full_name": "Phường Bình Thọ"
+    },
+        "location": {
+        "lat": 10.8450342,
+        "lon": 106.7657131
+    },
+        "location_geo_point": "10.8450342,106.7657131",
+        "star": 2,
+        "hotel_details": {
+        "number_of_floor": 3,
+        "distance_to_center_city": 20,
+        "description": "Đi chơi nhiều rồi về đây ngủ một giấc là y bài luôn ha",
+        "location_detail": "Gần đó có cái circle K á, tới đó mà flex",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:42:50Z",
+        "updated_at": "2024-05-10T18:42:50Z",
+        "facility_list": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        13,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        55,
+        123,
+        150,
+        200,
+        201
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "30",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 16,
+        "name": "New Life Tower",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "230 Hoàng Minh Giám, Hạ Long",
+        "province": {
+        "code": "22",
+        "name": "Quảng Ninh",
+        "full_name": "Tỉnh Quảng Ninh"
+    },
+        "district": {
+        "code": "203",
+        "name": "Vân Đồn",
+        "full_name": "Huyện Vân Đồn"
+    },
+        "ward": {
+        "code": "06994",
+        "name": "Cái Rồng",
+        "full_name": "Thị trấn Cái Rồng"
+    },
+        "location": {
+        "lat": 20.9524716,
+        "lon": 107.0244848
+    },
+        "location_geo_point": "20.9524716,107.0244848",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Khách sạn này có thật nha ae",
+        "location_detail": "",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:43:47Z",
+        "updated_at": "2024-05-10T18:43:47Z",
+        "facility_list": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        13,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        55,
+        123,
+        150,
+        200,
+        201
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "31",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 17,
+        "name": "Khách Sạn Galaxy Ha Long",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg", "width": 2048, "height": 1535, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg", "width": 900, "height": 599, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "15 Tiên Ông, Bãi Cháy, Thành phố Hạ Long, Quảng Ninh, Việt Nam",
+        "province": {
+        "code": "22",
+        "name": "Quảng Ninh",
+        "full_name": "Tỉnh Quảng Ninh"
+    },
+        "district": {
+        "code": "203",
+        "name": "Vân Đồn",
+        "full_name": "Huyện Vân Đồn"
+    },
+        "ward": {
+        "code": "06994",
+        "name": "Cái Rồng",
+        "full_name": "Thị trấn Cái Rồng"
+    },
+        "location": {
+        "lat": 20.9550409,
+        "lon": 107.0218585
+    },
+        "location_geo_point": "20.9550409,107.0218585",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:44:41Z",
+        "updated_at": "2024-05-10T18:44:41Z",
+        "facility_list": [
+        1,
+        2,
+        5,
+        13,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        55,
+        123,
+        150,
+        220
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "32",
+        "_score": 1,
+        "_source": {
+        "owner_id": 18,
+        "name": "Ha Long Lotus Hotel",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg", "width": 800, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg", "width": 800, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "295 Lê Lợi, Trần Hưng Đạo, Thành phố Hạ Long, Quảng Ninh, Việt Nam",
+        "province": {
+        "code": "22",
+        "name": "Quảng Ninh",
+        "full_name": "Tỉnh Quảng Ninh"
+    },
+        "district": {
+        "code": "203",
+        "name": "Vân Đồn",
+        "full_name": "Huyện Vân Đồn"
+    },
+        "ward": {
+        "code": "06994",
+        "name": "Cái Rồng",
+        "full_name": "Thị trấn Cái Rồng"
+    },
+        "location": {
+        "lat": 20.9624189,
+        "lon": 107.0803643
+    },
+        "location_geo_point": "20.9624189,107.0803643",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:47:04Z",
+        "updated_at": "2024-05-10T18:47:04Z",
+        "facility_list": [
+        1,
+        2,
+        5,
+        13,
+        21,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        55,
+        123,
+        150,
+        220
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "33",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 19,
+        "name": "NEWSKY HOTEL",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg", "width": 2048, "height": 1535, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}]""",
+        "address": "88 Đặng Thùy Trâm, Hồng Hà, Thành phố Hạ Long ",
+        "province": {
+        "code": "22",
+        "name": "Quảng Ninh",
+        "full_name": "Tỉnh Quảng Ninh"
+    },
+        "district": {
+        "code": "203",
+        "name": "Vân Đồn",
+        "full_name": "Huyện Vân Đồn"
+    },
+        "ward": {
+        "code": "06994",
+        "name": "Cái Rồng",
+        "full_name": "Thị trấn Cái Rồng"
+    },
+        "location": {
+        "lat": 20.9435275,
+        "lon": 107.1202706
+    },
+        "location_geo_point": "20.9435275,107.1202706",
+        "star": 3,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:48:48Z",
+        "updated_at": "2024-05-10T18:48:48Z",
+        "facility_list": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        13,
+        21,
+        23,
+        40,
+        50,
+        60,
+        70,
+        99,
+        100,
+        101,
+        112,
+        123,
+        150,
+        200,
+        201
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "35",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 21,
+        "name": "Sunday Homestay Vung Tau",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}]""",
+        "address": "268/6B Trần Phú, Phường 5, Thành phố Vũng Tầu, Bà Rịa - Vũng Tàu, Việt Nam",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.3921446,
+        "lon": 107.0604295
+    },
+        "location_geo_point": "10.3921446,107.0604295",
+        "star": 2,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:51:25Z",
+        "updated_at": "2024-05-10T18:51:25Z",
+        "facility_list": [
+        1,
+        2,
+        5,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "36",
+        "_score": 1,
+        "_source": {
+        "owner_id": 22,
+        "name": "The Cap Hotel",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "1 Đường Thi Sách, Phường 8, Thành phố Vũng Tầu, Bà Rịa - Vũng Tàu, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26539",
+        "name": "11",
+        "full_name": "Phường 11"
+    },
+        "location": {
+        "lat": 10.3547475,
+        "lon": 107.0972445
+    },
+        "location_geo_point": "10.3547475,107.0972445",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:52:17Z",
+        "updated_at": "2024-05-10T18:52:17Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "37",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 23,
+        "name": "The Cap Hotel",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg", "width": 900, "height": 599, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg", "width": 272, "height": 185, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg", "width": 800, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "1 Đường Thi Sách, Phường 8, Thành phố Vũng Tầu, Bà Rịa - Vũng Tàu, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26539",
+        "name": "11",
+        "full_name": "Phường 11"
+    },
+        "location": {
+        "lat": 10.3547475,
+        "lon": 107.0972445
+    },
+        "location_geo_point": "10.3547475,107.0972445",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:53:19Z",
+        "updated_at": "2024-05-10T18:53:19Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "38",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 24,
+        "name": "Long Hải Channel Beach Resort",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "ĐT44A, TT. Long Hải, Long Điền, Bà Rịa - Vũng Tàu 790000, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26508",
+        "name": "Thắng Tam",
+        "full_name": "Phường Thắng Tam"
+    },
+        "location": {
+        "lat": 10.383602,
+        "lon": 107.2467899
+    },
+        "location_geo_point": "10.383602,107.2467899",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Một chút mô tả hữu ích về khách sạn",
+        "location_detail": "Đọc cái này chắc chắn biết khách sạn ở đầu luôn nè",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:54:38Z",
+        "updated_at": "2024-05-10T18:54:38Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "39",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 24,
+        "name": "Long Hải Channel Beach Resort",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "ĐT44A, TT. Long Hải, Long Điền, Bà Rịa - Vũng Tàu 790000, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26508",
+        "name": "Thắng Tam",
+        "full_name": "Phường Thắng Tam"
+    },
+        "location": {
+        "lat": 10.383602,
+        "lon": 107.2467899
+    },
+        "location_geo_point": "10.383602,107.2467899",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Một chút mô tả hữu ích về khách sạn",
+        "location_detail": "Đọc cái này chắc chắn biết khách sạn ở đầu luôn nè",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:55:46Z",
+        "updated_at": "2024-05-10T18:55:46Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "40",
+        "_score": 1,
+        "_source": {
+        "owner_id": 24,
+        "name": "HomestayGardenKhảiTâm",
+        "hotel_type": 2,
+        "logo_str": null,
+        "images_str": null,
+        "address": "589/182 Nguyễn Tất Thành, TT. Long Hải, Long Điền, Bà Rịa - Vũng Tàu, Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "752",
+        "name": "Long Điền",
+        "full_name": "Huyện Long Điền"
+    },
+        "ward": {
+        "code": "26662",
+        "name": "Long Hải",
+        "full_name": "Thị trấn Long Hải"
+    },
+        "location": {
+        "lat": 10.4028661,
+        "lon": 107.2396483
+    },
+        "location_geo_point": "10.4028661,107.2396483",
+        "star": 2,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Một chút mô tả hữu ích về khách sạn",
+        "location_detail": "Đọc cái này chắc chắn biết khách sạn ở đầu luôn nè",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:56:03Z",
+        "updated_at": "2024-05-10T18:56:03Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "24",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 10,
+        "name": "Halalala Hotel",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg", "width": 297, "height": 170, "extension": ".jpeg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg", "width": 297, "height": 170, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg", "width": 1600, "height": 1182, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/714120562.jpg", "width": 680, "height": 450, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg", "width": 268, "height": 188, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg", "width": 1024, "height": 768, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg", "width": 259, "height": 194, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg", "width": 832, "height": 468, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "12 Võ Văn Ngân, Linh Chiểu ",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26815",
+        "name": "Linh Chiểu",
+        "full_name": "Phường Linh Chiểu"
+    },
+        "location": {
+        "lat": 10.8532945,
+        "lon": 106.7657571
+    },
+        "location_geo_point": "10.8532945,106.7657571",
+        "star": 3,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Khách sạn cho anh em sư phạm, nói và nói không với sinh viên khoa X",
+        "location_detail": "Cạnh trường SỐ 1 VVN",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:36:36Z",
+        "updated_at": "2024-05-10T18:36:36Z",
+        "facility_list": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        21,
+        53,
+        57,
+        111,
+        121,
+        123,
+        124,
+        212,
+        229
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "25",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 11,
+        "name": "SE CON VÔ ĐỊCH",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg", "width": 266, "height": 190, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg", "width": 522, "height": 392, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg", "width": 275, "height": 183, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg", "width": 800, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg", "width": 2048, "height": 1535, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg", "width": 900, "height": 599, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "120 Hòa Hưng, Phường 13, Quận 10",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "771",
+        "name": "10",
+        "full_name": "Quận 10"
+    },
+        "ward": {
+        "code": "27166",
+        "name": "13",
+        "full_name": "Phường 13"
+    },
+        "location": {
+        "lat": 10.7794645,
+        "lon": 106.6721952
+    },
+        "location_geo_point": "10.7794645,106.6721952",
+        "star": 5,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "SBTC = SÔNG BẰNG TÌNH CẢM != SỐNG BẨN THẾ CƯỜNG",
+        "location_detail": "120 Hòa Hưng, Phường 13, Quận 10, TP HCM",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:37:49Z",
+        "updated_at": "2024-05-10T18:37:49Z",
+        "facility_list": [
+        2,
+        4,
+        5,
+        7,
+        8,
+        11,
+        22,
+        99,
+        100,
+        123,
+        222
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "4",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 0,
+        "created_at": "2024-05-04T15:46:31Z",
+        "updated_at": "2024-05-04T15:51:56Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "5",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-04T15:52:49Z",
+        "updated_at": "2024-05-04T15:52:49Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "6",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-04T15:52:50Z",
+        "updated_at": "2024-05-04T15:52:50Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "7",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-04T15:52:51Z",
+        "updated_at": "2024-05-04T15:52:51Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "8",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-05T16:45:18Z",
+        "updated_at": "2024-05-05T16:45:18Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "9",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-05T16:51:23Z",
+        "updated_at": "2024-05-05T16:51:23Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "10",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san sieu sieu dep",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-05T16:55:11Z",
+        "updated_at": "2024-05-05T16:55:11Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "11",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san cua tao",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 20.865139,
+        "lon": 106.68383
+    },
+        "location_geo_point": "20.865139,106.68383",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-06T06:48:31Z",
+        "updated_at": "2024-05-06T06:48:31Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "12",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san cua tao22",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.8003328,
+        "lon": 106.6860544
+    },
+        "location_geo_point": "10.8003328,106.6860544",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-06T06:48:56Z",
+        "updated_at": "2024-05-06T06:48:56Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "13",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san bu cu",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-06T06:51:56Z",
+        "updated_at": "2024-05-06T06:51:56Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "14",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san bu cu",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-07T15:56:20Z",
+        "updated_at": "2024-05-07T15:56:20Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "15",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san bu cu1231",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-07T08:59:17Z",
+        "updated_at": "2024-05-07T08:59:17Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "16",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Khach san bu cu1231",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-07T09:35:36Z",
+        "updated_at": "2024-05-07T09:35:36Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "17",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Dit me may hieu",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-07T09:35:46Z",
+        "updated_at": "2024-05-08T06:39:05Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "18",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Dit me may hieu",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-07T09:50:22Z",
+        "updated_at": "2024-05-07T09:50:22Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "19",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Dit me may chim se",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-07T09:50:32Z",
+        "updated_at": "2024-05-08T03:54:55Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "20",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Dit me may chim se",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-08T16:39:11Z",
+        "updated_at": "2024-05-08T16:39:11Z",
+        "facility_list": [
+        1,
+        2,
+        3
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "21",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Dit me may chim se",
+        "hotel_type": 4,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T15:17:48Z",
+        "updated_at": "2024-05-10T15:17:48Z",
+        "facility_list": [
+        12,
+        23,
+        111,
+        122,
+        221
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "22",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 1,
+        "name": "Dit me may chim se",
+        "hotel_type": 1,
+        "logo_str": """{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}""",
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg", "width": 1000, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "31 Ngo quyen",
+        "province": {
+        "code": "01",
+        "name": "Hà Nội",
+        "full_name": "Thành phố Hà Nội"
+    },
+        "district": {
+        "code": "623",
+        "name": "An Khê",
+        "full_name": "Thị xã An Khê"
+    },
+        "ward": {
+        "code": "17683",
+        "name": "Thịnh Sơn",
+        "full_name": "Xã Thịnh Sơn"
+    },
+        "location": {
+        "lat": 10.870927,
+        "lon": 106.802211
+    },
+        "location_geo_point": "10.870927,106.802211",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "this is a very big and beutiful hotel",
+        "location_detail": "31 ngo quyen, Doi dien quan 9 6 6 9",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-10T16:20:24Z",
+        "updated_at": "2024-05-10T16:20:24Z",
+        "facility_list": [
+        12,
+        23,
+        111,
+        122,
+        221
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "23",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 9,
+        "name": "Not for wibu Hotel",
+        "hotel_type": 1,
+        "logo_str": null,
+        "images_str": """[{"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg", "width": 600, "height": 400, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg", "width": 309, "height": 163, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg", "width": 2048, "height": 1535, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg", "width": 900, "height": 599, "extension": ".jpg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg", "width": 272, "height": 185, "extension": ".jpeg", "cloud_name": "s3"}, {"id": 0, "url": "https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg", "width": 800, "height": 600, "extension": ".jpg", "cloud_name": "s3"}]""",
+        "address": "129 Nguyễn Chí Thanh, Quận 10, TP HCM",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "771",
+        "name": "10",
+        "full_name": "Quận 10"
+    },
+        "ward": {
+        "code": "27166",
+        "name": "13",
+        "full_name": "Phường 13"
+    },
+        "location": {
+        "lat": 10.759857,
+        "lon": 106.668281
+    },
+        "location_geo_point": "10.759857,106.668281",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Đây là khách sạn siêu cấp thượng đẳng, trang trí siêu đẹp, ngầu lòi, ảo tung chảo",
+        "location_detail": "Ở gần cái nhà thờ to to, nhìn đối diện sang bên trái là thấy á",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 12,
+        "cancellation_policy": 0.800000011920929,
+        "smoking_policy": "free",
+        "additional_policies": "Wibu không được phép vào khách sạn này, chúng tôi không tiếp wibu!!"
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:33:41Z",
+        "updated_at": "2024-05-10T18:33:41Z",
+        "facility_list": [
+        1,
+        2,
+        4,
+        21,
+        33,
+        45,
+        65,
+        69,
+        70,
+        71
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "34",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 20,
+        "name": "Khách Sạn Phúc Đạt",
+        "hotel_type": 1,
+        "logo_str": """{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg","width":266,"height":190,"extension":".jpeg","cloud_name":"s3"}""",
+        "images_str": """[{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg","width":259,"height":194,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg","width":832,"height":468,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg","width":266,"height":190,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg","width":522,"height":392,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg","width":1000,"height":600,"extension":".jpg","cloud_name":"s3"}]""",
+        "address": "126 Đ. 2 Tháng 9, Phường 11, Thành phố Vũng Tầu Việt Nam",
+        "province": {
+        "code": "77",
+        "name": "Bà Rịa - Vũng Tàu",
+        "full_name": "Tỉnh Bà Rịa - Vũng Tàu"
+    },
+        "district": {
+        "code": "747",
+        "name": "Vũng Tàu",
+        "full_name": "Thành phố Vũng Tàu"
+    },
+        "ward": {
+        "code": "26539",
+        "name": "11",
+        "full_name": "Phường 11"
+    },
+        "location": {
+        "lat": 10.4033924,
+        "lon": 107.1434253
+    },
+        "location_geo_point": "10.4033924,107.1434253",
+        "star": 2,
+        "hotel_details": {
+        "number_of_floor": null,
+        "distance_to_center_city": null,
+        "description": null,
+        "location_detail": null,
+        "check_in_time": null,
+        "check_out_time": null,
+        "require_document": null,
+        "minimum_age": null,
+        "cancellation_policy": null,
+        "smoking_policy": null,
+        "additional_policies": null
+    },
+        "status": 1,
+        "created_at": "2024-05-10T18:50:09Z",
+        "updated_at": "2024-05-19T14:18:22Z",
+        "facility_list": [
+        1,
+        2,
+        5,
+        21,
+        40,
+        50,
+        60,
+        70,
+        99,
+        100,
+        101,
+        112,
+        123,
+        150,
+        200,
+        201
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "43",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 29,
+        "name": "Khách sạn GenG",
+        "hotel_type": 1,
+        "logo_str": """{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg","width":297,"height":170,"extension":".jpeg","cloud_name":"s3"}""",
+        "images_str": """[{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg","width":297,"height":170,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg","width":1600,"height":1182,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/714120562.jpg","width":680,"height":450,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg","width":268,"height":188,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg","width":1024,"height":768,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg","width":259,"height":194,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg","width":832,"height":468,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg","width":266,"height":190,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg","width":522,"height":392,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg","width":1000,"height":600,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg","width":800,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg","width":275,"height":183,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg","width":275,"height":183,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg","width":800,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg","width":600,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg","width":309,"height":163,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg","width":2048,"height":1535,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg","width":900,"height":599,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg","width":272,"height":185,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg","width":800,"height":600,"extension":".jpg","cloud_name":"s3"}]""",
+        "address": "4 Đường 205A, KP3, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26542",
+        "name": "12",
+        "full_name": "Phường 12"
+    },
+        "location": {
+        "lat": 10.8764833,
+        "lon": 106.7920287
+    },
+        "location_geo_point": "10.8764833,106.7920287",
+        "star": 4,
+        "hotel_details": {
+        "number_of_floor": 4,
+        "distance_to_center_city": 12,
+        "description": "Một chút mô tả hữu ích về khách sạn",
+        "location_detail": "Đọc cái này chắc chắn biết khách sạn ở đầu luôn nè",
+        "check_in_time": 45000000000,
+        "check_out_time": 45000000000,
+        "require_document": 1,
+        "minimum_age": 0,
+        "cancellation_policy": 0,
+        "smoking_policy": "free",
+        "additional_policies": ""
+    },
+        "status": 1,
+        "created_at": "2024-05-20T07:50:59Z",
+        "updated_at": "2024-05-20T07:55:36Z",
+        "facility_list": null
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "44",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 29,
+        "name": "Khách sạn T1",
+        "hotel_type": 1,
+        "logo_str": """{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg","width":297,"height":170,"extension":".jpeg","cloud_name":"s3"}""",
+        "images_str": """[{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg","width":297,"height":170,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg","width":1600,"height":1182,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/714120562.jpg","width":680,"height":450,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg","width":268,"height":188,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg","width":1024,"height":768,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg","width":259,"height":194,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg","width":832,"height":468,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg","width":266,"height":190,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg","width":522,"height":392,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg","width":1000,"height":600,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg","width":800,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg","width":275,"height":183,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg","width":275,"height":183,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg","width":800,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg","width":600,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg","width":309,"height":163,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg","width":2048,"height":1535,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg","width":900,"height":599,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg","width":272,"height":185,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg","width":800,"height":600,"extension":".jpg","cloud_name":"s3"}]""",
+        "address": "Khu Phố 6, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26542",
+        "name": "12",
+        "full_name": "Phường 12"
+    },
+        "location": {
+        "lat": 10.8715148,
+        "lon": 106.8007948
+    },
+        "location_geo_point": "10.8715148,106.8007948",
+        "star": 3,
+        "hotel_details": {
+        "number_of_floor": null,
+        "distance_to_center_city": null,
+        "description": null,
+        "location_detail": null,
+        "check_in_time": null,
+        "check_out_time": null,
+        "require_document": null,
+        "minimum_age": null,
+        "cancellation_policy": null,
+        "smoking_policy": null,
+        "additional_policies": null
+    },
+        "status": 1,
+        "created_at": "2024-05-21T00:01:30Z",
+        "updated_at": "2024-05-20T17:03:05Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    },
+    {
+        "_index": "hotels_enriched",
+        "_id": "45",
+        "_score": 1,
+        "_ignored": [
+        "images_str.keyword"
+        ],
+        "_source": {
+        "owner_id": 29,
+        "name": "Khách sạn GAM",
+        "hotel_type": 1,
+        "logo_str": """{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg","width":297,"height":170,"extension":".jpeg","cloud_name":"s3"}""",
+        "images_str": """[{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/920458666.jpeg","width":297,"height":170,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/28745456.jpg","width":1600,"height":1182,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/714120562.jpg","width":680,"height":450,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/912986729.jpeg","width":268,"height":188,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/321655556.jpg","width":1024,"height":768,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/643885272.jpeg","width":259,"height":194,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/795003376.jpg","width":832,"height":468,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/985913354.jpeg","width":266,"height":190,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/309154034.jpg","width":522,"height":392,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotel_images/658799386.jpg","width":1000,"height":600,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/421368060.jpg","width":800,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg","width":275,"height":183,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/957039152.jpeg","width":275,"height":183,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/611762498.jpg","width":800,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/688026627.jpg","width":600,"height":400,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/202009453.jpeg","width":309,"height":163,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/882089196.jpg","width":2048,"height":1535,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/883751206.jpg","width":900,"height":599,"extension":".jpg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/480779278.jpeg","width":272,"height":185,"extension":".jpeg","cloud_name":"s3"},{"id":0,"url":"https://d3jwhct9rpti9n.cloudfront.net/hotels_image/698964277.jpg","width":800,"height":600,"extension":".jpg","cloud_name":"s3"}]""",
+        "address": "Đường Hàn Thuyên, khu phố 6 P, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+        "province": {
+        "code": "79",
+        "name": "Hồ Chí Minh",
+        "full_name": "Thành phố Hồ Chí Minh"
+    },
+        "district": {
+        "code": "769",
+        "name": "Thủ Đức",
+        "full_name": "Thành phố Thủ Đức"
+    },
+        "ward": {
+        "code": "26542",
+        "name": "12",
+        "full_name": "Phường 12"
+    },
+        "location": {
+        "lat": 10.871694,
+        "lon": 106.799899
+    },
+        "location_geo_point": "10.871694,106.799899",
+        "star": 5,
+        "hotel_details": {
+        "number_of_floor": null,
+        "distance_to_center_city": null,
+        "description": null,
+        "location_detail": null,
+        "check_in_time": null,
+        "check_out_time": null,
+        "require_document": null,
+        "minimum_age": null,
+        "cancellation_policy": null,
+        "smoking_policy": null,
+        "additional_policies": null
+    },
+        "status": 1,
+        "created_at": "2024-05-21T00:10:17Z",
+        "updated_at": "2024-05-20T17:11:02Z",
+        "facility_list": [
+        2,
+        3,
+        4,
+        6,
+        8,
+        21,
+        40,
+        50,
+        60,
+        70,
+        81,
+        82,
+        83,
+        99,
+        100,
+        101,
+        112,
+        150,
+        160,
+        170,
+        171,
+        172,
+        191,
+        200
+        ]
+    }
+    }
+    ]
+}
+}

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.collectAsState
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.data.remote.api.response
@@ -33,6 +34,7 @@ class HomeViewModel @Inject constructor(
     private val useCaseLocations: SearchUseCases,
     private val sharedPrefManager: SharedPrefManager
 ) :ViewModel (){
+    private var context: Context? = null
     private val _listHotelDataResponse = MutableStateFlow<Result<ListHotelDTO>>(Result.Idle)
     val listHotelDataResponse = _listHotelDataResponse.asStateFlow()
     private val _listDistrict = MutableStateFlow<Result<DistrictsDTO>>(Result.Idle)
@@ -58,6 +60,7 @@ class HomeViewModel @Inject constructor(
 
     @SuppressLint("MissingPermission")
     public fun startLocationUpdates() {
+
         setStateHotelSearchLoading()
         locationCallback?.let {
             val locationRequest = LocationRequest.Builder(
@@ -72,7 +75,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
     public fun initLocationProvider(context: Context) {
+        this.context = context
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
         Log.d("List Hotel Location", "Init location provider")
     }
