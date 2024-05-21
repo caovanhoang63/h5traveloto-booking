@@ -171,7 +171,8 @@ fun UpdateInformationScreen(navController: NavController,
                             navController.navigateUp()},
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",)
+                                .padding(vertical = 0.dp, horizontal = 20.dp),text = "Hoàn thành",
+                            )
 
                     }
                 }

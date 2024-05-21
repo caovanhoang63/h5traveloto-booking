@@ -1,13 +1,20 @@
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.net.http.SslError
+import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
+import android.widget.Toast
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -21,6 +28,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.payment.VNP_SdkCompletedCallback
 import com.example.h5traveloto_booking.payment.VNPayLibrary
 import com.vnpay.authentication.VNP_AuthenticationActivity
 import java.security.MessageDigest
@@ -130,7 +139,7 @@ fun createPayment(id: String, amount: String, navController: NavController, cont
 
     val paymentUrl = vnpay.createRequestUrl(vnp_Url, vnp_HashSecret)
     println("VNPAY URL: $paymentUrl")
-    Log.d("hehe",paymentUrl.toString())
+    //Log.d("hehe",paymentUrl.toString())
     val intent = Intent(Intent.ACTION_VIEW).apply {
         data = Uri.parse(paymentUrl)
     }
@@ -138,7 +147,12 @@ fun createPayment(id: String, amount: String, navController: NavController, cont
     //context.startActivity(intent)
 }
 @Composable
-fun WebViewScreen(url: String) {
+fun WebViewScreen4(
+    url: String,
+    scheme: String,
+    onPaymentResult: (paymentResult: String) -> Unit,
+    sdkCompletedCallback: VNP_SdkCompletedCallback? = null
+){
     AndroidView(factory = { context ->
         WebView(context).apply {
             layoutParams = ViewGroup.LayoutParams(
@@ -152,8 +166,12 @@ fun WebViewScreen(url: String) {
             webChromeClient = WebChromeClient()
             webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                   view?.loadUrl(request?.url.toString())
+                    view?.loadUrl(request?.url.toString())
                     return super.shouldOverrideUrlLoading(view, request)
+                    /*if (view != null) {
+                        handleShouldOverrideUrlLoading(view, url, context, scheme, sdkCompletedCallback, onPaymentResult)
+                    }
+                    return true*/
                 }
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
@@ -163,9 +181,20 @@ fun WebViewScreen(url: String) {
                     super.onReceivedError(view, errorCode, description, failingUrl)
                     // Xử lý lỗi
                 }
+                override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+                    super.onReceivedError(view, request, error)
+                }
+                override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
+                    super.onReceivedHttpError(view, request, errorResponse)
+                }
+
+                override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+                    super.onReceivedSslError(view, handler, error)
+                }
 
             }
             loadUrl(url)
+
         }
     }, update = { webView ->
         webView.loadUrl(url)
@@ -174,6 +203,196 @@ fun WebViewScreen(url: String) {
     )
 }
 
+@Composable
+fun WebViewScreen3(
+    url: String,
+    scheme: String,
+    onPaymentResult: (paymentResult: String) -> Unit,
+    sdkCompletedCallback: VNP_SdkCompletedCallback? = null
+                  ) {
+    AndroidView(factory = { context ->
+        WebView(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
+            webChromeClient = WebChromeClient()
+            webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                   //view?.loadUrl(request?.url.toString())
+                    //return super.shouldOverrideUrlLoading(view, request)
+                    Log.d("URL",request?.url.toString())
+                    if (view != null) {
+                        handleShouldOverrideUrlLoading(view, request?.url.toString(), context, scheme, sdkCompletedCallback, onPaymentResult)
+                    }
+                    return true
+                }
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    // Xử lý khi trang tải xong
+                }
+                override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+                    super.onReceivedError(view, errorCode, description, failingUrl)
+                    // Xử lý lỗi
+                }
+                override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+                    super.onReceivedError(view, request, error)
+                }
+                override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
+                    super.onReceivedHttpError(view, request, errorResponse)
+                }
+
+                override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+                    super.onReceivedSslError(view, handler, error)
+                }
+
+            }
+            loadUrl(url)
+
+        }
+    }, update = { webView ->
+        webView.loadUrl(url)
+    },
+        modifier = Modifier.fillMaxSize()
+    )
+}
+
+private fun handleShouldOverrideUrlLoading(
+    view: WebView,
+    url: String,
+    context: Context,
+    scheme: String,
+    sdkCompletedCallback: VNP_SdkCompletedCallback?,
+    onPaymentResult: (paymentResult: String) -> Unit
+) {
+    val intent: Intent?
+    var uri: Uri
+
+    if (!TextUtils.isEmpty(url) && url.startsWith("intent://")) {
+        try {
+            uri = Uri.parse(url)
+            if (!TextUtils.isEmpty(scheme)) {
+                uri = addUriParameter(uri, "newcallbackurl", scheme)
+            }
+
+            intent = Intent.parseUri(uri.toString(), Intent.URI_INTENT_SCHEME)
+            if (intent != null) {
+                var authenticate = false
+
+                try {
+                    authenticate = true
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.wtf("SDK", e.message)
+                    authenticate = true
+                }
+
+                if (authenticate) {
+                    view.stopLoading()
+
+                    try {
+                        context.startActivity(intent)
+                        (context as? Activity)?.finish()
+                    } catch (e: Exception) {
+                        val appPackageName = intent.`package`
+
+                        try {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(
+                                        "market://details?id=$appPackageName"
+                                    )
+                                )
+                            )
+                        } catch (anfe: ActivityNotFoundException) {
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(
+                                        "https://play.google.com/store/apps/details?id=$appPackageName"
+                                    )
+                                )
+                            )
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "This bank is not support", Toast.LENGTH_LONG).show()
+                }
+
+                return
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.wtf("SDK", e)
+        }
+
+        return
+    } else when {
+        url.contains("cancel.sdk.merchantbackapp") -> {
+            sdkCompletedCallback?.sdkAction("WebBackAction")
+            onPaymentResult("WebBackAction")
+         //   (context as? Activity)?.finish()
+            return
+        }
+        url.contains("fail.sdk.merchantbackapp") -> {
+            sdkCompletedCallback?.sdkAction("FaildBackAction")
+            onPaymentResult("FaildBackAction")
+          //  (context as? Activity)?.finish()
+            return
+        }
+        url.contains("success.sdk.merchantbackapp") -> {
+            sdkCompletedCallback?.sdkAction("SuccessBackAction")
+            onPaymentResult("SuccessBackAction")
+         //   (context as? Activity)?.finish()
+            return
+        }
+        url.contains("vnp_ResponseCode=24") ->{
+            sdkCompletedCallback?.sdkAction("FaildBackAction")
+            onPaymentResult("FaildBackAction")
+       //     (context as? Activity)?.finish()
+            return
+        }
+        url.contains("vnp_ResponseCode=00") ->{
+         //   sdkCompletedCallback?.sdkAction("SuccessBackAction")
+            onPaymentResult("SuccessBackAction")
+        //    (context as? Activity)?.finish()
+            return
+        }
+        url.startsWith("tel:") -> {
+            intent = Intent(Intent.ACTION_DIAL, Uri.parse(url))
+            context.startActivity(intent)
+            return
+        }
+        url.startsWith("mailto:") -> {
+            val i = Intent(Intent.ACTION_SENDTO, Uri.parse(url))
+            context.startActivity(i)
+            return
+        }
+        !url.startsWith("http") -> {
+            uri = Uri.parse(url)
+            val ix = Intent(Intent.ACTION_VIEW, uri)
+            context.startActivity(ix)
+       //     (context as? Activity)?.finish()
+            return
+        }
+        else -> view.loadUrl(url)
+    }
+}
+fun addUriParameter(uri: Uri, key: String, newValue: String): Uri {
+    val params = uri.queryParameterNames
+    val newUri = uri.buildUpon().clearQuery()
+    val var5: Iterator<*> = params.iterator()
+
+    while (var5.hasNext()) {
+        val param = var5.next() as String
+        newUri.appendQueryParameter(param, uri.getQueryParameter(param))
+    }
+    newUri.appendQueryParameter(key, newValue)
+    return newUri.build()
+}
 /*fun OpenUrlScreen(vnpUrlWithHash: String,context: Context) {
    // val context = LocalContext.current
 

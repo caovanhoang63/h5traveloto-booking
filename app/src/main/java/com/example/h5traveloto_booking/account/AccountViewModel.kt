@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -56,6 +57,8 @@ class AccountViewModel @Inject constructor(
             Log.d("Success",it.data.avatar?.url.toString())
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
+            UserShare.User.id = it.data.id
+
         }
     }
 

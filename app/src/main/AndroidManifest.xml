@@ -22,13 +22,16 @@
                 android:name=".MainActivity"
                 android:exported="true"
                 android:label="@string/app_name"
-                android:theme="@style/Theme.H5travelotobooking">
+                android:theme="@style/Theme.H5travelotobooking"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize"
+                android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".payment.VNP_AuthenticationActivity"
+       <!-- <activity android:name=".payment.VNP_AuthenticationActivity"
         android:exported="true"
                   android:theme="@style/Theme.H5travelotobooking">
             <intent-filter>
@@ -38,7 +41,7 @@
 
                 <data android:scheme="resultactivity" />
             </intent-filter>
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>

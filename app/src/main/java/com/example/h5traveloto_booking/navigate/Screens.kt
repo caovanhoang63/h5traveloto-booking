@@ -31,4 +31,8 @@ enum class Screens {
     AllFavoriteScreen,
     ListPolicies,
     ListReviews,
+    AddCollectionScreen,
+    AddHotelInCollectionScreen,
+    DetailCollectionScreen,
+    AddImageInCollectionScreen
 }

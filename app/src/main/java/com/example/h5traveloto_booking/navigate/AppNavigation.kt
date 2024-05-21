@@ -20,6 +20,9 @@ import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDe
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListPolicies
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListReviews
+import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddCollectionScreen
+import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddImageInCollectionScreen
+import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInCollection.AddHotelInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
@@ -28,6 +31,7 @@ import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 fun AppNavigation(startDestination : String ) {
 
     val navController = rememberNavController()
+    LocationProvider.initLocationProvider(LocalContext.current)
 
     NavHost (
         navController = navController,
@@ -72,6 +76,27 @@ fun AppNavigation(startDestination : String ) {
         }
         composable(route = Screens.ListReviews.name ) {
             ListReviews(navController = navController)
+        }
+        composable(route = Screens.AddCollectionScreen.name ) {
+            AddCollectionScreen(navController = navController)
+        }
+        composable(route = Screens.AddHotelInCollectionScreen.name){
+            AddHotelInCollectionScreen(navController = navController, collectionId = "")
+        }
+        composable(route = Screens.AddImageInCollectionScreen.name ) {
+            AddImageInCollectionScreen(navController = navController)
+        }
+        composable(route="detailcollection/{CollectionID}",
+            arguments = listOf(navArgument("CollectionID")
+            {type = NavType.StringType }
+            )
+        ) {
+            backStackEntry ->
+            val collectionID = backStackEntry.arguments?.getString("CollectionID")
+            Log.d("hehehee",collectionID.toString())
+            if (collectionID != null) {
+                DetailCollectionScreen(navController = navController, collectionID = collectionID)
+            }
         }
         composable("webview/{url}"){
             backStackEntry ->

@@ -34,6 +34,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
 import java.io.InputStreamReader
@@ -49,7 +50,7 @@ class VNP_AuthenticationActivity () : ComponentActivity() {
     private var scheme: String? = ""
     private var tmn_code: String? = ""
     private var is_sandbox = false
-    private var entity_Response: Array<VNP_BankEntity>? = null
+    private lateinit var entity_Response: Array<VNP_BankEntity>
     private var dialog: ProgressDialog? = null
     private var llLoading: LinearLayout? = null
     var Url: String = "https://pay.vnpay.vn/qrpayauth/api/sdk/get_qrpay_support/"
@@ -104,7 +105,7 @@ class VNP_AuthenticationActivity () : ComponentActivity() {
                             this.scheme = this.scheme + "://sdk"
                         }
 
-                        Log.wtf("SDK", this.scheme)
+                        Log.wtf("SDK1", this.scheme)
                     }
                 }
 
@@ -163,6 +164,8 @@ class VNP_AuthenticationActivity () : ComponentActivity() {
                 }
 
                 wvContent!!.webViewClient = myWebClient()
+                Log.d("SDK@",url.toString())
+                url ="https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1000000000&vnp_Command=pay&vnp_CreateDate=20240520200828&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=3pcoy6EMqydAnX100000&vnp_OrderType=order&vnp_ReturnUrl=https%3A%2F%2Fsandbox.vnPayment.vn%2Fmerchant_webapi%2Fmerchant.html&vnp_TmnCode=RKNI1E2L&vnp_TxnRef=018f961e-2173-7dd8-8134-b61a807732f3&vnp_Version=2.1.0&vnp_SecureHash=1f4bcf0bf8dd43d4a1ce89f42d76c0bffe649a0d1b7eafd2c8c9b4bcec2873e19aac363ba7f151b2532e28cd655674c713a3790d1929c6c76f2bfcdde6d2ead7"
                 wvContent!!.loadUrl(url!!)
             }
 
@@ -185,10 +188,8 @@ class VNP_AuthenticationActivity () : ComponentActivity() {
                             .writeTimeout(80L, TimeUnit.SECONDS)
                             .readTimeout(80L, TimeUnit.SECONDS).build()
                     val mediaType = "application/x-www-form-urlencoded".toMediaTypeOrNull()
-                    val body = RequestBody.create(
-                        mediaType,
-                        "tmn_code=" + this@VNP_AuthenticationActivity.tmn_code + "&os_type=ANDROID"
-                    )
+                    val body = ("tmn_code=" + this@VNP_AuthenticationActivity.tmn_code + "&os_type=ANDROID"
+                            ).toRequestBody(mediaType)
                     val request: Request =
                         Request.Builder().url(if (this@VNP_AuthenticationActivity.is_sandbox) Url_sandbox else Url)
                             .post(body).addHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -324,7 +325,7 @@ class VNP_AuthenticationActivity () : ComponentActivity() {
                                 authenticate = true
                             } else {
                                 val var17 = this@VNP_AuthenticationActivity.entity_Response
-                                val var7 = var17!!.size
+                                val var7 = var17.size
 
                                 for (var8 in 0 until var7) {
                                     val bankEntity = var17[var8]
@@ -467,15 +468,15 @@ fun setSdkCompletedCallback(sdkCompletedCallback: VNP_SdkCompletedCallback?) {
 
 fun openSdk(context: Context) {
     val intent = Intent(context,VNP_AuthenticationActivity::class.java)
-    intent.putExtra("url", "https://sandbox.vnpayment.vn/testsdk/") //bắt buộc, VNPAY cung cấp
-    intent.putExtra("tmn_code", "FAHASA03") //bắt buộc, VNPAY cung cấp
+    intent.putExtra("url", "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html") //bắt buộc, VNPAY cung cấp
+    intent.putExtra("tmn_code", "CXE5IZGS") //bắt buộc, VNPAY cung cấp
+    intent.putExtra("vnp_SecureHash","2MMW18YEFAIAATHVRLN0JI06HZ82C7FZ")
     intent.putExtra(
         "scheme",
         "resultactivity"
     ) //bắt buộc, scheme để mở lại app khi có kết quả thanh toán từ mobile banking
-    intent.putExtra("is_sandbox", false) //bắt buộc, true <=> môi trường test, true <=> môi trường live
+    intent.putExtra("is_sandbox", true) //bắt buộc, true <=> môi trường test, true <=> môi trường live
     setSdkCompletedCallback(object : VNP_SdkCompletedCallback  {
-
         override fun sdkAction(var1: String?) {
             TODO("Not yet implemented")
             Log.wtf("SplashActivity", "action: $var1")
