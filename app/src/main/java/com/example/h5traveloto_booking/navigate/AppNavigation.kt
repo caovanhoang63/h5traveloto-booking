@@ -1,14 +1,16 @@
 package com.example.h5traveloto_booking.navigate
 
 import ListRooms
-import WebViewScreen
+import WebViewScreen3
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.h5traveloto_booking.account.ChangePassword.ChangePasswordScreen
 import com.example.h5traveloto_booking.auth.presentation.login.LoginScreen
 import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
@@ -16,6 +18,7 @@ import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
+import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListPolicies
@@ -26,8 +29,10 @@ import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInColl
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
+import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollection.DetailCollectionScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
+import com.google.gson.Gson
 
 @Composable
 fun AppNavigation(startDestination : String ) {
@@ -105,11 +110,33 @@ fun AppNavigation(startDestination : String ) {
             BookingScreen(navController = navController, bookingData = bookingData)
         }
         composable("webview/{url}"){
-            backStackEntry ->
+                backStackEntry ->
             val url = backStackEntry.arguments?.getString("url")?:""
-            Log.d("hehe",url.toString())
-         //  WebViewScreen2(url = url, tmnCode = "CXE5IZGS",scheme="resultactivity",isSandbox = true)
-          WebViewScreen(url = url)
+            Log.d("hehe1",url.toString())
+            //  WebViewScreen2(url = url, tmnCode = "CXE5IZGS",scheme="resultactivity",isSandbox = true)
+            val onPaymentResult: (String) -> Unit = { paymentResult ->
+                // Xử lý kết quả thanh toán tại đây
+                when (paymentResult) {
+                    "SuccessBackAction" -> {
+                        // Xử lý khi thanh toán thành công
+                        navController.navigateUp()
+                        //navController.popBackStack()
+                    }
+                    "FaildBackAction" -> {
+                        // Xử lý khi thanh toán thất bại
+                        Log.d("URL","hehe")
+                        //navController.navigate(Screens.AccountScreen.name)
+                        //  navController.navigateUp()
+                        navController.popBackStack()
+                        // navController.navigate(Screens.AccountScreen.name)
+                    }
+                    "WebBackAction" -> {
+                        // Xử lý khi quay lại từ web
+                        navController.navigateUp()
+                    }
+                }
+            }
+            WebViewScreen3(url = url, scheme = "resultactivity",onPaymentResult = onPaymentResult)
         }
     }
 }
