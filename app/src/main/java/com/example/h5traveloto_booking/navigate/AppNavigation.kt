@@ -19,8 +19,12 @@ import com.example.h5traveloto_booking.details.presentation.bookingdetails.Booki
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingDetailsFillingScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
+import com.google.gson.Gson
 
 @Composable
 fun AppNavigation(startDestination : String ) {
@@ -66,8 +70,9 @@ fun AppNavigation(startDestination : String ) {
         composable(route = Screens.AllFavoriteScreen.name ) {
             AllFavoriteScreen(navController = navController)
         }
-        composable(route = Screens.BookingScreen.name) {
-            BookingScreen(navController = navController)
+        composable(route = "${Screens.BookingScreen.name}/{bookingData}") { backstabEntry ->
+            val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), CreateBookingDTO::class.java)
+            BookingScreen(navController = navController, bookingData = bookingData)
         }
         composable("webview/{url}"){
             backStackEntry ->

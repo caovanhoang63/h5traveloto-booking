@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
@@ -25,6 +26,7 @@ import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.ui_shared_components.DateRangePicker
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.MIN_DATE
+import com.google.gson.Gson
 import io.wojciechosak.calendar.utils.today
 import kotlinx.coroutines.delay
 import kotlinx.datetime.DateTimeUnit
@@ -40,6 +42,17 @@ public fun CalendarScreen (
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
+
+    // Dummy data
+    val bookingData = CreateBookingDTO(
+        hotelId = "DCWYE7tu7Da8kJd",
+        roomTypeId = "3pcoy6AP1VifpD",
+        roomQuantity = 1,
+        adults = 1,
+        children = 1,
+        startDate = "21-12-2024",
+        endDate = "22-12-2024"
+    )
 
     Scaffold(
         modifier = Modifier
@@ -64,7 +77,7 @@ public fun CalendarScreen (
             item {
                 Button(
                     onClick = {
-                        parentNavController.navigate(Screens.BookingScreen.name)
+                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
                     }
                 ) {
 

@@ -19,6 +19,7 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.BookingSummaryCard
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.ContactDetailsCard
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.PriceDetailsCard
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
@@ -28,7 +29,8 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 @Composable
 fun BookingDetailsFillingScreen(
     navController: NavController,
-    parentNavController: NavController
+    parentNavController: NavController,
+    bookingData: CreateBookingDTO
 ) {
     Scaffold(
         topBar = {
@@ -103,7 +105,7 @@ fun BookingDetailsFillingScreen(
                             fontSize = 16.sp
                         )
                         Text(
-                            "012345678",
+                            "${bookingData.hotelId}",
                             color = Grey500Color,
                             fontSize = 14.sp
                         )

@@ -23,10 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreenViewModel
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.ObjectAndPrice
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
@@ -35,7 +39,9 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 
 @Composable
 fun BookingReviewScreen (
-    navController: NavController
+    navController: NavController,
+    bookingData: CreateBookingDTO,
+    viewModel: BookingScreenViewModel = hiltViewModel()
 ) {
     Scaffold (
         topBar = {
@@ -68,7 +74,9 @@ fun BookingReviewScreen (
         },
         bottomBar = {
             Button(
-                onClick = {  },
+                onClick = {
+//                    viewModel.createBooking()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(65.dp)
