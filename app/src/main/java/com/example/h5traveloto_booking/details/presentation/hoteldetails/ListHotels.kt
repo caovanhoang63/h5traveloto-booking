@@ -27,6 +27,7 @@ import com.example.h5traveloto_booking.details.presentation.data.`class`.HotelCl
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard2
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.StarFilter
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -67,13 +68,12 @@ fun ListHotels(
         }
     }
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.initLocationProvider(context)
-        if(shareHotelDataViewModel.checkExistedData() && !shareHotelDataViewModel.getOnClickBooking()){
+        if (shareHotelDataViewModel.checkExistedData() && !shareHotelDataViewModel.getOnClickBooking()) {
             viewModel.setStateHotelSearchSuccess(shareHotelDataViewModel.getListHotel()!!)
-        }
-        else{
-            if(!shareHotelDataViewModel.isCurrentLocation()){
+        } else {
+            if (!shareHotelDataViewModel.isCurrentLocation()) {
                 viewModel.getHotelSearch()
             }
         }
@@ -184,12 +184,12 @@ fun ListHotels(
 
                         Column { //Current location
                             Text(
-                                text = "Khách sạn gần tôi",
+                                text = shareDataHotelDetail.getSearchText(),
                                 style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp)
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng",
+                                text = "${shareDataHotelDetail.getStartDate()}, ${shareDataHotelDetail.getPersonOption().first} đêm, ${shareDataHotelDetail.getPersonOption().third} phòng",
                                 style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp)
                             )
                         }
@@ -220,26 +220,31 @@ fun ListHotels(
             modifier = Modifier
                 .padding(innerPadding)
         ) {
-            when(listHotelSearch){
+            when (listHotelSearch) {
                 is Result.Idle -> {
-                    if(shareHotelDataViewModel.isCurrentLocation()){
-                        if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
-                            || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
-                        ){
+                    if (shareHotelDataViewModel.isCurrentLocation()) {
+                        if (ActivityCompat.checkSelfPermission(
+                                context,
+                                android.Manifest.permission.ACCESS_FINE_LOCATION
+                            ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                            || ActivityCompat.checkSelfPermission(
+                                context,
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                        ) {
                             ButtonRequestLocationPermission(onClick = {
                                 launchMultiplePermissions.launch(permissions)
                             })
-                        }
-                        else{
+                        } else {
                             viewModel.initLocationProvider(context)
                             launchMultiplePermissions.launch(permissions)
                             viewModel.setStateHotelSearchLoading()
                         }
-                    }
-                    else{
+                    } else {
                         viewModel.setStateHotelSearchLoading()
                     }
                 }
+
                 is Result.Loading -> {
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                         CircularProgressIndicator()

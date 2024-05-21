@@ -33,8 +33,10 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.ListHotelsViewModel
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.*
+import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
 
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -53,10 +55,15 @@ fun HotelDetailsScreen(
         viewModel.getHotelDetails()
         viewModel.getListReviews()
     }
+
     val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
+
+    val hotelInfo = shareDataHotelDetail.getHotelDetails();
 
     val listReviewsResponse = viewModel.ListReviewsResponse.collectAsState().value
     var favoriteState by remember { mutableStateOf(false) }
+
+    val imageUrlList = hotelInfo!!.images.map { it.url }
 
     when (HotelDetailsResponse) {/*is Result.Loading -> {
             Log.d("List Hotel ", "dang load")
@@ -86,7 +93,7 @@ fun HotelDetailsScreen(
             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Column {
                     GreyText(text = "Giá/phòng/đêm từ")
-                    PrimaryText2(text = "1.000.000 VND", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp))
+                    PrimaryText2(text = "${hotelInfo!!.displayPrice} VND", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp))
                     BoldText(text = "Giá cuối cùng")
                 }
                 
@@ -134,7 +141,7 @@ fun HotelDetailsScreen(
                         contentAlignment = Alignment.TopEnd,
                     ) {
                         AsyncImage(
-                            model = imgURL,
+                            model = hotelInfo!!.logo.url,
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -162,11 +169,11 @@ fun HotelDetailsScreen(
 
                     YSpacer(height = 16)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        BoldText(text = "Khách sạn Palace Sài Gòn")
+                        BoldText(text = hotelInfo!!.name)
                         HotelServiceTag(
                             DrawableId = R.drawable.star,
                             alt = "rating",
-                            text = "5.0",
+                            text = "${hotelInfo.star}.0",
                             iconColor = Color(0xffffe234),
                         )
                     }
@@ -178,7 +185,7 @@ fun HotelDetailsScreen(
                             contentScale = ContentScale.Crop
                         )
                         XSpacer(width = 10)
-                        GreyText(text = "56 - 66 Nguyễn Huệ, Bến Nghé, Quận 1")
+                        GreyText(text = "${hotelInfo!!.district.name}, ${hotelInfo.province.name}")
                     }
                     YSpacer(height = 16)
                     BoldText(text = "Mô Tả Khách Sạn")
@@ -210,56 +217,23 @@ fun HotelDetailsScreen(
                     YSpacer(height = 8)
                     LazyRow(modifier = Modifier.fillMaxWidth()) {
                         item {
-                            AsyncImage(
-                                model = imgURL,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(98.dp)
-                                    .height(82.dp)
-                                    .clip(RoundedCornerShape(8.dp)),
-                                contentScale = ContentScale.Crop,
-                            )
-                            XSpacer(width = 16)
-                            AsyncImage(
-                                model = imgURL,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(98.dp)
-                                    .height(82.dp)
-                                    .clip(RoundedCornerShape(8.dp)),
-                                contentScale = ContentScale.Crop,
-                            )
-                            XSpacer(width = 16)
-                            AsyncImage(
-                                model = imgURL,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(98.dp)
-                                    .height(82.dp)
-                                    .clip(RoundedCornerShape(8.dp)),
-                                contentScale = ContentScale.Crop,
-                            )
-                            XSpacer(width = 16)
-                            AsyncImage(
-                                model = imgURL,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(98.dp)
-                                    .height(82.dp)
-                                    .clip(RoundedCornerShape(8.dp)),
-                                contentScale = ContentScale.Crop,
-                            )
-                            XSpacer(width = 16)
-                            AsyncImage(
-                                model = imgURL,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(98.dp)
-                                    .height(82.dp)
-                                    .clip(RoundedCornerShape(8.dp)),
-                                contentScale = ContentScale.Crop,
-                            )
+                            imageUrlList.forEachIndexed { index, imageDTO ->
+                                /*RoomDetailCard(roomDTO = rooms[index], navController = navController)
+                                if (index < rooms.lastIndex) {
+                                    Spacer(modifier = Modifier.height(15.dp))
+                                }*/
+                                AsyncImage(
+                                    model = imageDTO,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .width(98.dp)
+                                        .height(82.dp)
+                                        .clip(RoundedCornerShape(8.dp)),
+                                    contentScale = ContentScale.Crop,
+                                )
+                                XSpacer(width = 16)
 
+                            }
                         }
 
                     }

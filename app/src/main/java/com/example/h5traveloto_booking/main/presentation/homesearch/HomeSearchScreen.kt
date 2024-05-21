@@ -41,6 +41,7 @@ import com.example.h5traveloto_booking.main.presentation.homesearch.screens.Sear
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.ShareHotelDataViewModel
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -76,30 +77,34 @@ fun HomeSearchScreen(
         }
     }
 
-    Scaffold (
+    Scaffold(
         topBar = {
-           Row (
-               horizontalArrangement = Arrangement.SpaceBetween,
-               verticalAlignment = Alignment.CenterVertically,
-               modifier = Modifier
-                   .background(color = Grey50Color)
-                   .fillMaxWidth()
-                   .padding(21.dp, 0.dp, 21.dp, 0.dp)
-                   .height(64.dp)
-           ){
-               PrimaryIconButton(DrawableId = R.drawable.backbutton, onClick = {navController.popBackStack()},alt = "",)
-               Text(text = "Accommodation", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
-               PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "Back")
-           }
-       }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .background(color = Grey50Color)
+                    .fillMaxWidth()
+                    .padding(21.dp, 0.dp, 21.dp, 0.dp)
+                    .height(64.dp)
+            ) {
+                PrimaryIconButton(
+                    DrawableId = R.drawable.backbutton,
+                    onClick = { navController.popBackStack() },
+                    alt = "",
+                )
+                Text(text = "Accommodation", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+                PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "Back")
+            }
+        }
 
-    ){ innerPaddings ->
+    ) { innerPaddings ->
         Column(
             modifier = Modifier
                 .padding(innerPaddings)
                 .fillMaxSize()
 
-        ){
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -117,9 +122,9 @@ fun HomeSearchScreen(
                         .height(277.dp)
                         .background(color = Color(0xFFFBFBFB))
                         .fillMaxWidth()
-                        .offset( y = (-20).dp),
+                        .offset(y = (-20).dp),
                     contentAlignment = Alignment.TopCenter
-                ){
+                ) {
                     Box(
                         modifier = Modifier
                             .height(260.dp)
@@ -140,25 +145,27 @@ fun HomeSearchScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(52.dp),
-                            ){
+                            ) {
 /* Choose location */
                                 TextButtonDialog(
                                     modifier = Modifier
                                         .height(52.dp)
                                         .weight(1f)
-                                        .clickable { showChoseLocation = true},
+                                        .clickable { showChoseLocation = true },
                                     content = location,
                                     icon = {
-                                        Image(painterResource(id = R.drawable.location1),
+                                        Image(
+                                            painterResource(id = R.drawable.location1),
                                             contentDescription = "",
-                                            modifier = Modifier.size(20.dp))
+                                            modifier = Modifier.size(20.dp)
+                                        )
                                     },
                                 )
-                                if(showChoseLocation){
+                                if (showChoseLocation) {
                                     SearchLocationScreen(
                                         onDismiss = { showChoseLocation = false },
                                         onComplete = { locations, suggestion ->
-                                            if(locations.isNotEmpty()){
+                                            if (locations.isNotEmpty()) {
                                                 location = locations
                                             }
                                             showChoseLocation = false
@@ -177,7 +184,8 @@ fun HomeSearchScreen(
                                         location = "Khách sạn gần tôi"
                                         viewModel.setIsCurrentLocation(true)
                                     },
-                                    modifier = Modifier.size(44.dp)
+                                    modifier = Modifier
+                                        .size(44.dp)
                                         .padding(4.dp)
                                         .shadow(4.dp, shape = RoundedCornerShape(22.dp))
                                         .clip(shape = RoundedCornerShape(22.dp)),
@@ -187,10 +195,15 @@ fun HomeSearchScreen(
                                     ),
                                 )
                                 {
-                                    Icon(Icons.Default.MyLocation, contentDescription = "", modifier = Modifier.size(24.dp), tint = PrimaryColor)
+                                    Icon(
+                                        Icons.Default.MyLocation,
+                                        contentDescription = "",
+                                        modifier = Modifier.size(24.dp),
+                                        tint = PrimaryColor
+                                    )
                                 }
                             }
-/* data picker range */
+                            /* data picker range */
                             TextButtonDialog(
                                 modifier = Modifier
                                     .height(52.dp)
@@ -200,12 +213,14 @@ fun HomeSearchScreen(
                                     },
                                 content = "${viewModel.getStartDate().dayOfMonth} Thg ${viewModel.getStartDate().monthNumber} ${viewModel.getStartDate().year} - ${viewModel.getEndDate().dayOfMonth} Thg ${viewModel.getEndDate().monthNumber} ${viewModel.getEndDate().year}",
                                 icon = {
-                                    Image(painterResource(id = R.drawable.calendar),
+                                    Image(
+                                        painterResource(id = R.drawable.calendar),
                                         contentDescription = "",
-                                        modifier = Modifier.size(20.dp))
+                                        modifier = Modifier.size(20.dp)
+                                    )
                                 },
                             )
-                            if(isShowDateRangePicker){
+                            if (isShowDateRangePicker) {
                                 DateRangePicker(
                                     start = viewModel.getStartDate(),
                                     end = viewModel.getEndDate(),
@@ -218,7 +233,7 @@ fun HomeSearchScreen(
                                     }
                                 )
                             }
-/* Choose person */
+                            /* Choose person */
                             TextButtonDialog(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -226,12 +241,14 @@ fun HomeSearchScreen(
                                     .clickable { showChosePerson = true },
                                 content = "$adult người lớn, $child trẻ em, $room phòng",
                                 icon = {
-                                    Image(painterResource(id = R.drawable.useralt),
+                                    Image(
+                                        painterResource(id = R.drawable.useralt),
                                         contentDescription = "",
-                                        modifier = Modifier.size(22.dp))
+                                        modifier = Modifier.size(22.dp)
+                                    )
                                 },
                             )
-                            if(showChosePerson){
+                            if (showChosePerson) {
                                 ChoosePersonScreen(
                                     onDismiss = { showChosePerson = false },
                                     onConfirm = { adults, childs, rooms ->
@@ -241,17 +258,20 @@ fun HomeSearchScreen(
                                         viewModel.setPersonEndRoom(adults, childs, rooms)
                                         showChosePerson = false
                                     },
-                                    adult,child,room
+                                    adult, child, room
                                 )
                             }
                             Spacer(modifier = Modifier.height(24.dp))
-/* Button booking now */
+                            /* Button booking now */
                             Button(
                                 onClick = {
                                     //launchMultiplePermissions.launch(permissions)
                                     viewModel.bookingNow()
                                     navAppNavController.navigate(Screens.ListHotels.name)
-                                          },
+                                    shareDataHotelDetail.setSearchText(location)
+                                    shareDataHotelDetail.setSelectedStartDate(viewModel.getStartDate().toString(),)
+                                    shareDataHotelDetail.setPersonOption(adult, child, room)
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(48.dp),
@@ -260,7 +280,8 @@ fun HomeSearchScreen(
                                     containerColor = OrangeColor
                                 )
                             ) {
-                                Text(text = "Booking Now",
+                                Text(
+                                    text = "Booking Now",
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp,
@@ -270,9 +291,11 @@ fun HomeSearchScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
-                Column (modifier = Modifier.padding(16.dp,0.dp)) {
-                    Row (modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween) {
+                Column(modifier = Modifier.padding(16.dp, 0.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
                         BoldText("Đã xem gần đây")
                         ClickableText("See all", {})
                     }

@@ -128,6 +128,7 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default r
                 Screens.HotelDetailsScreen.name
             );
             shareDataHotelDetail.setHotelId(hotelDTO.id)
+            shareDataHotelDetail.setHotelDetails(hotelDTO)
         },
     ) {
         Column(modifier = Modifier.padding(15.dp)) {

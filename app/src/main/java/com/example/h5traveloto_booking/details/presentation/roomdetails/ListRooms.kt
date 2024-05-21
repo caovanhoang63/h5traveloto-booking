@@ -104,14 +104,14 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
                         }
 
                         is Result.Success -> {
-                            Log.d("ListRooms", "thanh cong")
+                            /*Log.d("ListRooms", "thanh cong")
                             val rooms = listRoomResponse.data.data
                             rooms.forEachIndexed { index, hotelDTO ->
                                 RoomDetailCard(roomDTO = rooms[index], navController = navController)
                                 if (index < rooms.lastIndex) {
                                     Spacer(modifier = Modifier.height(15.dp))
                                 }
-                            }
+                            }*/
                         }
 
                         else -> Unit

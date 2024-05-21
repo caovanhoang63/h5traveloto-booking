@@ -235,6 +235,7 @@ fun HomeScreen(
                                 hotels.forEachIndexed { index, hotelDTO ->
                                     item {
                                         HotelTagLarge(hotelDTO, onClick = {
+                                            shareDataHotelDetail.setHotelDetails(hotelDTO)
                                             shareDataHotelDetail.setHotelId(hotelDTO.id)
                                             shareDataHotelDetail.LogData()
                                             navAppController.navigate(Screens.HotelDetailsScreen.name)

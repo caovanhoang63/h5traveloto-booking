@@ -1,6 +1,7 @@
 package com.example.h5traveloto_booking.share
 
 import android.util.Log
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
@@ -13,6 +14,29 @@ class ShareDataHotelDetail {
     private var roomQuantity: Int = 1
     private var adults: Int = 1
     private var children: Int = 0
+    private var hotelDetails: Data? = null
+    private var searchText :String = ""
+    private var selectedStartDate: String = ""
+    private var personOption: Triple<Int, Int, Int> = Triple(1, 1, 1)
+
+    fun setPersonOption(adults: Int, children: Int, roomQuantity: Int){
+        personOption = Triple(adults, children, roomQuantity)
+    }
+    fun getPersonOption(): Triple<Int, Int, Int>{
+        return personOption
+    }
+    fun getSelectedStartDate(): String{
+        return selectedStartDate
+    }
+    fun setSelectedStartDate(selectedStartDate: String){
+        this.selectedStartDate = selectedStartDate
+    }
+    fun getSearchText(): String{
+        return searchText
+    }
+    fun setSearchText(searchText: String){
+        this.searchText = searchText
+    }
 
     fun getHotelId(): String{
         return hotelId
@@ -36,6 +60,12 @@ class ShareDataHotelDetail {
 
     fun getChildren(): Int{
         return children
+    }
+    fun getHotelDetails(): Data?{
+        return hotelDetails
+    }
+    fun setHotelDetails(hotelDetails: Data){
+        this.hotelDetails = hotelDetails
     }
 
     fun setHotelId(hotelId: String){
