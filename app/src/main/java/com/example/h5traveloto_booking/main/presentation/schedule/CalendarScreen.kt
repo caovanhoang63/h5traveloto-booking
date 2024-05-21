@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
@@ -25,6 +26,7 @@ import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.ui_shared_components.DateRangePicker
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.MIN_DATE
+import com.google.gson.Gson
 import io.wojciechosak.calendar.utils.today
 import kotlinx.coroutines.delay
 import kotlinx.datetime.DateTimeUnit
@@ -35,20 +37,22 @@ import kotlinx.datetime.plus
 @Composable
 public fun CalendarScreen (
     bookingList: List<BookingDTO>,
-    navController: NavController
+    navController: NavController,
+    parentNavController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
 
-    val showDialog = remember {
-        mutableStateOf(false)
-    }
-    val dialogVal0 = remember {
-        mutableStateOf(LocalDate.today())
-    }
-    val dialogVal1 = remember {
-        mutableStateOf(LocalDate.today().plus(1, DateTimeUnit.DAY))
-    }
+    // Dummy data
+    val bookingData = CreateBookingDTO(
+        hotelId = "DCWYE7tu7Da8kJd",
+        roomTypeId = "3pcoy6AP1VifpD",
+        roomQuantity = 1,
+        adults = 1,
+        children = 1,
+        startDate = "21-12-2024",
+        endDate = "22-12-2024"
+    )
 
     Scaffold(
         modifier = Modifier
@@ -71,29 +75,13 @@ public fun CalendarScreen (
                 .padding(horizontal = 10.dp)
         ) {
             item {
-                Button(onClick = {
-                    showDialog.value = true
-                }) {
-                    Text(
-                        text = "${dialogVal0.value}   ${dialogVal1.value}",
-                        color = Color.White
-                    )
-                }
-                if (showDialog.value) {
-                    DateRangePicker(
-                        start = dialogVal0.value,
-                        end = dialogVal1.value,
-                        onCompleted = { startDate, endDate ->
-                            dialogVal0.value = startDate
-                            dialogVal1.value = endDate
-                            showDialog.value = false
-                        },
-                        onDismiss = {
-                            showDialog.value = false
-                        }
-                    )
-                }
+                Button(
+                    onClick = {
+                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
+                    }
+                ) {
 
+                }
                 BookingCalendar(bookingList = bookingList)
                 YSpacer(height = 5)
             }

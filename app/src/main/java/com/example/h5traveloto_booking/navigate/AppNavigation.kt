@@ -23,6 +23,8 @@ import com.example.h5traveloto_booking.details.presentation.hoteldetails.compone
 import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddImageInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInCollection.AddHotelInCollectionScreen
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
@@ -97,6 +99,10 @@ fun AppNavigation(startDestination : String ) {
             if (collectionID != null) {
                 DetailCollectionScreen(navController = navController, collectionID = collectionID)
             }
+        }
+        composable(route = "${Screens.BookingScreen.name}/{bookingData}") { backstabEntry ->
+            val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), CreateBookingDTO::class.java)
+            BookingScreen(navController = navController, bookingData = bookingData)
         }
         composable("webview/{url}"){
             backStackEntry ->

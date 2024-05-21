@@ -1,6 +1,8 @@
 package com.example.h5traveloto_booking.main.presentation.data.api.repository
 
 import com.example.h5traveloto_booking.main.presentation.data.api.Booking.BookingApi
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.IdRespondDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.ListUserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.domain.repository.BookingRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +15,12 @@ class BookingRepositoryImpl @Inject constructor (
     override suspend fun getUserBookings(userID: String): ListUserBookingDTO {
         return withContext(Dispatchers.Default) {
             api.getListUserBooking(userID)
+        }
+    }
+
+    override suspend fun createBooking(createBookingData: CreateBookingDTO): IdRespondDTO {
+        return withContext(Dispatchers.Default) {
+            api.createBooking(createBookingData)
         }
     }
 }

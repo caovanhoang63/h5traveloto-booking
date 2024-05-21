@@ -25,6 +25,10 @@ enum class Screens {
     ScheduleCalendarScreen,
     ScheduleBookingScreen,
 
+    BookingScreen,
+    BookingDetailsFillingScreen,
+    BookingDetailsReviewScreen,
+
     SplashScreen,
     AppNavigation,
     ChatScreen,

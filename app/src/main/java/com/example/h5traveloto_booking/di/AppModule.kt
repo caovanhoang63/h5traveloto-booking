@@ -436,6 +436,14 @@ object AppModule {
         )
     }
 
+    @Provides
+    @Singleton
+    fun provideBookingUseCases(repository: BookingRepository) : BookingUseCases {
+        return BookingUseCases(
+            bookingUseCase = BookingUseCase(repository)
+        )
+    }
+
     /*
     * 
     * 

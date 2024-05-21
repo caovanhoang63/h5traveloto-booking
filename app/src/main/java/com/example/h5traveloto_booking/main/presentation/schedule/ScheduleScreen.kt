@@ -83,7 +83,7 @@ fun ScheduleScreen (
             Log.d("UserBookings ", "Error at UserBookings")
         }
         is Result.Success -> {
-            Log.d("UserBookings", "Success" + UserBookingsResponse.data.data[0].name)
+            Log.d("UserBookings", "Success")
         }
         else -> Unit
     }
@@ -95,7 +95,8 @@ fun ScheduleScreen (
         composable(route = Screens.ScheduleCalendarScreen.name) {
             CalendarScreen(
                 bookingList = bookingList,
-                navController = scheduleNavController
+                navController = scheduleNavController,
+                parentNavController = navController
             )
         }
         composable(route = Screens.ScheduleBookingScreen.name) {

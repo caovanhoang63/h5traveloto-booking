@@ -16,6 +16,7 @@ val Grey500Color = Color(0xFF878787)
 val Grey100Color = Color(0xFFDFE0F3)
 val Grey50Color = Color(0xFFF5F5FF)
 val GreenColor = Color(0xFF00FF1A)
+val DarkGreenColor = Color(0xFF29A849)
 val RedColor = Color(0xFFFF0000)
 val StarColor = Color(0xffffe234)
 
