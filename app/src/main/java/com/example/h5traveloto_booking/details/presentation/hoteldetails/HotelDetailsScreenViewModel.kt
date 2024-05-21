@@ -35,6 +35,16 @@ class HotelDetailsScreenViewModel @Inject constructor(
     private val _ListReviewsResponse = MutableStateFlow<Result<ListReviewsDTO>>(Result.Idle)
     val ListReviewsResponse = _ListReviewsResponse.asStateFlow()
 
+    private var policy: HotelDetailsDTO? = null
+    fun setPolicy() {
+        if (_HotelDetailsResponse.value is Result.Success){
+            policy = (_HotelDetailsResponse.value as Result.Success).data
+        }
+    }
+    fun getPolicy(): HotelDetailsDTO? {
+        return policy
+    }
+
     fun getListReviews(
 
     ) = viewModelScope.launch {
@@ -55,10 +65,10 @@ class HotelDetailsScreenViewModel @Inject constructor(
                 _ListReviewsResponse.value = Result.Error(errorResponse.message)
             }
             else if (it is Exception) {
-                Log.d("ChangePassword ViewModel", it.javaClass.name)
+                Log.d("Reviews ViewModel", it.javaClass.name)
             }
         }.collect {
-            Log.d("HotelDetails Success", it.data.toString())
+            Log.d("Reviews Success", it.data.toString())
             _ListReviewsResponse.value = Result.Success(it)
         }
     }
@@ -70,7 +80,7 @@ class HotelDetailsScreenViewModel @Inject constructor(
         Log.d("HotelDetails ViewModel", "Get token")
         Log.d("HotelDetails ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        useCases.getHotelDetailsUseCase("3mMo3hVGTE4VTM").onStart {
+        useCases.getHotelDetailsUseCase("4DN56QmgW8Morw").onStart {
             _HotelDetailsResponse.value = Result.Loading
             Log.d("HotelDetails ViewModel", "Loading")
 
@@ -80,7 +90,7 @@ class HotelDetailsScreenViewModel @Inject constructor(
             Log.d("HotelDetails ViewModel E", it.message.toString())
             _HotelDetailsResponse.value = Result.Error(it.message.toString())
         }.collect {
-            Log.d("HotelDetails Success", it.data.description)
+            Log.d("HotelDetails Success", it.data.toString())
             _HotelDetailsResponse.value = Result.Success(it)
         }
     }
