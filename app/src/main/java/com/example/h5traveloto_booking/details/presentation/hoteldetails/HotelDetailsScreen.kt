@@ -42,12 +42,17 @@ import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 @SuppressLint("InvalidColorHexValue")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScreenViewModel = hiltViewModel()) {
+fun HotelDetailsScreen(
+    navController: NavController,
+    viewModel: HotelDetailsScreenViewModel = hiltViewModel()
+) {
     LaunchedEffect(Unit) {
         viewModel.getHotelDetails()
+        viewModel.getListReviews()
     }
     val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
 
+    val listReviewsResponse = viewModel.ListReviewsResponse.collectAsState().value
     var favoriteState by remember { mutableStateOf(false) }
 
     when (HotelDetailsResponse) {/*is Result.Loading -> {
@@ -235,13 +240,13 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         BoldText(text = "Đánh Giá")
-                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable { })
+                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable {navController.navigate(Screens.ListReviews.name) })
                     }
                     YSpacer(height = 12)
-                    HotelDetailFeedback(
+                    /*HotelDetailFeedback(
                         text = "The Aston Vill Hotel is a 5-star hotel located in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.",
                         author = "John Doe"
-                    )
+                    )*/
                     YSpacer(height = 16)
                     HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
                     YSpacer(height = 8)
@@ -310,7 +315,9 @@ fun HotelDetailsScreen(navController: NavController, viewModel: HotelDetailsScre
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         BoldText(text = "Chính Sách Lưu Trú")
-                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable {navController.navigate(Screens.ListPolicies.name) })
+                        PrimaryText(
+                            text = "Xem tất cả",
+                            modifier = Modifier.clickable { navController.navigate(Screens.ListPolicies.name) })
                     }
                     YSpacer(height = 8)
                     HotelDetailPolicyCard(

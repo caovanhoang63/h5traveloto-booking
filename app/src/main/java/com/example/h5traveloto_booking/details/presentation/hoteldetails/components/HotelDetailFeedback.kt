@@ -15,16 +15,15 @@ import com.example.h5traveloto_booking.theme.Grey50Color
 fun HotelDetailFeedback(text: String, author: String) {
     Card(
         modifier = Modifier
-            .width(165.dp)
-            .height(100.dp),
+            .fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color, //Card background color
         ),
     ) {
         LazyColumn(Modifier.padding(15.dp)){
             item {
-                ExpandingText(longText = text, minimizedMaxLines = 3, )
                 Text(text = author, textAlign = androidx.compose.ui.text.style.TextAlign.End)
+                ExpandingText(longText = text, minimizedMaxLines = 3, )
             }
         }
 

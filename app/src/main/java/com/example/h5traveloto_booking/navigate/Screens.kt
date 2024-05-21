@@ -30,4 +30,5 @@ enum class Screens {
     ChatScreen,
     AllFavoriteScreen,
     ListPolicies,
+    ListReviews,
 }

@@ -20,14 +20,14 @@ import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatLis
 import com.example.h5traveloto_booking.details.presentation.data.api.hotelDetails.HotelDetailsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.ListRoomsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.HotelDetailsRepositoryImpl
+import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListReviewsRepositoryImpl
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListRoomsRepositoryImpl
+import com.example.h5traveloto_booking.details.presentation.data.api.reviews.ListReviewsApi
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.domain.repository.HotelDetailsRepository
+import com.example.h5traveloto_booking.details.presentation.domain.repository.ListReviewsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
-import com.example.h5traveloto_booking.details.presentation.domain.usecases.HotelDetailsUseCase
-import com.example.h5traveloto_booking.details.presentation.domain.usecases.HotelDetailsUseCases
-import com.example.h5traveloto_booking.details.presentation.domain.usecases.ListRoomsUseCase
-import com.example.h5traveloto_booking.details.presentation.domain.usecases.ListRoomsUseCases
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.*
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
 import com.example.h5traveloto_booking.main.presentation.data.api.AuthInterceptor.AuthInterceptor
@@ -379,6 +379,30 @@ object AppModule {
     fun provideListUserBookingUseCases(repository: BookingRepository) : ListUserBookingUseCases {
         return ListUserBookingUseCases(
             getListUserBookingUseCase = ListUserBookingUseCase(repository)
+        )
+    }
+    //
+    @Provides
+    @Singleton
+    fun provideListReviews(moshi: Moshi,okHttpClient: OkHttpClient) : ListReviewsApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(ListReviewsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListReviewsRepository(api : ListReviewsApi) : ListReviewsRepository {
+        return ListReviewsRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideListReviewsUseCases(repository: ListReviewsRepository) :ListReviewsUseCases {
+        return ListReviewsUseCases(
+            geListReviewsUseCases = ListReviewsUseCase(repository)
         )
     }
 

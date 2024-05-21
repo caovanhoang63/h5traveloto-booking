@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.ui_shared_components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -13,7 +14,15 @@ fun BoldText(text : String ) {
         text = text
     )
 }
-
+@Composable
+fun BoldText2(text : String,modifier: Modifier) {
+    Text(
+        fontSize = 16.sp,
+        fontWeight =  FontWeight.Bold,
+        text = text,
+        modifier = modifier
+    )
+}
 @Composable
 fun BoldText14(text: String ) {
     Text(
