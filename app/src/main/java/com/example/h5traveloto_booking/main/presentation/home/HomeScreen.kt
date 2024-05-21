@@ -188,6 +188,7 @@ fun HomeScreen(
                             modifier = Modifier.clickable {
                                 if(viewModel.checkData()){
                                     shareHotelDataViewModel.setListHotel((listHotelSearch as Result.Success).data)
+                                    shareHotelDataViewModel.setOnClickBooking(false)
                                     navAppController.navigate(Screens.ListHotels.name)
                                 }
                             }

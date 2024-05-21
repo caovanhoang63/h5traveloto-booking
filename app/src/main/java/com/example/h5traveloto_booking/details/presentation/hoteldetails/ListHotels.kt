@@ -69,7 +69,7 @@ fun ListHotels(
 
     LaunchedEffect(Unit){
         viewModel.initLocationProvider(context)
-        if(shareHotelDataViewModel.checkExistedData()){
+        if(shareHotelDataViewModel.checkExistedData() && !shareHotelDataViewModel.getOnClickBooking()){
             viewModel.setStateHotelSearchSuccess(shareHotelDataViewModel.getListHotel()!!)
         }
         else{
@@ -276,34 +276,6 @@ fun ListHotels(
                             } else {
                                 viewModel.setStateHotelSearchError()
                             }
-//                            when (listHotelResponse) {
-//                                is Result.Loading -> {
-//                                    Log.d("List Hotel ", "dang load")
-//
-//                                    // Hieu ung load
-//                                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-//                                        CircularProgressIndicator()
-//
-//                                    }
-//                                }
-//
-//                                is Result.Error -> {
-//                                    Log.d("List Hotel ", "loi roi")
-//                                }
-//
-//                                is Result.Success -> {
-//                                    Log.d("List Hotel ", "thanh cong")
-//                                    val hotels = listHotelResponse.data.data
-//                                    hotels.forEachIndexed { index, hotelDTO ->
-//                                        HotelDetailCard(hotelDTO = hotelDTO, navController = navController)
-//                                        if (index < hotels.lastIndex) {
-//                                            Spacer(modifier = Modifier.height(15.dp))
-//                                        }
-//                                    }
-//                                }
-//
-//                                else -> Unit
-//                            }
                         }
                     }
                 }

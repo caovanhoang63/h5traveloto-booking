@@ -15,6 +15,15 @@ class ShareHotelDataViewModel @Inject constructor(
 ): ViewModel(){
     private val searchHotelParams = SearchHotelParams()
     private var listHotel : SearchHotelDTO?= null
+    private var isOnClickBooking: Boolean = true
+
+    fun setOnClickBooking(isOnClickBooking: Boolean){
+        this.isOnClickBooking = isOnClickBooking
+    }
+
+    fun getOnClickBooking(): Boolean{
+        return isOnClickBooking
+    }
 
     fun checkExistedData(): Boolean{
         if(listHotel?.data?.size != 0){

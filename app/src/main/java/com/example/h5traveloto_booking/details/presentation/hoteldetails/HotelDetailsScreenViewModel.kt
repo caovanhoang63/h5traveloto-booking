@@ -10,6 +10,7 @@ import com.example.h5traveloto_booking.details.presentation.domain.usecases.List
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.ListReviewsUseCases
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -45,6 +46,7 @@ class HotelDetailsScreenViewModel @Inject constructor(
         return policy
     }
 
+
     fun getListReviews(
 
     ) = viewModelScope.launch {
@@ -52,7 +54,8 @@ class HotelDetailsScreenViewModel @Inject constructor(
         Log.d("Reviews ViewModel", "Get token")
         Log.d("Reviews ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        reviewsUseCases.geListReviewsUseCases("\"4DN56QmgW8Morw\"").onStart {
+        Log.d("hotelid", shareDataHotelDetail.getHotelId())
+        reviewsUseCases.geListReviewsUseCases("\"${shareDataHotelDetail.getHotelId()}\"").onStart {
             _ListReviewsResponse.value = Result.Loading
             Log.d("Reviews ViewModel", "Loading")
         }.catch {
@@ -80,7 +83,7 @@ class HotelDetailsScreenViewModel @Inject constructor(
         Log.d("HotelDetails ViewModel", "Get token")
         Log.d("HotelDetails ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        useCases.getHotelDetailsUseCase("4DN56QmgW8Morw").onStart {
+        useCases.getHotelDetailsUseCase(shareDataHotelDetail.getHotelId()).onStart {
             _HotelDetailsResponse.value = Result.Loading
             Log.d("HotelDetails ViewModel", "Loading")
 

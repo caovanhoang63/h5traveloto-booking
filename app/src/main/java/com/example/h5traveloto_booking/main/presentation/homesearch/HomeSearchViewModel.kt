@@ -74,6 +74,7 @@ class HomeSearchViewModel @Inject constructor(
         setSearchHotelDataQuery()
         Log.d("HomeSearchViewModel", searchHotelParams.toString())
         Log.d("HomeSearchViewModel", dataApiSearch.toString())
+        shareHotelDataViewModel.setOnClickBooking(true)
         shareDataHotelDetail.LogData()
     }
 

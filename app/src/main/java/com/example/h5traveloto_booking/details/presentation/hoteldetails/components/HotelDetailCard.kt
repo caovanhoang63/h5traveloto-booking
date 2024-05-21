@@ -24,6 +24,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.HotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
@@ -32,7 +33,7 @@ import kotlin.math.log
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default rating will be 1
+fun HotelDetailCard(navController: NavController, hotelDTO: HotelDTO) { //default rating will be 1
     val imgURL = hotelDTO.images?.map { it.url }
 
 
@@ -44,7 +45,7 @@ fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color, //Card background color
         ),
-        onClick = {navController.navigate(Screens.HotelDetailsScreen.name)},
+        onClick = { navController.navigate(Screens.HotelDetailsScreen.name) },
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
             LazyRow(
@@ -86,8 +87,7 @@ fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default
                             tint = Color(0xffffe234),
                         )
                         XSpacer(width = 5)
-                        BoldText(text = hotelDTO.star.toString()+".0")
-
+                        BoldText(text = hotelDTO.star.toString() + ".0")
 
 
                     }
@@ -111,7 +111,7 @@ fun HotelDetailCard(navController: NavController,hotelDTO: HotelDTO) { //default
 }
 
 @Composable
-fun HotelDetailCard2(navController: NavController,hotelDTO: Data) { //default rating will be 1
+fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default rating will be 1
     val imgURL = hotelDTO.images?.map { it.url }
 
 
@@ -123,7 +123,12 @@ fun HotelDetailCard2(navController: NavController,hotelDTO: Data) { //default ra
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color, //Card background color
         ),
-        onClick = {navController.navigate(Screens.HotelDetailsScreen.name)},
+        onClick = {
+            navController.navigate(
+                Screens.HotelDetailsScreen.name
+            );
+            shareDataHotelDetail.setHotelId(hotelDTO.id)
+        },
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
             LazyRow(
@@ -165,8 +170,7 @@ fun HotelDetailCard2(navController: NavController,hotelDTO: Data) { //default ra
                             tint = Color(0xffffe234),
                         )
                         XSpacer(width = 5)
-                        BoldText(text = hotelDTO.star.toString()+".0")
-
+                        BoldText(text = hotelDTO.star.toString() + ".0")
 
 
                     }
