@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.*
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.PasswordUseCases
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -28,7 +29,6 @@ class UpdateInformationViewModel @Inject constructor(
     private val _getProfileResponse = MutableStateFlow<Result<ProfileDTO>>(Result.Idle)
     val UpdateProfileResponse = _updateProfileResponse.asStateFlow()
     val GetProfileResponse = _getProfileResponse.asStateFlow()
-
     fun getProfile() = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
         Log.d("UpdateProfile ViewModel", "Get token")

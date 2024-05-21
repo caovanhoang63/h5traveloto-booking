@@ -7,6 +7,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Account.*
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.UpdateProfileUseCase
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.UploadUseCases
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -62,6 +63,7 @@ class PersonalInformationViewModel @Inject constructor(
             Log.d("Success",it.data.email)
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
+            UserShare.User.id = it.data.id
         }
     }
 

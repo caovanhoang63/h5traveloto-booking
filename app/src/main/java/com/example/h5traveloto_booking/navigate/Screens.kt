@@ -29,4 +29,8 @@ enum class Screens {
     AppNavigation,
     ChatScreen,
     AllFavoriteScreen,
+    AddCollectionScreen,
+    AddHotelInCollectionScreen,
+    DetailCollectionScreen,
+    AddImageInCollectionScreen
 }

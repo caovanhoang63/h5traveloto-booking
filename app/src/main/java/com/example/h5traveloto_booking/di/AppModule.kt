@@ -33,6 +33,7 @@ import com.example.h5traveloto_booking.main.presentation.data.api.Account.Profil
 import com.example.h5traveloto_booking.main.presentation.data.api.AuthInterceptor.AuthInterceptor
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.UploadApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Booking.BookingApi
+import com.example.h5traveloto_booking.main.presentation.data.api.Favorite.FavoriteApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.*
@@ -379,6 +380,35 @@ object AppModule {
     fun provideListUserBookingUseCases(repository: BookingRepository) : ListUserBookingUseCases {
         return ListUserBookingUseCases(
             getListUserBookingUseCase = ListUserBookingUseCase(repository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteApi(moshi: Moshi,okHttpClient: OkHttpClient) : FavoriteApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(FavoriteApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteRepository(api : FavoriteApi) : FavoriteRepository {
+        return FavoriteRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCollectionUseCase(repository: FavoriteRepository) : FavoriteUseCases {
+        return FavoriteUseCases(
+            getCollectionUseCase = CollectionUseCase(repository),
+            getAllSavedHotelsUseCase = AllSavedHotelsUseCase(repository),
+            unsaveHotelUseCase = UnSaveHotelUseCase(repository),
+            getHotelsByCollectionIdUseCase = GetHotelsByCollectionIdUseCase(repository),
+            deleteHotelUseCase = DeleteHotelUseCase(repository),
+            addHotelUseCase = AddHotelUseCase(repository)
         )
     }
 

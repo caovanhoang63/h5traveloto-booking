@@ -30,6 +30,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.account.AccountScreen
+import com.example.h5traveloto_booking.account.AccountViewModel
 import com.example.h5traveloto_booking.main.presentation.favorite.FavoriteScreen
 import com.example.h5traveloto_booking.main.presentation.history.HistoryScreen
 import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
@@ -53,8 +54,14 @@ data class BottomNavigationItem(
 @Composable
 fun MainScreen(
     navController: NavController,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    profileViewModel: AccountViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(Unit){
+        profileViewModel.getProfile()
+    }
+
     val mainNavController = rememberNavController()
     var presses by remember { mutableIntStateOf(0) }
     val items = listOf(
@@ -112,18 +119,9 @@ fun MainScreen(
                                 onClick =  {
                                     selectedItemIndex = index
                                     mainNavController.navigate(item.route) {
-                                        // Pop up to the start destination of the graph to
-                                        // avoid building up a large stack of destinations
-                                        // on the back stack as users select items
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
+                                        popUpTo(Screens.HomeNavigation.name) {
+                                            inclusive = false
                                         }
-                                        // Avoid multiple copies of the same destination when
-                                        // reselecting the same item
-                                        launchSingleTop = true
-                                        // Restore state when reselecting a previously selected item
-                                        restoreState = true
-
                                     }
 
                                 },
