@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
+import com.example.h5traveloto_booking.ui_shared_components.BoldText2
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 
 @Composable
@@ -28,11 +29,13 @@ fun ListPolicies(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween
 
             ) {
-                PrimaryIconButton(
-                    DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = ""
-                )
-                BoldText(text = "Chính Sách Lưu Trú")
-                Spacer(modifier = Modifier.weight(1f))
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    PrimaryIconButton(
+                        DrawableId = R.drawable.backbutton, onClick = { navController.popBackStack() }, alt = ""
+                    )
+                    BoldText2(text = "Chính Sách Lưu Trú", modifier = Modifier.align(Alignment.Center))
+
+                }
 
             }
         },
@@ -55,7 +58,7 @@ fun ListPolicies(navController: NavController) {
             HotelDetailPolicyCard(
                 icon = R.drawable.baseline_child_care_24,
                 text = "Chính sách về độ tuổi tối thiểu",
-                description = "Trẻ em từ 0-5 tuổi"
+                description = "Trẻ em từ trên 0-5 tuổi"
             )
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)

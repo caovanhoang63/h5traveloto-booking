@@ -23,8 +23,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -36,6 +38,7 @@ import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.RangeMidDay
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
@@ -80,14 +83,22 @@ fun HotelDetailsScreen(
         "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI="
     Scaffold(
         bottomBar = {
-            PrimaryButton(
-                onClick = { navController.navigate(Screens.ListRooms.name) },
-                text = "Chọn Phòng",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(65.dp)
-                    .padding(horizontal = 24.dp, vertical = 10.dp)
-            )
+            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Column {
+                    GreyText(text = "Giá/phòng/đêm từ")
+                    PrimaryText2(text = "1.000.000 VND", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp))
+                    BoldText(text = "Giá cuối cùng")
+                }
+                
+                PrimaryButton(
+                    onClick = { navController.navigate(Screens.ListRooms.name) },
+                    text = "Chọn Phòng",
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(65.dp)
+                )
+            }
+            
         },
         topBar = {
             Row(
@@ -150,70 +161,13 @@ fun HotelDetailsScreen(
                     }
 
                     YSpacer(height = 16)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(36.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(0.8f),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        ) {
-                            items(1) {
-
-                                HotelServiceTag(
-                                    DrawableId = R.drawable.wifi,
-                                    alt = "wifi",
-                                    text = "Free Wifi",
-                                    iconColor = Color.Black
-                                )
-                                HotelServiceTag(
-                                    DrawableId = R.drawable.coffee,
-                                    alt = "coffee",
-                                    text = "Free Breakfast",
-                                    iconColor = Color.Black
-                                )
-                                HotelServiceTag(
-                                    DrawableId = R.drawable.wifi,
-                                    alt = "wifi",
-                                    text = "Free Wifi",
-                                    iconColor = Color.Black
-                                )
-                                HotelServiceTag(
-                                    DrawableId = R.drawable.coffee,
-                                    alt = "coffee",
-                                    text = "Free Breakfast",
-                                    iconColor = Color.Black
-                                )
-                                HotelServiceTag(
-                                    DrawableId = R.drawable.wifi,
-                                    alt = "wifi",
-                                    text = "Free Wifi",
-                                    iconColor = Color.Black
-                                )
-                                HotelServiceTag(
-                                    DrawableId = R.drawable.coffee,
-                                    alt = "coffee",
-                                    text = "Free Breakfast",
-                                    iconColor = Color.Black
-                                )
-                            }
-                        }
-//
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        BoldText(text = "Khách sạn Palace Sài Gòn")
                         HotelServiceTag(
                             DrawableId = R.drawable.star,
                             alt = "rating",
                             text = "5.0",
-                            iconColor = Color(0xffffe234)
-                        )
-                    }
-                    YSpacer(height = 16)
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        BoldText(text = "Khách sạn Palace Sài Gòn")
-                        MultiColorText(
-                            Triple("$165.3", PrimaryColor, FontWeight.Bold),
-                            Triple(" /đêm", Grey500Color, FontWeight.Normal)
+                            iconColor = Color(0xffffe234),
                         )
                     }
                     YSpacer(height = 8)
@@ -240,7 +194,9 @@ fun HotelDetailsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         BoldText(text = "Đánh Giá")
-                        PrimaryText(text = "Xem tất cả", modifier = Modifier.clickable {navController.navigate(Screens.ListReviews.name) })
+                        PrimaryText(
+                            text = "Xem tất cả",
+                            modifier = Modifier.clickable { navController.navigate(Screens.ListReviews.name) })
                     }
                     YSpacer(height = 12)
                     /*HotelDetailFeedback(
