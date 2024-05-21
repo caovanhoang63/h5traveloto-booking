@@ -21,3 +21,12 @@ fun AppLogo(size : Int = 20 ) {
         modifier = Modifier.size(size.dp)
     )
 }
+
+@Composable
+fun Star(size : Int = 20 ) {
+    Image(
+        painter = painterResource(id = R.drawable.star),
+        contentDescription = "Star",
+        modifier = Modifier.size(size.dp)
+    )
+}

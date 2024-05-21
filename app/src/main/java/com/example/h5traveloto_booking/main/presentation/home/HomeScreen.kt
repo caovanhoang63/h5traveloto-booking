@@ -1,6 +1,8 @@
 package com.example.h5traveloto_booking.main.presentation.home
 
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,15 +13,18 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.R
@@ -28,6 +33,7 @@ import com.example.h5traveloto_booking.main.presentation.home.components.HotelTa
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagSmall
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.ShareHotelDataViewModel
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -39,18 +45,35 @@ import com.example.h5traveloto_booking.util.Result
 @Composable
 fun HomeScreen(
     navController: NavController,
+    navAppController: NavController,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-
-
-    //
-    LaunchedEffect(Unit) {
-        viewModel.getListHotel()
-        viewModel.getListDistricts()
+    val context = LocalContext.current
+    val permissions = arrayOf(
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+        android.Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+    val launchMultiplePermissions = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.all { it.value }) {
+            viewModel.startLocationUpdates()
+        } else {
+            Log.d("LocationProvider", "Permissions denied")
+        }
     }
 
-    var selectedItemIndex by remember { mutableStateOf(0) }
-    var items = listOf(District("Hanoi"), District("HCM"), District("Da Nang"))
+    val listHotelSearch = viewModel.ListHotelSearch.collectAsState().value
+    val selectedItemIndex = rememberSaveable { mutableStateOf(0) }
+
+    //
+    LaunchedEffect(UInt) {
+        Log.d("HomeScreen", "LaunchedEffect")
+        shareHotelDataViewModel.setIsCurrentLocation(true)
+        viewModel.getListDistricts()
+        viewModel.initLocationProvider(context)
+    }
+
     val listHotelDataResponse = viewModel.listHotelDataResponse.collectAsState().value
     val listDistrict = viewModel.listDistrict.collectAsState().value
     Spacer(modifier = Modifier.height(10.dp))
@@ -71,11 +94,26 @@ fun HomeScreen(
                         if (listDistrict is Result.Success) {
                             listDistrict.data.districts
                         } else {
-                            items
+                            listOf(District("Vị trí gần tôi", ""))
                         },
-                        selectedItemIndex = selectedItemIndex,
-                        onItemSelected = { index -> selectedItemIndex = index })
-
+                        selectedItemIndex = selectedItemIndex.value,
+                        onItemSelected = { index, province ->
+                            selectedItemIndex.value = index
+                            if(index == 0) {
+                                shareHotelDataViewModel.setIsCurrentLocation(true)
+                                shareHotelDataViewModel.setSearchTerm("location")
+                                viewModel.setStateHotelSearchIdle()
+                                shareHotelDataViewModel.logHotelParams()
+                            }
+                            else{
+                                shareHotelDataViewModel.setIsCurrentLocation(false)
+                                shareHotelDataViewModel.setId(province.code)
+                                shareHotelDataViewModel.setSearchTerm("province")
+                                viewModel.setStateHotelSearchLoading()
+                                viewModel.getHotelSearch()
+                                shareHotelDataViewModel.logHotelParams()
+                            }
+                        })
                 }
                 Column {
                     PrimaryIconButton(DrawableId = R.drawable.notifyicon, onClick = {}, alt = "")
@@ -146,8 +184,13 @@ fun HomeScreen(
                         Text(
                             text = "See all",
                             fontSize = 16.sp,
-                            color = PrimaryColor,
-                            modifier = Modifier.clickable { navController.navigate(Screens.LoginScreen.name) }
+                            color = if(viewModel.checkData()) PrimaryColor else Grey500Color,
+                            modifier = Modifier.clickable {
+                                if(viewModel.checkData()){
+                                    shareHotelDataViewModel.setListHotel((listHotelSearch as Result.Success).data)
+                                    navAppController.navigate(Screens.ListHotels.name)
+                                }
+                            }
                         )
                     }
                 }
@@ -155,51 +198,76 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
 
-
-
-                when (listHotelDataResponse) {
-                    is Result.Loading -> {
-                        Log.d("Home ", "dang load")
-
-                        // Hieu ung load
-                        Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                            CircularProgressIndicator()
-
+                when(listHotelSearch){
+                    is Result.Idle -> {
+                        if(shareHotelDataViewModel.isCurrentLocation()){
+                            if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                                || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                            ){
+                                ButtonRequestLocationPermission(onClick = {
+                                    launchMultiplePermissions.launch(permissions)
+                                })
+                            }
+                            else{
+                                viewModel.initLocationProvider(context)
+                                launchMultiplePermissions.launch(permissions)
+                            }
                         }
-                    }
-
-                    is Result.Error -> {
-                        Log.d("Home ", "loi roi")
-                    }
-
-                    is Result.Success -> {
-//                    Log.d("Home Screen", result.data.data.size.toString())
-                        val hotels = listHotelDataResponse.data.data
-                        LazyRow(modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)) {
-                            for (i in 0..hotels.size - 1) {
-                                item {
-                                    HotelTagLarge(hotels[i])
-                                }
+                        else{
+                            if(shareHotelDataViewModel.getSearchHotelParams().id != ""){
+                                viewModel.getHotelSearch()
                             }
                         }
                     }
-
-                    else -> Unit
+                    is Result.Loading -> {
+                        Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                           CircularProgressIndicator()
+                        }
+                    }
+                    is Result.Error -> {
+                        NotFoundHotel()
+                    }
+                    is Result.Success -> {
+                        val hotels = listHotelSearch.data.data
+                        LazyRow(modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)) {
+                            if(hotels!= null){
+                                hotels.forEachIndexed { index, hotelDTO ->
+                                    item {
+                                        HotelTagLarge(hotelDTO, onClick = {
+                                            shareDataHotelDetail.setHotelId(hotelDTO.id)
+                                            shareDataHotelDetail.LogData()
+                                            navAppController.navigate(Screens.HotelDetailsScreen.name)
+                                        })
+                                    }
+                                    if(index >= 2){
+                                        return@LazyRow
+                                    }
+                                }
+                            }
+                            else{
+                                viewModel.setStateHotelSearchError()
+                            }
+                        }
+                    }
                 }
+
 
 
                 Spacer(modifier = Modifier.height(22.dp))
 
                 Column(modifier = Modifier.padding(16.dp, 0.dp)) {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxSize(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         BoldText("Địa điểm nổi bật")
                         ClickableText("See all", {})
                     }
-                    YSpacer(10)
+                    YSpacer(12)
                     HotelTagSmall()
+                    YSpacer(12)
+                    HotelTagSmall()
+                    YSpacer(16)
                 }
             }
         }

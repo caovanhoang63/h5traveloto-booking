@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelParams
 import com.example.h5traveloto_booking.main.presentation.homesearch.DataApiSearch
 import javax.inject.Inject
@@ -13,6 +14,23 @@ class ShareHotelDataViewModel @Inject constructor(
 
 ): ViewModel(){
     private val searchHotelParams = SearchHotelParams()
+    private var listHotel : SearchHotelDTO?= null
+
+    fun checkExistedData(): Boolean{
+        if(listHotel?.data?.size != 0){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    fun setListHotel(listHotel: SearchHotelDTO){
+        this.listHotel = listHotel
+    }
+
+    fun getListHotel(): SearchHotelDTO?{
+        return listHotel
+    }
 
     fun getSearchHotelParams(): SearchHotelParams{
         Log.d("List Hotel ViewModel", searchHotelParams.toMap().toString())
@@ -23,10 +41,14 @@ class ShareHotelDataViewModel @Inject constructor(
         return searchHotelParams.isCurrentLocation
     }
 
+    fun setIsCurrentLocation(isCurrentLocation: Boolean){
+        searchHotelParams.isCurrentLocation = isCurrentLocation
+    }
+
     fun setSearchHotelParams(dataApiSearch: DataApiSearch){
         searchHotelParams.searchTerm = dataApiSearch.location.index
-        searchHotelParams.startDate = "\"29-06-2024\""
-        searchHotelParams.endDate = "\"30-06-2024\""
+        searchHotelParams.startDate = dataApiSearch.startDate
+        searchHotelParams.endDate = dataApiSearch.endDate
         searchHotelParams.adults = dataApiSearch.adult
         searchHotelParams.children = dataApiSearch.child
         searchHotelParams.roomQuantity = dataApiSearch.room
@@ -50,11 +72,20 @@ class ShareHotelDataViewModel @Inject constructor(
 
             searchHotelParams.isCurrentLocation = false
         }
-        Log.d("HomeSearchViewModel", searchHotelParams.toMap().toString())
+        Log.d("Share ViewModel", searchHotelParams.toMap().toString())
     }
     fun setCurrentLocation(lat: Double, lng: Double){
         searchHotelParams.lat = lat
         searchHotelParams.lng = lng
+    }
+    fun setId(id: String){
+        searchHotelParams.id = id
+    }
+    fun logHotelParams(){
+        Log.d("Share ViewModel", searchHotelParams.toMap().toString())
+    }
+    fun setSearchTerm(searchTerm: String){
+        searchHotelParams.searchTerm = searchTerm
     }
 }
 

@@ -8,11 +8,16 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Suggest
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDataQuery
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelParams
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,15 +30,26 @@ class HomeSearchViewModel @Inject constructor(
     private val searchHotelParams = SearchHotelParams()
     private val nameDataQuery = SearchHotelDataQuery()
 
+    private var startDate: LocalDate = LocalDate.today()
+    private var endDate: LocalDate = LocalDate.today().plus(1, kotlinx.datetime.DateTimeUnit.DAY)
+
     fun setPersonEndRoom(adult: Int, child: Int, room: Int){
         dataApiSearch.adult = adult
         dataApiSearch.child = child
         dataApiSearch.room = room
+        // Data detail
+        shareDataHotelDetail.setAdultsChildrenRoomQuantity(adult, child, room)
     }
 
-    fun setStartDateEndDate(startDate: String, endDate: String){
-        dataApiSearch.startDate = startDate
-        dataApiSearch.endDate = endDate
+    private fun setStartDateEndDate(){
+        val startDay = if(startDate.dayOfMonth < 10) "0${startDate.dayOfMonth}" else startDate.dayOfMonth.toString()
+        val startMonth = if(startDate.monthNumber < 10) "0${startDate.monthNumber}" else startDate.monthNumber.toString()
+        val startYear = startDate.year.toString()
+        val endDay = if(endDate.dayOfMonth < 10) "0${endDate.dayOfMonth}" else endDate.dayOfMonth.toString()
+        val endMonth = if(endDate.monthNumber < 10) "0${endDate.monthNumber}" else endDate.monthNumber.toString()
+        val endYear = endDate.year.toString()
+        dataApiSearch.startDate = "\"$startDay-$startMonth-$startYear\""
+        dataApiSearch.endDate = "\"$endDay-$endMonth-$endYear\""
     }
 
     fun setIsCurrentLocation(isCurrentLocation: Boolean){
@@ -54,13 +70,31 @@ class HomeSearchViewModel @Inject constructor(
     }
 
     fun bookingNow(){
+        setStartDateEndDate()
         setSearchHotelDataQuery()
         Log.d("HomeSearchViewModel", searchHotelParams.toString())
         Log.d("HomeSearchViewModel", dataApiSearch.toString())
+        shareDataHotelDetail.LogData()
     }
 
     private fun setSearchHotelDataQuery(){
         shareHotelDataViewModel.setSearchHotelParams(dataApiSearch)
+    }
+
+    fun getStartDate(): LocalDate{
+       return startDate
+    }
+
+    fun getEndDate(): LocalDate{
+        return endDate
+    }
+
+    fun setStartDateEndDate(startDate: LocalDate, endDate: LocalDate){
+        this.startDate = startDate
+        this.endDate = endDate
+        setStartDateEndDate()
+        // Data detail
+        shareDataHotelDetail.setStartDateEndDate(startDate, endDate)
     }
 }
 

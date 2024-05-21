@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Backup
+import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -59,6 +60,7 @@ fun HomeSearchScreen(
     var child by rememberSaveable { mutableIntStateOf(0) }
     var room by rememberSaveable { mutableIntStateOf(1) }
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
+    var isShowDateRangePicker by remember { mutableStateOf(false) }
 
     val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -175,18 +177,17 @@ fun HomeSearchScreen(
                                         location = "Khách sạn gần tôi"
                                         viewModel.setIsCurrentLocation(true)
                                     },
-                                    modifier = Modifier.size(40.dp),
+                                    modifier = Modifier.size(44.dp)
+                                        .padding(4.dp)
+                                        .shadow(4.dp, shape = RoundedCornerShape(22.dp))
+                                        .clip(shape = RoundedCornerShape(22.dp)),
                                     contentPadding = PaddingValues(0.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.Transparent,
+                                        containerColor = Color.White,
                                     ),
                                 )
                                 {
-                                    Image(
-                                        painterResource(id = R.drawable.targeticon),
-                                        contentDescription = "",
-                                        modifier = Modifier.size(40.dp)
-                                    )
+                                    Icon(Icons.Default.MyLocation, contentDescription = "", modifier = Modifier.size(24.dp), tint = PrimaryColor)
                                 }
                             }
 /* data picker range */
@@ -194,14 +195,29 @@ fun HomeSearchScreen(
                                 modifier = Modifier
                                     .height(52.dp)
                                     .fillMaxWidth()
-                                    .clickable { },
-                                content = "Ngày Tháng",
+                                    .clickable {
+                                        isShowDateRangePicker = true
+                                    },
+                                content = "${viewModel.getStartDate().dayOfMonth} Thg ${viewModel.getStartDate().monthNumber} ${viewModel.getStartDate().year} - ${viewModel.getEndDate().dayOfMonth} Thg ${viewModel.getEndDate().monthNumber} ${viewModel.getEndDate().year}",
                                 icon = {
                                     Image(painterResource(id = R.drawable.calendar),
                                         contentDescription = "",
                                         modifier = Modifier.size(20.dp))
                                 },
                             )
+                            if(isShowDateRangePicker){
+                                DateRangePicker(
+                                    start = viewModel.getStartDate(),
+                                    end = viewModel.getEndDate(),
+                                    onCompleted = { startDate, endDate ->
+                                        viewModel.setStartDateEndDate(startDate, endDate)
+                                        isShowDateRangePicker = false
+                                    },
+                                    onDismiss = {
+                                        isShowDateRangePicker = false
+                                    }
+                                )
+                            }
 /* Choose person */
                             TextButtonDialog(
                                 modifier = Modifier
@@ -260,14 +276,13 @@ fun HomeSearchScreen(
                         BoldText("Đã xem gần đây")
                         ClickableText("See all", {})
                     }
-                    YSpacer(10)
+                    YSpacer(12)
                     HotelTagSmall()
+                    YSpacer(12)
                     HotelTagSmall()
+                    YSpacer(12)
                     HotelTagSmall()
-                    HotelTagSmall()
-                    HotelTagSmall()
-                    HotelTagSmall()
-                    HotelTagSmall()
+                    YSpacer(16)
                 }
             }
         }

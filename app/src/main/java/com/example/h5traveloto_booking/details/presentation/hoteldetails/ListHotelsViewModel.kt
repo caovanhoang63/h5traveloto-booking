@@ -118,6 +118,9 @@ class ListHotelsViewModel @Inject constructor(
     fun setStateHotelSearchError(){
         _listHotelSearch.value = Result.Error("Error")
     }
+    fun setStateHotelSearchSuccess(data: SearchHotelDTO){
+        _listHotelSearch.value = Result.Success(data)
+    }
     fun sortHotelList(selectedOption: String) {
         viewModelScope.launch {
             _listHotelSearch.value.let { result ->

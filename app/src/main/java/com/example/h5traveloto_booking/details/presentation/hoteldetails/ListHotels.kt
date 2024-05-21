@@ -64,16 +64,18 @@ fun ListHotels(
             viewModel.startLocationUpdates()
         } else {
             Log.d("LocationProvider", "Permissions denied")
-            Log.d("LocationProvider", "Permissions denied")
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(Unit){
         viewModel.initLocationProvider(context)
-        viewModel.getListHotels()
-        Log.d("List Hotel ", shareHotelDataViewModel.getSearchHotelParams().toMap().toString())
-        if (!shareHotelDataViewModel.isCurrentLocation()) {
-            viewModel.getHotelSearch()
+        if(shareHotelDataViewModel.checkExistedData()){
+            viewModel.setStateHotelSearchSuccess(shareHotelDataViewModel.getListHotel()!!)
+        }
+        else{
+            if(!shareHotelDataViewModel.isCurrentLocation()){
+                viewModel.getHotelSearch()
+            }
         }
     }
     val listHotelResponse = viewModel.ListHotelResponse.collectAsState().value
@@ -218,66 +220,26 @@ fun ListHotels(
             modifier = Modifier
                 .padding(innerPadding)
         ) {
-            when (listHotelSearch) {
+            when(listHotelSearch){
                 is Result.Idle -> {
-                    if (shareHotelDataViewModel.isCurrentLocation()) {
-                        if (ActivityCompat.checkSelfPermission(
-                                context,
-                                android.Manifest.permission.ACCESS_FINE_LOCATION
-                            ) != android.content.pm.PackageManager.PERMISSION_GRANTED
-                            || ActivityCompat.checkSelfPermission(
-                                context,
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION
-                            ) != android.content.pm.PackageManager.PERMISSION_GRANTED
-                        ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.fillMaxSize()
-                            ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.targeticon),
-                                        contentDescription = "Location",
-                                        modifier = Modifier.size(50.dp)
-                                    )
-                                    YSpacer(16)
-                                    Text(
-                                        text = "Không thể tìm thấy vị trí hiện tại",
-                                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-                                        modifier = Modifier.padding(horizontal = 20.dp)
-                                    )
-                                    YSpacer(8)
-                                    Text(
-                                        text = "Bạn chưa kích hoạt GPS/Dịch vụ định vị",
-                                        style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 14.sp),
-                                        modifier = Modifier.padding(horizontal = 20.dp),
-                                    )
-                                    YSpacer(10)
-                                    PrimaryButton(
-                                        onClick = {
-                                            launchMultiplePermissions.launch(permissions)
-                                            viewModel.setStateHotelSearchLoading()
-                                        },
-                                        text = "Kích hoạt ngay",
-                                        modifier = Modifier
-                                            .padding(40.dp, 2.dp)
-                                            .fillMaxWidth()
-                                    )
-                                }
-                            }
-                        } else {
+                    if(shareHotelDataViewModel.isCurrentLocation()){
+                        if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                            || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                        ){
+                            ButtonRequestLocationPermission(onClick = {
+                                launchMultiplePermissions.launch(permissions)
+                            })
+                        }
+                        else{
+                            viewModel.initLocationProvider(context)
                             launchMultiplePermissions.launch(permissions)
                             viewModel.setStateHotelSearchLoading()
                         }
-                    } else {
+                    }
+                    else{
                         viewModel.setStateHotelSearchLoading()
                     }
                 }
-
                 is Result.Loading -> {
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                         CircularProgressIndicator()
@@ -285,15 +247,7 @@ fun ListHotels(
                 }
 
                 is Result.Error -> {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            text = "Không tìm thấy khách sạn",
-                            style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-                        )
-                    }
+                    NotFoundHotel()
                 }
 
                 is Result.Success -> {
