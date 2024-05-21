@@ -106,13 +106,11 @@ fun PriceDetailsCard (
                 color = Grey100Color,
                 thickness = 1.dp
             )
-            LazyColumn {
-                item {
-                    ObjectAndPrice(
-                        text = "(1x) Phòng vjp kinh",
-                        price = 100000
-                    )
-                }
+            Column {
+                ObjectAndPrice(
+                    text = "(1x) Phòng vjp kinh",
+                    price = 100000
+                )
             }
         }
     }

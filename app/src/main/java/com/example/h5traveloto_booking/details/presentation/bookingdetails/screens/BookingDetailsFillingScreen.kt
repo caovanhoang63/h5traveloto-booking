@@ -1,7 +1,8 @@
-package com.example.h5traveloto_booking.details.presentation.bookingdetails
+package com.example.h5traveloto_booking.details.presentation.bookingdetails.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -20,16 +21,14 @@ import com.example.h5traveloto_booking.details.presentation.bookingdetails.compo
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.PriceDetailsCard
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.*
-import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
-import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 
 @Composable
 fun BookingDetailsFillingScreen(
     navController: NavController,
-
+    parentNavController: NavController
 ) {
     Scaffold(
         topBar = {
@@ -45,26 +44,24 @@ fun BookingDetailsFillingScreen(
                 ) {
                     PrimaryIconButton(
                         DrawableId = R.drawable.backbutton,
-                        onClick = { navController.popBackStack() },
+                        onClick = { parentNavController.popBackStack() },
                         alt = ""
                     )
                 }
-                Box(
+                Text(
+                    text = "Điền thông tin đặt phòng",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
                     modifier = Modifier
                         .fillMaxWidth(0.75f)
-                ) {
-                    Text(
-                        text = "Điền thông tin đặt phòng",
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-                }
+                )
+
             }
         },
         bottomBar = {
             Button(
-                onClick = { navController.navigate(Screens.ListRooms.name) },
+                onClick = { navController.navigate(Screens.BookingDetailsReviewScreen.name) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(65.dp)
@@ -80,43 +77,51 @@ fun BookingDetailsFillingScreen(
             }
         }
     ) { innerPadding ->
-        Column (
+        LazyColumn (
             modifier = Modifier
                 .padding(innerPadding)
         ) {
-            Row (
-                modifier = Modifier
-                    .background(color = Grey50Color)
-                    .fillMaxWidth()
-                    .padding(24.dp, 12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.user),
-                    contentDescription = "",
-                    tint = Color.Unspecified,
+            item {
+                Row (
                     modifier = Modifier
-                        .size(30.dp)
-                )
-                XSpacer(20)
-                Column {
-                    Text(
-                        "Đăng nhập bởi Mai Hoàng Hưng",
-                        fontSize = 16.sp
+                        .background(color = Grey50Color)
+                        .fillMaxWidth()
+                        .padding(24.dp, 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.user),
+                        contentDescription = "",
+                        tint = Color.Unspecified,
+                        modifier = Modifier
+                            .size(30.dp)
                     )
-                    Text(
-                        "+84012345678",
-                        color = Grey500Color,
-                        fontSize = 14.sp
-                    )
+                    XSpacer(20)
+                    Column {
+                        Text(
+                            "Đăng nhập bởi Mai Hoàng Hưng",
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            "012345678",
+                            color = Grey500Color,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
             }
-            YSpacer(20)
-            BookingSummaryCard()
-            YSpacer(20)
-            ContactDetailsCard()
-            YSpacer(20)
-            PriceDetailsCard()
+            item { YSpacer(20) }
+            item {
+                BookingSummaryCard()
+            }
+            item { YSpacer(20) }
+            item {
+                ContactDetailsCard()
+            }
+            item { YSpacer(20) }
+            item {
+                PriceDetailsCard()
+            }
         }
     }
 }

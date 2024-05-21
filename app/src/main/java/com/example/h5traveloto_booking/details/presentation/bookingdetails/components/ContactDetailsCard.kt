@@ -192,7 +192,12 @@ fun ContactDetailsCard (
                 fontSize = 16.sp
             )
             Text(
-                text = "mhhung0811@gmail.com   +84012345678",
+                text = "mhhung0811@gmail.com",
+                fontSize = 14.sp,
+                color = Grey500Color
+            )
+            Text(
+                text = "012345678",
                 fontSize = 14.sp,
                 color = Grey500Color
             )

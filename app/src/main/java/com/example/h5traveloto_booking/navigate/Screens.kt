@@ -24,6 +24,8 @@ enum class Screens {
 
     ScheduleCalendarScreen,
     ScheduleBookingScreen,
+
+    BookingScreen,
     BookingDetailsFillingScreen,
     BookingDetailsReviewScreen,
 

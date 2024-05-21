@@ -64,7 +64,7 @@ public fun CalendarScreen (
             item {
                 Button(
                     onClick = {
-                        parentNavController.navigate(Screens.BookingDetailsFillingScreen.name)
+                        parentNavController.navigate(Screens.BookingScreen.name)
                     }
                 ) {
 
