@@ -26,7 +26,6 @@ import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 fun AppNavigation(startDestination : String ) {
 
     val navController = rememberNavController()
-    LocationProvider.initLocationProvider(LocalContext.current)
 
     NavHost (
         navController = navController,

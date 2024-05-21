@@ -1,16 +1,23 @@
 package com.example.h5traveloto_booking.main.presentation.home
+import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.data.remote.api.response
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.DistrictsDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.util.Result
 
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.util.SharedPrefManager
+import com.google.android.gms.location.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +37,49 @@ class HomeViewModel @Inject constructor(
     val listHotelDataResponse = _listHotelDataResponse.asStateFlow()
     private val _listDistrict = MutableStateFlow<Result<DistrictsDTO>>(Result.Idle)
     val listDistrict = _listDistrict.asStateFlow()
+
+    //
+    private val _listHotelSearch = MutableStateFlow<Result<SearchHotelDTO>>(Result.Idle)
+    val ListHotelSearch = _listHotelSearch.asStateFlow()
+
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val locationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            super.onLocationResult(locationResult)
+            Log.d("List Hotel Location", "Location received")
+            for (location in locationResult.locations) {
+                Log.d("List Hotel Location", "Callback set Latitude: ${location.latitude}, Longitude: ${location.longitude}")
+                shareHotelDataViewModel.setCurrentLocation(location.latitude, location.longitude)
+            }
+            getHotelSearch()
+            stopLocationUpdates()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    public fun startLocationUpdates() {
+        setStateHotelSearchLoading()
+        locationCallback?.let {
+            val locationRequest = LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY, 100
+            )
+                .setWaitForAccurateLocation(true)
+                .setMinUpdateIntervalMillis(3000)
+                .setMaxUpdateDelayMillis(100)
+                .build()
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, it, Looper.getMainLooper())
+            Log.d("List Hotel Location", "Requesting location updates")
+        }
+    }
+
+    public fun initLocationProvider(context: Context) {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+        Log.d("List Hotel Location", "Init location provider")
+    }
+    public fun stopLocationUpdates() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    }
+    //
 
     fun getListHotel(
 
@@ -65,10 +115,46 @@ class HomeViewModel @Inject constructor(
         }
         .catch {
             Log.d("HomeViewModel", "getListDistricts: ${it.message}")
+            val currentLocation = District("Vị trí gần tôi", "")
+            _listDistrict.value = Result.Success(DistrictsDTO(listOf(currentLocation)))
         }
         .collect { response ->
             Log.d("HomeViewModel", "getListDistricts: ${response.districts}")
-            _listDistrict.value = Result.Success(response)
+            val sorted = response.districts.sortedBy { it.name }
+            val currentLocation = District("Vị trí gần tôi", "")
+            val list = mutableListOf(currentLocation)
+            list.addAll(sorted)
+            _listDistrict.value = Result.Success(DistrictsDTO(list))
+            shareHotelDataViewModel.logHotelParams()
         }
+    }
+
+    fun getHotelSearch() = viewModelScope.launch {
+        useCaseLocations.searchHotelUseCase(shareHotelDataViewModel.getSearchHotelParams()).onStart {
+            Log.d("List Hotel ViewModel", "Loading")
+            _listHotelSearch.value = Result.Loading
+        }.catch {
+            Log.d("List Hotel ViewModel", it.message.toString())
+            _listHotelSearch.value = Result.Error(it.message.toString())
+        }.collect {
+            Log.d("List Hotel ViewModel", "Success")
+            Log.d("List Hotel ViewModel", it.toString())
+            _listHotelSearch.value = Result.Success(it)
+        }
+    }
+    fun setStateHotelSearchLoading(){
+        _listHotelSearch.value = Result.Loading
+    }
+    fun setStateHotelSearchError(){
+        _listHotelSearch.value = Result.Error("Error")
+    }
+    fun setStateHotelSearchIdle(){
+        _listHotelSearch.value = Result.Idle
+    }
+    fun checkData(): Boolean{
+        if(_listHotelSearch.value is Result.Success){
+            return (_listHotelSearch.value as Result.Success).data.data?.size != 0
+        }
+        return false
     }
 }

@@ -8,6 +8,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Suggest
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDataQuery
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelParams
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +37,8 @@ class HomeSearchViewModel @Inject constructor(
         dataApiSearch.adult = adult
         dataApiSearch.child = child
         dataApiSearch.room = room
+        // Data detail
+        shareDataHotelDetail.setAdultsChildrenRoomQuantity(adult, child, room)
     }
 
     private fun setStartDateEndDate(){
@@ -71,6 +74,7 @@ class HomeSearchViewModel @Inject constructor(
         setSearchHotelDataQuery()
         Log.d("HomeSearchViewModel", searchHotelParams.toString())
         Log.d("HomeSearchViewModel", dataApiSearch.toString())
+        shareDataHotelDetail.LogData()
     }
 
     private fun setSearchHotelDataQuery(){
@@ -89,6 +93,8 @@ class HomeSearchViewModel @Inject constructor(
         this.startDate = startDate
         this.endDate = endDate
         setStartDateEndDate()
+        // Data detail
+        shareDataHotelDetail.setStartDateEndDate(startDate, endDate)
     }
 }
 

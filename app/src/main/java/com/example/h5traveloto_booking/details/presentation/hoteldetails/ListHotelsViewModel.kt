@@ -52,6 +52,7 @@ class ListHotelsViewModel @Inject constructor(
 
     @SuppressLint("MissingPermission")
     public fun startLocationUpdates() {
+        setStateHotelSearchLoading()
         locationCallback?.let {
             val locationRequest = LocationRequest.Builder(
                 Priority.PRIORITY_HIGH_ACCURACY, 100
@@ -114,5 +115,8 @@ class ListHotelsViewModel @Inject constructor(
     }
     fun setStateHotelSearchError(){
         _listHotelSearch.value = Result.Error("Error")
+    }
+    fun setStateHotelSearchSuccess(data: SearchHotelDTO){
+        _listHotelSearch.value = Result.Success(data)
     }
 }

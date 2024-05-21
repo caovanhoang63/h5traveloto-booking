@@ -10,11 +10,11 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,10 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.main.presentation.data.dto.Search.District
+import com.example.h5traveloto_booking.theme.PrimaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuDown(items: List<District>, selectedItemIndex: Int, onItemSelected: (Int) -> Unit){
+fun MenuDown(items: List<District>, selectedItemIndex: Int, onItemSelected: (Int, District) -> Unit){
     var expanded by remember { mutableStateOf(false) }
     val angle: Float by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
@@ -79,17 +80,36 @@ fun MenuDown(items: List<District>, selectedItemIndex: Int, onItemSelected: (Int
 
             ) {
                 items.forEachIndexed { index, s ->
-                    DropdownMenuItem(
-                        onClick = {
-                            onItemSelected(index)
-                            expanded = false
-                        },
-                        text = {
-                            Text(text = s.name)
-                        },
-                        modifier = Modifier.padding(0.dp)
-                            .height(35.dp)
-                    )
+                    if(index == 0){
+                        DropdownMenuItem(
+                            onClick = {
+                                onItemSelected(index, s)
+                                expanded = false
+                            },
+                            text = {
+                                Text(text = s.name)
+                            },
+                            modifier = Modifier.padding(0.dp)
+                                .height(32.dp)
+                                .offset((-8).dp,0.dp),
+                            leadingIcon = {
+                                //Icon(painterResource(id = R.drawable.targeticon), contentDescription = "location", modifier = Modifier.size(22.dp).offset(8.dp,0.dp), tint = PrimaryColor)
+                                Icon(Icons.Default.MyLocation, contentDescription = "location", modifier = Modifier.size(22.dp).offset(8.dp,0.dp), tint = PrimaryColor)
+                            }
+                        )
+                    }else {
+                        DropdownMenuItem(
+                            onClick = {
+                                onItemSelected(index, s)
+                                expanded = false
+                            },
+                            text = {
+                                Text(text = s.name)
+                            },
+                            modifier = Modifier.padding(start = 8.dp)
+                                .height(32.dp),
+                        )
+                    }
                 }
             }
         }

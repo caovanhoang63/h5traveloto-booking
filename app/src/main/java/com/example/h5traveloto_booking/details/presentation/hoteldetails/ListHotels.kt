@@ -31,9 +31,7 @@ import com.example.h5traveloto_booking.details.presentation.hoteldetails.compone
 import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagLarge
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.Grey50Color
-import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
-import com.example.h5traveloto_booking.ui_shared_components.XSpacer
-import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -63,10 +61,13 @@ fun ListHotels(navController: NavController,
 
     LaunchedEffect(Unit){
         viewModel.initLocationProvider(context)
-        viewModel.getListHotels()
-        Log.d("List Hotel ", shareHotelDataViewModel.getSearchHotelParams().toMap().toString())
-        if(!shareHotelDataViewModel.isCurrentLocation()){
-            viewModel.getHotelSearch()
+        if(shareHotelDataViewModel.checkExistedData()){
+            viewModel.setStateHotelSearchSuccess(shareHotelDataViewModel.getListHotel()!!)
+        }
+        else{
+            if(!shareHotelDataViewModel.isCurrentLocation()){
+                viewModel.getHotelSearch()
+            }
         }
     }
     val listHotelResponse = viewModel.ListHotelResponse.collectAsState().value
@@ -112,47 +113,13 @@ fun ListHotels(navController: NavController,
                         if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
                             || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
                         ){
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier.fillMaxSize()
-                            ){
-                                Column (
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                    modifier = Modifier.fillMaxWidth()
-                                ){
-                                    Image(
-                                        painter = painterResource(id = R.drawable.targeticon),
-                                        contentDescription = "Location",
-                                        modifier = Modifier.size(50.dp)
-                                    )
-                                    YSpacer(16)
-                                    Text(
-                                        text = "Không thể tìm thấy vị trí hiện tại",
-                                        style = TextStyle(fontWeight = FontWeight.Bold,fontSize = 16.sp),
-                                        modifier = Modifier.padding(horizontal = 20.dp)
-                                    )
-                                    YSpacer(8)
-                                    Text(
-                                        text = "Bạn chưa kích hoạt GPS/Dịch vụ định vị",
-                                        style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 14.sp),
-                                        modifier = Modifier.padding(horizontal = 20.dp),
-                                    )
-                                    YSpacer(10)
-                                    PrimaryButton(
-                                        onClick = {
-                                            launchMultiplePermissions.launch(permissions)
-                                            viewModel.setStateHotelSearchLoading()
-                                        },
-                                        text = "Kích hoạt ngay",
-                                        modifier = Modifier.padding(40.dp, 2.dp).fillMaxWidth()
-                                    )
-                                }
-                            }
+                            ButtonRequestLocationPermission(onClick = {
+                                launchMultiplePermissions.launch(permissions)
+                            })
                         }
                         else{
+                            viewModel.initLocationProvider(context)
                             launchMultiplePermissions.launch(permissions)
-                            viewModel.setStateHotelSearchLoading()
                         }
                     }
                     else{
@@ -166,15 +133,7 @@ fun ListHotels(navController: NavController,
                 }
 
                 is Result.Error -> {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            text = "Không tìm thấy khách sạn",
-                            style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp),
-                        )
-                    }
+                    NotFoundHotel()
                 }
                 is Result.Success -> {
                     LazyColumn(
@@ -196,34 +155,6 @@ fun ListHotels(navController: NavController,
                             else{
                                 viewModel.setStateHotelSearchError()
                             }
-//                            when (listHotelResponse) {
-//                                is Result.Loading -> {
-//                                    Log.d("List Hotel ", "dang load")
-//
-//                                    // Hieu ung load
-//                                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-//                                        CircularProgressIndicator()
-//
-//                                    }
-//                                }
-//
-//                                is Result.Error -> {
-//                                    Log.d("List Hotel ", "loi roi")
-//                                }
-//
-//                                is Result.Success -> {
-//                                    Log.d("List Hotel ", "thanh cong")
-//                                    val hotels = listHotelResponse.data.data
-//                                    hotels.forEachIndexed { index, hotelDTO ->
-//                                        HotelDetailCard(hotelDTO = hotelDTO, navController = navController)
-//                                        if (index < hotels.lastIndex) {
-//                                            Spacer(modifier = Modifier.height(15.dp))
-//                                        }
-//                                    }
-//                                }
-//
-//                                else -> Unit
-//                            }
                         }
                     }
                 }

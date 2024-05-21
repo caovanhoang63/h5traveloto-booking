@@ -37,15 +37,16 @@ class SplashViewModel @Inject constructor(
             Log.d("Success","Refresh Token Success")
             res.data.Token.let {
                 token -> sharedPrefManager.saveToken(token)
+                Log.d("Token", token)
             }
             isRefreshToken = true
             setIsRefreshToken(isRefreshToken)
             setScreens("MainScreen")
-            navController.navigate(Screens.AppNavigation.name,builder = {
-                popUpTo(Screens.SplashScreen.name){
+            navController.navigate(Screens.AppNavigation.name,) {
+                popUpTo(0){
                     inclusive = true
                 }
-            })
+            }
         }
     }
     fun logRefreshToken() {
