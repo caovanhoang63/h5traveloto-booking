@@ -16,9 +16,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RadioButtonComponent(
     radioOptions: List<String>,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    selectedOptionPara: String
 ) {
-    val (selectedOption, onOptionChangedInternal) = remember { mutableStateOf(radioOptions[0]) }
+    val (selectedOption, onOptionChangedInternal) = remember { mutableStateOf(selectedOptionPara) }
     Column {
         radioOptions.forEach { text ->
             Row(

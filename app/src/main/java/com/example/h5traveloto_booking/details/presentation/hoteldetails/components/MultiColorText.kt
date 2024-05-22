@@ -7,6 +7,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun MultiColorText(vararg textWithColors: Triple<String, Color, FontWeight>) {
@@ -15,7 +16,8 @@ fun MultiColorText(vararg textWithColors: Triple<String, Color, FontWeight>) {
             withStyle(
                 style = SpanStyle(
                     color = color,
-                    fontWeight = fontWeight
+                    fontWeight = fontWeight,
+                    fontSize = 16.sp,
                 )
             ) {
                 append(text)

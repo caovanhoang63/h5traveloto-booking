@@ -30,13 +30,10 @@ fun ListPolicies(
     navController: NavController,
     viewModel: HotelDetailsScreenViewModel = hiltViewModel()
 ) {
-
     val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
     LaunchedEffect(Unit) {
         viewModel.getHotelDetails()
-
     }
-
     Scaffold(
         topBar = {
             Row(
@@ -129,6 +126,7 @@ fun ListPolicies(
                 }
                 is Result.Error -> {
                     Log.d("List Policies", HotelDetailsResponse.toString())
+                    NotFoundPolycies()
                 }
                 else -> {
                     Log.d("List Policies", "Error")

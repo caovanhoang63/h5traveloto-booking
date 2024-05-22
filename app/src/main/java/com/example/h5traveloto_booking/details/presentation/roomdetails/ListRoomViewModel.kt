@@ -54,7 +54,7 @@ class ListRoomViewModel @Inject constructor(
         val token = sharedPrefManager.getToken()
         val bearerToken = "Bearer $token"
         Log.d("ListRooms ViewModel", listRoomTypeParams.toMap().toString())
-        setListRoomTypeParams("29-06-2024", "30-06-2024", "DCWYE7tu7Da8kJd")
+        setListRoomTypeParams(shareDataHotelDetail.getStartDateString(), shareDataHotelDetail.getEndDateString(), shareDataHotelDetail.getHotelId())
         Log.d("ListRooms Params", listRoomTypeParams.toMap().toString())
         useCases.searchRoomTypeUseCase(listRoomTypeParams).onStart {
             _ListRoomsResponse.value = Result.Loading

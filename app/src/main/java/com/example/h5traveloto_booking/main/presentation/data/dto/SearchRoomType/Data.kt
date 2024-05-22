@@ -23,7 +23,7 @@ data class Data(
     @Json(name = "id")
     val id: String,
     @Json(name = "images")
-    val images: Any,
+    val images: Any?,
     @Json(name = "max_customer")
     val maxCustomer: Int,
     @Json(name = "name")

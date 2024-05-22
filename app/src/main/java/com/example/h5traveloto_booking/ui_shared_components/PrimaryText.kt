@@ -20,10 +20,10 @@ fun PrimaryText(text : String,modifier: Modifier = Modifier ) {
         )
 }
 @Composable
-fun PrimaryText2(text : String,modifier: Modifier = Modifier,style: TextStyle ) {
+fun PrimaryText16(text : String,modifier: Modifier = Modifier,style: TextStyle ) {
     Text(
         modifier = Modifier.then(modifier),
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         fontWeight =  FontWeight.Bold,
         color = PrimaryColor,
         text = text,

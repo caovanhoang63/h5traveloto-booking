@@ -23,6 +23,7 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.Data
 import com.example.h5traveloto_booking.details.presentation.data.dto.listRooms.ListRoomDTO
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.MultiColorText
+import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
@@ -108,8 +109,8 @@ fun RoomDetailCard(
                     /*verticalArrangement = Arrangement.SpaceBetween,*/
                     horizontalAlignment = Alignment.End
                 ) {
-                    PrimaryText2(
-                        text = roomDTO.price.toString() + " VND",
+                    PrimaryText16(
+                        text = roomDTO.price.formatPrice() + " VND",
                         style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     )
                     GreyText(text = "/phòng/đêm")

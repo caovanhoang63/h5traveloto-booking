@@ -30,6 +30,7 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.HotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
+import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 import com.example.h5traveloto_booking.theme.Grey100Color
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -74,13 +75,12 @@ fun HotelTagLarge(
                 }
                 YSpacer(8)
 
-                GreyText("Alice Springs NT 0870, Australia")
+                GreyText("${hotelDTO.district.fullName}, ${hotelDTO.province.fullName}")
 
                 YSpacer(8)
                 Row {
-                    PrimaryText("$")
-                    PrimaryText("200,7")
-                    GreyText("/night")
+                    PrimaryText("${hotelDTO.displayPrice.formatPrice()} VND")
+                    GreyText("/đêm")
                 }
             }
         }

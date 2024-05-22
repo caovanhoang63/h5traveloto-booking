@@ -20,7 +20,9 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.ListHotelsViewModel
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard
 import com.example.h5traveloto_booking.details.presentation.roomdetails.ListRoomViewModel
+import com.example.h5traveloto_booking.details.presentation.roomdetails.components.NotFoundRoomTypes
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
@@ -40,10 +42,9 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
         topBar = {
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .height(121.dp)
                 .background(Grey50Color)
             ) {
-                Column(modifier = Modifier.padding(top = 21.dp, start = 27.dp, end = 27.dp)) {
+                Column(modifier = Modifier.padding(top = 21.dp, bottom = 21.dp, start = 27.dp, end = 27.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -56,22 +57,16 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
 
                         Column { //Current location
                             Text(
-                                text = "Khách sạn Palce Sài Gòn",
+                                text = shareDataHotelDetail.getHotelName(),
                                 style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp)
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Th 6, 15 / 3 / 2024, 1 đêm, 1 phòng",
+                                text = "${shareDataHotelDetail.getStartDate()}, ${shareDataHotelDetail.getPersonOption().first} đêm, ${shareDataHotelDetail.getPersonOption().third} phòng",
                                 style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp)
                             )
                         }
                         PrimaryIconButton(DrawableId = R.drawable.search, onClick = {}, alt = "")
-                    }
-                    YSpacer(15)
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        PrimaryIconButton(DrawableId = R.drawable.filter, onClick = {}, alt = "")
-                        XSpacer(25)
-                        PrimaryIconButton(DrawableId = R.drawable.sort, onClick = {}, alt = "")
                     }
                 }
             }
@@ -85,7 +80,7 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(vertical = 54.dp, horizontal = 15.dp),
+                    .padding(start = 15.dp, end = 15.dp, top = 15.dp, bottom = 54.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp),
             ) {
@@ -103,6 +98,7 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
 
                         is Result.Error -> {
                             Log.d("List Hotel ", "loi roi")
+                            NotFoundRoomTypes()
                         }
 
                         is Result.Success -> {
@@ -115,7 +111,6 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
                                 }
                             }
                         }
-
                         else -> Unit
                     }
                 }

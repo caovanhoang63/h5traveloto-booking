@@ -74,6 +74,7 @@ fun ListReviews(
 
                 is Result.Error -> {
                     Log.d("List Reviews ", "loi roi")
+                    NotFoundReview()
                 }
 
                 is Result.Success -> {
@@ -81,7 +82,12 @@ fun ListReviews(
                     val reviews = listReviewsResponse.data.data
                     reviews.forEach() {
                         Spacer(modifier = Modifier.height(16.dp))
-                        HotelDetailFeedback(text = it.comment, author = it.user.lastName)
+                        HotelDetailFeedback(
+                            text = it.comment,
+                            author = "${it.user.lastName} ${it.user.firstName}",
+                            rating = it.rating.toString(),
+                            createdDate = it.createdAt
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
                         HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
 

@@ -18,6 +18,14 @@ class ShareDataHotelDetail {
     private var searchText :String = ""
     private var selectedStartDate: String = ""
     private var personOption: Triple<Int, Int, Int> = Triple(1, 1, 1)
+    private var hotelName : String = "";
+
+    fun setHotelName(hotelName: String){
+        this.hotelName = hotelName
+    }
+    fun getHotelName(): String{
+        return hotelName
+    }
 
     fun setPersonOption(adults: Int, children: Int, roomQuantity: Int){
         personOption = Triple(adults, children, roomQuantity)
@@ -91,7 +99,7 @@ class ShareDataHotelDetail {
         val Day = if(localDate.dayOfMonth < 10) "0${localDate.dayOfMonth}" else localDate.dayOfMonth.toString()
         val Month = if(localDate.monthNumber < 10) "0${localDate.monthNumber}" else localDate.monthNumber.toString()
         val Year = localDate.year.toString()
-        return "\"$Day-$Month-$Year\""
+        return "$Day-$Month-$Year"
     }
 
     fun getStartDateString(): String{

@@ -44,6 +44,7 @@ fun ListHotels(
 ) {
     val radioOption = listOf("Giá thấp đến cao", "Giá cao đến thấp", "Xếp hạng cao đến thấp", "Xếp hạng thấp đến cao")
     var isSortSheetOpened by remember { mutableStateOf(false) }
+    var isSortSelected by remember { mutableStateOf("Giá thấp đến cao") }
     var isFilterSheetOpened by remember { mutableStateOf(false) }
 
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOption[0]) }
@@ -145,7 +146,8 @@ fun ListHotels(
                     radioOptions = radioOption,
                     onOptionSelected = { option ->
                         onOptionSelected(option)
-                    }
+                    },
+                    selectedOptionPara = selectedOption
                 )
                 HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
                 PrimaryButton(
@@ -182,12 +184,11 @@ fun ListHotels(
                             alt = "",
                         )
 
-                        Column { //Current location
+                        Column(verticalArrangement = Arrangement.SpaceBetween) { //Current location
                             Text(
                                 text = shareDataHotelDetail.getSearchText(),
                                 style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp)
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = "${shareDataHotelDetail.getStartDate()}, ${shareDataHotelDetail.getPersonOption().first} đêm, ${shareDataHotelDetail.getPersonOption().third} phòng",
                                 style = TextStyle(fontWeight = FontWeight.Normal, fontSize = 12.sp)
@@ -259,7 +260,7 @@ fun ListHotels(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(vertical = 54.dp, horizontal = 15.dp),
+                            .padding(start = 15.dp, end = 15.dp, top = 15.dp, bottom = 54.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(15.dp),
                     ) {

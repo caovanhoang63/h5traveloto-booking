@@ -34,6 +34,7 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.ListHotelsViewModel
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.*
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
+import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
@@ -90,22 +91,33 @@ fun HotelDetailsScreen(
         "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI="
     Scaffold(
         bottomBar = {
-            Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 10.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Column {
                     GreyText(text = "Giá/phòng/đêm từ")
-                    PrimaryText2(text = "${hotelInfo!!.displayPrice} VND", style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp))
+                    PrimaryText16(
+                        text = "${hotelInfo!!.displayPrice.formatPrice()} VND",
+                        style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                    )
                     BoldText(text = "Giá cuối cùng")
                 }
-                
+
                 PrimaryButton(
-                    onClick = { navController.navigate(Screens.ListRooms.name) },
+                    onClick = {
+                        navController.navigate(Screens.ListRooms.name);
+                        shareDataHotelDetail.setHotelName(hotelInfo.name)
+                    },
                     text = "Chọn Phòng",
                     modifier = Modifier
                         .width(150.dp)
                         .height(65.dp)
                 )
             }
-            
+
         },
         topBar = {
             Row(

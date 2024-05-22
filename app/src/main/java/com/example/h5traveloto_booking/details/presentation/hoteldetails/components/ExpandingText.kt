@@ -54,7 +54,7 @@ fun ExpandingText(
             withStyle(
                 style = SpanStyle(
                     color = PrimaryColor,
-                    fontSize = 14.sp
+                    fontSize = 16.sp
                 )
             ) {
                 pushStringAnnotation(tag = "showLess", annotation = "showLess")
@@ -62,7 +62,7 @@ fun ExpandingText(
                 addStyle(
                     style = SpanStyle(
                         color = clickColor,
-                        fontSize = 14.sp
+                        fontSize = 16.sp
                     ),
                     start = longText.length,
                     end = longText.length + showMore.length
@@ -74,7 +74,7 @@ fun ExpandingText(
             withStyle(
                 style = SpanStyle(
                     color = PrimaryColor,
-                    fontSize = 14.sp
+                    fontSize = 16.sp
                 )
             ) {
                 if (showOverflow.value) {
@@ -83,7 +83,7 @@ fun ExpandingText(
                     addStyle(
                         style = SpanStyle(
                             color = clickColor,
-                            fontSize = 14.sp
+                            fontSize = 16.sp
                         ),
                         start = adjustedText.length,
                         end = adjustedText.length + showMore.length
@@ -99,7 +99,7 @@ fun ExpandingText(
             text = annotatedText,
             style = TextStyle(
                 color = Color.Gray,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 textAlign = textAlign
             ),
             maxLines = if (isExpanded) Int.MAX_VALUE else MINIMIZED_MAX_LINES,

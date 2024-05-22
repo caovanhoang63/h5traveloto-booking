@@ -406,3 +406,7 @@ fun Long.formatPrice(): String {
     val formatter = java.text.DecimalFormat("#,###")
     return formatter.format(this)
 }
+fun Int.formatPrice(): String {
+    val formatter = java.text.DecimalFormat("#,###")
+    return formatter.format(this)
+}

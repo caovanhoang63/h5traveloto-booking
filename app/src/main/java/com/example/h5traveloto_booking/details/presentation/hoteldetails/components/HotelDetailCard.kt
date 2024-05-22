@@ -23,6 +23,7 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.HotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
+import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.Grey500Color
@@ -128,6 +129,8 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default r
                 Screens.HotelDetailsScreen.name
             );
             shareDataHotelDetail.setHotelId(hotelDTO.id)
+            Log.d("HotelDetailCard2", "HotelId: ${hotelDTO.id}")
+            Log.d("HotelDetailCard2", "HotelName: "+ shareDataHotelDetail.getHotelId())
             shareDataHotelDetail.setHotelDetails(hotelDTO)
         },
     ) {
@@ -183,7 +186,7 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default r
                 ) {
                     PrimaryText(text = "${hotelDTO.totalRating} (${hotelDTO.totalRating})")
                     MultiColorText(
-                        Triple("${hotelDTO.displayPrice}VND", PrimaryColor, FontWeight.Bold),
+                        Triple("${hotelDTO.displayPrice.formatPrice()} VND", PrimaryColor, FontWeight.Bold),
                         Triple("/đêm", Grey500Color, FontWeight.Normal)
                     )
 

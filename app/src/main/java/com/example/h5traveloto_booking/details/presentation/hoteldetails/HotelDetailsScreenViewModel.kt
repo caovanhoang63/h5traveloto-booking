@@ -68,8 +68,10 @@ class HotelDetailsScreenViewModel @Inject constructor(
                 _ListReviewsResponse.value = Result.Error(errorResponse.message)
             }
             else if (it is Exception) {
+                _ListReviewsResponse.value = Result.Error("hehe")
                 Log.d("Reviews ViewModel", it.javaClass.name)
             }
+
         }.collect {
             Log.d("Reviews Success", it.data.toString())
             _ListReviewsResponse.value = Result.Success(it)

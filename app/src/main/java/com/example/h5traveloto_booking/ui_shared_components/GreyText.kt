@@ -19,3 +19,13 @@ fun GreyText(text : String, modifier: Modifier = Modifier ) {
         text = text
     )
 }
+@Composable
+fun GreyText16(text : String, modifier: Modifier = Modifier ) {
+    Text(
+        modifier = Modifier.then(modifier),
+        fontSize = 16.sp,
+        fontWeight =  FontWeight.Medium,
+        color = Grey500Color,
+        text = text
+    )
+}
