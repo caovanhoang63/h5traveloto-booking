@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
@@ -31,14 +32,14 @@ fun ContactDetailsCard (
         mutableStateOf(false)
     }
     var nameText by remember {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue("${UserShare.User.lastName} ${UserShare.User.firstName}"))
     }
     var phoneText by remember {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue("${UserShare.User.phone}"))
     }
-    var emailText by remember {
-        mutableStateOf(TextFieldValue(""))
-    }
+//    var emailText by remember {
+//        mutableStateOf(TextFieldValue(""))
+//    }
 
     if (showContactDialog.value) {
         Dialog(
@@ -103,22 +104,22 @@ fun ContactDetailsCard (
                            .height(60.dp)
                            .fillMaxWidth()
                    )
-                   YSpacer(10)
-                   OutlinedTextField(
-                       value = emailText,
-                       onValueChange = {
-                           emailText = it
-                       },
-                       label = {
-                           Text(
-                               text = "Email",
-                               fontSize = 14.sp
-                           )
-                       },
-                       modifier = Modifier
-                           .height(60.dp)
-                           .fillMaxWidth()
-                   )
+//                   YSpacer(10)
+//                   OutlinedTextField(
+//                       value = emailText,
+//                       onValueChange = {
+//                           emailText = it
+//                       },
+//                       label = {
+//                           Text(
+//                               text = "Email",
+//                               fontSize = 14.sp
+//                           )
+//                       },
+//                       modifier = Modifier
+//                           .height(60.dp)
+//                           .fillMaxWidth()
+//                   )
                    YSpacer(10)
                    Row (
                        horizontalArrangement = Arrangement.SpaceEvenly
@@ -188,16 +189,16 @@ fun ContactDetailsCard (
                 .padding(12.dp)
         ) {
             Text(
-                text = "Mai Hoang Hung",
+                text = "${UserShare.User.lastName} ${UserShare.User.firstName}",
                 fontSize = 16.sp
             )
             Text(
-                text = "mhhung0811@gmail.com",
+                text = "${UserShare.User.email}",
                 fontSize = 14.sp,
                 color = Grey500Color
             )
             Text(
-                text = "012345678",
+                text = "${UserShare.User.phone}",
                 fontSize = 14.sp,
                 color = Grey500Color
             )

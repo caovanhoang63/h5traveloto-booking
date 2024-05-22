@@ -9,9 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,9 +26,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.h5traveloto_booking.auth.domain.models.User
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.HotelDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.util.Result
@@ -43,7 +44,11 @@ fun ScheduleScreen (
     navController: NavController,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
+    val isHaveBookings = remember {
+        mutableStateOf(false)
+    }
     val scheduleNavController = rememberNavController()
+    val userBookingList: MutableList<UserBookingDTO> = arrayListOf()
 
     val bookingList : List<BookingDTO> = listOf(
         BookingDTO(
@@ -84,9 +89,19 @@ fun ScheduleScreen (
         }
         is Result.Success -> {
             Log.d("UserBookings", "Success")
+            if (UserBookingsResponse.data.data.isEmpty()) {
+                isHaveBookings.value = false
+            } else {
+                UserBookingsResponse.data.data.forEach { userBookingDTO ->
+                    userBookingList.add(userBookingDTO)
+                    Log.d("UserBookings", userBookingDTO.hotel.name)
+                }
+            }
         }
         else -> Unit
     }
+
+
 
     NavHost (
         navController = scheduleNavController,

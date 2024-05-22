@@ -21,6 +21,7 @@ import com.example.h5traveloto_booking.details.presentation.bookingdetails.compo
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.PriceDetailsCard
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
@@ -101,20 +102,22 @@ fun BookingDetailsFillingScreen(
                     XSpacer(20)
                     Column {
                         Text(
-                            "Đăng nhập bởi Mai Hoàng Hưng",
+                            "Đăng nhập bởi ${UserShare.User.lastName} ${UserShare.User.firstName}",
                             fontSize = 16.sp
                         )
-                        Text(
-                            "${bookingData.hotelId}",
-                            color = Grey500Color,
-                            fontSize = 14.sp
-                        )
+                        if (!UserShare.User.phone.isNullOrEmpty()) {
+                            Text(
+                                "${UserShare.User.phone}",
+                                color = Grey500Color,
+                                fontSize = 14.sp
+                            )
+                        }
                     }
                 }
             }
             item { YSpacer(20) }
             item {
-                BookingSummaryCard()
+                BookingSummaryCard(bookingData)
             }
             item { YSpacer(20) }
             item {

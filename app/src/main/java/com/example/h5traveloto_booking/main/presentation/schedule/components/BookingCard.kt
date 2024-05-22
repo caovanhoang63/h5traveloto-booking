@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.schedule.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -26,7 +27,8 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 
 @Composable
 public fun BookingCard(
-    isStatusVisible: Boolean
+    isStatusVisible: Boolean,
+
 ) {
     Card (
         colors = CardDefaults.cardColors(
@@ -37,7 +39,11 @@ public fun BookingCard(
             .height(120.dp)
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
-//            .clip(shape = RoundedCornerShape(8.dp))
+            .clickable(
+                onClick = {
+
+                }
+            )
     ) {
         Row (
             modifier = Modifier

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.ListUserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.ListUserBookingUseCase
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.ListUserBookingUseCases
+import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,16 +31,21 @@ class ScheduleViewModel @Inject constructor(
         Log.d("Schedule ViewModel", "Get token")
         Log.d("Schedule ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
-        useCases.getListUserBookingUseCase("3mMo3jdFhPcusy").onStart {
-            _UserBookingsResponse.value = Result.Loading
-            Log.d("Schedule ViewModel", "Loading")
-        }.catch {
-            Log.d("Schedule ViewModel", "catch")
-            Log.d("Schedule ViewModel", it.message.toString())
-            _UserBookingsResponse.value = Result.Error(it.message.toString())
-        }.collect {
-            Log.d("Schedule ViewModel", "UserBookings Success")
-            _UserBookingsResponse.value = Result.Success(it)
+
+        if (UserShare.User.id != null) {
+            useCases.getListUserBookingUseCase(UserShare.User.id.toString()).onStart {
+                _UserBookingsResponse.value = Result.Loading
+                Log.d("Schedule ViewModel", "Loading")
+            }.catch {
+                Log.d("Schedule ViewModel", "catch")
+                Log.d("Schedule ViewModel", it.message.toString())
+                _UserBookingsResponse.value = Result.Error(it.message.toString())
+            }.collect {
+                Log.d("Schedule ViewModel", "UserBookings Success")
+                _UserBookingsResponse.value = Result.Success(it)
+            }
+        } else {
+            Log.d("Schedule ViewModel", "User Id Null")
         }
     }
 }

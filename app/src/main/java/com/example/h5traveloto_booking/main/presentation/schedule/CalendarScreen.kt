@@ -21,6 +21,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.Create
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
@@ -43,15 +44,16 @@ public fun CalendarScreen (
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
 
-    // Dummy data
+    val hotelInfo = shareDataHotelDetail.getHotelDetails()
+
     val bookingData = CreateBookingDTO(
-        hotelId = "DCWYE7tu7Da8kJd",
+        hotelId = shareDataHotelDetail.getHotelId(),
         roomTypeId = "3pcoy6AP1VifpD",
-        roomQuantity = 1,
-        adults = 1,
-        children = 1,
-        startDate = "21-12-2024",
-        endDate = "22-12-2024"
+        roomQuantity = shareDataHotelDetail.getRoomQuantity(),
+        adults = shareDataHotelDetail.getAdults(),
+        children = shareDataHotelDetail.getChildren(),
+        startDate = shareDataHotelDetail.getStartDateString(),
+        endDate = shareDataHotelDetail.getEndDateString()
     )
 
     Scaffold(
@@ -77,7 +79,7 @@ public fun CalendarScreen (
             item {
                 Button(
                     onClick = {
-                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
+//                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
                     }
                 ) {
 
