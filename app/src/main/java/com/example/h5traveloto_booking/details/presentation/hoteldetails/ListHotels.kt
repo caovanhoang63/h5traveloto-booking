@@ -78,7 +78,7 @@ fun ListHotels(
             }
         }
     }
-    val listHotelResponse = viewModel.ListHotelResponse.collectAsState().value
+    //val listHotelResponse = viewModel.ListHotelResponse.collectAsState().value
     val listHotelSearch = viewModel.ListHotelSearch.collectAsState().value
 
     if (isFilterSheetOpened) {
@@ -233,12 +233,12 @@ fun ListHotels(
                             ) != android.content.pm.PackageManager.PERMISSION_GRANTED
                         ) {
                             ButtonRequestLocationPermission(onClick = {
+                                viewModel.initLocationProvider(context)
                                 launchMultiplePermissions.launch(permissions)
                             })
                         } else {
                             viewModel.initLocationProvider(context)
                             launchMultiplePermissions.launch(permissions)
-                            viewModel.setStateHotelSearchLoading()
                         }
                     } else {
                         viewModel.setStateHotelSearchLoading()

@@ -14,6 +14,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Da
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -32,8 +33,9 @@ class ListHotelsViewModel @Inject constructor(
     private val sharedPrefManager: SharedPrefManager,
     private val useCaseSearch: SearchUseCases
 ) : ViewModel() {
-    private val _listHotelResponse = MutableStateFlow<Result<ListHotelDTO>>(Result.Idle)
-    val ListHotelResponse = _listHotelResponse.asStateFlow()
+    private var context: Context? = null
+//    private val _listHotelResponse = MutableStateFlow<Result<ListHotelDTO>>(Result.Idle)
+//    val ListHotelResponse = _listHotelResponse.asStateFlow()
     private val _listHotelSearch = MutableStateFlow<Result<SearchHotelDTO>>(Result.Idle)
     val ListHotelSearch = _listHotelSearch.asStateFlow()
 
@@ -63,12 +65,21 @@ class ListHotelsViewModel @Inject constructor(
                 .setMinUpdateIntervalMillis(3000)
                 .setMaxUpdateDelayMillis(100)
                 .build()
+
+            if(!LocationProvider.isLocationEnabled(context!!)) {
+                LocationProvider.createLocationRequest(context!!)
+            }
+            else{
+                setStateHotelSearchLoading()
+            }
+
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, it, Looper.getMainLooper())
             Log.d("List Hotel Location", "Requesting location updates")
         }
     }
 
     public fun initLocationProvider(context: Context) {
+        this.context = context
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
         Log.d("List Hotel Location", "Init location provider")
     }

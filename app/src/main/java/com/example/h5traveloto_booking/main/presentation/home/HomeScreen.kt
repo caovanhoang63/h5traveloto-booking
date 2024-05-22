@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.home
 
+import android.app.Activity
 import android.content.Context.LOCATION_SERVICE
 import android.location.LocationManager
 import android.provider.Settings
@@ -62,15 +63,19 @@ fun HomeScreen(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         if (permissions.all { it.value }) {
-            if(LocationProvider.isLocationEnabled(context)) {
-                viewModel.initLocationProvider(context)
-                viewModel.startLocationUpdates()
-            }
-            else{
-                LocationProvider.createLocationRequest(context)
-            }
+            viewModel.startLocationUpdates()
         } else {
             Log.d("LocationProvider", "Permissions denied")
+        }
+    }
+
+    val enableGpsLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.startLocationUpdates()
+        } else {
+            Log.d("LocationProvider", "GPS enabling denied")
         }
     }
 
