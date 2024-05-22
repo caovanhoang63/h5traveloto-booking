@@ -169,11 +169,11 @@ fun SearchLocationScreen(
                             ItemSearch(
                                 title = city.name,
                                 detail = if(city.district != null && city.province != null){
-                                    city.district.name + ", " + city.province.name + ", Việt Nam"
+                                    city.district.fullName + ", " + city.province.name
                                 }else if(city.province != null){
-                                    city.province.name + ", Việt Nam"
+                                    city.province.name
                                 } else {
-                                    "Việt Nam"
+                                    ""
                                 },
                                 onClick = {
                                     onComplete(city.name, city)
@@ -185,7 +185,10 @@ fun SearchLocationScreen(
                                     "Khách sạn"
                                 } else if(city.index == "provinces"){
                                     "Tỉnh thành"
-                                }else{
+                                }else if(city.index == "landmarks_enriched"){
+                                    "Địa danh"
+                                }
+                                else{
                                     "Vùng"
                                 }
                             )

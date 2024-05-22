@@ -27,4 +27,9 @@ interface SearchApi {
     suspend fun searchRoomTypes(
         @QueryMap params: Map<String, String>?,
     ) : SearchRoomTypeDTO
+
+    @GET("search/hotels/prominent")
+    suspend fun searchProminentHotels(
+        @Query("limit") limit: Int,
+    ) : SearchHotelDTO
 }

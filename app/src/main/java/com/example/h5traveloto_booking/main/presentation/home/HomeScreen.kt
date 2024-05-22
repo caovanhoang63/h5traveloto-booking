@@ -89,6 +89,7 @@ fun HomeScreen(
     }
 
     val listHotelSearch = viewModel.ListHotelSearch.collectAsState().value
+    val listProminentHotel = viewModel.ListProminentHotel.collectAsState().value
     val selectedItemIndex = rememberSaveable { mutableStateOf(0) }
 
     //
@@ -96,6 +97,7 @@ fun HomeScreen(
         LocationProvider.setGpsLauncher(enableGpsLauncher)
         shareHotelDataViewModel.setIsCurrentLocation(true)
         viewModel.getListDistricts()
+        viewModel.getProminentHotel()
         viewModel.initLocationProvider(context)
         Log.d("HomeScreen", "LaunchedEffect")
     }
@@ -267,7 +269,7 @@ fun HomeScreen(
                                             navAppController.navigate(Screens.HotelDetailsScreen.name)
                                         })
                                     }
-                                    if(index >= 2){
+                                    if(index >= 3){
                                         return@LazyRow
                                     }
                                 }
@@ -292,11 +294,44 @@ fun HomeScreen(
                         BoldText("Địa điểm nổi bật")
                         ClickableText("See all", {})
                     }
-                    YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(16)
+//                    YSpacer(12)
+//                    HotelTagSmall()
+//                    YSpacer(12)
+//                    HotelTagSmall()
+//                    YSpacer(16)
+                    when(listProminentHotel){
+                        is Result.Idle -> {
+
+                        }
+                        is Result.Loading -> {
+                            Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                        is Result.Error -> {
+                            NotFoundHotel()
+                        }
+                        is Result.Success -> {
+                            val hotels = listProminentHotel.data.data
+                            LazyRow (modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)) {
+                                if(hotels!= null){
+                                    hotels.forEachIndexed { index, hotelDTO ->
+                                        item {
+                                            HotelTagLarge(hotelDTO, onClick = {
+                                                shareDataHotelDetail.setHotelDetails(hotelDTO)
+                                                shareDataHotelDetail.setHotelId(hotelDTO.id)
+                                                shareDataHotelDetail.LogData()
+                                                navAppController.navigate(Screens.HotelDetailsScreen.name)
+                                            })
+                                        }
+                                    }
+                                }
+                                else{
+                                    viewModel.setStateProminentHotelError()
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
