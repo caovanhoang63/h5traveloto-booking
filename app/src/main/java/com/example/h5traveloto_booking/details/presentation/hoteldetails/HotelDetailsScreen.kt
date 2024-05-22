@@ -82,7 +82,7 @@ fun HotelDetailsScreen(
                 Column {
                     GreyText(text = "Giá/phòng/đêm từ")
                     PrimaryText16(
-                        text = "${hotelInfo!!.displayPrice.formatPrice()} VND",
+                        text = "${hotelInfo!!.displayPrice?.formatPrice()} VND",
                         style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     )
                     BoldText(text = "Giá cuối cùng")

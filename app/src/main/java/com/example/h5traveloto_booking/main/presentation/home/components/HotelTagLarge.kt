@@ -79,7 +79,7 @@ fun HotelTagLarge(
 
                 YSpacer(8)
                 Row {
-                    PrimaryText("${hotelDTO.displayPrice.formatPrice()} VND")
+                    PrimaryText("${hotelDTO.displayPrice?.formatPrice()} VND")
                     GreyText("/đêm")
                 }
             }
@@ -90,7 +90,7 @@ fun HotelTagLarge(
 
 
 @Composable
-fun ScrollingText(hotelName: String, modifier: Modifier) {
+fun ScrollingText(hotelName: String, modifier: Modifier = Modifier) {
     val offsetX = remember { Animatable(0f) }
 
     LaunchedEffect(hotelName) {
@@ -114,6 +114,41 @@ fun ScrollingText(hotelName: String, modifier: Modifier) {
             style = TextStyle(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
+            ),
+            softWrap = false,
+            maxLines = 1,
+            overflow = TextOverflow.Visible,
+            modifier = Modifier
+                .offset { IntOffset(offsetX.value.toInt(), 0) }
+        )
+    }
+}
+@Composable
+fun ScrollingText2(hotelName: String, modifier: Modifier = Modifier) {
+    val offsetX = remember { Animatable(0f) }
+
+    LaunchedEffect(hotelName) {
+        val textWidth = 800f // Chiều rộng giả định của văn bản
+        while (true && hotelName.length > 40) {
+            offsetX.animateTo(
+                targetValue = -textWidth,
+                animationSpec = tween(durationMillis = 6000, easing = LinearEasing)
+            )
+            offsetX.snapTo(0f)
+            delay(1000) // Khoảng dừng giữa các lần lặp lại
+        }
+    }
+
+    Box(
+        modifier = Modifier.then(modifier)
+            .clipToBounds()
+    ) {
+        BasicText(
+            text = hotelName,
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium
+
             ),
             softWrap = false,
             maxLines = 1,

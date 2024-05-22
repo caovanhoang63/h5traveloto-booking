@@ -285,13 +285,13 @@ fun HomeSearchScreen(
                         BoldText("Đã xem gần đây")
                         ClickableText("See all", {})
                     }
-                    YSpacer(12)
+                    /*YSpacer(12)
                     HotelTagSmall()
                     YSpacer(12)
                     HotelTagSmall()
                     YSpacer(12)
                     HotelTagSmall()
-                    YSpacer(16)
+                    YSpacer(16)*/
                 }
             }
         }

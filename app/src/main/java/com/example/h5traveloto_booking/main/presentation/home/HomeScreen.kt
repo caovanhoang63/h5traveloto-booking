@@ -222,10 +222,7 @@ fun HomeScreen(
                         )
                     }
                 }
-
                 Spacer(modifier = Modifier.height(16.dp))
-
-
                 when(listHotelSearch){
                     is Result.Idle -> {
                         if(shareHotelDataViewModel.isCurrentLocation()){
@@ -279,13 +276,8 @@ fun HomeScreen(
                             }
                         }
                     }
-
                 }
-
-
-
                 Spacer(modifier = Modifier.height(22.dp))
-
                 Column(modifier = Modifier.padding(16.dp, 0.dp)) {
                     Row(
                         modifier = Modifier.fillMaxSize(),
@@ -308,16 +300,17 @@ fun HomeScreen(
                         }
                         is Result.Success -> {
                             val hotels = listProminentHotel.data.data
-                            LazyRow (modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)) {
+                            Column(modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)) {
                                 if(hotels!= null){
                                     hotels.forEachIndexed { index, hotelDTO ->
-                                        item {
-                                            HotelTagLarge(hotelDTO, onClick = {
+                                            HotelTagSmall(hotelDTO, onClick = {
                                                 shareDataHotelDetail.setHotelDetails(hotelDTO)
                                                 shareDataHotelDetail.setHotelId(hotelDTO.id)
                                                 shareDataHotelDetail.LogData()
                                                 navAppController.navigate(Screens.HotelDetailsScreen.name)
                                             })
+                                        if (index >= 3) {
+                                            return@Column
                                         }
                                     }
                                 }

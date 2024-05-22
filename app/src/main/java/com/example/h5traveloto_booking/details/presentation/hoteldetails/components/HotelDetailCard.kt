@@ -186,7 +186,7 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default r
                 ) {
                     PrimaryText(text = "${hotelDTO.totalRating} (${hotelDTO.totalRating})")
                     MultiColorText(
-                        Triple("${hotelDTO.displayPrice.formatPrice()} VND", PrimaryColor, FontWeight.Bold),
+                        Triple("${hotelDTO.displayPrice?.formatPrice()} VND", PrimaryColor, FontWeight.Bold),
                         Triple("/đêm", Grey500Color, FontWeight.Normal)
                     )
 
