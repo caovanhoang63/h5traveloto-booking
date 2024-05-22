@@ -45,6 +45,7 @@ import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.Result
+import kotlinx.coroutines.delay
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -59,11 +60,19 @@ fun HomeScreen(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
+
     val launchMultiplePermissions = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
+        Log.d("HomeScreen", "")
         if (permissions.all { it.value }) {
-            viewModel.startLocationUpdates()
+            if(LocationProvider.isLocationEnabled(context)){
+                viewModel.startLocationUpdates()
+            }
+            else{
+                Log.d("HomeScreen", "GPS not enabled ne ne")
+                LocationProvider.createLocationRequest(context)
+            }
         } else {
             Log.d("LocationProvider", "Permissions denied")
         }
@@ -84,10 +93,11 @@ fun HomeScreen(
 
     //
     LaunchedEffect(UInt) {
-        Log.d("HomeScreen", "LaunchedEffect")
+        LocationProvider.setGpsLauncher(enableGpsLauncher)
         shareHotelDataViewModel.setIsCurrentLocation(true)
         viewModel.getListDistricts()
         viewModel.initLocationProvider(context)
+        Log.d("HomeScreen", "LaunchedEffect")
     }
 
     val listDistrict = viewModel.listDistrict.collectAsState().value
@@ -219,6 +229,7 @@ fun HomeScreen(
                         if(shareHotelDataViewModel.isCurrentLocation()){
                             if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
                                 || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                                || !LocationProvider.isLocationEnabled(context)
                             ){
                                 ButtonRequestLocationPermission(onClick = {
                                     launchMultiplePermissions.launch(permissions)
@@ -266,6 +277,7 @@ fun HomeScreen(
                             }
                         }
                     }
+
                 }
 
 

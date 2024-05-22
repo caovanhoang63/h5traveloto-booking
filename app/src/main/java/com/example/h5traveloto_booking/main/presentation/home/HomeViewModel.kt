@@ -41,7 +41,6 @@ class HomeViewModel @Inject constructor(
     private val _listDistrict = MutableStateFlow<Result<DistrictsDTO>>(Result.Idle)
     val listDistrict = _listDistrict.asStateFlow()
 
-    //
     private val _listHotelSearch = MutableStateFlow<Result<SearchHotelDTO>>(Result.Idle)
     val ListHotelSearch = _listHotelSearch.asStateFlow()
 
@@ -71,13 +70,7 @@ class HomeViewModel @Inject constructor(
                 .setMaxUpdateDelayMillis(100)
                 .build()
 
-            if(!LocationProvider.isLocationEnabled(context!!)){
-                LocationProvider.createLocationRequest(context!!)
-            }
-            else{
-                setStateHotelSearchLoading()
-            }
-
+            setStateHotelSearchLoading()
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, it, Looper.getMainLooper())
             Log.d("List Hotel Location", "Requesting location updates")
         }

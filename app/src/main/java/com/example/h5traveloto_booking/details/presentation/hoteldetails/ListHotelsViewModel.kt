@@ -47,8 +47,6 @@ class ListHotelsViewModel @Inject constructor(
             for (location in locationResult.locations) {
                 Log.d("List Hotel Location", "Callback set Latitude: ${location.latitude}, Longitude: ${location.longitude}")
                 shareHotelDataViewModel.setCurrentLocation(location.latitude, location.longitude)
-                //shareHotelDataViewModel.setCurrentLocation(10.3547475, 107.0972445)
-
             }
             getHotelSearch()
             stopLocationUpdates()
@@ -65,14 +63,7 @@ class ListHotelsViewModel @Inject constructor(
                 .setMinUpdateIntervalMillis(3000)
                 .setMaxUpdateDelayMillis(100)
                 .build()
-
-            if(!LocationProvider.isLocationEnabled(context!!)) {
-                LocationProvider.createLocationRequest(context!!)
-            }
-            else{
-                setStateHotelSearchLoading()
-            }
-
+            setStateHotelSearchLoading()
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, it, Looper.getMainLooper())
             Log.d("List Hotel Location", "Requesting location updates")
         }
