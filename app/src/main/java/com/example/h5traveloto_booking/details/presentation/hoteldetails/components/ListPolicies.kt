@@ -28,12 +28,9 @@ import com.example.h5traveloto_booking.util.Result
 @Composable
 fun ListPolicies(
     navController: NavController,
-    viewModel: HotelDetailsScreenViewModel = hiltViewModel()
+    Object: Data,
 ) {
-    val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
-    LaunchedEffect(Unit) {
-        viewModel.getHotelDetails()
-    }
+
     Scaffold(
         topBar = {
             Row(
@@ -61,81 +58,64 @@ fun ListPolicies(
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
-            when(HotelDetailsResponse) {
-                is Result.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is Result.Success -> {
-                    HotelDetailPolicyCard(
-                        icon = R.drawable.baseline_access_time_24,
-                        text = "Giờ nhận phòng/trả phòng",
-                        description = "Nhận phòng: ${HotelDetailsResponse.data.data.checkInTime} - Trả phòng: ${HotelDetailsResponse.data.data.checkOutTime}"
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-                    //
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HotelDetailPolicyCard(
-                        icon = R.drawable.baseline_child_care_24,
-                        text = "Chính sách về độ tuổi tối thiểu",
-                        description = "Trẻ em từ trên ${HotelDetailsResponse.data.data.minimumAge} tuổi"
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-                    //
-                    Spacer(modifier = Modifier.height(16.dp))
-                    if (HotelDetailsResponse.data.data.smokingPolicy != "free") {
-                        HotelDetailPolicyCard(
-                            icon = R.drawable.baseline_smoking_rooms_24,
-                            text = "Hút thuốc",
-                            description = "Cơ sở lưu trú cấm hút thuốc"
-                        )
-                    }
-                    else HotelDetailPolicyCard(
-                        icon = R.drawable.baseline_smoking_rooms_24,
-                        text = "Hút thuốc",
-                        description = "Cơ sở lưu trú được phép hút thuốc"
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-                    //
-                    Spacer(modifier = Modifier.height(16.dp))
-                    if (HotelDetailsResponse.data.data.petPolicy != "free") {
-                        HotelDetailPolicyCard(
-                            icon = R.drawable.baseline_pets_24,
-                            text = "Thú cưng",
-                            description = "Không được mang thú cưng"
-                        )
-                    }
-                    else HotelDetailPolicyCard(
-                        icon = R.drawable.baseline_pets_24,
-                        text = "Thú cưng",
-                        description = "Được mang thú cưng"
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-                    //
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HotelDetailPolicyCard(
-                        icon = R.drawable.baseline_edit_note_24,
-                        text = "Chính sách bổ sung",
-                        description = HotelDetailsResponse.data.data.additionalPolicies
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-                }
-                is Result.Error -> {
-                    Log.d("List Policies", HotelDetailsResponse.toString())
-                    NotFoundPolycies()
-                }
-                else -> {
-                    Log.d("List Policies", "Error")
-                }
-            }
 
-
-
+            HotelDetailPolicyCard(
+                icon = R.drawable.baseline_access_time_24,
+                text = "Giờ nhận phòng/trả phòng",
+                description = "Nhận phòng: ${Object.checkInTime} - Trả phòng: ${Object.checkOutTime}"
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
+            //
+            Spacer(modifier = Modifier.height(16.dp))
+            HotelDetailPolicyCard(
+                icon = R.drawable.baseline_child_care_24,
+                text = "Chính sách về độ tuổi tối thiểu",
+                description = "Trẻ em từ trên ${Object.minimumAge} tuổi"
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
+            //
+            Spacer(modifier = Modifier.height(16.dp))
+            if (Object.smokingPolicy != "free") {
+                HotelDetailPolicyCard(
+                    icon = R.drawable.baseline_smoking_rooms_24,
+                    text = "Hút thuốc",
+                    description = "Cơ sở lưu trú cấm hút thuốc"
+                )
+            } else HotelDetailPolicyCard(
+                icon = R.drawable.baseline_smoking_rooms_24,
+                text = "Hút thuốc",
+                description = "Cơ sở lưu trú được phép hút thuốc"
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
+            //
+            Spacer(modifier = Modifier.height(16.dp))
+            if (Object.petPolicy != "free") {
+                HotelDetailPolicyCard(
+                    icon = R.drawable.baseline_pets_24,
+                    text = "Thú cưng",
+                    description = "Không được mang thú cưng"
+                )
+            } else HotelDetailPolicyCard(
+                icon = R.drawable.baseline_pets_24,
+                text = "Thú cưng",
+                description = "Được mang thú cưng"
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
+            //
+            Spacer(modifier = Modifier.height(16.dp))
+            HotelDetailPolicyCard(
+                icon = R.drawable.baseline_edit_note_24,
+                text = "Chính sách bổ sung",
+                description = Object.additionalPolicies
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
         }
-
     }
+
+
 }

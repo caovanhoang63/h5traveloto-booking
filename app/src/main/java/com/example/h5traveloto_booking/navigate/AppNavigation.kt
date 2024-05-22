@@ -19,6 +19,7 @@ import com.example.h5traveloto_booking.account.personal_information.PersonalInfo
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreen
+import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListPolicies
@@ -78,8 +79,11 @@ fun AppNavigation(startDestination : String ) {
         composable(route = Screens.AllFavoriteScreen.name ) {
             AllFavoriteScreen(navController = navController)
         }
-        composable(route = Screens.ListPolicies.name ) {
-            ListPolicies(navController = navController)
+        composable(route ="${Screens.ListPolicies.name}/{Object}" ) {
+            backStackEntry ->
+            val Object = Gson().fromJson(backStackEntry.arguments?.getString("Object"), HotelDetailsDTO::class.java)
+            ListPolicies(navController = navController, Object = Object.data)
+
         }
         composable(route = Screens.ListReviews.name ) {
             ListReviews(navController = navController)

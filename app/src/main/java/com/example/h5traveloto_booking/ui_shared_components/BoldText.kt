@@ -15,7 +15,7 @@ fun BoldText(text : String ) {
     )
 }
 @Composable
-fun BoldText2(text : String,modifier: Modifier) {
+fun BoldText2(text : String,modifier: Modifier = Modifier) {
     Text(
         fontSize = 16.sp,
         fontWeight =  FontWeight.Bold,

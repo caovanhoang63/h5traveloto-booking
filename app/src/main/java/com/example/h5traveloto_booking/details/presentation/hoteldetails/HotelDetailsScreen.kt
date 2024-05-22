@@ -44,6 +44,7 @@ import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.modifiers.RangeMidDay
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
+import com.google.gson.Gson
 
 @SuppressLint("InvalidColorHexValue")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,29 +64,10 @@ fun HotelDetailsScreen(
 
     val listReviewsResponse = viewModel.ListReviewsResponse.collectAsState().value
     var favoriteState by remember { mutableStateOf(false) }
-
+    var tengicungduoc: com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO? =
+        null
     val imageUrlList = hotelInfo!!.images.map { it.url }
 
-    when (HotelDetailsResponse) {/*is Result.Loading -> {
-            Log.d("List Hotel ", "dang load")
-
-            // Hieu ung load
-            Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator()
-
-            }
-        }*/
-
-        is Result.Error -> {
-            Log.d("HotelDetails ", "loi roi")
-        }
-
-        is Result.Success -> {
-            Log.d("HotelDetails", HotelDetailsResponse.data.data.description)
-        }
-
-        else -> Unit
-    }
 
     val imgURL =
         "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI="
@@ -143,134 +125,148 @@ fun HotelDetailsScreen(
         Column(
             modifier = Modifier.padding(innerPadding)
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 24.dp, start = 24.dp, end = 24.dp),
-            ) {
-                item {
-                    Box(
-                        contentAlignment = Alignment.TopEnd,
-                    ) {
-                        AsyncImage(
-                            model = hotelInfo!!.logo.url,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(246.dp)
-                                .clip(RoundedCornerShape(8.dp)),
-                            contentScale = ContentScale.Crop,
-                        )
-                        IconButton(modifier = Modifier
-                            .padding(8.dp)
-                            .offset(x = (-8).dp, y = 8.dp)
-                            .width(32.dp)
-                            .height(32.dp)
-                            .background(
-                                color = Color.White, shape = RoundedCornerShape(50.dp)
-                            ), onClick = { favoriteState = !favoriteState }, content = {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(
-                                    id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
-                                ),
-                                contentDescription = "Favorite Icon",
-                                tint = if (favoriteState) Color.Red else Color.Gray
-                            )
-                        })
-                    }
+            when (HotelDetailsResponse) {
 
-                    YSpacer(height = 16)
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        BoldText(text = hotelInfo!!.name)
-                        HotelServiceTag(
-                            DrawableId = R.drawable.star,
-                            alt = "rating",
-                            text = "${hotelInfo.star}.0",
-                            iconColor = Color(0xffffe234),
-                        )
-                    }
-                    YSpacer(height = 8)
-                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.location),
-                            contentDescription = "Location",
-                            contentScale = ContentScale.Crop
-                        )
-                        XSpacer(width = 10)
-                        GreyText(text = "${hotelInfo!!.district.name}, ${hotelInfo.province.name}")
-                    }
-                    YSpacer(height = 16)
-                    BoldText(text = "Mô Tả Khách Sạn")
-                    YSpacer(height = 12)
-                    ExpandingText(
-                        longText = "Palace Hotel Saigon là khách sạn sở hữu đầy đủ tiện nghi và dịch vụ xuất sắc theo nhận định của hầu hết khách lưu trú. Hãy sẵn sàng đón nhận những giây phút vô giá khó phai trong suốt kỳ nghỉ của quý khách tại Palace Hotel Saigon."
-                    )
-                    YSpacer(height = 16)
-                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
-                    YSpacer(height = 8)
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                is Result.Error -> {
+                    Log.d("HotelDetails ", "loi roi")
+                }
+
+                is Result.Success -> {
+                    tengicungduoc = HotelDetailsResponse.data
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 24.dp, start = 24.dp, end = 24.dp),
                     ) {
-                        BoldText(text = "Đánh Giá")
-                        PrimaryText(
-                            text = "Xem tất cả",
-                            modifier = Modifier.clickable { navController.navigate(Screens.ListReviews.name) })
-                    }
-                    YSpacer(height = 12)
-                    /*HotelDetailFeedback(
-                        text = "The Aston Vill Hotel is a 5-star hotel located in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.",
-                        author = "John Doe"
-                    )*/
-                    YSpacer(height = 16)
-                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
-                    YSpacer(height = 8)
-                    BoldText(text = "Hình Ảnh Xem Trước")
-                    YSpacer(height = 8)
-                    LazyRow(modifier = Modifier.fillMaxWidth()) {
                         item {
-                            imageUrlList.forEachIndexed { index, imageDTO ->
-                                /*RoomDetailCard(roomDTO = rooms[index], navController = navController)
-                                if (index < rooms.lastIndex) {
-                                    Spacer(modifier = Modifier.height(15.dp))
-                                }*/
+                            Box(
+                                contentAlignment = Alignment.TopEnd,
+                            ) {
                                 AsyncImage(
-                                    model = imageDTO,
+                                    model = hotelInfo!!.logo.url,
                                     contentDescription = null,
                                     modifier = Modifier
-                                        .width(98.dp)
-                                        .height(82.dp)
+                                        .fillMaxWidth()
+                                        .height(246.dp)
                                         .clip(RoundedCornerShape(8.dp)),
                                     contentScale = ContentScale.Crop,
                                 )
-                                XSpacer(width = 16)
+                                IconButton(modifier = Modifier
+                                    .padding(8.dp)
+                                    .offset(x = (-8).dp, y = 8.dp)
+                                    .width(32.dp)
+                                    .height(32.dp)
+                                    .background(
+                                        color = Color.White, shape = RoundedCornerShape(50.dp)
+                                    ), onClick = { favoriteState = !favoriteState }, content = {
+                                    Icon(
+                                        imageVector = ImageVector.vectorResource(
+                                            id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                                        ),
+                                        contentDescription = "Favorite Icon",
+                                        tint = if (favoriteState) Color.Red else Color.Gray
+                                    )
+                                })
+                            }
+
+                            YSpacer(height = 16)
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                BoldText(text = hotelInfo!!.name)
+                                HotelServiceTag(
+                                    DrawableId = R.drawable.star,
+                                    alt = "rating",
+                                    text = "${hotelInfo.star}.0",
+                                    iconColor = Color(0xffffe234),
+                                )
+                            }
+                            YSpacer(height = 8)
+                            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.location),
+                                    contentDescription = "Location",
+                                    contentScale = ContentScale.Crop
+                                )
+                                XSpacer(width = 10)
+                                GreyText(text = "${hotelInfo!!.district.fullName}, ${hotelInfo.province.fullName}")
+                            }
+                            YSpacer(height = 16)
+                            BoldText(text = "Mô Tả Khách Sạn")
+                            YSpacer(height = 12)
+                            ExpandingText(
+                                longText = HotelDetailsResponse.data.data.description
+
+                            )
+                            YSpacer(height = 16)
+                            HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                            YSpacer(height = 8)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                            ) {
+                                BoldText(text = "Đánh Giá")
+                                PrimaryText(
+                                    text = "Xem tất cả",
+                                    modifier = Modifier.clickable { navController.navigate(Screens.ListReviews.name) })
+                            }
+                            YSpacer(height = 12)
+                            /*HotelDetailFeedback(
+                                text = "The Aston Vill Hotel is a 5-star hotel located in the heart of the city. The hotel is a 5-minute walk from the city center and a 10-minute walk from the beach. The hotel offers a variety of amenities, including a spa, fitness center, and swimming pool. The hotel also has a restaurant and bar, where guests can enjoy a variety of dishes and drinks.",
+                                author = "John Doe"
+                            )*/
+                            YSpacer(height = 16)
+                            HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                            YSpacer(height = 8)
+                            BoldText(text = "Hình Ảnh Xem Trước")
+                            YSpacer(height = 8)
+                            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                                item {
+                                    imageUrlList.forEachIndexed { index, imageDTO ->
+                                        AsyncImage(
+                                            model = imageDTO,
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .width(98.dp)
+                                                .height(82.dp)
+                                                .clip(RoundedCornerShape(8.dp)),
+                                            contentScale = ContentScale.Crop,
+                                        )
+                                        XSpacer(width = 16)
+
+                                    }
+                                }
 
                             }
-                        }
+                            YSpacer(height = 16)
+                            HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                            YSpacer(height = 8)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                            ) {
+                                BoldText(text = "Chính Sách Lưu Trú")
+                                PrimaryText(
+                                    text = "Xem tất cả",
+                                    modifier = Modifier.clickable {
+                                        navController.navigate("${Screens.ListPolicies.name}/${Gson().toJson(tengicungduoc)}")
+                                    })
+                            }
+                            YSpacer(height = 8)
+                            HotelDetailPolicyCard(
+                                icon = R.drawable.baseline_access_time_24,
+                                text = "Giờ nhận phòng/trả phòng",
+                                description = "Nhận phòng: ${HotelDetailsResponse.data.data.checkInTime} - Trả phòng: ${HotelDetailsResponse.data.data.checkOutTime}"
+                            )
+                            YSpacer(height = 10)
 
+                        }
                     }
-                    YSpacer(height = 16)
-                    HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
-                    YSpacer(height = 8)
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        BoldText(text = "Chính Sách Lưu Trú")
-                        PrimaryText(
-                            text = "Xem tất cả",
-                            modifier = Modifier.clickable { navController.navigate(Screens.ListPolicies.name) })
-                    }
-                    YSpacer(height = 8)
-                    HotelDetailPolicyCard(
-                        icon = R.drawable.baseline_access_time_24,
-                        text = "Giờ nhận phòng/trả phòng",
-                        description = "Nhận phòng: 14:00 - Trả phòng: 12:00"
-                    )
-                    YSpacer(height = 10)
 
                 }
+
+                else -> Unit
             }
+
         }
     }
 }

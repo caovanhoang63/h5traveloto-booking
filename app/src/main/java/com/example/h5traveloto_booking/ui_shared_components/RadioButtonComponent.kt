@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 fun RadioButtonComponent(
     radioOptions: List<String>,
     onOptionSelected: (String) -> Unit,
-    selectedOptionPara: String
+    selectedOptionPara: String,
+    onClick:()->Unit,
 ) {
     val (selectedOption, onOptionChangedInternal) = remember { mutableStateOf(selectedOptionPara) }
     Column {
@@ -29,7 +30,8 @@ fun RadioButtonComponent(
                         selected = (text == selectedOption),
                         onClick = {
                             onOptionChangedInternal(text)
-                            onOptionSelected(text) // Gọi hàm callback
+                            onOptionSelected(text)
+                            onClick()// Gọi hàm callback
                         }
                     )
                     .padding(horizontal = 16.dp),
@@ -39,7 +41,9 @@ fun RadioButtonComponent(
                     selected = (text == selectedOption),
                     onClick = {
                         onOptionChangedInternal(text)
-                        onOptionSelected(text) // Gọi hàm callback
+                        onOptionSelected(text)
+                        onClick()// Gọi hàm callback
+
                     }
                 )
                 Text(

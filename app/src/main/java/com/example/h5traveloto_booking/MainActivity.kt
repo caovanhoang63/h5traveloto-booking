@@ -37,11 +37,11 @@ class MainActivity @Inject constructor(
         super.onCreate(savedInstanceState)
         setContent {
             H5travelotobookingTheme {
-                /*window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 setupEvent(socketHandler1)
-                NavigationOnApp()*/
+                NavigationOnApp()
 
-                RoomDetailsScreen()
+//                RoomDetailsScreen()
                 //AppNavigation("LoginScreen")
             }
         }

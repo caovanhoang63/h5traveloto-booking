@@ -147,14 +147,17 @@ fun ListHotels(
                     onOptionSelected = { option ->
                         onOptionSelected(option)
                     },
-                    selectedOptionPara = selectedOption
+                    selectedOptionPara = selectedOption,
+                    onClick = {
+                        isSortSheetOpened = false;
+                        viewModel.sortHotelList(selectedOption)
+                    }
+
                 )
                 HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
                 PrimaryButton(
                     onClick = {
                         isSortSheetOpened = false;
-                        viewModel.sortHotelList(selectedOption)
-
                     },
                     text = "Đóng",
                     modifier = Modifier
