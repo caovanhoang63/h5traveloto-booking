@@ -16,6 +16,7 @@ import com.example.h5traveloto_booking.util.Result
 
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.google.android.gms.location.*
@@ -70,6 +71,10 @@ class HomeViewModel @Inject constructor(
                 .setMinUpdateIntervalMillis(3000)
                 .setMaxUpdateDelayMillis(100)
                 .build()
+
+            if(!LocationProvider.isLocationEnabled(context!!)) {
+                LocationProvider.createLocationRequest(context!!)
+            }
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, it, Looper.getMainLooper())
             Log.d("List Hotel Location", "Requesting location updates")
         }

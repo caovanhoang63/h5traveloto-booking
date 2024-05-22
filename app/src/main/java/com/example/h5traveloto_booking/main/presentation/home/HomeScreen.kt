@@ -62,13 +62,15 @@ fun HomeScreen(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         if (permissions.all { it.value }) {
-            if(LocationProvider.isLocationEnabled(context)) {
-                viewModel.initLocationProvider(context)
-                viewModel.startLocationUpdates()
-            }
-            else{
-                LocationProvider.createLocationRequest(context)
-            }
+//            if(LocationProvider.isLocationEnabled(context)) {
+//                viewModel.initLocationProvider(context)
+//                viewModel.startLocationUpdates()
+//            }
+//            else{
+//                LocationProvider.createLocationRequest(context)
+//            }
+            viewModel.initLocationProvider(context)
+            viewModel.startLocationUpdates()
         } else {
             Log.d("LocationProvider", "Permissions denied")
         }

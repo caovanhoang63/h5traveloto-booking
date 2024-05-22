@@ -62,19 +62,7 @@ fun HomeSearchScreen(
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
     var isShowDateRangePicker by remember { mutableStateOf(false) }
 
-    val permissions = arrayOf(
-        android.Manifest.permission.ACCESS_FINE_LOCATION,
-        android.Manifest.permission.ACCESS_COARSE_LOCATION
-    )
-    val launchMultiplePermissions = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (permissions.all { it.value }) {
-            LocationProvider.startLocationUpdates()
-        } else {
-            Log.d("LocationProvider", "Permissions denied")
-        }
-    }
+
 
     Scaffold (
         topBar = {
