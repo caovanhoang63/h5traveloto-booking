@@ -8,11 +8,13 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.QueryMap
 
 interface BookingApi {
     @GET("/v1/users/{userId}/bookings")
     suspend fun getListUserBooking (
-        @Path("userId") userId: String
+        @Path("userId") userId: String,
+        @QueryMap listUserBookingParams: Map<String,String>?
     ) : ListUserBookingDTO
 
     @POST("/v1/bookings/")

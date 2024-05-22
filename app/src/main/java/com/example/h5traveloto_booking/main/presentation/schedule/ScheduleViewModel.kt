@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.ListUserBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.ListUserBookingParams
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.ListUserBookingUseCase
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.ListUserBookingUseCases
 import com.example.h5traveloto_booking.share.UserShare
@@ -21,6 +22,10 @@ class ScheduleViewModel @Inject constructor(
     private val useCases: ListUserBookingUseCases,
     private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
+    val listUserBookingParams = ListUserBookingParams (
+        state = "expired",
+    )
+
     private val _UserBookingsResponse = MutableStateFlow<Result<ListUserBookingDTO>>(Result.Idle)
     val UserBookingsResponse = _UserBookingsResponse.asStateFlow()
 
@@ -33,7 +38,7 @@ class ScheduleViewModel @Inject constructor(
         val bearerToken = "Bearer $token"
 
         if (UserShare.User.id != null) {
-            useCases.getListUserBookingUseCase(UserShare.User.id.toString()).onStart {
+            useCases.getListUserBookingUseCase(UserShare.User.id.toString(), listUserBookingParams).onStart {
                 _UserBookingsResponse.value = Result.Loading
                 Log.d("Schedule ViewModel", "Loading")
             }.catch {
@@ -41,7 +46,7 @@ class ScheduleViewModel @Inject constructor(
                 Log.d("Schedule ViewModel", it.message.toString())
                 _UserBookingsResponse.value = Result.Error(it.message.toString())
             }.collect {
-                Log.d("Schedule ViewModel", "UserBookings Success")
+                Log.d("Schedule ViewModel", "UserBookings Success, has ${it.data.size} booking(s)")
                 _UserBookingsResponse.value = Result.Success(it)
             }
         } else {
