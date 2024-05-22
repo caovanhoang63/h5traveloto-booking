@@ -294,11 +294,6 @@ fun HomeScreen(
                         BoldText("Địa điểm nổi bật")
                         ClickableText("See all", {})
                     }
-//                    YSpacer(12)
-//                    HotelTagSmall()
-//                    YSpacer(12)
-//                    HotelTagSmall()
-//                    YSpacer(16)
                     when(listProminentHotel){
                         is Result.Idle -> {
 
