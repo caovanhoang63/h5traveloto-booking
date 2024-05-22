@@ -14,6 +14,7 @@ import com.example.h5traveloto_booking.util.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
 import javax.inject.Inject
 import kotlin.math.log
 
@@ -22,16 +23,25 @@ class ScheduleViewModel @Inject constructor(
     private val useCases: ListUserBookingUseCases,
     private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
-    val listUserBookingParams = ListUserBookingParams (
-        state = "expired",
-    )
-
     private val _UserBookingsResponse = MutableStateFlow<Result<ListUserBookingDTO>>(Result.Idle)
     val UserBookingsResponse = _UserBookingsResponse.asStateFlow()
 
     fun getUserBookings(
-
+        state: String? = null,
+        startDate: String? = null,
+        endDate: String? = null,
+        hotelId: String? = null,
+        payInHotel: Boolean? = null
     ) = viewModelScope.launch {
+        // Querying stuff
+        val listUserBookingParams = ListUserBookingParams (
+            state,
+            startDate,
+            endDate,
+            hotelId,
+            payInHotel
+        )
+
         val token = sharedPrefManager.getToken()
         Log.d("Schedule ViewModel", "Get token")
         Log.d("Schedule ViewModel Token", token.toString())

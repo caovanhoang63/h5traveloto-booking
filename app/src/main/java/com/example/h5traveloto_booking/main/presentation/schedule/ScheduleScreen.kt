@@ -109,7 +109,6 @@ fun ScheduleScreen (
     ) {
         composable(route = Screens.ScheduleCalendarScreen.name) {
             CalendarScreen(
-                bookingList = bookingList,
                 navController = scheduleNavController,
                 parentNavController = navController
             )

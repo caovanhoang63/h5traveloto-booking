@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.schedule
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
@@ -27,6 +29,7 @@ import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.ui_shared_components.DateRangePicker
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.MIN_DATE
+import com.example.h5traveloto_booking.util.Result
 import com.google.gson.Gson
 import io.wojciechosak.calendar.utils.today
 import kotlinx.coroutines.delay
@@ -37,12 +40,18 @@ import kotlinx.datetime.plus
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 public fun CalendarScreen (
-    bookingList: List<BookingDTO>,
     navController: NavController,
-    parentNavController: NavController
+    parentNavController: NavController,
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val list = List(3) {}
+
+
+    LaunchedEffect(Unit) {
+        viewModel.getUserBookings(state = "expired")
+    }
+    val listCalendarBookingResponse = viewModel.UserBookingsResponse.collectAsState().value
 
     val hotelInfo = shareDataHotelDetail.getHotelDetails()
 
@@ -84,7 +93,24 @@ public fun CalendarScreen (
                 ) {
 
                 }
-                BookingCalendar(bookingList = bookingList)
+                when(listCalendarBookingResponse) {
+                    is Result.Loading -> {
+                        Log.d("Schedule Screen", "Calendar is loading")
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            CircularProgressIndicator()
+
+                        }
+                    }
+                    is Result.Error -> {
+                        Log.d("Schedule Screen", "Calendar error")
+                    }
+                    is Result.Success -> {
+                        Log.d("Schedule Screen", "Calendar Success")
+                        var listCalendarBooking = listCalendarBookingResponse.data.data
+                        BookingCalendar(bookingList = listCalendarBooking)
+                    }
+                    else -> Unit
+                }
                 YSpacer(height = 5)
             }
             item {

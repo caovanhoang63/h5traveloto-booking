@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDayState
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.theme.SecondaryColor
@@ -39,6 +40,7 @@ import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.to
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarDay
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarView
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.HorizontalCalendarView
+import com.example.h5traveloto_booking.util.FromStringtoDate
 //import io.wojciechosak.calendar.animation.CalendarAnimator
 //import io.wojciechosak.calendar.config.CalendarConfig
 //import io.wojciechosak.calendar.config.DayState
@@ -54,7 +56,7 @@ import kotlinx.datetime.*
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 public fun BookingCalendar (
-    bookingList: List<BookingDTO>,
+    bookingList: List<UserBookingDTO>,
 ) {
     val startDate by remember { mutableStateOf(LocalDate.today()) }
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
@@ -68,24 +70,24 @@ public fun BookingCalendar (
 
     for (booking in bookingList) {
         // Note start date
-        if (mapBookingDayState[booking.start_date] == null)
+        if (mapBookingDayState[FromStringtoDate(booking.startDate)] == null)
         {
-            mapBookingDayState[booking.start_date] = BookingDayState(
-                date = booking.start_date,
+            mapBookingDayState[FromStringtoDate(booking.startDate)] = BookingDayState(
+                date = FromStringtoDate(booking.startDate),
                 is_StartDate = false,
                 is_MiddleDate = false,
                 is_EndDate = false,
                 is_FullDate = false
             )
         }
-        mapBookingDayState[booking.start_date]?.booking_id?.add(booking.id)
-        mapBookingDayState[booking.start_date]?.is_StartDate = true
+        mapBookingDayState[FromStringtoDate(booking.startDate)]?.booking_id?.add(booking.id)
+        mapBookingDayState[FromStringtoDate(booking.startDate)]?.is_StartDate = true
 
         // Note middle date
         for (
         date: LocalDate in
-        booking.start_date.plus(DatePeriod(days = 1))..
-                booking.end_date.minus(DatePeriod(days = 1))
+        FromStringtoDate(booking.startDate).plus(DatePeriod(days = 1))..
+                FromStringtoDate(booking.endDate).minus(DatePeriod(days = 1))
         ) {
             if (mapBookingDayState[date] == null)
             {
@@ -102,33 +104,33 @@ public fun BookingCalendar (
         }
 
         // Note end date
-        if (mapBookingDayState[booking.end_date] == null)
+        if (mapBookingDayState[FromStringtoDate(booking.endDate)] == null)
         {
-            mapBookingDayState[booking.end_date] = BookingDayState(
-                date = booking.end_date,
+            mapBookingDayState[FromStringtoDate(booking.endDate)] = BookingDayState(
+                date = FromStringtoDate(booking.endDate),
                 is_StartDate = false,
                 is_MiddleDate = false,
                 is_EndDate = false,
                 is_FullDate = false
             )
         }
-        mapBookingDayState[booking.end_date]?.booking_id?.add(booking.id)
-        mapBookingDayState[booking.end_date]?.is_EndDate = true;
+        mapBookingDayState[FromStringtoDate(booking.endDate)]?.booking_id?.add(booking.id)
+        mapBookingDayState[FromStringtoDate(booking.endDate)]?.is_EndDate = true;
 
         // Note full date
-        if (booking.start_date == booking.end_date) {
-            if (mapBookingDayState[booking.start_date] == null)
+        if (FromStringtoDate(booking.startDate) == FromStringtoDate(booking.endDate)) {
+            if (mapBookingDayState[FromStringtoDate(booking.startDate)] == null)
             {
-                mapBookingDayState[booking.start_date] = BookingDayState(
-                    date = booking.start_date,
+                mapBookingDayState[FromStringtoDate(booking.startDate)] = BookingDayState(
+                    date = FromStringtoDate(booking.startDate),
                     is_StartDate = false,
                     is_MiddleDate = false,
                     is_EndDate = false,
                     is_FullDate = false
                 )
             }
-            mapBookingDayState[booking.start_date]?.booking_id?.add(booking.id)
-            mapBookingDayState[booking.start_date]?.is_FullDate = true
+            mapBookingDayState[FromStringtoDate(booking.startDate)]?.booking_id?.add(booking.id)
+            mapBookingDayState[FromStringtoDate(booking.startDate)]?.is_FullDate = true
         }
     }
 
@@ -227,6 +229,7 @@ public fun BookingCalendar (
             verticalArrangement = Arrangement.spacedBy(0.dp),
 //            selectionMode = SelectionMode.Range,
             onDateSelected = {
+                Log.d("Booking Date", mapBookingDayState[it[0]].toString())
                 selectedDates.clear()
                 selectedDates.addAll(it)
             },
