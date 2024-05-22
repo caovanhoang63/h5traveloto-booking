@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.details.presentation.hoteldetails
 
+import android.app.Activity
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +28,7 @@ import com.example.h5traveloto_booking.details.presentation.data.`class`.HotelCl
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard2
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.StarFilter
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.Grey50Color
@@ -63,13 +65,29 @@ fun ListHotels(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         if (permissions.all { it.value }) {
-            viewModel.startLocationUpdates()
+            if(LocationProvider.isLocationEnabled(context)){
+                viewModel.startLocationUpdates()
+            }
+            else{
+                LocationProvider.createLocationRequest(context)
+            }
         } else {
             Log.d("LocationProvider", "Permissions denied")
         }
     }
 
+    val enableGpsLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.startLocationUpdates()
+        } else {
+            Log.d("LocationProvider", "GPS enabling denied")
+        }
+    }
+
     LaunchedEffect(Unit) {
+        LocationProvider.setGpsLauncher(enableGpsLauncher)
         viewModel.initLocationProvider(context)
         if (shareHotelDataViewModel.checkExistedData() && !shareHotelDataViewModel.getOnClickBooking()) {
             viewModel.setStateHotelSearchSuccess(shareHotelDataViewModel.getListHotel()!!)
@@ -79,7 +97,7 @@ fun ListHotels(
             }
         }
     }
-    val listHotelResponse = viewModel.ListHotelResponse.collectAsState().value
+
     val listHotelSearch = viewModel.ListHotelSearch.collectAsState().value
 
     if (isFilterSheetOpened) {
@@ -231,18 +249,21 @@ fun ListHotels(
                                 context,
                                 android.Manifest.permission.ACCESS_FINE_LOCATION
                             ) != android.content.pm.PackageManager.PERMISSION_GRANTED
-                            || ActivityCompat.checkSelfPermission(
+                            ||
+                            ActivityCompat.checkSelfPermission(
                                 context,
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION
                             ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                            ||
+                            !LocationProvider.isLocationEnabled(context)
                         ) {
                             ButtonRequestLocationPermission(onClick = {
+                                viewModel.initLocationProvider(context)
                                 launchMultiplePermissions.launch(permissions)
                             })
                         } else {
                             viewModel.initLocationProvider(context)
                             launchMultiplePermissions.launch(permissions)
-                            viewModel.setStateHotelSearchLoading()
                         }
                     } else {
                         viewModel.setStateHotelSearchLoading()

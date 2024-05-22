@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.home
 
+import android.app.Activity
 import android.content.Context.LOCATION_SERVICE
 import android.location.LocationManager
 import android.provider.Settings
@@ -44,6 +45,7 @@ import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.Result
+import kotlinx.coroutines.delay
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -58,15 +60,17 @@ fun HomeScreen(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION
     )
+
     val launchMultiplePermissions = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
+        Log.d("HomeScreen", "")
         if (permissions.all { it.value }) {
-            if(LocationProvider.isLocationEnabled(context)) {
-                viewModel.initLocationProvider(context)
+            if(LocationProvider.isLocationEnabled(context)){
                 viewModel.startLocationUpdates()
             }
             else{
+                Log.d("HomeScreen", "GPS not enabled ne ne")
                 LocationProvider.createLocationRequest(context)
             }
         } else {
@@ -74,15 +78,28 @@ fun HomeScreen(
         }
     }
 
+    val enableGpsLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.startLocationUpdates()
+        } else {
+            Log.d("LocationProvider", "GPS enabling denied")
+        }
+    }
+
     val listHotelSearch = viewModel.ListHotelSearch.collectAsState().value
+    val listProminentHotel = viewModel.ListProminentHotel.collectAsState().value
     val selectedItemIndex = rememberSaveable { mutableStateOf(0) }
 
     //
     LaunchedEffect(UInt) {
-        Log.d("HomeScreen", "LaunchedEffect")
+        LocationProvider.setGpsLauncher(enableGpsLauncher)
         shareHotelDataViewModel.setIsCurrentLocation(true)
         viewModel.getListDistricts()
+        viewModel.getProminentHotel()
         viewModel.initLocationProvider(context)
+        Log.d("HomeScreen", "LaunchedEffect")
     }
 
     val listDistrict = viewModel.listDistrict.collectAsState().value
@@ -214,6 +231,7 @@ fun HomeScreen(
                         if(shareHotelDataViewModel.isCurrentLocation()){
                             if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
                                 || ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                                || !LocationProvider.isLocationEnabled(context)
                             ){
                                 ButtonRequestLocationPermission(onClick = {
                                     launchMultiplePermissions.launch(permissions)
@@ -251,7 +269,7 @@ fun HomeScreen(
                                             navAppController.navigate(Screens.HotelDetailsScreen.name)
                                         })
                                     }
-                                    if(index >= 2){
+                                    if(index >= 3){
                                         return@LazyRow
                                     }
                                 }
@@ -261,6 +279,7 @@ fun HomeScreen(
                             }
                         }
                     }
+
                 }
 
 
@@ -275,11 +294,44 @@ fun HomeScreen(
                         BoldText("Địa điểm nổi bật")
                         ClickableText("See all", {})
                     }
-                    YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(16)
+//                    YSpacer(12)
+//                    HotelTagSmall()
+//                    YSpacer(12)
+//                    HotelTagSmall()
+//                    YSpacer(16)
+                    when(listProminentHotel){
+                        is Result.Idle -> {
+
+                        }
+                        is Result.Loading -> {
+                            Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                        is Result.Error -> {
+                            NotFoundHotel()
+                        }
+                        is Result.Success -> {
+                            val hotels = listProminentHotel.data.data
+                            LazyRow (modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)) {
+                                if(hotels!= null){
+                                    hotels.forEachIndexed { index, hotelDTO ->
+                                        item {
+                                            HotelTagLarge(hotelDTO, onClick = {
+                                                shareDataHotelDetail.setHotelDetails(hotelDTO)
+                                                shareDataHotelDetail.setHotelId(hotelDTO.id)
+                                                shareDataHotelDetail.LogData()
+                                                navAppController.navigate(Screens.HotelDetailsScreen.name)
+                                            })
+                                        }
+                                    }
+                                }
+                                else{
+                                    viewModel.setStateProminentHotelError()
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

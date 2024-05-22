@@ -9,7 +9,7 @@ data class SearchHotelDTO(
     @Json(name = "data")
     val `data`: List<Data>?,
     @Json(name = "filter")
-    val filter: Filter,
+    val filter: Filter?,
     @Json(name = "paging")
-    val paging: Paging
+    val paging: Paging?
 )

@@ -16,6 +16,7 @@ import com.example.h5traveloto_booking.util.Result
 
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.google.android.gms.location.*
@@ -35,14 +36,14 @@ class HomeViewModel @Inject constructor(
     private val sharedPrefManager: SharedPrefManager
 ) :ViewModel (){
     private var context: Context? = null
-    private val _listHotelDataResponse = MutableStateFlow<Result<ListHotelDTO>>(Result.Idle)
-    val listHotelDataResponse = _listHotelDataResponse.asStateFlow()
     private val _listDistrict = MutableStateFlow<Result<DistrictsDTO>>(Result.Idle)
     val listDistrict = _listDistrict.asStateFlow()
 
-    //
     private val _listHotelSearch = MutableStateFlow<Result<SearchHotelDTO>>(Result.Idle)
     val ListHotelSearch = _listHotelSearch.asStateFlow()
+
+    private val _listProminentHotel = MutableStateFlow<Result<SearchHotelDTO>>(Result.Idle)
+    val ListProminentHotel = _listProminentHotel.asStateFlow()
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val locationCallback: LocationCallback = object : LocationCallback() {
@@ -61,7 +62,6 @@ class HomeViewModel @Inject constructor(
     @SuppressLint("MissingPermission")
     public fun startLocationUpdates() {
 
-        setStateHotelSearchLoading()
         locationCallback?.let {
             val locationRequest = LocationRequest.Builder(
                 Priority.PRIORITY_HIGH_ACCURACY, 100
@@ -70,6 +70,8 @@ class HomeViewModel @Inject constructor(
                 .setMinUpdateIntervalMillis(3000)
                 .setMaxUpdateDelayMillis(100)
                 .build()
+
+            setStateHotelSearchLoading()
             fusedLocationProviderClient.requestLocationUpdates(locationRequest, it, Looper.getMainLooper())
             Log.d("List Hotel Location", "Requesting location updates")
         }
@@ -83,35 +85,6 @@ class HomeViewModel @Inject constructor(
     }
     public fun stopLocationUpdates() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-    }
-    //
-
-    fun getListHotel(
-
-    ) = viewModelScope.launch {
-        val token = sharedPrefManager.getToken()
-        Log.d("Home ViewModel", "Get token")
-        Log.d("Home ViewModel Token", token.toString())
-        val bearerToken = "Bearer $token"
-        useCases.listHotelUseCase(bearerToken).onStart {
-            _listHotelDataResponse.value = Result.Loading
-            Log.d("Home ViewModel", "Loading")
-
-        }.catch {
-            Log.d("Home ViewModel", "catch")
-            Log.d("Home ViewModel E", it.message.toString() )
-       //     _listHotelDataResponse.value = Result.Error(it)
-            _listHotelDataResponse.value = Result.Error(it.message.toString())
-        }.collect{
-
-            Log.d("Success","Ok")
-            Log.d("Success",it.data.size.toString())
-            if (it == null ){
-                Log.d("Success","NULL")
-            }
-//            Log.d("Success",it.paging.total.toString())
-            _listHotelDataResponse.value = Result.Success(it)
-        }
     }
 
     suspend fun getListDistricts() {
@@ -147,6 +120,21 @@ class HomeViewModel @Inject constructor(
             _listHotelSearch.value = Result.Success(it)
         }
     }
+
+    fun getProminentHotel() = viewModelScope.launch {
+        useCaseLocations.getProminentHotelUseCase(10).onStart {
+            Log.d("Home ViewModel Prominent", "Loading")
+            _listProminentHotel.value = Result.Loading
+        }.catch {
+            Log.d("Home ViewModel Prominent", it.message.toString())
+            _listProminentHotel.value = Result.Error(it.message.toString())
+        }.collect {
+            Log.d("Home ViewModel Prominent", "Success")
+            Log.d("Home ViewModel Prominent", it.toString())
+            _listProminentHotel.value = Result.Success(it)
+        }
+    }
+
     fun setStateHotelSearchLoading(){
         _listHotelSearch.value = Result.Loading
     }
@@ -156,6 +144,17 @@ class HomeViewModel @Inject constructor(
     fun setStateHotelSearchIdle(){
         _listHotelSearch.value = Result.Idle
     }
+
+    fun setStateProminentHotelLoading(){
+        _listProminentHotel.value = Result.Loading
+    }
+    fun setStateProminentHotelError(){
+        _listProminentHotel.value = Result.Error("Error")
+    }
+    fun setStateProminentHotelIdle(){
+        _listProminentHotel.value = Result.Idle
+    }
+
     fun checkData(): Boolean{
         if(_listHotelSearch.value is Result.Success){
             return (_listHotelSearch.value as Result.Success).data.data?.size != 0

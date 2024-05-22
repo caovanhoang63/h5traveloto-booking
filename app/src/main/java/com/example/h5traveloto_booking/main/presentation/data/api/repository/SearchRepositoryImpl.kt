@@ -39,4 +39,10 @@ class SearchRepositoryImpl @Inject constructor(
             api.searchRoomTypes(params.toMap())
         }
     }
+
+    override suspend fun searchProminentHotels(limit: Int): SearchHotelDTO {
+        return withContext(Dispatchers.Default) {
+            api.searchProminentHotels(limit)
+        }
+    }
 }

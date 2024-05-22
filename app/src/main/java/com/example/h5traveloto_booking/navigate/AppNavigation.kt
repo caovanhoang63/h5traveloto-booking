@@ -39,7 +39,6 @@ import com.google.gson.Gson
 fun AppNavigation(startDestination : String ) {
 
     val navController = rememberNavController()
-    LocationProvider.initLocationProvider(LocalContext.current)
 
     NavHost (
         navController = navController,

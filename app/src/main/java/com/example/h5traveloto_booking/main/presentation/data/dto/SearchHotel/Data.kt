@@ -11,7 +11,7 @@ data class Data(
     @Json(name = "created_at")
     val createdAt: String,
     @Json(name = "display_price")
-    val displayPrice: Int,
+    val displayPrice: Int?,
     @Json(name = "district")
     val district: District,
     @Json(name = "hotel_type")
