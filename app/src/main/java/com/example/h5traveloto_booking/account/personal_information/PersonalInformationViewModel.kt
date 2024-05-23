@@ -64,7 +64,10 @@ class PersonalInformationViewModel @Inject constructor(
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
             UserShare.User.id = it.data.id
-        }
+            UserShare.User.lastName = it.data.lastName
+            UserShare.User.firstName = it.data.firstName
+            UserShare.User.phone = it.data.phone
+            UserShare.User.email = it.data.email        }
     }
 
     fun uploadProfile(file: File, folder: String)= viewModelScope.launch {

@@ -6,11 +6,13 @@ import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.h5traveloto_booking.account.AboutUsScreen.AboutUsScreen
 import com.example.h5traveloto_booking.account.ChangePassword.ChangePasswordScreen
 import com.example.h5traveloto_booking.auth.presentation.login.LoginScreen
 import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
@@ -22,6 +24,9 @@ import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.chat.presentation.components.AllChatCard
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreen
+import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreenViewModel
+import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingDetailsFillingScreen
+import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingReviewScreen
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
@@ -41,11 +46,18 @@ import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollecti
 import com.example.h5traveloto_booking.main.presentation.favorite.UpdateCollectionScreen.UpdateCollectionScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
+import com.example.h5traveloto_booking.payment.PaymentFailed.PaymentFailedScreen
+import com.example.h5traveloto_booking.payment.PaymentSuccess.PaymentSuccessScreen
+import com.example.h5traveloto_booking.share.TxnShare
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.google.gson.Gson
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
-fun AppNavigation(startDestination : String ) {
+fun AppNavigation(startDestination : String ,
+                    paymentViewModel :BookingScreenViewModel = hiltViewModel()
+) {
 
     val navController = rememberNavController()
 //    LocationProvider.initLocationProvider(LocalContext.current)
@@ -140,13 +152,26 @@ fun AppNavigation(startDestination : String ) {
                     collection = Collection)
             }
         }
-        composable(route = "${Screens.BookingScreen.name}/{bookingData}") { backstabEntry ->
+        composable(route = "${Screens.BookingDetailsFillingScreen.name}/{bookingData}") { backstabEntry ->
             val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), CreateBookingDTO::class.java)
-            BookingScreen(navController = navController, bookingData = bookingData)
+            BookingDetailsFillingScreen(navController = navController, bookingData = bookingData)
+        }
+        composable(route = "${Screens.BookingDetailsReviewScreen.name}/{bookingData}") { backstabEntry ->
+            val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), CreateBookingDTO::class.java)
+            BookingReviewScreen(navController = navController, bookingData = bookingData)
         }
         composable(route = "${Screens.BookingDetailsScreen.name}/{bookingData}") { backstabEntry ->
             val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), UserBookingDTO::class.java)
             BookingDetailsScreen(navController = navController, userBookingData = bookingData)
+        }
+        composable(Screens.PaymentSuccessScreen.name){
+            PaymentSuccessScreen(navController = navController)
+        }
+        composable(Screens.PaymentFailedScreen.name){
+            PaymentFailedScreen(navController = navController)
+        }
+        composable(Screens.AboutUsScreen.name){
+            AboutUsScreen(navController = navController)
         }
         composable("webview/{url}"){
                 backStackEntry ->
@@ -158,15 +183,28 @@ fun AppNavigation(startDestination : String ) {
                 when (paymentResult) {
                     "SuccessBackAction" -> {
                         // Xử lý khi thanh toán thành công
-                        navController.navigateUp()
+                        navController.navigate(Screens.PaymentSuccessScreen.name)
                         //navController.popBackStack()
                     }
                     "FaildBackAction" -> {
                         // Xử lý khi thanh toán thất bại
                         Log.d("URL","hehe")
+                        navController.navigate(Screens.PaymentFailedScreen.name)
                         //navController.navigate(Screens.AccountScreen.name)
                         //  navController.navigateUp()
-                        navController.popBackStack()
+                        val bookingData = CreateBookingDTO(
+                            hotelId = shareDataHotelDetail.getHotelId(),
+                            roomTypeId = shareDataHotelDetail.getRoomTypeId(),
+                            roomQuantity = shareDataHotelDetail.getRoomQuantity(),
+                            adults = shareDataHotelDetail.getAdults(),
+                            children = shareDataHotelDetail.getChildren(),
+                            startDate = shareDataHotelDetail.getStartDateString(),
+                            endDate = shareDataHotelDetail.getEndDateString()
+                        )
+                      //  navController.popBackStack(route = "${Screens.BookingDetailsReviewScreen.name}/${Gson().toJson(bookingData)}",
+                      //      inclusive = true)
+                      //  navController.navigate("${Screens.BookingDetailsReviewScreen.name}/${Gson().toJson(bookingData)}")
+                      //  paymentViewModel.cancelPayment(txnId = TxnShare.TxnID)
                         // navController.navigate(Screens.AccountScreen.name)
                     }
                     "WebBackAction" -> {
@@ -175,7 +213,7 @@ fun AppNavigation(startDestination : String ) {
                     }
                 }
             }
-            WebViewScreen3(url = url, scheme = "resultactivity",onPaymentResult = onPaymentResult)
+            WebViewScreen3(url = url, scheme = "resultactivity",onPaymentResult = onPaymentResult, navController = navController)
         }
 
         composable(route ="${Screens.RoomDetailsScreen.name}/{Object}" ) {

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.h5traveloto_booking.auth.domain.models.User
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.AccountUseCases
 import com.example.h5traveloto_booking.navigate.Screens
@@ -59,7 +60,10 @@ class AccountViewModel @Inject constructor(
 //            Log.d("Success",it.paging.total.toString())
             _profileDataResponse.value = Result.Success(it)
             UserShare.User.id = it.data.id
-
+            UserShare.User.lastName = it.data.lastName
+            UserShare.User.firstName = it.data.firstName
+            UserShare.User.phone = it.data.phone
+            UserShare.User.email = it.data.email
         }
     }
 

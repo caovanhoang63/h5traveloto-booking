@@ -44,4 +44,7 @@ enum class Screens {
     RoomDetailsScreen,
     AllChatCard,
     AllChatScreen,
+    PaymentSuccessScreen,
+    PaymentFailedScreen,
+    AboutUsScreen,
 }

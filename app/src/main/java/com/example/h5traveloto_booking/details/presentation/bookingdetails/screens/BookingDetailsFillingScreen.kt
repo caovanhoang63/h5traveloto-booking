@@ -26,11 +26,11 @@ import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.google.gson.Gson
 
 @Composable
 fun BookingDetailsFillingScreen(
     navController: NavController,
-    parentNavController: NavController,
     bookingData: CreateBookingDTO
 ) {
     Scaffold(
@@ -47,7 +47,7 @@ fun BookingDetailsFillingScreen(
                 ) {
                     PrimaryIconButton(
                         DrawableId = R.drawable.backbutton,
-                        onClick = { parentNavController.popBackStack() },
+                        onClick = { navController.popBackStack() },
                         alt = ""
                     )
                 }
@@ -64,7 +64,7 @@ fun BookingDetailsFillingScreen(
         },
         bottomBar = {
             Button(
-                onClick = { navController.navigate(Screens.BookingDetailsReviewScreen.name) },
+                onClick = { navController.navigate("${ Screens.BookingDetailsReviewScreen.name }/${Gson().toJson(bookingData)}" )},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(65.dp)

@@ -28,3 +28,11 @@ data class user(
 )
 @Singleton
 val UserShare = UserViewModel()
+
+
+class TXNViewModel:ViewModel(){
+    var TxnID :String = ""
+}
+
+@Singleton
+val TxnShare = TXNViewModel()

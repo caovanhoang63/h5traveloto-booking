@@ -43,6 +43,7 @@ fun RoomDetailsScreen(
     viewModel: RoomDetailsScreenViewModel = hiltViewModel(),
     Object: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data,
 ) {
+
     val bookingData = CreateBookingDTO(
         hotelId = shareDataHotelDetail.getHotelId(),
         roomTypeId = shareDataHotelDetail.getRoomTypeId(),
@@ -116,7 +117,7 @@ fun RoomDetailsScreen(
                 PrimaryButton(
                     onClick = {
 
-                        navController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
+                        navController.navigate("${Screens.BookingDetailsFillingScreen.name}/${Gson().toJson(bookingData)}")
                     },
                     text = "Đặt Phòng",
                     modifier = Modifier
