@@ -28,6 +28,7 @@ import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.util.FromStringtoDate
 import com.google.gson.Gson
 
 @Composable
@@ -36,6 +37,21 @@ public fun BookingCard(
     bookingData: UserBookingDTO,
     navController: NavController
 ) {
+    val months = listOf(
+        "Thg 1",
+        "Thg 2",
+        "Thg 3",
+        "Thg 4",
+        "Thg 5",
+        "Thg 3",
+        "Thg 7",
+        "Thg 8",
+        "Thg 9",
+        "Thg 10",
+        "Thg 11",
+        "Thg 12",
+    )
+
     Card (
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color,
@@ -60,10 +76,10 @@ public fun BookingCard(
         ){
             AsyncImage(
                 modifier = Modifier
-                    .width(90.dp)
-                    .height(90.dp)
+                    .width(80.dp)
+                    .height(80.dp)
                     .clip(shape = RoundedCornerShape(4.dp)),
-                model = if (bookingData.hotel.image != null && bookingData.hotel.image.size > 0) bookingData.hotel.image[0].url else com.example.h5traveloto_booking.R.drawable.default_img,
+                model = if (bookingData.hotel.logo != null) bookingData.hotel.logo.url else com.example.h5traveloto_booking.R.drawable.default_img,
                 contentDescription = "Cover Image",
                 contentScale = ContentScale.Crop
             )
@@ -75,39 +91,39 @@ public fun BookingCard(
                 Row {
                     Text(
                         modifier = Modifier.
-                            fillMaxWidth(0.5f),
-                        text = "Asteria Hotel",
+                            fillMaxWidth(),
+                        text = bookingData.hotel.name,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        Text(
-                            text = "$" + 164,
-                            color = PrimaryColor,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-                        Text(
-                            text = " /đêm",
-                            color = Grey500Color,
-                            fontSize = 12.sp,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-                    }
+//                    Row (
+//                        modifier = Modifier
+//                            .fillMaxWidth(),
+//                        horizontalArrangement = Arrangement.End
+//                    ) {
+//                        Text(
+//                            text = "${bookingData.finalAmount} VND",
+//                            color = PrimaryColor,
+//                            fontSize = 13.sp,
+//                            fontWeight = FontWeight.Bold,
+//                            overflow = TextOverflow.Ellipsis,
+//                            maxLines = 1
+//                        )
+//                        Text(
+//                            text = " /đêm",
+//                            color = Grey500Color,
+//                            fontSize = 12.sp,
+//                            overflow = TextOverflow.Ellipsis,
+//                            maxLines = 1
+//                        )
+//                    }
                 }
                 YSpacer(height = 5)
                 Row {
                     Text(
-                        text = "Wilora NT 0872, Australia",
+                        text = "${bookingData.hotel.ward.fullName}, ${bookingData.hotel.province.fullName}",
                         fontSize = 12.sp,
                         color = Grey500Color,
                         overflow = TextOverflow.Ellipsis,
@@ -117,7 +133,13 @@ public fun BookingCard(
                 YSpacer(height = 5)
                 Row {
                     Text(
-                        text = "19 October 2022",
+                        text = "${FromStringtoDate(bookingData.startDate).dayOfMonth} " +
+                                "Thg ${FromStringtoDate(bookingData.startDate).monthNumber} " +
+                                "${FromStringtoDate(bookingData.startDate).year} " +
+                                "- " +
+                                "${FromStringtoDate(bookingData.endDate).dayOfMonth} " +
+                                "Thg ${FromStringtoDate(bookingData.endDate).monthNumber} " +
+                                "${FromStringtoDate(bookingData.endDate).year}",
                         color = Grey500Color,
                         fontSize = 12.sp,
                         modifier = Modifier

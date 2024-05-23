@@ -9,11 +9,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +31,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.Bookin
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
+import com.example.h5traveloto_booking.share.user
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
@@ -46,33 +47,81 @@ fun BookingDetailsScreen (
     shareDataHotelDetail.setHotelId(userBookingData.hotel.id)
     shareDataHotelDetail.setRoomTypeId(userBookingData.roomTypeId)
 //    val roomInfo = shareDataHotelDetail.getRoomDTO()
+    val state by remember {
+        mutableStateOf(userBookingData.state)
+    }
     Scaffold (
         topBar = {
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Column (
+                verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                Box(
+                Row (
                     modifier = Modifier
-                        .fillMaxWidth(0.2f)
+                        .fillMaxWidth()
+                        .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    PrimaryIconButton(
-                        DrawableId = R.drawable.backbutton,
-                        onClick = { navController.popBackStack() },
-                        alt = ""
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(0.2f)
+                    ) {
+                        PrimaryIconButton(
+                            DrawableId = R.drawable.backbutton,
+                            onClick = { navController.popBackStack() },
+                            alt = ""
+                        )
+                    }
+                    Text(
+                        text = "Chi tiết đặt phòng",
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .fillMaxWidth(0.75f)
                     )
                 }
-                Text(
-                    text = "Chi tiết đặt phòng",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    modifier = Modifier
-                        .fillMaxWidth(0.75f)
-                )
-
+                Row (
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    when (state) {
+                        "pending" -> {
+                            Text(
+                                text = "đang đặt phòng",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        }
+                        "paid" -> {
+                            Text(
+                                text = "đã thanh toán",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        }
+                        "canceled" -> {
+                            Text(
+                                text = "đã hủy",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        }
+                        "check-out" -> {
+                            Text(
+                                text = "đã trả phòng",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        }
+                        "expired" -> {
+                            Text(
+                                text = "đã hết thời gian chờ",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        }
+                        else -> Unit
+                    }
+                }
             }
         },
         bottomBar = {
