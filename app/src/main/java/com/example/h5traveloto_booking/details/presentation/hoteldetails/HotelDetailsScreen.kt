@@ -161,6 +161,10 @@ fun HotelDetailsScreen(
                 is Result.Success -> {
                     tengicungduoc = HotelDetailsResponse.data
 
+                    shareDataHotelDetail.setCheckInTime(HotelDetailsResponse.data.data.checkInTime)
+                    shareDataHotelDetail.setCheckOutTime(HotelDetailsResponse.data.data.checkOutTime)
+
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()

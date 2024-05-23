@@ -49,7 +49,7 @@ public fun CalendarScreen (
 
 
     LaunchedEffect(Unit) {
-        viewModel.getUserBookings(state = "expired")
+        viewModel.getUserBookings(state = "paid")
     }
     val listCalendarBookingResponse = viewModel.UserBookingsResponse.collectAsState().value
     val listCalendarBooking = remember {

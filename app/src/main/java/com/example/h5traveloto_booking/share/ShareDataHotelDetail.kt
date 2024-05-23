@@ -21,6 +21,10 @@ class ShareDataHotelDetail {
     private var hotelName : String = "";
     private var roomTypeId:String="";
     private lateinit var roomDTO: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data
+    private var checkInTime: String = ""
+    private var checkOutTime: String = ""
+
+
 
     fun setRoomDTO(roomDTO: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data){
         this.roomDTO = roomDTO
@@ -124,6 +128,20 @@ class ShareDataHotelDetail {
 
     fun getEndDateString(): String{
         return setStartDateEndDate(endDate)
+    }
+
+    fun setCheckInTime(time: String) {
+        checkInTime = time
+    }
+    fun getCheckInTime(): String {
+        return checkInTime
+    }
+
+    fun setCheckOutTime(time: String) {
+        checkOutTime = time
+    }
+    fun getCheckOutTime(): String {
+        return checkOutTime
     }
 }
 

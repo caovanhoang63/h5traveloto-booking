@@ -29,6 +29,7 @@ import com.example.h5traveloto_booking.details.presentation.data.api.hotelDetail
 import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.ListRoomsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.*
 import com.example.h5traveloto_booking.details.presentation.data.api.reviews.ListReviewsApi
+import com.example.h5traveloto_booking.details.presentation.data.api.reviews.ReviewApi
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.domain.repository.*
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.*
@@ -411,6 +412,34 @@ object AppModule {
         )
     }
     //
+
+    //
+    @Provides
+    @Singleton
+    fun provideReviewApi(moshi: Moshi,okHttpClient: OkHttpClient): ReviewApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(ReviewApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewRepository(api: ReviewApi) : ReviewRepository {
+        return ReviewRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewUseCases(reviewRepository: ReviewRepository) : ReviewUseCases {
+        return ReviewUseCases(
+            getReviewUseCase = ReviewUseCase(reviewRepository)
+        )
+    }
+    //
+
+
     @Provides
     @Singleton
     fun provideListReviews(moshi: Moshi,okHttpClient: OkHttpClient) : ListReviewsApi {
@@ -500,7 +529,8 @@ object AppModule {
     @Singleton
     fun provideRoomFacilitiesDetailsUseCases(repository: RoomFacilitiesDetailsRepository): RoomFacilitiesDetailsUseCases {
         return RoomFacilitiesDetailsUseCases(
-             getRoomFacilitiesDetailsUseCase = RoomFacilitiesDetailsUseCase(repository)
+            getRoomFacilitiesDetailsUseCase = RoomFacilitiesDetailsUseCase(repository),
+            getRoomTypeByIdUseCase = GetRoomTypeByIdUseCase(repository)
         )
     }
     //
