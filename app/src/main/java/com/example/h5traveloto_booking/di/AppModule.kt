@@ -26,16 +26,11 @@ import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatRoo
 import com.example.h5traveloto_booking.details.presentation.data.api.RoomFacilitiesDetails.RoomFacilitiesDetailsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.hotelDetails.HotelDetailsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.ListRoomsApi
-import com.example.h5traveloto_booking.details.presentation.data.api.repository.HotelDetailsRepositoryImpl
-import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListReviewsRepositoryImpl
-import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListRoomsRepositoryImpl
-import com.example.h5traveloto_booking.details.presentation.data.api.repository.RoomFacilitiesDetailsRepositoryImpl
+import com.example.h5traveloto_booking.details.presentation.data.api.repository.*
 import com.example.h5traveloto_booking.details.presentation.data.api.reviews.ListReviewsApi
+import com.example.h5traveloto_booking.details.presentation.data.api.reviews.ReviewApi
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
-import com.example.h5traveloto_booking.details.presentation.domain.repository.HotelDetailsRepository
-import com.example.h5traveloto_booking.details.presentation.domain.repository.ListReviewsRepository
-import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
-import com.example.h5traveloto_booking.details.presentation.domain.repository.RoomFacilitiesDetailsRepository
+import com.example.h5traveloto_booking.details.presentation.domain.repository.*
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.*
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
@@ -411,6 +406,34 @@ object AppModule {
         )
     }
     //
+
+    //
+    @Provides
+    @Singleton
+    fun provideReviewApi(moshi: Moshi,okHttpClient: OkHttpClient): ReviewApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(ReviewApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewRepository(api: ReviewApi) : ReviewRepository {
+        return ReviewRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewUseCases(reviewRepository: ReviewRepository) : ReviewUseCases {
+        return ReviewUseCases(
+            getReviewUseCase = ReviewUseCase(reviewRepository)
+        )
+    }
+    //
+
+
     @Provides
     @Singleton
     fun provideListReviews(moshi: Moshi,okHttpClient: OkHttpClient) : ListReviewsApi {

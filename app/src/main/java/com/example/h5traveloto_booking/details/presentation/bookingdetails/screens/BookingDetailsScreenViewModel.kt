@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.domain.use_case.RegisterUsesCase
+import com.example.h5traveloto_booking.details.presentation.data.dto.reviews.CreateReviewDTO
 import com.example.h5traveloto_booking.details.presentation.data.dto.roomFacilitiesDetails.RoomFacilitiesDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.data.dto.roomtypebyid.RoomTypeByIdDTO
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.ReviewUseCase
+import com.example.h5traveloto_booking.details.presentation.domain.usecases.ReviewUseCases
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.RoomFacilitiesDetailsUseCases
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingResponse
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
@@ -29,7 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookingDetailsScreenViewModel @Inject constructor(
     private val bookingUsesCases: BookingUseCases,
-    private val searchUseCases: SearchUseCases,
+    private val reviewUseCases: ReviewUseCases,
     private val sharedPrefManager: SharedPrefManager,
     private val roomTypeUseCases: RoomFacilitiesDetailsUseCases
 ) : ViewModel() {
@@ -72,9 +75,11 @@ class BookingDetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun getRoomTypeById() = viewModelScope.launch {
+    fun getRoomTypeById(
+        roomTypeId: String
+    ) = viewModelScope.launch {
 
-        roomTypeUseCases.getRoomTypeByIdUseCase("3stY2v2wYdkY7g").onStart {
+        roomTypeUseCases.getRoomTypeByIdUseCase(roomTypeId).onStart {
             _roomType.value = Result.Loading
         }.catch {
             if(it is HttpException){
@@ -95,8 +100,10 @@ class BookingDetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun getRoomTypeFacility() = viewModelScope.launch {
-        roomTypeUseCases.getRoomFacilitiesDetailsUseCase("3stY2v2wYdkY7g").onStart {
+    fun getRoomTypeFacility(
+        roomTypeId: String
+    ) = viewModelScope.launch {
+        roomTypeUseCases.getRoomFacilitiesDetailsUseCase(roomTypeId).onStart {
             _roomTypeFacility.value = Result.Loading
         }.catch {
             if(it is HttpException){
@@ -114,6 +121,18 @@ class BookingDetailsScreenViewModel @Inject constructor(
             Log.d("BookingDetails ViewModel", "RoomTypeFacility Success")
             Log.d("BookingDetails ViewModel", it.toString())
             _roomTypeFacility.value = Result.Success(it)
+        }
+    }
+
+    fun createReview(
+        data: CreateReviewDTO
+    ) = viewModelScope.launch {
+        reviewUseCases.getReviewUseCase(data).onStart {
+
+        }.catch {
+
+        }.collect {
+
         }
     }
 }

@@ -2,13 +2,15 @@ package com.example.h5traveloto_booking.details.presentation.bookingdetails
 
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text2.input.rememberTextFieldState
 import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,9 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -27,6 +31,7 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.components.ObjectAndPrice
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingDetailsScreenViewModel
+import com.example.h5traveloto_booking.details.presentation.data.dto.reviews.CreateReviewDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.share.UserShare
@@ -43,13 +48,340 @@ import kotlinx.datetime.plus
 fun BookingDetailsScreen (
     userBookingData: UserBookingDTO,
     navController: NavController,
+    viewModel: BookingDetailsScreenViewModel = hiltViewModel()
 ) {
     shareDataHotelDetail.setHotelId(userBookingData.hotel.id)
-    shareDataHotelDetail.setRoomTypeId(userBookingData.roomTypeId)
-//    val roomInfo = shareDataHotelDetail.getRoomDTO()
+
+
     val state by remember {
         mutableStateOf(userBookingData.state)
     }
+    val showRateDialog = remember {
+        mutableStateOf(false)
+    }
+    var rateText by remember {
+        mutableStateOf(TextFieldValue(""))
+    }
+    val score = remember {
+        mutableStateOf(0)
+    }
+    val showSuccessDialog = remember {
+        mutableStateOf(false)
+    }
+
+    if (showSuccessDialog.value) {
+        Dialog(
+            onDismissRequest = {
+                showSuccessDialog.value = false
+            }
+        ) {
+            Card (
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                )
+            ) {
+                Column (
+                    modifier = Modifier
+                        .padding(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.onlylogo),
+                        contentDescription = "",
+                        tint = PrimaryColor,
+                        modifier = Modifier
+                            .size(30.dp)
+                    )
+                    YSpacer(10)
+                    Text(
+                        text = "Đánh giá của bạn đã được ghi nhận!",
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
+        }
+    }
+
+    if (showRateDialog.value) {
+        Dialog(
+            onDismissRequest = {
+                showRateDialog.value = false
+            }
+        ) {
+            Card (
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                )
+            ) {
+                Column (
+                    modifier = Modifier
+                        .padding(12.dp)
+                ) {
+                    Text(
+                        text = "Đánh giá",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    YSpacer(10)
+                    OutlinedTextField(
+                        value = rateText,
+                        onValueChange = {
+                            rateText = it
+                        },
+                        label = {
+                            Text(
+                                text = "Bình luận",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        },
+                        placeholder = {
+                            Text(
+                                text = "Trải nghiệm của bạn....",
+                                fontSize = 14.sp,
+                                color = Color.Black
+                            )
+                        },
+                        minLines = 4,
+                        maxLines = 6,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    YSpacer(10)
+                    Row {
+                        Text(
+                            text = "Trên thang điểm 10, độ hài lòng của bạn là: ${score.value}",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .fillMaxWidth(0.4f)
+                        )
+                        Column (
+                            horizontalAlignment = Alignment.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Row (
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 1) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 1) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 1
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 2) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 2) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 2
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 3) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 3) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 3
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 4) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 4) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 4
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 5) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 5) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 5
+                                            }
+                                        )
+                                )
+                            }
+                            YSpacer(5)
+                            Row (
+                                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 6) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 6) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 6
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 7) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 7) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 7
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 8) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 8) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 8
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 9) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 9) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 9
+                                            }
+                                        )
+                                )
+                                Icon(
+                                    painter = painterResource(
+                                        if (score.value >= 10) R.drawable.star
+                                        else R.drawable.baseline_star_outline_16
+                                    ),
+                                    tint = if (score.value >= 10) StarColor else Color.Black,
+                                    contentDescription = "" ,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clickable(
+                                            onClick = {
+                                                score.value = 10
+                                            }
+                                        )
+                                )
+                            }
+                        }
+                    }
+                    YSpacer(10)
+                    Row (
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = { showRateDialog.value = false },
+                            modifier = Modifier
+                                .height(65.dp)
+                                .width(150.dp)
+                                .padding(12.dp)
+                                .border(2.dp, BorderStroke, RoundedCornerShape(12.dp)),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(Color.Transparent)
+                        ) {
+                            Text(
+                                text = "Hủy",
+                                fontSize = 14.sp,
+                                color = PrimaryColor
+                            )
+                        }
+
+                        Button(
+                            onClick = {
+                                showRateDialog.value = false
+                                viewModel.createReview(
+                                    CreateReviewDTO(
+                                        hotelId = userBookingData.hotel.id,
+                                        roomTypeId = userBookingData.roomTypeId,
+                                        comment = rateText.text,
+                                        rate = score.value
+                                    )
+                                )
+                                showSuccessDialog.value = true
+                                      },
+                            modifier = Modifier
+                                .height(65.dp)
+                                .width(150.dp)
+                                .padding(12.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(OrangeColor)
+                        ) {
+                            Text(
+                                text = "Gửi",
+                                fontSize = 14.sp,
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
     Scaffold (
         topBar = {
             Column (
@@ -59,7 +391,8 @@ fun BookingDetailsScreen (
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     Box(
                         modifier = Modifier
@@ -125,7 +458,36 @@ fun BookingDetailsScreen (
             }
         },
         bottomBar = {
-
+            if (state == "check-out") {
+                Row {
+                    Text(
+                        text = "Chúc mừng bạn đã hoàn thành chuyến đi của mình, để lại một đánh giá để ghi lại trải nghệm của bạn",
+                        fontSize = 14.sp,
+                        color = SecondaryColor,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .padding(horizontal = 24.dp, vertical = 10.dp)
+                            .fillMaxWidth(0.6f),
+                    )
+                    Button(
+                        onClick = {
+                            showRateDialog.value = true
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp, vertical = 10.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(SecondaryColor)
+                    ) {
+                        Text(
+                            text = "Đánh giá ngay",
+                            fontSize = 14.sp,
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
         }
     ) { innerPadding ->
         LazyColumn (
