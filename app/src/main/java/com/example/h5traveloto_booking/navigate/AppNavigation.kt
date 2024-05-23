@@ -226,6 +226,9 @@ fun AppNavigation(startDestination : String ,
         composable(route = Screens.AllChatScreen.name ) {
             AllChatScreen(navController = navController)
         }
+        composable(route = Screens.ForgotPasswordScreen.name ) {
+            ForgotPasswordScreen(navController = navController)
+        }
 
     }
 }
