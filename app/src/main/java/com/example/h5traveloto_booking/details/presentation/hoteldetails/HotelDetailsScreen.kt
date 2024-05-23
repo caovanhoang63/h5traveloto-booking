@@ -34,6 +34,7 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.ListHotelsViewModel
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.*
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
+import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomFacilitiesList
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 
 import com.example.h5traveloto_booking.navigate.Screens
@@ -51,13 +52,16 @@ import com.google.gson.Gson
 @Composable
 fun HotelDetailsScreen(
     navController: NavController,
-    viewModel: HotelDetailsScreenViewModel = hiltViewModel()
+    viewModel: HotelDetailsScreenViewModel = hiltViewModel(),
+    hotelFacilitiesDetailsViewModel: HotelFacilitiesDetailsViewModel = hiltViewModel()
+
 ) {
     LaunchedEffect(Unit) {
+        hotelFacilitiesDetailsViewModel.getHotelFacilitiesDetails()
         viewModel.getHotelDetails()
         viewModel.getListReviews()
     }
-
+    val  listHotelFacilitiesDetails = hotelFacilitiesDetailsViewModel.hotelacilitiesDetailsResponse.collectAsState().value
     val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
 
     val hotelInfo = shareDataHotelDetail.getHotelDetails();
@@ -288,7 +292,29 @@ fun HotelDetailsScreen(
                                 text = "Giờ nhận phòng/trả phòng",
                                 description = "Nhận phòng: ${HotelDetailsResponse.data.data.checkInTime} - Trả phòng: ${HotelDetailsResponse.data.data.checkOutTime}"
                             )
-                            YSpacer(height = 10)
+                            YSpacer(height = 16)
+                            HorizontalDivider(color = Color.Black, thickness = 0.1.dp)
+                            YSpacer(height = 8)
+
+                            when(listHotelFacilitiesDetails){
+                                is Result.Success -> {
+                                    BoldText(text = "Tiện ích Khách Sạn")
+                                    RoomFacilitiesList(
+                                        items = listHotelFacilitiesDetails.data.data.map { data ->
+                                            data.nameVn
+                                        },
+                                        style = TextStyle(
+                                            color = Color.Black,
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Normal,
+                                        ),
+                                        lineSpacing = 8.dp,
+                                    )
+                                }
+                                else -> {}
+                            }
+
+
 
                         }
                     }

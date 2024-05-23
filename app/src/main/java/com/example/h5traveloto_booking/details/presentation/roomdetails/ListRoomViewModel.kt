@@ -32,12 +32,7 @@ class ListRoomViewModel @Inject constructor(
 ) : ViewModel() {
     private val _ListRoomsResponse = MutableStateFlow<Result<SearchRoomTypeDTO>>(Result.Idle)
     val ListRoomsResponse = _ListRoomsResponse.asStateFlow()
-    /*val listRoomTypeParams =
-        SearchRoomTypeParams(
-            startDate = "\"29-06-2024\"",
-            endDate = "\"30-06-2024\"",
-            hotelId = "\"${shareDataHotelDetail.getHotelId()}\""
-        )*/
+
     val listRoomTypeParams = SearchRoomTypeParams()
     fun setListRoomTypeParams(
         startDate: String,

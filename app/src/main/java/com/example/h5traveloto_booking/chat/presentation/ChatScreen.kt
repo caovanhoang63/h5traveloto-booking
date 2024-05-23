@@ -28,6 +28,10 @@ import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.ui_shared_components.BoldText2
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.util.Result
+import com.google.gson.Gson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import websocket.SocketHandler
 import websocket.socketHandler1
 
 @Composable
@@ -36,11 +40,30 @@ fun ChatScreen(
     viewModel: ChatListViewModel = hiltViewModel(),
     chatRoomviewModel: ChatRoomViewModel = hiltViewModel()
 ) {
+    var a by remember { mutableStateOf("") }
+
+// Khởi tạo Moshi và adapter
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory()) // Để hỗ trợ các tính năng của Kotlin
+        .build()
+
+    val jsonAdapter = moshi.adapter(com.example.h5traveloto_booking.chat.presentation.data.dto.Data::class.java)
+
+
+    var isCustomerRender by remember {
+        mutableStateOf(true)
+    }
+    var isRender by remember {
+        mutableStateOf(true)
+    }
     LaunchedEffect(Unit) {
-        viewModel.getChatList()
-        chatRoomviewModel.getChatRoom()
+        chatRoomviewModel.getChatRoom(getChat = { roomId ->
+            viewModel.getChatList(roomId)
+        })
+
     }
     val focusManager = LocalFocusManager.current
+
 
     val chatListResponse = viewModel.ChatListResponse.collectAsState().value
     var roomId by remember {
@@ -49,17 +72,23 @@ fun ChatScreen(
 
 
     val chatRoomResponse = chatRoomviewModel.ChatRoomResponse.collectAsState().value
-    when(chatRoomResponse){
+
+
+    when (chatRoomResponse) {
         is Result.Success -> {
             Log.d("ChatRoom", "thanh cong")
             Log.d("ChatRoom", chatRoomResponse.data.data.id)
             roomId = chatRoomResponse.data.data.id
+
+
             socketHandler1.joinRoom(chatRoomResponse.data.data.id)
             socketHandler1.onJoinedRoom()
         }
+
         is Result.Error -> {
             Log.d("ChatRoom", "loi roi")
         }
+
         else -> Unit
     }
     Log.d("ChatRoom", chatRoomResponse.toString())
@@ -91,20 +120,13 @@ fun ChatScreen(
             ChatTextField(
                 text = message, onValueChange = { message = it },
                 onclick = {
-                    val newMessage = com.example.h5traveloto_booking.chat.presentation.data.dto.Data(
-                        message = message,
-                        isFromCustomer = true,
-                        updatedAt = "2021-10-10T10:10:10.000Z",
 
-                    );
                     val sendMessage = com.example.h5traveloto_booking.chat.presentation.data.dto.SendMessageDTO(
                         message = message,
                         room_id = roomId,
 
-                    );
+                        );
                     socketHandler1.sendMessage(sendMessage)
-                    socketHandler1.onNewMessage()
-                    messages = messages + newMessage;
                     message = ""
                 },
                 modifier = Modifier,
@@ -136,19 +158,17 @@ fun ChatScreen(
                             start = 15.dp,
                             end = 15.dp,
                         ),
+
                         reverseLayout = true // Thêm dòng này để đảo ngược thứ tự hiển thị
 
+
                     ) {
-                        /*item {
+                        item {
                             when (chatListResponse) {
                                 is Result.Loading -> {
                                     Log.d("ChatList", "dang load")
+                                    androidx.compose.material.CircularProgressIndicator()
 
-                                    // Hieu ung load
-                                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                                        CircularProgressIndicator()
-
-                                    }
                                 }
 
                                 is Result.Error -> {
@@ -156,25 +176,49 @@ fun ChatScreen(
                                 }
 
                                 is Result.Success -> {
-                                    Log.d("ChatList", "thanh cong")
+                                    //
+                                    socketHandler1.onNewMessage(object : SocketHandler.MessageCallback {
+                                        override fun onMessageReceived(message: Any?) {
+                                            Log.d("New message", message.toString())
+                                            a = message.toString()
+                                            Log.d("ChatList a", a)
+                                            isRender = true // Đặt isRender = true mỗi khi nhận được một tin nhắn mới
+
+                                        }
+                                    })
+                                    try {
+                                        /*val b =// Chuyển đổi JSON sang đối tượng*/
+                                        val b: com.example.h5traveloto_booking.chat.presentation.data.dto.Data? = jsonAdapter.fromJson(a)
+                                        Log.d("ChatList b", b.toString())
+                                        if (isRender) {
+                                            messages = messages + b!!
+                                            isRender = false
+                                        }
+                                        Log.d("ChatList message", messages.toString())
+                                    } catch (e: Exception) {
+                                        Log.d("ChatList E", e.message.toString())
+                                    }
+
+
+                                    // Ở đây, thay vì hiển thị chatListResponse.data.data, ta sẽ hiển thị messages
+                                    messages.reversed().forEach {
+                                        ChatRow(chat = it)
+                                    }
                                     val chatlist = chatListResponse.data.data
                                     chatlist.forEachIndexed { index, chatListDTO ->
                                         ChatRow(chat = chatlist[index])
                                     }
+
+
                                 }
 
                                 else -> Unit
 
-                            }*/
-                        items(messages.reversed()) { message ->
-                            ChatRow(chat = message)
-                        }
-                            /*items(chatList, key = { it.id }) {
-                            ChatRow(chat = it)
-                        }*/
+                            }
                         }
                     }
                 }
             }
         }
     }
+}

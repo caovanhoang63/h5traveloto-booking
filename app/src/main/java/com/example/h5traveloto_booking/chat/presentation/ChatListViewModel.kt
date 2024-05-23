@@ -7,6 +7,7 @@ import com.example.h5traveloto_booking.chat.presentation.data.dto.ChatListDTO
 import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatListUseCases
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.HotelDetailsUseCases
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,14 +29,14 @@ class ChatListViewModel @Inject constructor(
     val ChatListResponse = _chatListResponse.asStateFlow()
 
     fun getChatList(
-
+        roomChatId: String
     ) = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
         Log.d("ChatList ViewModel", "Get token")
         Log.d("ChatList ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
 
-        useCases.getChatListUseCase("66472bbdf70ec79d3c5d6709",0,0).onStart {
+        useCases.getChatListUseCase(roomChatId,0,0).onStart {
             _chatListResponse.value = Result.Loading
             Log.d("ChatList ViewModel", "Loading")
 
@@ -49,4 +50,5 @@ class ChatListViewModel @Inject constructor(
             _chatListResponse.value = Result.Success(it)
         }
     }
+
 }

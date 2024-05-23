@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.chat.presentation.data.dto.ChatListDTO
 import com.example.h5traveloto_booking.theme.Grey50Color
+import kotlinx.datetime.toLocalTime
 
 @Composable
 fun ChatRow(
