@@ -45,4 +45,10 @@ class SearchRepositoryImpl @Inject constructor(
             api.searchProminentHotels(limit)
         }
     }
+
+    override suspend fun searchViewedHotels(token: String): SearchHotelDTO {
+        return withContext(Dispatchers.Default) {
+            api.searchViewedHotels(token)
+        }
+    }
 }

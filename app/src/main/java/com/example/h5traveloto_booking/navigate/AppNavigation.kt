@@ -39,6 +39,7 @@ import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollecti
 import com.example.h5traveloto_booking.main.presentation.favorite.UpdateCollectionScreen.UpdateCollectionScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
+import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.google.gson.Gson
 
 @Composable

@@ -45,6 +45,7 @@ import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.share.shareHotelDataViewModel
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.*
+import com.example.h5traveloto_booking.util.Result
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -62,6 +63,12 @@ fun HomeSearchScreen(
     var room by rememberSaveable { mutableIntStateOf(1) }
     var location by rememberSaveable { mutableStateOf("Khách sạn gần tôi") }
     var isShowDateRangePicker by remember { mutableStateOf(false) }
+
+    val listHotelViewed = viewModel.ListHotelViewed.collectAsState().value
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getHotelViewed()
+    }
 
     Scaffold(
         topBar = {
@@ -283,15 +290,57 @@ fun HomeSearchScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         BoldText("Đã xem gần đây")
-                        ClickableText("See all", {})
+                        Text(
+                            text = "See all",
+                            fontSize = 16.sp,
+                            color = if(viewModel.checkDataViewed()) PrimaryColor else Grey500Color,
+                            modifier = Modifier.clickable {
+                                if(viewModel.checkDataViewed()){
+                                    shareHotelDataViewModel.setIsCurrentLocation(false)
+                                    shareHotelDataViewModel.setListHotel((listHotelViewed as Result.Success).data)
+                                    shareHotelDataViewModel.setOnClickBooking(false)
+                                    navAppNavController.navigate(Screens.ListHotels.name)
+                                }
+                            }
+                        )
                     }
-                    /*YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(12)
-                    HotelTagSmall()
-                    YSpacer(16)*/
+                    YSpacer(16)
+                    when(listHotelViewed){
+                        is Result.Error -> {
+                            NotFoundHotel()
+                        }
+                        is Result.Idle -> {
+                        }
+                        is Result.Loading -> {
+                            Box(Modifier.fillMaxWidth().height(200.dp)) {
+                                CircleLoading()
+                            }
+                        }
+                        is Result.Success -> {
+                            val listHotel = listHotelViewed.data.data
+                            Column(modifier = Modifier.padding(0.dp,0.dp,0.dp,0.dp)) {
+                                if(listHotel != null){
+                                    listHotel.forEachIndexed { index, hotel ->
+                                        HotelTagSmall(
+                                            hotelDTO = hotel,
+                                            onClick = {
+                                                shareDataHotelDetail.setHotelDetails(hotel)
+                                                shareDataHotelDetail.setHotelId(hotel.id)
+                                                shareDataHotelDetail.LogData()
+                                                navAppNavController.navigate(Screens.HotelDetailsScreen.name)
+                                            }
+                                        )
+                                        YSpacer(16)
+                                        if(index >= 3){
+                                            return@Column
+                                        }
+                                    }
+                                } else {
+                                    NotFoundHotel()
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.main.presentation.home.components
 
 import android.app.Dialog
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -34,7 +35,8 @@ fun HotelTagSmall(
                 clip = true,
                 ambientColor = Grey100Color,
                 spotColor = Grey500Color
-            ),
+            )
+            .clickable { onClick() },
     ) {
         Column(
             Modifier
@@ -67,13 +69,11 @@ fun HotelTagSmall(
                     YSpacer(4)
 
                     Row {
-                        Star()
-                        Star()
-                        Star()
-                        Star()
-                        Star()
+                        repeat(hotelDTO.star) {
+                            Star()
+                        }
                         XSpacer(4)
-                        BoldText("5.0")
+                        BoldText("${hotelDTO.star}")
                     }
                     Row {
                         PrimaryText("Chỉ từ ")

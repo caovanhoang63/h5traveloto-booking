@@ -298,7 +298,7 @@ fun ListHotels(
                                 }*/
                                 Log.d("Star selected", listHotelSearch.data.data.toString())
                                 listHotelSearch.data.data.forEachIndexed { index, hotelDTO ->
-                                    HotelDetailCard2(hotelDTO = hotelDTO, navController = navController)
+                                    HotelDetailCard2(hotelDTO = hotelDTO, navController = navController, click = {viewModel.postClickHotel(hotelDTO.id)})
                                     if (index < listHotelSearch.data.data.lastIndex) {
                                         Spacer(modifier = Modifier.height(15.dp))
                                     }

@@ -112,7 +112,7 @@ fun HotelDetailCard(navController: NavController, hotelDTO: HotelDTO) { //defaul
 }
 
 @Composable
-fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default rating will be 1
+fun HotelDetailCard2(navController: NavController, hotelDTO: Data, click: (hotelId: String) -> Unit) { //default rating will be 1
     val imgURL = hotelDTO.images?.map { it.url }
 
 
@@ -125,6 +125,7 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data) { //default r
             containerColor = Grey50Color, //Card background color
         ),
         onClick = {
+            click(hotelDTO.id)
             navController.navigate(
                 Screens.HotelDetailsScreen.name
             );

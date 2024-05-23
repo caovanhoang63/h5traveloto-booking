@@ -6,6 +6,7 @@ import com.example.h5traveloto_booking.auth.data.dto.RefreshToken
 import com.example.h5traveloto_booking.auth.data.remote.api.AuthenticateApi
 import com.example.h5traveloto_booking.auth.domain.repository.AuthenticateRepository
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
+import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ClickHotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Hotel.ListHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.repository.HotelRepository
 import kotlinx.coroutines.Dispatchers
@@ -21,4 +22,9 @@ class HotelRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun ClickHotel(token: String, hotelId: String) : ClickHotelDTO {
+        return withContext(Dispatchers.Default) {
+            api.ClickHotel(token, hotelId)
+        }
+    }
 }

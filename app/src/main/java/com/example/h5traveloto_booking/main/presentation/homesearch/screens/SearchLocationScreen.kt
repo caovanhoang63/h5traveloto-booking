@@ -51,7 +51,7 @@ fun SearchLocationScreen(
 ) {
     val searchQuery by viewModel.searchQuery.collectAsState()
     val searchResults by viewModel.filteredCities.collectAsState()
-    val searchPopular = CreateSearchPopular()
+    val searchPopular = getSearchPopular()
 
 
     Log.d("SearchLocationScreen", "render")
@@ -144,14 +144,23 @@ fun SearchLocationScreen(
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(20.dp, 32.dp)
                     )
-                    searchPopular.forEach { item ->
+                    searchPopular.forEach { city ->
                         ItemSearch(
-                            title = item.title,
-                            detail = item.detail,
-                            type = item.type,
+                            title = city.name,
+                            detail = city.fullName?: "",
+                            type = if(city.index == "hotels_enriched"){
+                                "Khách sạn"
+                            } else if(city.index == "provinces"){
+                                "Tỉnh thành"
+                            }else if(city.index == "landmarks_enriched"){
+                                "Địa danh"
+                            }
+                            else{
+                                "Vùng"
+                            },
                             onClick = {
-                                onComplete(item.title, Suggestion("", "", "", "", 0.0, null, null, null))
-                                viewModel.updateSearchQuery(item.title)
+                                onComplete(city.name, city)
+                                viewModel.updateSearchQuery(city.name)
                                 setIsCurrentLocation(false)
                             },
                             icon = {},
@@ -192,7 +201,6 @@ fun SearchLocationScreen(
                                     "Vùng"
                                 }
                             )
-
                         }
                     }
                 }
