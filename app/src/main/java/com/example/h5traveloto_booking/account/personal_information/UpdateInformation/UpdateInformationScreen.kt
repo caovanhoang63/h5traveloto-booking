@@ -65,7 +65,7 @@ fun UpdateInformationScreen(navController: NavController,
             var birthDate by rememberSaveable { mutableStateOf(date)}
             var phoneNumber by rememberSaveable { mutableStateOf(ProfileResponse.data.data.phone) }
             var email by rememberSaveable { mutableStateOf(ProfileResponse.data.data.email) }
-            var avatar by rememberSaveable { mutableStateOf(ProfileResponse.data.data.avatar)}
+            var avatar by remember { mutableStateOf(ProfileResponse.data.data.avatar)}
             var city by rememberSaveable { mutableStateOf("Not Set") }
             var showDialog by remember { mutableStateOf(false) }
             var showDialog2 by remember { mutableStateOf(true) }

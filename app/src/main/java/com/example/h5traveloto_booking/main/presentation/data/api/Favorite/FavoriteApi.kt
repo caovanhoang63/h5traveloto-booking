@@ -2,9 +2,12 @@ package com.example.h5traveloto_booking.main.presentation.data.api.Favorite
 
 import android.database.Observable
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.AllSavedHotelsDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Collection
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.CollectionDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.CreateResponse
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Response
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -41,6 +44,22 @@ interface FavoriteApi {
 
     @POST("collections")
     suspend fun createCollection(
+        @Body createCollection:RequestBody
+    ) :CreateResponse
 
-    )
+    @DELETE("collections/{collection-id}")
+    suspend fun deteleCollection(
+        @Path("collection-id") collectionId: String
+    ) : Response
+
+    @PATCH("collections/{collection-id}")
+    suspend fun updateCollection(
+        @Path("collection-id") collectionId: String,
+        @Body updateCollection:RequestBody
+    ) :Response
+
+    @GET("collections/{collection-id}")
+    suspend fun getCollectionByCollectionId(
+        @Path("collection-id") collectionId: String
+    ): Collection
 }

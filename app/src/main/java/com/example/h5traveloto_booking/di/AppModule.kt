@@ -425,14 +425,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetCollectionUseCase(repository: FavoriteRepository) : FavoriteUseCases {
+    fun provideFavoriteUseCase(repository: FavoriteRepository) : FavoriteUseCases {
         return FavoriteUseCases(
             getCollectionUseCase = CollectionUseCase(repository),
             getAllSavedHotelsUseCase = AllSavedHotelsUseCase(repository),
             unsaveHotelUseCase = UnSaveHotelUseCase(repository),
             getHotelsByCollectionIdUseCase = GetHotelsByCollectionIdUseCase(repository),
             deleteHotelUseCase = DeleteHotelUseCase(repository),
-            addHotelUseCase = AddHotelUseCase(repository)
+            addHotelUseCase = AddHotelUseCase(repository),
+            createCollectionUseCase = CreateCollectionUseCase(repository),
+            deleteCollectionUseCase = DeleteCollectionUseCase(repository),
+            updateCollectionUseCase = UpdateCollectionUseCase(repository),
+            getCollectionByCollectionIdUseCase = GetCollectionByCollectionIdUseCase(repository)
         )
     }
 

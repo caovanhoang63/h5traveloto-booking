@@ -134,4 +134,38 @@ class PersonalInformationViewModel @Inject constructor(
             _updateProfileResponse.value = Result.Success(it)
         }
     }
+
+    private val _uploadImageResponse = MutableStateFlow<Result<AvatarDTO>>(Result.Idle)
+    val UploadImageResponse = _uploadImageResponse.asStateFlow()
+    fun uploadImage(file: File, folder: String)= viewModelScope.launch {
+        val token = sharedPrefManager.getToken()
+        Log.d("PersonalInformation ViewModel", "Get token")
+        Log.d("PersonalInformation ViewModel Token", token.toString())
+        val bearerToken = "Bearer $token"
+        uploadUseCase.uploadFileUseCase(bearerToken,file,folder).onStart {
+            _uploadImageResponse.value = Result.Loading
+            Log.d("PersonalInformation ViewModel", "Loading")
+            Log.d("PersonalInformation ViewModel","uploadfile")
+        }.catch {
+            if(it is HttpException){
+                Log.d("AddImage ViewModel", "catch")
+                //Log.d("PersonalInformation ViewModel E", it.message.toString())
+                Log.d("AddImage ViewModel", "hehe")
+                val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                Log.d("AddImage ViewModel Error", errorResponse.message)
+                _uploadImageResponse.value = Result.Error(errorResponse.message)
+            }
+            else if (it is Exception) {
+                _uploadImageResponse.value = Result.Error("errorResponse.message")
+                Log.d("AddImage ViewModel", it.javaClass.name)
+            }
+        }.collect{
+            Log.d("AddImage","Ok")
+            Log.d("AddImage",it.avatar.url.toString())
+            Log.d("AddImage",it.avatar.toString())
+            // Log.d("PersonalInformation",it.toString())
+//            Log.d("Success",it.paging.total.toString())
+            _uploadImageResponse.value = Result.Success(it)
+        }
+    }
 }

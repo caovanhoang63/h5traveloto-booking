@@ -98,6 +98,14 @@ fun AllFavoriteScreen(navController: NavController,
                         innerPadding ->
                     when(AllSavedHotlesDataResponse){
                         is Result.Error -> {
+                            Column(
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        {
+                                Image(painterResource(id = R.drawable.error404),
+                                    contentDescription = "Error",
+                                    modifier = Modifier.fillMaxSize())
+                        }
                         }
                         Result.Idle -> {
                         }
@@ -108,135 +116,143 @@ fun AllFavoriteScreen(navController: NavController,
                             var listHotel by remember {
                                 mutableStateOf((AllSavedHotlesDataResponse.data.data))
                             }
-                            LazyColumn(
-                                modifier = Modifier
-                                    .padding(innerPadding)
-                            )
-                            {
-                                if(listHotel.size==0){
-                                    item{
-                                        Image(painter = painterResource(id = R.drawable.nullsaved),
-                                            contentDescription ="List is empty",
-                                            modifier = Modifier.fillMaxSize())
+                            if(listHotel.size==0){
+                                Column(
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.nullsaved),
+                                        contentDescription = "List is empty",
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                }
+                            }else{
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .padding(innerPadding)
+                                )
+                                {
+
+                                    val hotelList = listOf(
+                                        HotelTag(
+                                            id = 1,
+                                            hotelName = "Khách sạn Ánh Dương",
+                                            rating = 4.5f,
+                                            reviewCount = 200,
+                                            star = 4,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a2.jpg",
+                                            price = 1200000,
+                                        ),
+                                        HotelTag(
+                                            id = 2,
+                                            hotelName = "Khách sạn Biển Xanh",
+                                            rating = 4.2f,
+                                            reviewCount = 300,
+                                            star = 5,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a1.jpg",
+                                            price = 1440000,
+                                        ),
+                                        // Add more HotelTag objects
+                                        HotelTag(
+                                            id = 3,
+                                            hotelName = "Khách sạn Thiên Đường",
+                                            rating = 4.8f,
+                                            reviewCount = 450,
+                                            star = 5,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a3.jpg",
+                                            price = 2440000,
+                                        ),
+                                        HotelTag(
+                                            id = 4,
+                                            hotelName = "Khách sạn Hạ Long",
+                                            rating = 3.9f,
+                                            reviewCount = 180,
+                                            star = 4,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Lobby/a1.jpg",
+                                            price = 3240000,
+                                        ),
+                                        HotelTag(
+                                            id = 5,
+                                            hotelName = "Khách sạn Cát Bà",
+                                            rating = 4.3f,
+                                            reviewCount = 320,
+                                            star = 4,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Deluxe/Deluxe-Double-1.jpg",
+                                            price = 4240000,
+                                        ),
+                                        HotelTag(
+                                            id = 6,
+                                            hotelName = "Khách sạn Sapa",
+                                            rating = 4.6f,
+                                            reviewCount = 290,
+                                            star = 5,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Deluxe/Deluxe-Twin-1.jpg",
+                                            price = 4350000,
+                                        ),
+                                        HotelTag(
+                                            id = 7,
+                                            hotelName = "Khách sạn Đà Lạt",
+                                            rating = 4.1f,
+                                            reviewCount = 210,
+                                            star = 4,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Superior/Superior-Twin-2.jpg",
+                                            price = 1230000,
+                                        ),
+                                        HotelTag(
+                                            id = 8,
+                                            hotelName = "Khách sạn Bình Dương",
+                                            rating = 4.4f,
+                                            reviewCount = 350,
+                                            star = 4,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Restaurant/a2.jpg",
+                                            price = 1940000,
+                                        ),
+                                        HotelTag(
+                                            id = 9,
+                                            hotelName = "Khách sạn Hội An",
+                                            rating = 4.7f,
+                                            reviewCount = 420,
+                                            star = 5,
+                                            isFavorite = true,
+                                            onFavoriteClick = { /* handle favorite click */ },
+                                            imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Restaurant/a11.jpg",
+                                            price = 1540000,
+                                        )
+                                    )
+                                    items(listHotel){
+                                            item ->
+                                        HotelItemTag(
+                                            hotelName = item.name,
+                                            rating = 4.5f,
+                                            reviewCount = item.totalRating,
+                                            star = item.star,
+                                            isFavorite = true,
+                                            onFavoriteClick = {
+                                                viewModel.unsaveHotel(item.id.toString())
+                                            },
+                                            imagePainter = item.logo.url,
+                                            // price = item.price
+                                        )
                                     }
                                 }
-                                val hotelList = listOf(
-                                    HotelTag(
-                                        id = 1,
-                                        hotelName = "Khách sạn Ánh Dương",
-                                        rating = 4.5f,
-                                        reviewCount = 200,
-                                        star = 4,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a2.jpg",
-                                        price = 1200000,
-                                    ),
-                                    HotelTag(
-                                        id = 2,
-                                        hotelName = "Khách sạn Biển Xanh",
-                                        rating = 4.2f,
-                                        reviewCount = 300,
-                                        star = 5,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a1.jpg",
-                                        price = 1440000,
-                                    ),
-                                    // Add more HotelTag objects
-                                    HotelTag(
-                                        id = 3,
-                                        hotelName = "Khách sạn Thiên Đường",
-                                        rating = 4.8f,
-                                        reviewCount = 450,
-                                        star = 5,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Overview/a3.jpg",
-                                        price = 2440000,
-                                    ),
-                                    HotelTag(
-                                        id = 4,
-                                        hotelName = "Khách sạn Hạ Long",
-                                        rating = 3.9f,
-                                        reviewCount = 180,
-                                        star = 4,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Lobby/a1.jpg",
-                                        price = 3240000,
-                                    ),
-                                    HotelTag(
-                                        id = 5,
-                                        hotelName = "Khách sạn Cát Bà",
-                                        rating = 4.3f,
-                                        reviewCount = 320,
-                                        star = 4,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Deluxe/Deluxe-Double-1.jpg",
-                                        price = 4240000,
-                                    ),
-                                    HotelTag(
-                                        id = 6,
-                                        hotelName = "Khách sạn Sapa",
-                                        rating = 4.6f,
-                                        reviewCount = 290,
-                                        star = 5,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Deluxe/Deluxe-Twin-1.jpg",
-                                        price = 4350000,
-                                    ),
-                                    HotelTag(
-                                        id = 7,
-                                        hotelName = "Khách sạn Đà Lạt",
-                                        rating = 4.1f,
-                                        reviewCount = 210,
-                                        star = 4,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Rooms/Superior/Superior-Twin-2.jpg",
-                                        price = 1230000,
-                                    ),
-                                    HotelTag(
-                                        id = 8,
-                                        hotelName = "Khách sạn Bình Dương",
-                                        rating = 4.4f,
-                                        reviewCount = 350,
-                                        star = 4,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Restaurant/a2.jpg",
-                                        price = 1940000,
-                                    ),
-                                    HotelTag(
-                                        id = 9,
-                                        hotelName = "Khách sạn Hội An",
-                                        rating = 4.7f,
-                                        reviewCount = 420,
-                                        star = 5,
-                                        isFavorite = true,
-                                        onFavoriteClick = { /* handle favorite click */ },
-                                        imageRes = "https://pistachiohotel.com/UploadFile/Gallery/Restaurant/a11.jpg",
-                                        price = 1540000,
-                                    )
-                                )
-                                items(listHotel){
-                                        item ->
-                                    HotelItemTag(
-                                        hotelName = item.name,
-                                        rating = 4.5f,
-                                        reviewCount = item.totalRating,
-                                        star = item.star,
-                                        isFavorite = true,
-                                        onFavoriteClick = {
-                                            viewModel.unsaveHotel(item.id.toString())
-                                                          },
-                                        imagePainter = item.logo.url,
-                                       // price = item.price
-                                    )
-                                }
+
                             }
 
                         }
@@ -303,7 +319,7 @@ fun HotelItemTag(
                         .padding(vertical = 16.dp, horizontal = 20.dp)
                         .clickable(onClick = {
                             onFavoriteClick()
-                           // favoriteState = !favoriteState
+                            // favoriteState = !favoriteState
                             isSheetOpened = false
                         }),
                     verticalAlignment = Alignment.CenterVertically,

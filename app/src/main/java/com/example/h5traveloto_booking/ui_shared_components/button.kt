@@ -22,3 +22,16 @@ fun PrimaryButton(onClick : ()->Unit,  text : String = "", modifier : Modifier =
         Text(text, fontSize = 16.sp)
     }
 }
+
+@Composable
+fun PrimaryButton2(onClick : ()->Unit,  text : String = "", modifier : Modifier = Modifier,enabled:Boolean) {
+    Button(
+        enabled =enabled,
+        onClick = onClick,
+        modifier = Modifier.then(modifier).height(52.dp),
+        shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(PrimaryColor)
+    ) {
+        Text(text, fontSize = 16.sp)
+    }
+}
