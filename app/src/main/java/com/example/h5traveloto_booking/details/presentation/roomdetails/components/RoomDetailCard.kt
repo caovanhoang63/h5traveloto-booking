@@ -134,6 +134,7 @@ fun RoomDetailCard(
                                         Gson().toJson(roomDTO.images)
                                     }"
                                 )
+                                shareDataHotelDetail.setRoomTypeId(roomDTO.id)
                                 navController.navigate("${Screens.RoomDetailsScreen.name}/${Uri.encode(Gson().toJson(roomDTO))}")
                                 navController.navigate(Screens.RoomDetailsScreen.name)
                             } catch (e: Exception) {

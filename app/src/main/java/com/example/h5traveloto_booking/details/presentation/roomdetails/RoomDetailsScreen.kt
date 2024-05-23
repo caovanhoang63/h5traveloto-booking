@@ -52,6 +52,14 @@ fun RoomDetailsScreen(
         startDate = shareDataHotelDetail.getStartDateString(),
         endDate = shareDataHotelDetail.getEndDateString()
     )
+    Log.d("booking", bookingData.hotelId)
+    Log.d("booking", bookingData.roomTypeId)
+    Log.d("booking", bookingData.roomQuantity.toString())
+    Log.d("booking", bookingData.adults.toString())
+    Log.d("booking", bookingData.children.toString())
+    Log.d("booking", bookingData.startDate)
+    Log.d("booking", bookingData.endDate)
+
 
     LaunchedEffect(Unit) {
         viewModel.getRoomFacilitiesDetails(Object.id)
@@ -107,6 +115,7 @@ fun RoomDetailsScreen(
 
                 PrimaryButton(
                     onClick = {
+
                         navController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
                     },
                     text = "Đặt Phòng",
