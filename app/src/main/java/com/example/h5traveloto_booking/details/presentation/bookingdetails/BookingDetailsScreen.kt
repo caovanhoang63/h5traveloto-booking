@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.details.presentation.bookingdetails
 
+import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,16 +29,23 @@ import com.example.h5traveloto_booking.details.presentation.bookingdetails.compo
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingDetailsScreenViewModel
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
+import com.example.h5traveloto_booking.share.UserShare
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 
 @Composable
 fun BookingDetailsScreen (
     userBookingData: UserBookingDTO,
     navController: NavController,
 ) {
+    shareDataHotelDetail.setHotelId(userBookingData.hotel.id)
+    shareDataHotelDetail.setRoomTypeId(userBookingData.roomTypeId)
+//    val roomInfo = shareDataHotelDetail.getRoomDTO()
     Scaffold (
         topBar = {
             Row (
@@ -84,7 +92,7 @@ fun BookingDetailsScreen (
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Text(
-                        text = "Đâu cũng được hotel",
+                        text = userBookingData.hotel.name,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -108,12 +116,12 @@ fun BookingDetailsScreen (
                                 fontSize = 14.sp
                             )
                             Text(
-                                text = "Thứ 2, 20 tháng 5",
+                                text = "Thứ ${shareDataHotelDetail.getStartDate().dayOfWeek.value}, ${shareDataHotelDetail.getStartDate().dayOfMonth} Thg ${shareDataHotelDetail.getStartDate().monthNumber}",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "14:00",
+                                text = shareDataHotelDetail.getCheckInTime(),
                                 color = Grey500Color,
                                 fontSize = 14.sp
                             )
@@ -131,7 +139,7 @@ fun BookingDetailsScreen (
                             )
                             YSpacer(20)
                             Text(
-                                text = "1 night(s)",
+                                text = "${shareDataHotelDetail.getEndDate().minus(shareDataHotelDetail.getStartDate()).days} night(s)",
                                 color = Grey500Color,
                                 fontSize = 14.sp
                             )
@@ -147,13 +155,13 @@ fun BookingDetailsScreen (
                                 textAlign = TextAlign.End
                             )
                             Text(
-                                text = "Thứ 3, 21 tháng 5",
+                                text = "Thứ ${shareDataHotelDetail.getEndDate().dayOfWeek.value}, ${shareDataHotelDetail.getEndDate().dayOfMonth} Thg ${shareDataHotelDetail.getEndDate().monthNumber}",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.End
                             )
                             Text(
-                                text = "12:00",
+                                text = shareDataHotelDetail.getCheckOutTime(),
                                 fontSize = 14.sp,
                                 color = Grey500Color,
                                 textAlign = TextAlign.End
@@ -174,7 +182,8 @@ fun BookingDetailsScreen (
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     Text(
-                        text = "(1x) Phòng vjp kinh",
+//                        text = "(${userBookingData.roomQuantity}x) ${roomInfo.name}",
+                        text = "(${userBookingData.roomQuantity}x) Ten phong",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -190,12 +199,41 @@ fun BookingDetailsScreen (
                             modifier = Modifier
                                 .fillMaxWidth(0.3f)
                         )
-                        Text(
-                            text = "1 king bed",
-                            fontSize = 14.sp,
+                        Column (
+                            verticalArrangement = Arrangement.spacedBy(5.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                        )
+                        ) {
+//                            if (roomInfo.bed.double > 0) {
+//                                Text(
+//                                    text = "${roomInfo.bed.double} double bed",
+//                                    fontSize = 14.sp,
+//                                )
+//                            }
+//                            if (roomInfo.bed.king > 0) {
+//                                Text(
+//                                    text = "${roomInfo.bed.king} king bed",
+//                                    fontSize = 14.sp,
+//                                )
+//                            }
+//                            if (roomInfo.bed.queen > 0) {
+//                                Text(
+//                                    text = "${roomInfo.bed.queen} queen bed",
+//                                    fontSize = 14.sp,
+//                                )
+//                            }
+//                            if (roomInfo.bed.single > 0) {
+//                                Text(
+//                                    text = "${roomInfo.bed.single} single bed",
+//                                    fontSize = 14.sp,
+//                                )
+//                            }
+                            Text(
+                                text = "1 double bed",
+                                fontSize = 14.sp,
+                            )
+                        }
+
                     }
                     Row (
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -214,12 +252,16 @@ fun BookingDetailsScreen (
                             modifier = Modifier
                                 .fillMaxWidth()
                         ) {
+//                            Text(
+//                                text = "${roomInfo.maxCustomer} người/phòng",
+//                                fontSize = 14.sp,
+//                            )
                             Text(
-                                text = "2 người/phòng",
-                                fontSize = 14.sp,
+                                text = "1 nguoi / phong",
+                                fontSize = 14.sp
                             )
                             Text(
-                                text = "(tổng cộng 2 người trong 1 phòng)",
+                                text = "(${userBookingData.adults} người lớn, ${userBookingData.children} trẻ em trong ${userBookingData.roomQuantity} phòng)",
                                 fontSize = 14.sp,
                             )
                         }
@@ -234,7 +276,8 @@ fun BookingDetailsScreen (
                                 .fillMaxWidth(0.3f)
                                 .heightIn(0.dp, 80.dp)
                                 .clip(shape = RoundedCornerShape(4.dp)),
-                            model = "https://cdn.vietnambiz.vn/2019/11/4/dd32d9b188d86d6d8dc40d1ff9a0ebf6-15728512315071030248829.jpg",
+//                            model = if (roomInfo.images != null && roomInfo.images.isNotEmpty()) roomInfo.images[0].url else R.drawable.default_img,
+                            model = R.drawable.default_img,
                             contentDescription = "Cover Image",
                             contentScale = ContentScale.Crop
                         )
@@ -296,7 +339,7 @@ fun BookingDetailsScreen (
                             )
                             XSpacer(10)
                             Text(
-                                text = "Mai Hoang Hung",
+                                text = "${UserShare.User.lastName.toString()} ${UserShare.User.firstName.toString()}",
                                 fontSize = 16.sp
                             )
                         }
@@ -325,7 +368,7 @@ fun BookingDetailsScreen (
                             )
                             XSpacer(10)
                             Text(
-                                text = "mhhung0811@gmai.com",
+                                text = UserShare.User.email.toString(),
                                 fontSize = 16.sp
                             )
                         }
@@ -354,7 +397,7 @@ fun BookingDetailsScreen (
                             )
                             XSpacer(10)
                             Text(
-                                text = "012345678",
+                                text = UserShare.User.phone.toString(),
                                 fontSize = 16.sp
                             )
                         }
@@ -378,8 +421,10 @@ fun BookingDetailsScreen (
                         fontWeight = FontWeight.Bold
                     )
                     ObjectAndPrice(
-                        text = "(1x) Phòng vjp kinh",
-                        price = 1000000
+//                        text = "(${userBookingData.roomQuantity}x) ${roomInfo.name}",
+                        text = "(${userBookingData.roomQuantity}x) Ten phong",
+//                        price = roomInfo.price.toLong() * userBookingData.roomQuantity
+                        price = (1000000 * userBookingData.roomQuantity).toLong()
                     )
                     Divider(
                         modifier = Modifier
@@ -399,7 +444,7 @@ fun BookingDetailsScreen (
                                 .fillMaxWidth(0.5f)
                         )
                         Text(
-                            text = "1000000 VND",
+                            text = "${userBookingData.totalAmount} VND",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.End,

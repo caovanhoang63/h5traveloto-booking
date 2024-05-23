@@ -63,7 +63,7 @@ public fun BookingCard(
                     .width(90.dp)
                     .height(90.dp)
                     .clip(shape = RoundedCornerShape(4.dp)),
-                model = "https://cdn.vietnambiz.vn/2019/11/4/dd32d9b188d86d6d8dc40d1ff9a0ebf6-15728512315071030248829.jpg",
+                model = if (bookingData.hotel.image != null && bookingData.hotel.image.size > 0) bookingData.hotel.image[0].url else com.example.h5traveloto_booking.R.drawable.default_img,
                 contentDescription = "Cover Image",
                 contentScale = ContentScale.Crop
             )

@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.auth.domain.use_case.RegisterUsesCase
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingResponse
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeParams
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.BookingUseCases
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
@@ -19,7 +23,8 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class BookingDetailsScreenViewModel @Inject constructor(
-    private val usesCases: BookingUseCases,
+    private val bookingUsesCases: BookingUseCases,
+    private val searchUseCases: SearchUseCases,
     private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
     private val _bookingResponse = MutableStateFlow<Result<BookingResponse>>(Result.Idle)
@@ -33,7 +38,7 @@ class BookingDetailsScreenViewModel @Inject constructor(
         Log.d("BookingDetails ViewModel Token", token.toString())
         val bearerToken = "Bearer $token"
 
-        usesCases.getBookingUseCase(bookingId).onStart {
+        bookingUsesCases.getBookingUseCase(bookingId).onStart {
             _bookingResponse.value = Result.Loading
             Log.d("BookingDetails ViewModel", "Loading")
         }.catch {
