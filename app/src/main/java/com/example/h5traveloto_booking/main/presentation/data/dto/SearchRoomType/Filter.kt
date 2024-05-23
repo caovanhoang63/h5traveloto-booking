@@ -6,10 +6,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Filter(
-    @Json(name = "adult")
-    val adult: Int,
-    @Json(name = "child")
-    val child: Int,
+    @Json(name = "adults")
+    val adults: Int,
+    @Json(name = "children")
+    val children: Int,
     @Json(name = "end_date")
     val endDate: String,
     @Json(name = "hotel_id")
