@@ -35,6 +35,7 @@ import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetail
 import com.example.h5traveloto_booking.details.presentation.domain.repository.HotelDetailsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListReviewsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
+import com.example.h5traveloto_booking.details.presentation.domain.repository.RoomFacilitiesDetailsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.*
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
@@ -488,6 +489,7 @@ object AppModule {
 
     @Provides
     @Singleton
+
     fun provideRoomFacilitiesDetailsRepository(api: RoomFacilitiesDetailsApi): RoomFacilitiesDetailsRepository {
         return RoomFacilitiesDetailsRepositoryImpl(api)
     }

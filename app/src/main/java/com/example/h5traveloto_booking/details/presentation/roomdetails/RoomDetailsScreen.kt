@@ -95,8 +95,7 @@ fun RoomDetailsScreen(
 
                 PrimaryButton(
                     onClick = {
-                        /*navController.navigate(Screens.ListRooms.name);
-                        shareDataHotelDetail.setHotelName(hotelInfo.name)*/
+                        /*navController.navigate(Screens.BookingDetailsFillingScreen.name)*/
                     },
                     text = "Đặt Phòng",
                     modifier = Modifier

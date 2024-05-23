@@ -27,7 +27,6 @@ import com.example.h5traveloto_booking.details.presentation.hoteldetails.compone
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListReviews
 import com.example.h5traveloto_booking.details.presentation.roomdetails.RoomDetailsScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddCollectionScreen
-import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddImageInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInCollection.AddHotelInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
@@ -46,7 +45,7 @@ import com.google.gson.Gson
 fun AppNavigation(startDestination : String ) {
 
     val navController = rememberNavController()
-    LocationProvider.initLocationProvider(LocalContext.current)
+//    LocationProvider.initLocationProvider(LocalContext.current)
 
     NavHost (
         navController = navController,
