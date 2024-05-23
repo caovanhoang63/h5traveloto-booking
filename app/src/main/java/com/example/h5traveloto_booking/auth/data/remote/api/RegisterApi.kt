@@ -21,14 +21,6 @@ interface RegisterApi {
 }
 
 
-// [] <nil>
-
-
-
-// SignUpRequestDTO.email = email
-//  ->>>>
-// {"email" : "213123" , "asdasd" : "sadasd"}
-
 
 @JsonClass(generateAdapter = true)
 data class response(

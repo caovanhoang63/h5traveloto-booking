@@ -157,7 +157,8 @@ object AppModule {
     @Singleton
     fun provideHotelUsesCases(repository: HotelRepository): HotelUseCases {
         return HotelUseCases(
-            listHotelUseCase = ListHotelUseCase(repository)
+            listHotelUseCase = ListHotelUseCase(repository),
+            clickHotelUseCase = ClickHotelUseCase(repository)
         )
     }
 
@@ -217,6 +218,7 @@ object AppModule {
             searchHotelUseCase = SearchHotelUseCase(repository),
             searchRoomTypeUseCase = SearchRoomTypeUseCase(repository),
             getProminentHotelUseCase = GetProminentHotelUseCase(repository),
+            searchViewedHotelsUseCase = SearchViewedHotelsUseCase(repository)
         )
     }
 

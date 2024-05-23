@@ -1,16 +1,20 @@
 package com.example.h5traveloto_booking.share
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelParams
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.HotelUseCases
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
 import com.example.h5traveloto_booking.main.presentation.homesearch.DataApiSearch
+import com.example.h5traveloto_booking.util.SharedPrefManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class ShareHotelDataViewModel @Inject constructor(
+class ShareHotelDataViewModel (
 
 ): ViewModel(){
     private val searchHotelParams = SearchHotelParams()

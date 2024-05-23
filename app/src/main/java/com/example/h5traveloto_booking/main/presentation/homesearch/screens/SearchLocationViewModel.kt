@@ -66,26 +66,13 @@ class SearchLocationViewModel @Inject constructor(
 }
 
 
-
-
-
-
-class ItemSearchPopular(
-    val title: String,
-    val detail: String,
-    val type: String,
-)
-
-fun CreateSearchPopular(): List<ItemSearchPopular>{
-    val searchPopular2 = ItemSearchPopular("Hồ Chí Minh", "Việt Nam", "Thành phố")
-    val searchPopular3 = ItemSearchPopular("Đà Nẵng", "Việt Nam", "Tỉnh")
-    val searchPopular4 = ItemSearchPopular("Hội An", "Quảng Nam,Việt Nam", "Thành phố")
-    val searchPopular5 = ItemSearchPopular("Nha Trang", "Khánh Hòa,Việt Nam", "Thành phố")
-    val searchPopular6 = ItemSearchPopular("Phú Quốc", "Kiên Giang, Việt Nam", "Thành phố")
-    val searchPopular7 = ItemSearchPopular("Hà Nội", "Việt Nam", "Thành phố")
-    val searchPopular8 = ItemSearchPopular("Đà Lạt", "Lâm Đồng, Việt Nam", "Thành phố")
-    val searchPopular9 = ItemSearchPopular("Huế", "Thừa Thiên Huế, Việt Nam", "Thành phố")
-    val searchPopular10 = ItemSearchPopular("Sapa", "Lào Cai, Việt Nam", "Thành phố")
-    val items: List<ItemSearchPopular> = listOf( searchPopular2, searchPopular3, searchPopular4, searchPopular5, searchPopular6, searchPopular7, searchPopular8, searchPopular9, searchPopular10)
-    return items
+fun getSearchPopular(): List<Suggestion>{
+    val nhaTrang = Suggestion("landmarks_enriched","56","Khánh Hòa","Nha Trang, Khánh Hòa",258.07596,null,null,null)
+    val hanoi = Suggestion("provinces","01","Hà Nội","",110.65946,null,null,null)
+    val hoiAn = Suggestion("landmarks_enriched","49","Quảng Nam","Hội An, Quảng Nam",258.07596,null,null,null)
+    val hcm = Suggestion("provinces" ,"79","Hồ Chí Minh","",110.65946,null,null,null)
+    val daNang = Suggestion("provinces","48","Đà Nẵng","",258.07596,null,null,null)
+    val phuQuoc = Suggestion("landmarks_enriched","47","Phú Quốc","Phú Quốc, Kiên Giang",258.07596,null,null,null)
+    val vungTau = Suggestion("provinces","77","Bà Rịa - Vũng Tàu","",258.07596,null,null,null)
+    return listOf(nhaTrang, hanoi, hoiAn, hcm, daNang, phuQuoc, vungTau)
 }
