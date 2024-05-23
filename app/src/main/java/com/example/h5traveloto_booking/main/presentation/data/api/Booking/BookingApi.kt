@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.data.api.Booking
 
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingResponse
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.IdRespondDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.ListUserBookingDTO
@@ -21,4 +22,9 @@ interface BookingApi {
     suspend fun createBooking (
         @Body bookingData : CreateBookingDTO
     ) : IdRespondDTO
+
+    @GET("/v1/bookings/{bookingId}")
+    suspend fun getBooking (
+        @Path("bookingId") bookingId: String
+    ) : BookingResponse
 }

@@ -19,6 +19,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDayState
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
@@ -57,6 +58,7 @@ import kotlinx.datetime.*
 @Composable
 public fun BookingCalendar (
     bookingList: List<UserBookingDTO>,
+    navController: NavController
 ) {
     val startDate by remember { mutableStateOf(LocalDate.today()) }
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
@@ -64,6 +66,13 @@ public fun BookingCalendar (
 
     val calendarAnimator = CalendarAnimator(startDate)
     val coroutineScope = rememberCoroutineScope()
+
+    val bookingsInDate = remember {
+        mutableStateListOf<UserBookingDTO>()
+    }
+    val isShowBottomSheet = remember {
+        mutableStateOf(false)
+    }
 
     val rangeColor = SecondaryColor
     val rangeStrokeWidth = 2
@@ -132,6 +141,17 @@ public fun BookingCalendar (
             mapBookingDayState[FromStringtoDate(booking.startDate)]?.booking_id?.add(booking.id)
             mapBookingDayState[FromStringtoDate(booking.startDate)]?.is_FullDate = true
         }
+    }
+
+
+    if (isShowBottomSheet.value) {
+        ListBookingDialog (
+            bookingList = bookingsInDate,
+            navController = navController,
+            onDismiss = {
+                isShowBottomSheet.value = false
+            }
+        )
     }
 
     HorizontalCalendarView(
@@ -229,9 +249,20 @@ public fun BookingCalendar (
             verticalArrangement = Arrangement.spacedBy(0.dp),
 //            selectionMode = SelectionMode.Range,
             onDateSelected = {
-                Log.d("Booking Date", mapBookingDayState[it[0]].toString())
-                selectedDates.clear()
-                selectedDates.addAll(it)
+                bookingsInDate.clear()
+                if (mapBookingDayState[it[0]] != null) {
+                    for (bookingId in mapBookingDayState[it[0]]!!.booking_id) {
+                        bookingList.find {
+                            it.id == bookingId
+                        }?.let { it1 -> bookingsInDate.add(it1) }
+                    }
+                    if (bookingsInDate.size > 1) {
+                        isShowBottomSheet.value = true
+                    }
+                    Log.d("Booking Calendar", bookingsInDate.size.toString())
+                    Log.d("Booking Calendar", mapBookingDayState[it[0]]!!.booking_id.size.toString())
+                    Log.d("Booking Calendar", bookingsInDate.toString())
+                }
             },
 //            rangeConfig =
 //                RangeConfig(

@@ -21,7 +21,7 @@ class HotelDTO (
     @Json(name = "logo")
     val logo: Logo?,
     @Json(name = "image")
-    val image: Image?,
+    val image: List<Image>?,
     @Json(name = "province")
     val province: Province,
     @Json(name = "district")
@@ -31,5 +31,7 @@ class HotelDTO (
     @Json(name = "star")
     val star: Int,
     @Json(name = "total_rating")
-    val totalRating: Int
+    val totalRating: Int,
+    @Json(name = "avg_rating")
+    val avgRating: Int
 )

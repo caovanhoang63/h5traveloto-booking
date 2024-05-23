@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
@@ -45,13 +46,15 @@ public fun CalendarScreen (
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val list = List(3) {}
 
 
     LaunchedEffect(Unit) {
         viewModel.getUserBookings(state = "expired")
     }
     val listCalendarBookingResponse = viewModel.UserBookingsResponse.collectAsState().value
+    val listCalendarBooking = remember {
+        mutableStateOf(listOf<UserBookingDTO>())
+    }
 
     val hotelInfo = shareDataHotelDetail.getHotelDetails()
 
@@ -80,67 +83,74 @@ public fun CalendarScreen (
             }
         }
     ) { innerPadding ->
-        LazyColumn (
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 10.dp)
-        ) {
-            item {
-                Button(
-                    onClick = {
-//                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
-                    }
-                ) {
-
+        when(listCalendarBookingResponse) {
+            is Result.Loading -> {
+                Log.d("Schedule Screen", "Calendar is loading")
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator()
                 }
-                when(listCalendarBookingResponse) {
-                    is Result.Loading -> {
-                        Log.d("Schedule Screen", "Calendar is loading")
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                            CircularProgressIndicator()
-
-                        }
-                    }
-                    is Result.Error -> {
-                        Log.d("Schedule Screen", "Calendar error")
-                    }
-                    is Result.Success -> {
-                        Log.d("Schedule Screen", "Calendar Success")
-                        var listCalendarBooking = listCalendarBookingResponse.data.data
-                        BookingCalendar(bookingList = listCalendarBooking)
-                    }
-                    else -> Unit
-                }
-                YSpacer(height = 5)
             }
-            item {
-                Row (
+            is Result.Error -> {
+                Log.d("Schedule Screen", "Calendar error")
+            }
+            is Result.Success -> {
+                Log.d("Schedule Screen", "Calendar Success")
+                listCalendarBooking.value = listCalendarBookingResponse.data.data
+                LazyColumn (
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
+                        .padding(innerPadding)
+                        .padding(horizontal = 10.dp)
                 ) {
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f),
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        BoldText(text = "Danh sách đặt phòng")
-                    }
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        ClickableText(text = "Xem thêm") {
-                            navController.navigate(Screens.ScheduleBookingScreen.name)
+                    item {
+                        Button(
+                            onClick = {
+//                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
+                            }
+                        ) {
+
                         }
+                        BookingCalendar(
+                            bookingList = listCalendarBooking.value,
+                            navController = parentNavController
+                        )
+                        YSpacer(height = 5)
+                    }
+                    item {
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp)
+                        ) {
+                            Row (
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f),
+                                horizontalArrangement = Arrangement.Start
+                            ) {
+                                BoldText(text = "Danh sách đặt phòng")
+                            }
+                            Row (
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                ClickableText(text = "Xem thêm") {
+                                    navController.navigate(Screens.ScheduleBookingScreen.name)
+                                }
+                            }
+                        }
+                    }
+                    items(listCalendarBooking.value) { bookingData ->
+                        BookingCard(
+                            false,
+                            bookingData = bookingData,
+                            navController = parentNavController
+                        )
+                        YSpacer(height = 10)
                     }
                 }
             }
-            items(list) {
-                BookingCard(false)
-                YSpacer(height = 10)
-            }
+            else -> Unit
         }
+
     }
 }

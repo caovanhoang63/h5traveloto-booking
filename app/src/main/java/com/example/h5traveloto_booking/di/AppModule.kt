@@ -440,7 +440,8 @@ object AppModule {
     @Singleton
     fun provideBookingUseCases(repository: BookingRepository) : BookingUseCases {
         return BookingUseCases(
-            bookingUseCase = BookingUseCase(repository)
+            bookingUseCase = BookingUseCase(repository),
+            getBookingUseCase = GetBookingUseCase(repository)
         )
     }
 

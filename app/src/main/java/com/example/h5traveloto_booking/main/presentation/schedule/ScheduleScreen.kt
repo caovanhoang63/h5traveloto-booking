@@ -50,56 +50,28 @@ fun ScheduleScreen (
     val scheduleNavController = rememberNavController()
     val userBookingList: MutableList<UserBookingDTO> = arrayListOf()
 
-    val bookingList : List<BookingDTO> = listOf(
-        BookingDTO(
-            "1",
-            LocalDate(2024,4,19),
-            LocalDate(2024,4,20)
-        ),
-        BookingDTO(
-            "2",
-            LocalDate(2024,4,1),
-            LocalDate(2024,4,4)
-        ),
-        BookingDTO(
-            "3",
-            LocalDate(2024,4,3),
-            LocalDate(2024,4,3)
-        ),
-        BookingDTO(
-            "4",
-            LocalDate(2024,4,17),
-            LocalDate(2024,4,20)
-        ),
-        BookingDTO(
-            "5",
-            LocalDate(2024,4,30),
-            LocalDate(2024,5,6)
-        )
-    )
-
-    LaunchedEffect(Unit) {
-        viewModel.getUserBookings()
-    }
-    val UserBookingsResponse = viewModel.UserBookingsResponse.collectAsState().value
-
-    when (UserBookingsResponse) {
-        is Result.Error -> {
-            Log.d("UserBookings ", "Error at UserBookings")
-        }
-        is Result.Success -> {
-            Log.d("UserBookings", "Success")
-            if (UserBookingsResponse.data.data.isEmpty()) {
-                isHaveBookings.value = false
-            } else {
-                UserBookingsResponse.data.data.forEach { userBookingDTO ->
-                    userBookingList.add(userBookingDTO)
-                    Log.d("UserBookings", userBookingDTO.hotel.name)
-                }
-            }
-        }
-        else -> Unit
-    }
+//    LaunchedEffect(Unit) {
+//        viewModel.getUserBookings(state = "pending")
+//    }
+//    val UserBookingsResponse = viewModel.UserBookingsResponse.collectAsState().value
+//
+//    when (UserBookingsResponse) {
+//        is Result.Error -> {
+//            Log.d("UserBookings ", "Error at UserBookings")
+//        }
+//        is Result.Success -> {
+//            Log.d("UserBookings", "Success")
+//            if (UserBookingsResponse.data.data.isEmpty()) {
+//                isHaveBookings.value = false
+//            } else {
+//                UserBookingsResponse.data.data.forEach { userBookingDTO ->
+//                    userBookingList.add(userBookingDTO)
+//                    Log.d("UserBookings", userBookingDTO.hotel.name)
+//                }
+//            }
+//        }
+//        else -> Unit
+//    }
 
 
 
@@ -115,8 +87,8 @@ fun ScheduleScreen (
         }
         composable(route = Screens.ScheduleBookingScreen.name) {
             BookingScreen(
-                bookingList = bookingList,
-                navController = scheduleNavController
+                navController = scheduleNavController,
+                parentNavController = navController
             )
         }
     }
