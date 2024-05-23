@@ -43,6 +43,7 @@ fun RoomDetailsScreen(
     viewModel: RoomDetailsScreenViewModel = hiltViewModel(),
     Object: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data,
 ) {
+
     val bookingData = CreateBookingDTO(
         hotelId = shareDataHotelDetail.getHotelId(),
         roomTypeId = shareDataHotelDetail.getRoomTypeId(),

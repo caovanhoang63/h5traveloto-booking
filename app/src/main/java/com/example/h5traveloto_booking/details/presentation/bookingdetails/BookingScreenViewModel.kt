@@ -51,6 +51,7 @@ class BookingScreenViewModel @Inject constructor (
                 Log.d("Booking ViewModel", "hehe")
                 val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
                 Log.d("Booking ViewModel Error", errorResponse.message)
+                Log.d("Booking ViewModel Error", errorResponse.log)
                 _BookingIdResponse.value = Result.Error(errorResponse.message)
             }
             else if (it is Exception) {

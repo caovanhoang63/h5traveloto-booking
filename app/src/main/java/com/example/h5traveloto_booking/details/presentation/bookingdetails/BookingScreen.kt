@@ -21,17 +21,6 @@ fun BookingScreen (
     bookingData: CreateBookingDTO,
     viewModel: BookingScreenViewModel = hiltViewModel(),
 ) {
-    // Dummy data
-    val bookingData = CreateBookingDTO(
-        hotelId = "DCWYE7tu7Da8kJd",
-        roomTypeId = "3pcoy6AP1VifpD",
-        roomQuantity = 1,
-        adults = 1,
-        children = 1,
-        startDate = "21-12-2024",
-        endDate = "22-12-2024"
-    )
-
     val bookingNavController = rememberNavController()
 
     NavHost(
