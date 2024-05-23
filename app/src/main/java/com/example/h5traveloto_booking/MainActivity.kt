@@ -41,8 +41,6 @@ class MainActivity @Inject constructor(
                 setupEvent(socketHandler1)
                 NavigationOnApp()
 
-
-                //AppNavigation("LoginScreen")
             }
         }
     }

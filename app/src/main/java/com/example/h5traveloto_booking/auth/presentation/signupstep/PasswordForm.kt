@@ -147,7 +147,8 @@ fun PasswordForm(
                     navLogin.navigate(Screens.LoginScreen.name)
                  },
                 dialogTitle = "Đăng ký thành công",
-                dialogText = "Chúc mừng bạn đã tạo tài khoản thành công."
+                dialogText = "Chúc mừng bạn đã tạo tài khoản thành công.",
+                textButton = "Quay lại trang đăng nhập"
             )
         }
 

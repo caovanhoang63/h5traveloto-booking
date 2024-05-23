@@ -42,4 +42,10 @@ enum class Screens {
     AddImageInCollectionScreen,
     UpdateCollectionScreen,
     RoomDetailsScreen,
+
+    //forgot password
+    ForgotPasswordScreen,
+    EmailForgot,
+    PasswordForgot,
+    PinForgot,
 }

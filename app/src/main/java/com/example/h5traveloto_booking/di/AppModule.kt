@@ -48,6 +48,7 @@ import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchAp
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.*
 import com.example.h5traveloto_booking.main.presentation.domain.repository.*
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.*
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.ChangePasswordUseCase
 import com.example.h5traveloto_booking.util.Constants
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.squareup.moshi.Moshi
@@ -198,7 +199,10 @@ object AppModule {
     @Singleton
     fun provideCheckExistedUsesCases(repository: CheckExistedRepository) : CheckExistedUseCases {
         return CheckExistedUseCases(
-            checkExistedUseCase =  CheckExistedUseCase(repository)
+            checkExistedUseCase =  CheckExistedUseCase(repository),
+            sentMailUseCase = SentMailUseCase(repository),
+            checkPinUseCase = CheckPinUseCase(repository),
+            changePasswordForgotUseCase = ChangePasswordForgotUseCase(repository)
         )
     }
 

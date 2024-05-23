@@ -47,7 +47,8 @@ fun SplashScreen(
                     })
                 },
                 dialogTitle = "Phiên đăng nhập hết hạn",
-                dialogText = "Vui lòng đăng nhập lại."
+                dialogText = "Vui lòng đăng nhập lại.",
+                textButton = "Quay lại trang đăng nhập"
             )
         }
     }

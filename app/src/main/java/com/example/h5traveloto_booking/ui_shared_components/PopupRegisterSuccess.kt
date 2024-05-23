@@ -26,6 +26,7 @@ fun PopupRegisterSuccess(
     onConfirmation: () -> Unit,
     dialogTitle: String,
     dialogText: String,
+    textButton: String
 ) {
     AlertDialog(
         icon = {
@@ -58,7 +59,7 @@ fun PopupRegisterSuccess(
                     contentColor = Color.White
                 ),
             ) {
-                Text("Quay lại trang đăng nhập")
+                Text(text = textButton)
             }
         },
         containerColor = Color.White,

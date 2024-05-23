@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.PrimaryColor
 
@@ -19,12 +20,19 @@ fun SignUpBottom(navController: NavController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Already have an account?", fontSize = 12.sp)
+        Text(text = "Bạn đã có tài khoản?", fontSize = 12.sp)
         Text(
-            text = "Login",
+            text = "Đăng nhập ngay",
             fontSize = 14.sp,
             color = PrimaryColor,
-            modifier = Modifier.clickable { navController.navigate(Screens.LoginScreen.name)}
+            modifier = Modifier.clickable {
+                navController.navigate(Screens.LoginScreen.name) {
+                    launchSingleTop = true
+                    popUpTo(Screens.SignUpScreen.name) {
+                        inclusive = true
+                    }
+                }
+            }
         )
     }
 }
