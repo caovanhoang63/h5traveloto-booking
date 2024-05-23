@@ -47,6 +47,11 @@ class UpdateInformationViewModel @Inject constructor(
             Log.d("Success",it.data.email)
 //            Log.d("Success",it.paging.total.toString())
             _getProfileResponse.value = Result.Success(it)
+            UserShare.User.id = it.data.id
+            UserShare.User.lastName = it.data.lastName
+            UserShare.User.firstName = it.data.firstName
+            UserShare.User.phone = it.data.phone
+            UserShare.User.email = it.data.email
         }
     }
 
@@ -97,6 +102,7 @@ class UpdateInformationViewModel @Inject constructor(
             Log.d("UpdateProfile ViewModel",it.data.toString())
 //            Log.d("Success",it.paging.total.toString())
             _updateProfileResponse.value = Result.Success(it)
+            getProfile()
         }
     }
 }

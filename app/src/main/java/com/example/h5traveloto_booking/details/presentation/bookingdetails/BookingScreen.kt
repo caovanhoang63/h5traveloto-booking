@@ -30,7 +30,6 @@ fun BookingScreen (
         composable(route = Screens.BookingDetailsFillingScreen.name) {
             BookingDetailsFillingScreen(
                 navController = bookingNavController,
-                parentNavController = navController,
                 bookingData = bookingData
             )
         }

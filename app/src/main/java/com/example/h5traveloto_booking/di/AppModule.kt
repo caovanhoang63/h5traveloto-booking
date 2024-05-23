@@ -45,6 +45,7 @@ import com.example.h5traveloto_booking.main.presentation.data.api.Booking.Bookin
 import com.example.h5traveloto_booking.main.presentation.data.api.Favorite.FavoriteApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.HotelApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Hotel.SearchApi
+import com.example.h5traveloto_booking.main.presentation.data.api.Payment.PaymentApi
 import com.example.h5traveloto_booking.main.presentation.data.api.repository.*
 import com.example.h5traveloto_booking.main.presentation.domain.repository.*
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.*
@@ -526,6 +527,33 @@ object AppModule {
     fun provideChatRoomUseCases(repository: ChatRoomRepository): ChatRoomUseCases {
         return ChatRoomUseCases(
             getChatRoomUseCase = ChatRoomUseCase(repository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providePaymentApi(moshi: Moshi,okHttpClient: OkHttpClient) : PaymentApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(PaymentApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePaymentRepository(api : PaymentApi) : PaymentRepository {
+        return PaymentRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun providePaymentUseCase(repository: PaymentRepository) : PaymentUseCases {
+        return PaymentUseCases(
+            getLinkPaymentUseCase = GetLinkPaymentUseCase(repository),
+            executePaymentUseCase = ExecutePaymentUseCase(repository),
+            cancelPaymentUseCase = CancelPaymentUseCase(repository),
+            successPaymentUseCase = SuccessPaymentUseCase(repository)
         )
     }
 

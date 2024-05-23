@@ -5,6 +5,8 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.net.http.SslError
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -32,6 +34,8 @@ import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.payment.VNP_SdkCompletedCallback
 import com.example.h5traveloto_booking.payment.VNPayLibrary
 import com.vnpay.authentication.VNP_AuthenticationActivity
+import okhttp3.*
+import java.io.IOException
 import java.security.MessageDigest
 import java.util.*
 import javax.crypto.Mac
@@ -205,6 +209,7 @@ fun WebViewScreen4(
 
 @Composable
 fun WebViewScreen3(
+    navController: NavController,
     url: String,
     scheme: String,
     onPaymentResult: (paymentResult: String) -> Unit,
@@ -227,7 +232,7 @@ fun WebViewScreen3(
                     //return super.shouldOverrideUrlLoading(view, request)
                     Log.d("URL",request?.url.toString())
                     if (view != null) {
-                        handleShouldOverrideUrlLoading(view, request?.url.toString(), context, scheme, sdkCompletedCallback, onPaymentResult)
+                        handleShouldOverrideUrlLoading(navController,view, request?.url.toString(), context, scheme, sdkCompletedCallback, onPaymentResult)
                     }
                     return true
                 }
@@ -262,6 +267,7 @@ fun WebViewScreen3(
 }
 
 private fun handleShouldOverrideUrlLoading(
+    navController: NavController,
     view: WebView,
     url: String,
     context: Context,
@@ -351,13 +357,23 @@ private fun handleShouldOverrideUrlLoading(
         }
         url.contains("vnp_ResponseCode=24") ->{
             sdkCompletedCallback?.sdkAction("FaildBackAction")
-            onPaymentResult("FaildBackAction")
+            //onPaymentResult("FaildBackAction")
+            executeHttpRequest24(url,onPaymentResult)
+
        //     (context as? Activity)?.finish()
             return
         }
         url.contains("vnp_ResponseCode=00") ->{
          //   sdkCompletedCallback?.sdkAction("SuccessBackAction")
-            onPaymentResult("SuccessBackAction")
+            /*context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW, Uri.parse(
+                        url
+                    )
+                )
+            )*/
+            executeHttpRequest(url,onPaymentResult)
+            //onPaymentResult("SuccessBackAction")
         //    (context as? Activity)?.finish()
             return
         }
@@ -381,6 +397,57 @@ private fun handleShouldOverrideUrlLoading(
         else -> view.loadUrl(url)
     }
 }
+fun executeHttpRequest(url: String, onPaymentResult: (paymentResult: String) -> Unit) {
+    val client = OkHttpClient()
+    val request = Request.Builder()
+        .url(url)
+        .build()
+
+    client.newCall(request).enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            e.printStackTrace()
+            Handler(Looper.getMainLooper()).post {
+                onPaymentResult("SuccessBackAction")
+            }
+        }
+
+        override fun onResponse(call: Call, response: Response) {
+            Handler(Looper.getMainLooper()).post {
+                if (response.isSuccessful) {
+                    onPaymentResult("SuccessBackAction")
+                } else {
+                    onPaymentResult("SuccessBackAction")
+                }
+            }
+        }
+    })
+}
+fun executeHttpRequest24(url: String, onPaymentResult: (paymentResult: String) -> Unit) {
+    val client = OkHttpClient()
+    val request = Request.Builder()
+        .url(url)
+        .build()
+
+    client.newCall(request).enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            e.printStackTrace()
+            Handler(Looper.getMainLooper()).post {
+                onPaymentResult("FaildBackAction")
+            }
+        }
+
+        override fun onResponse(call: Call, response: Response) {
+            Handler(Looper.getMainLooper()).post {
+                if (response.isSuccessful) {
+                    onPaymentResult("FaildBackAction")
+                } else {
+                    onPaymentResult("FaildBackAction")
+                }
+            }
+        }
+    })
+}
+
 fun addUriParameter(uri: Uri, key: String, newValue: String): Uri {
     val params = uri.queryParameterNames
     val newUri = uri.buildUpon().clearQuery()

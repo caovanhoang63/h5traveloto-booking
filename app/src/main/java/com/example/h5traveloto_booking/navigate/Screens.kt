@@ -42,4 +42,7 @@ enum class Screens {
     AddImageInCollectionScreen,
     UpdateCollectionScreen,
     RoomDetailsScreen,
+    PaymentSuccessScreen,
+    PaymentFailedScreen,
+    AboutUsScreen,
 }

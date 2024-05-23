@@ -122,7 +122,7 @@ fun AccountScreen(navController: NavController, nav2Controller: NavController,
                             AppSetting()
                         }
                         item{
-                            SupportAndInformation()
+                            SupportAndInformation(navController)
                         }
                         item{
                             val context = LocalContext.current
@@ -437,7 +437,7 @@ fun AppSetting(){
     }
 }
 @Composable
-fun SupportAndInformation (){
+fun SupportAndInformation (navController: NavController){
     Spacer(modifier = Modifier.height(5.dp))
     GreyText(
         text = "Hỗ trợ và thông tin",
@@ -492,7 +492,9 @@ fun SupportAndInformation (){
 
                 AccountItem(
                     title = "About us",
-                    {},
+                    {
+                        navController.navigate(Screens.AboutUsScreen.name)
+                    },
                     null,
                     true,
                 )

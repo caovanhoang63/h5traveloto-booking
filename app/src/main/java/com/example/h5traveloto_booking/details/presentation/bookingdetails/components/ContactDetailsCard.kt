@@ -18,6 +18,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.h5traveloto_booking.account.AccountViewModel
+import com.example.h5traveloto_booking.account.PersonalInformationViewModel
+import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationViewModel
+import com.example.h5traveloto_booking.main.presentation.MainViewModel
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.theme.*
@@ -26,20 +31,21 @@ import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 
 @Composable
 fun ContactDetailsCard (
-
+    viewModel: UpdateInformationViewModel =hiltViewModel(),
 ) {
     val showContactDialog = remember {
         mutableStateOf(false)
     }
+    var phone by remember { mutableStateOf(UserShare.User.phone?.ifEmpty { "" })}
     var nameText by remember {
         mutableStateOf(TextFieldValue("${UserShare.User.lastName} ${UserShare.User.firstName}"))
     }
     var phoneText by remember {
-        mutableStateOf(TextFieldValue("${UserShare.User.phone}"))
+        mutableStateOf(UserShare.User.phone?.ifEmpty { "" })
     }
-//    var emailText by remember {
-//        mutableStateOf(TextFieldValue(""))
-//    }
+    var emailText by remember {
+        mutableStateOf(UserShare.User.email?.ifEmpty { "" })
+    }
 
     if (showContactDialog.value) {
         Dialog(
@@ -90,7 +96,24 @@ fun ContactDetailsCard (
                    )
                    YSpacer(10)
                    OutlinedTextField(
-                       value = phoneText,
+                       enabled = false,
+                       value = emailText.toString(),
+                       onValueChange = {
+                           emailText = it
+                       },
+                       label = {
+                           Text(
+                               text = "Email",
+                               fontSize = 14.sp
+                           )
+                       },
+                       modifier = Modifier
+                           .height(60.dp)
+                           .fillMaxWidth()
+                   )
+                   YSpacer(10)
+                   OutlinedTextField(
+                       value = phoneText.toString(),
                        onValueChange = {
                            phoneText = it
                        },
@@ -143,7 +166,10 @@ fun ContactDetailsCard (
                        }
 
                        Button(
-                           onClick = { showContactDialog.value = false },
+                           onClick = { showContactDialog.value = false
+                                        viewModel.updateProfile(phone=phoneText)
+                                        viewModel.getProfile()
+                                     },
                            modifier = Modifier
                                .height(65.dp)
                                .width(150.dp)
@@ -162,7 +188,6 @@ fun ContactDetailsCard (
             }
         }
     }
-
     Text(
         text = "Thông tin liên lạc",
         fontSize = 16.sp,
@@ -189,16 +214,16 @@ fun ContactDetailsCard (
                 .padding(12.dp)
         ) {
             Text(
-                text = "${UserShare.User.lastName} ${UserShare.User.firstName}",
+                text = "Họ và tên: ${nameText.text}",
                 fontSize = 16.sp
             )
             Text(
-                text = "${UserShare.User.email}",
+                text = "Email: ${UserShare.User.email}",
                 fontSize = 14.sp,
                 color = Grey500Color
             )
             Text(
-                text = "${UserShare.User.phone}",
+                text = "Số điện thoại: ${phoneText}",
                 fontSize = 14.sp,
                 color = Grey500Color
             )
