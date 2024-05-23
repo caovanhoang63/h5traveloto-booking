@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.details.presentation.bookingdetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -11,6 +12,7 @@ import androidx.wear.compose.material.Button
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingDetailsFillingScreen
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingReviewScreen
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.IdRespondDTO
 import com.example.h5traveloto_booking.navigate.Screens
 
 @Composable
@@ -19,6 +21,17 @@ fun BookingScreen (
     bookingData: CreateBookingDTO,
     viewModel: BookingScreenViewModel = hiltViewModel(),
 ) {
+    // Dummy data
+    val bookingData = CreateBookingDTO(
+        hotelId = "DCWYE7tu7Da8kJd",
+        roomTypeId = "3pcoy6AP1VifpD",
+        roomQuantity = 1,
+        adults = 1,
+        children = 1,
+        startDate = "21-12-2024",
+        endDate = "22-12-2024"
+    )
+
     val bookingNavController = rememberNavController()
 
     NavHost(

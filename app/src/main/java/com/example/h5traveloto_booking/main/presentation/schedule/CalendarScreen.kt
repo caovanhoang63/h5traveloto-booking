@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.schedule
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,17 +16,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.ClickableText
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
 import com.example.h5traveloto_booking.ui_shared_components.DateRangePicker
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.config.CalendarConstants.MIN_DATE
+import com.example.h5traveloto_booking.util.Result
 import com.google.gson.Gson
 import io.wojciechosak.calendar.utils.today
 import kotlinx.coroutines.delay
@@ -36,22 +41,31 @@ import kotlinx.datetime.plus
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 public fun CalendarScreen (
-    bookingList: List<BookingDTO>,
     navController: NavController,
-    parentNavController: NavController
+    parentNavController: NavController,
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val list = List(3) {}
 
-    // Dummy data
+
+    LaunchedEffect(Unit) {
+        viewModel.getUserBookings(state = "expired")
+    }
+    val listCalendarBookingResponse = viewModel.UserBookingsResponse.collectAsState().value
+    val listCalendarBooking = remember {
+        mutableStateOf(listOf<UserBookingDTO>())
+    }
+
+    val hotelInfo = shareDataHotelDetail.getHotelDetails()
+
     val bookingData = CreateBookingDTO(
-        hotelId = "DCWYE7tu7Da8kJd",
+        hotelId = shareDataHotelDetail.getHotelId(),
         roomTypeId = "3pcoy6AP1VifpD",
-        roomQuantity = 1,
-        adults = 1,
-        children = 1,
-        startDate = "21-12-2024",
-        endDate = "22-12-2024"
+        roomQuantity = shareDataHotelDetail.getRoomQuantity(),
+        adults = shareDataHotelDetail.getAdults(),
+        children = shareDataHotelDetail.getChildren(),
+        startDate = shareDataHotelDetail.getStartDateString(),
+        endDate = shareDataHotelDetail.getEndDateString()
     )
 
     Scaffold(
@@ -69,50 +83,74 @@ public fun CalendarScreen (
             }
         }
     ) { innerPadding ->
-        LazyColumn (
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 10.dp)
-        ) {
-            item {
-                Button(
-                    onClick = {
-                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
-                    }
-                ) {
-
+        when(listCalendarBookingResponse) {
+            is Result.Loading -> {
+                Log.d("Schedule Screen", "Calendar is loading")
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator()
                 }
-                BookingCalendar(bookingList = bookingList)
-                YSpacer(height = 5)
             }
-            item {
-                Row (
+            is Result.Error -> {
+                Log.d("Schedule Screen", "Calendar error")
+            }
+            is Result.Success -> {
+                Log.d("Schedule Screen", "Calendar Success")
+                listCalendarBooking.value = listCalendarBookingResponse.data.data
+                LazyColumn (
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp)
+                        .padding(innerPadding)
+                        .padding(horizontal = 10.dp)
                 ) {
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth(0.5f),
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        BoldText(text = "Danh sách đặt phòng")
+                    item {
+                        Button(
+                            onClick = {
+//                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
+                            }
+                        ) {
+
+                        }
+                        BookingCalendar(
+                            bookingList = listCalendarBooking.value,
+                            navController = parentNavController
+                        )
+                        YSpacer(height = 5)
                     }
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        ClickableText(text = "Xem thêm") {
-                            navController.navigate(Screens.ScheduleBookingScreen.name)
+                    item {
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp)
+                        ) {
+                            Row (
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f),
+                                horizontalArrangement = Arrangement.Start
+                            ) {
+                                BoldText(text = "Danh sách đặt phòng")
+                            }
+                            Row (
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                ClickableText(text = "Xem thêm") {
+                                    navController.navigate(Screens.ScheduleBookingScreen.name)
+                                }
+                            }
                         }
                     }
+                    items(listCalendarBooking.value) { bookingData ->
+                        BookingCard(
+                            false,
+                            bookingData = bookingData,
+                            navController = parentNavController
+                        )
+                        YSpacer(height = 10)
+                    }
                 }
             }
-            items(list) {
-                BookingCard(false)
-                YSpacer(height = 10)
-            }
+            else -> Unit
         }
+
     }
 }

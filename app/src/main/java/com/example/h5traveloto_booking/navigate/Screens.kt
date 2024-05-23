@@ -28,6 +28,7 @@ enum class Screens {
     BookingScreen,
     BookingDetailsFillingScreen,
     BookingDetailsReviewScreen,
+    BookingDetailsScreen,
 
     SplashScreen,
     AppNavigation,

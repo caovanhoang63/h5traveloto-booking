@@ -18,6 +18,7 @@ import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
+import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreen
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDetailsScreen
@@ -31,6 +32,7 @@ import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInColl
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollection.DetailCollectionScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
@@ -41,6 +43,7 @@ import com.google.gson.Gson
 fun AppNavigation(startDestination : String ) {
 
     val navController = rememberNavController()
+    LocationProvider.initLocationProvider(LocalContext.current)
 
     NavHost (
         navController = navController,
@@ -113,6 +116,10 @@ fun AppNavigation(startDestination : String ) {
         composable(route = "${Screens.BookingScreen.name}/{bookingData}") { backstabEntry ->
             val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), CreateBookingDTO::class.java)
             BookingScreen(navController = navController, bookingData = bookingData)
+        }
+        composable(route = "${Screens.BookingDetailsScreen.name}/{bookingData}") { backstabEntry ->
+            val bookingData = Gson().fromJson(backstabEntry.arguments?.getString("bookingData"), UserBookingDTO::class.java)
+            BookingDetailsScreen(navController = navController, userBookingData = bookingData)
         }
         composable("webview/{url}"){
                 backStackEntry ->

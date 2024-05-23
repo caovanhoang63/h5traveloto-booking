@@ -4,7 +4,7 @@ import kotlinx.datetime.LocalDate
 
 data class BookingDayState(
     val date: LocalDate,
-    var booking_id: MutableList<String> = mutableListOf<String>(),
+    var booking_id: MutableSet<String> = mutableSetOf<String>(),
     var is_StartDate: Boolean = false,
     var is_MiddleDate: Boolean = false,
     var is_EndDate: Boolean = false,

@@ -14,15 +14,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.*
+import com.example.h5traveloto_booking.share.ShareDataHotelDetail
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.BoldText14
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
+import com.squareup.moshi.Json
 
 @Composable
 fun BookingSummaryCard (
-
+    bookingData: CreateBookingDTO
 ) {
+    val hotelInfor = shareDataHotelDetail.getHotelDetails()
+    val dayOfWeek = listOf(
+        "Thứ 2",
+        "Thứ 3",
+        "Thứ 4",
+        "Thứ 5",
+        "Thứ 6",
+        "Thứ 7",
+        "Chủ nhật"
+    )
+
     Card (
         colors = CardDefaults.cardColors(
             containerColor = Grey50Color,
@@ -45,7 +61,7 @@ fun BookingSummaryCard (
                     modifier = Modifier.size(20.dp)
                 )
                 XSpacer(10)
-                BoldText("Đâu cũng được hotel")
+                BoldText(hotelInfor!!.name)
             }
             Row {
                 Text(
@@ -54,7 +70,8 @@ fun BookingSummaryCard (
                 )
                 XSpacer(20)
                 Text(
-                    text = "Thứ 2, 20-5-2024 (14:00)",
+//                    text = "Thứ 2, 20-5-2024 (14:00)",
+                    text = "${dayOfWeek.getOrNull(shareDataHotelDetail.getStartDate().dayOfWeek.ordinal)}, ${shareDataHotelDetail.getStartDateString()} (14:00)",
                     fontSize = 14.sp
                 )
             }
@@ -65,7 +82,7 @@ fun BookingSummaryCard (
                 )
                 XSpacer(20)
                 Text(
-                    text = "Thứ 3, 21-5-2024 (12:00)",
+                    text = "${dayOfWeek.getOrNull(shareDataHotelDetail.getEndDate().dayOfWeek.ordinal)}, ${shareDataHotelDetail.getEndDateString()} (12:00)",
                     fontSize = 14.sp
                 )
             }

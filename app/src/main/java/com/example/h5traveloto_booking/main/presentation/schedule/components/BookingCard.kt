@@ -1,5 +1,7 @@
 package com.example.h5traveloto_booking.main.presentation.schedule.components
 
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -17,16 +19,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.GreenColor
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.google.gson.Gson
 
 @Composable
 public fun BookingCard(
-    isStatusVisible: Boolean
+    isStatusVisible: Boolean,
+    bookingData: UserBookingDTO,
+    navController: NavController
 ) {
     Card (
         colors = CardDefaults.cardColors(
@@ -37,7 +45,11 @@ public fun BookingCard(
             .height(120.dp)
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
-//            .clip(shape = RoundedCornerShape(8.dp))
+            .clickable(
+                onClick = {
+                    navController.navigate("${Screens.BookingDetailsScreen.name}/${Uri.encode(Gson().toJson(bookingData))}")
+                }
+            )
     ) {
         Row (
             modifier = Modifier

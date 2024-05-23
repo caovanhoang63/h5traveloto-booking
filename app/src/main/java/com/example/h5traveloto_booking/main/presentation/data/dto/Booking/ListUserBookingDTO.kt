@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class ListUserBookingDTO (
     @Json(name = "data")
-    val data: List<HotelDTO>,
+    val data: List<UserBookingDTO>,
     @Json(name = "paging")
     val paging: Paging,
     @Json(name = "filter")
