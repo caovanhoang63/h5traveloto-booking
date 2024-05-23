@@ -28,12 +28,14 @@ import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailTag
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomFacilitiesList
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
 import com.example.h5traveloto_booking.util.Result
+import com.google.gson.Gson
 
 @Composable
 fun RoomDetailsScreen(
@@ -41,6 +43,16 @@ fun RoomDetailsScreen(
     viewModel: RoomDetailsScreenViewModel = hiltViewModel(),
     Object: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data,
 ) {
+    val bookingData = CreateBookingDTO(
+        hotelId = shareDataHotelDetail.getHotelId(),
+        roomTypeId = shareDataHotelDetail.getRoomTypeId(),
+        roomQuantity = shareDataHotelDetail.getRoomQuantity(),
+        adults = shareDataHotelDetail.getAdults(),
+        children = shareDataHotelDetail.getChildren(),
+        startDate = shareDataHotelDetail.getStartDateString(),
+        endDate = shareDataHotelDetail.getEndDateString()
+    )
+
     LaunchedEffect(Unit) {
         viewModel.getRoomFacilitiesDetails(Object.id)
     }
@@ -95,7 +107,7 @@ fun RoomDetailsScreen(
 
                 PrimaryButton(
                     onClick = {
-                        /*navController.navigate(Screens.BookingDetailsFillingScreen.name)*/
+                        navController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
                     },
                     text = "Đặt Phòng",
                     modifier = Modifier

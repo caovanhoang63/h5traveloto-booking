@@ -75,7 +75,7 @@ fun BookingReviewScreen (
         bottomBar = {
             Button(
                 onClick = {
-//                    viewModel.createBooking()
+                    viewModel.createBooking(bookingData)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

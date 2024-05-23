@@ -56,18 +56,6 @@ public fun CalendarScreen (
         mutableStateOf(listOf<UserBookingDTO>())
     }
 
-    val hotelInfo = shareDataHotelDetail.getHotelDetails()
-
-    val bookingData = CreateBookingDTO(
-        hotelId = shareDataHotelDetail.getHotelId(),
-        roomTypeId = "3pcoy6AP1VifpD",
-        roomQuantity = shareDataHotelDetail.getRoomQuantity(),
-        adults = shareDataHotelDetail.getAdults(),
-        children = shareDataHotelDetail.getChildren(),
-        startDate = shareDataHotelDetail.getStartDateString(),
-        endDate = shareDataHotelDetail.getEndDateString()
-    )
-
     Scaffold(
         modifier = Modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -102,13 +90,6 @@ public fun CalendarScreen (
                         .padding(horizontal = 10.dp)
                 ) {
                     item {
-                        Button(
-                            onClick = {
-//                        parentNavController.navigate("${Screens.BookingScreen.name}/${Gson().toJson(bookingData)}")
-                            }
-                        ) {
-
-                        }
                         BookingCalendar(
                             bookingList = listCalendarBooking.value,
                             navController = parentNavController
