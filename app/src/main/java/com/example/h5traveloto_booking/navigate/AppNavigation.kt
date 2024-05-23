@@ -24,11 +24,13 @@ import com.example.h5traveloto_booking.details.presentation.hoteldetails.HotelDe
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.ListHotels
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListPolicies
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.ListReviews
+import com.example.h5traveloto_booking.details.presentation.roomdetails.RoomDetailsScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.AddImageInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInCollection.AddHotelInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollection.DetailCollectionScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
@@ -140,6 +142,16 @@ fun AppNavigation(startDestination : String ) {
                 }
             }
             WebViewScreen3(url = url, scheme = "resultactivity",onPaymentResult = onPaymentResult)
+        }
+
+        /*composable(route ="${Screens.RoomDetailsScreen.name}/{Object}" ) {
+                backStackEntry ->
+            val Object = Gson().fromJson(backStackEntry.arguments?.getString("Object"), com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data::class.java)
+            RoomDetailsScreen(navController = navController, Object = Object)
+
+        }*/
+        composable(route = Screens.RoomDetailsScreen.name) {
+            RoomDetailsScreen(navController = navController)
         }
     }
 }

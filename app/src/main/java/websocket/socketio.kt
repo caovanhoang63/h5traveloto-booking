@@ -24,7 +24,6 @@ class SocketHandler {
     @Synchronized
     fun setSocket() {
         try {
-
             mSocket = IO.socket(URI.create("wss://api.h5traveloto.site"), IO.Options().apply {
                 reconnection = true
                 reconnectionAttempts = 3
@@ -67,8 +66,6 @@ class SocketHandler {
         mSocket.on(Socket.EVENT_CONNECT) {
             Log.d("Socket token", token )
             mSocket.emit("authenticate", token)
-            mSocket.emit("user_joined", "66472bbdf70ec79d3c5d6709")
-
         }
 
         return mSocket
@@ -87,6 +84,12 @@ class SocketHandler {
     @Synchronized
     fun joinRoom(hotelId: String) {
         mSocket.emit("user_joined", hotelId)
+    }
+    @Synchronized
+    fun onJoinedRoom() {
+        mSocket.on("user_joined") {
+            Log.d("User Joined", it.toString())
+        }
     }
    @Synchronized
    fun sendMessage(sendMessageDTO: SendMessageDTO) {

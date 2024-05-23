@@ -39,3 +39,19 @@ fun BoldText20(text: String ) {
         text = text
     )
 }
+@Composable
+fun BoldText16(text: String ) {
+    Text(
+        fontSize = 20.sp,
+        fontWeight =  FontWeight.Bold,
+        text = text
+    )
+}
+@Composable
+fun BoldText24(text: String ) {
+    Text(
+        fontSize = 24.sp,
+        fontWeight =  FontWeight.Bold,
+        text = text
+    )
+}

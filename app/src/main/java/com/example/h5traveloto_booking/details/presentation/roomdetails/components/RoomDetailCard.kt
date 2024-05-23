@@ -1,5 +1,7 @@
 package com.example.h5traveloto_booking.details.presentation.roomdetails.components
 
+import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,28 +27,20 @@ import com.example.h5traveloto_booking.details.presentation.data.dto.listRooms.L
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.MultiColorText
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.ui_shared_components.PrimaryButton
+import com.google.gson.Gson
 
 @Composable
 fun RoomDetailCard(
     navController: NavController,
     roomDTO: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data
 ) {
-    val imagelist = listOf(
-        //dummy data
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=",
-    )
+    val imagelist = roomDTO.images?.map { it.url }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -57,23 +51,34 @@ fun RoomDetailCard(
 
         ) {
         Column(modifier = Modifier.padding(15.dp)) {
-            LazyRow(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(15.dp)
-            ) {
-                imagelist.forEachIndexed { index, image ->
-                    item {
-                        AsyncImage(
-                            model = image,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(165.dp)
-                                .height(110.dp)
-                                .clip(RoundedCornerShape(8.dp)),
-                            contentScale = ContentScale.Crop,
-                        )
+            if ((roomDTO.images != null && roomDTO.images.isEmpty() || roomDTO.images.isNullOrEmpty()) )
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(110.dp)
+                    .background(Color.LightGray), contentAlignment = Alignment.Center) {
+                    Text(text = "Không có ảnh phòng", style = TextStyle(fontWeight = FontWeight.Bold))
+                }
+
+            else{
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(15.dp)
+                ) {
+                    imagelist?.forEachIndexed { index, image ->
+                        item {
+                            AsyncImage(
+                                model = image,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .width(165.dp)
+                                    .height(110.dp)
+                                    .clip(RoundedCornerShape(8.dp)),
+                                contentScale = ContentScale.Crop,
+                            )
+                        }
                     }
                 }
             }
+
             YSpacer(13)
             Row(
                 modifier = Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween
@@ -119,7 +124,23 @@ fun RoomDetailCard(
 
                     }
                     PrimaryButton(
-                        onClick = { navController.navigate(Screens.HotelDetailsScreen.name) },
+                        onClick = {
+                            try {
+                                Log.d("RoomDetailCard", "RoomDetailCard: $roomDTO")
+                                Log.d("RoomDetailCard", "RoomDetailCard: ${Gson().toJson(roomDTO)}")
+                                Log.d(
+                                    "RoomDetailCard", "RoomDetailCard: ${
+                                        Gson().toJson(roomDTO.images)
+                                    }"
+                                )
+                                shareDataHotelDetail.setRoomTypeId(roomDTO.id)
+                                shareDataHotelDetail.setRoomDTO(roomDTO)
+//                                navController.navigate("${Screens.RoomDetailsScreen.name}/${Gson().toJson(roomDTO)}")
+                                navController.navigate(Screens.RoomDetailsScreen.name)
+                            } catch (e: Exception) {
+                                Log.e("RoomDetailCard", "Error navigating to RoomDetailsScreen", e)
+                            }
+                        },
                         text = "Chọn Phòng",
                     )
                 }

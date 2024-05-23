@@ -31,3 +31,15 @@ fun PrimaryText16(text : String,modifier: Modifier = Modifier,style: TextStyle )
 
     )
 }
+@Composable
+fun PrimaryText20(text : String,modifier: Modifier = Modifier,style: TextStyle ) {
+    Text(
+        modifier = Modifier.then(modifier),
+        fontSize = 20.sp,
+        fontWeight =  FontWeight.Bold,
+        color = PrimaryColor,
+        text = text,
+        style = style,
+
+        )
+}

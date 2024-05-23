@@ -19,6 +19,22 @@ class ShareDataHotelDetail {
     private var selectedStartDate: String = ""
     private var personOption: Triple<Int, Int, Int> = Triple(1, 1, 1)
     private var hotelName : String = "";
+    private var roomTypeId:String="";
+    private lateinit var roomDTO: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data
+
+    fun setRoomDTO(roomDTO: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data){
+        this.roomDTO = roomDTO
+    }
+    fun getRoomDTO(): com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data{
+        return roomDTO
+    }
+
+    fun setRoomTypeId(roomTypeId: String){
+        this.roomTypeId = roomTypeId
+    }
+    fun getRoomTypeId(): String{
+        return roomTypeId
+    }
 
     fun setHotelName(hotelName: String){
         this.hotelName = hotelName

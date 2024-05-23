@@ -1,6 +1,7 @@
 package com.example.h5traveloto_booking.di
 
 import android.content.Context
+import android.util.Log
 import com.example.h5traveloto_booking.auth.data.remote.api.AuthenticateApi
 import com.example.h5traveloto_booking.auth.data.remote.api.CheckExistedApi
 import com.example.h5traveloto_booking.auth.data.remote.api.RegisterApi
@@ -12,21 +13,29 @@ import com.example.h5traveloto_booking.auth.domain.repository.CheckExistedReposi
 import com.example.h5traveloto_booking.auth.domain.repository.RegisterRepository
 import com.example.h5traveloto_booking.auth.domain.use_case.*
 import com.example.h5traveloto_booking.chat.presentation.data.api.ChatListApi
+import com.example.h5traveloto_booking.chat.presentation.data.api.ChatRoomApi
 import com.example.h5traveloto_booking.chat.presentation.data.dto.ChatListDTO
 import com.example.h5traveloto_booking.chat.presentation.data.repository.ChatListRepositoryImpl
+import com.example.h5traveloto_booking.chat.presentation.data.repository.ChatRoomRepositoryImpl
 import com.example.h5traveloto_booking.chat.presentation.domain.repository.ChatListRepository
+import com.example.h5traveloto_booking.chat.presentation.domain.repository.ChatRoomRepository
 import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatListUseCase
 import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatListUseCases
+import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatRoomUseCase
+import com.example.h5traveloto_booking.chat.presentation.domain.usecases.ChatRoomUseCases
+import com.example.h5traveloto_booking.details.presentation.data.api.RoomFacilitiesDetails.RoomFacilitiesDetailsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.hotelDetails.HotelDetailsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.ListRoomsApi
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.HotelDetailsRepositoryImpl
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListReviewsRepositoryImpl
 import com.example.h5traveloto_booking.details.presentation.data.api.repository.ListRoomsRepositoryImpl
+import com.example.h5traveloto_booking.details.presentation.data.api.repository.RoomFacilitiesDetailsRepositoryImpl
 import com.example.h5traveloto_booking.details.presentation.data.api.reviews.ListReviewsApi
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
 import com.example.h5traveloto_booking.details.presentation.domain.repository.HotelDetailsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListReviewsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
+import com.example.h5traveloto_booking.details.presentation.domain.repository.RoomFacilitiesDetailsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.*
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
@@ -71,7 +80,7 @@ object AppModule {
         } catch (e: Exception) {
             // Handle the exception here
             // You can log the exception, show an error message, or take appropriate actions
-            e.printStackTrace()
+            Log.d("OkHttpClient error",e.printStackTrace().toString())
             // Return a default OkHttpClient instance or throw a custom exception
             OkHttpClient.Builder().build()
         }
@@ -460,6 +469,57 @@ object AppModule {
     fun provideBookingUseCases(repository: BookingRepository): BookingUseCases {
         return BookingUseCases(
             bookingUseCase = BookingUseCase(repository)
+        )
+    }
+
+    //
+    @Provides
+    @Singleton
+
+    fun provideRoomFacilitiesDetails(moshi: Moshi): RoomFacilitiesDetailsApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(RoomFacilitiesDetailsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRoomFacilitiesDetailsRepository(api: RoomFacilitiesDetailsApi): RoomFacilitiesDetailsRepository {
+        return RoomFacilitiesDetailsRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRoomFacilitiesDetailsUseCases(repository: RoomFacilitiesDetailsRepository): RoomFacilitiesDetailsUseCases {
+        return RoomFacilitiesDetailsUseCases(
+             getRoomFacilitiesDetailsUseCase = RoomFacilitiesDetailsUseCase(repository)
+        )
+    }
+    //
+    //
+    @Provides
+    @Singleton
+    fun provideChatRoom(moshi: Moshi,okHttpClient: OkHttpClient): ChatRoomApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
+            .build()
+            .create(ChatRoomApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatRoomRepository(api: ChatRoomApi): ChatRoomRepository {
+        return ChatRoomRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideChatRoomUseCases(repository: ChatRoomRepository): ChatRoomUseCases {
+        return ChatRoomUseCases(
+            getChatRoomUseCase = ChatRoomUseCase(repository)
         )
     }
 

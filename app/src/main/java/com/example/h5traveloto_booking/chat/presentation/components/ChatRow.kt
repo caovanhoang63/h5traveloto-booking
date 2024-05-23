@@ -27,12 +27,12 @@ fun ChatRow(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = if (chat.isFromCustomer) Alignment.Start else Alignment.End
+        horizontalAlignment = if (!chat.isFromCustomer) Alignment.Start else Alignment.End
     ) {
         Box(
             modifier = Modifier
                 .background(
-                    if (chat.isFromCustomer) Color(0XFFFFE1CC) else Color(0XFFFFF1BF),
+                    if (!chat.isFromCustomer) Color(0XFFFFE1CC) else Color(0XFFFFF1BF),
                     RoundedCornerShape(100.dp)
                 ),
             contentAlignment = Alignment.Center

@@ -67,10 +67,24 @@ fun HotelDetailsScreen(
     var tengicungduoc: com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO? =
         null
     val imageUrlList = hotelInfo!!.images.map { it.url }
+    var currentImageUrl by remember {
+        mutableStateOf(imageUrlList[0])
+    }
+    var isLogoOpen by remember {
+        mutableStateOf(false)
+    }
+    var isImageOpen by remember {
+        mutableStateOf(false)
+    }
+    when (isLogoOpen) {
+        true -> DialogWithImage(onDismissRequest = { isLogoOpen = false }, imageURL = hotelInfo.logo.url)
+        false -> {}
+    }
+    when (isImageOpen) {
+        true -> DialogWithImage(onDismissRequest = { isImageOpen = false }, imageURL = currentImageUrl)
+        false -> {}
+    }
 
-
-    val imgURL =
-        "https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI="
     Scaffold(
         bottomBar = {
             Row(
@@ -81,7 +95,7 @@ fun HotelDetailsScreen(
             ) {
                 Column {
                     GreyText(text = "Giá/phòng/đêm từ")
-                    PrimaryText16(
+                    PrimaryText20(
                         text = "${hotelInfo!!.displayPrice?.formatPrice()} VND",
                         style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     )
@@ -115,7 +129,10 @@ fun HotelDetailsScreen(
                 BoldText(text = "Chi tiết khách sạn")
                 PrimaryIconButton(
                     DrawableId = R.drawable.message_circle,
-                    onClick = { navController.navigate(Screens.ChatScreen.name) },
+                    onClick = {
+                        navController.navigate(Screens.ChatScreen.name);
+                        shareDataHotelDetail.setHotelName(hotelInfo.name)
+                    },
                     alt = ""
                 )
             }
@@ -129,6 +146,12 @@ fun HotelDetailsScreen(
 
                 is Result.Error -> {
                     Log.d("HotelDetails ", "loi roi")
+                }
+
+                is Result.Loading -> {
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator()
+                    }
                 }
 
                 is Result.Success -> {
@@ -149,7 +172,8 @@ fun HotelDetailsScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .height(246.dp)
-                                        .clip(RoundedCornerShape(8.dp)),
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .clickable { isLogoOpen = true },
                                     contentScale = ContentScale.Crop,
                                 )
                                 IconButton(modifier = Modifier
@@ -228,7 +252,8 @@ fun HotelDetailsScreen(
                                             modifier = Modifier
                                                 .width(98.dp)
                                                 .height(82.dp)
-                                                .clip(RoundedCornerShape(8.dp)),
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .clickable { currentImageUrl = imageDTO; isImageOpen = true },
                                             contentScale = ContentScale.Crop,
                                         )
                                         XSpacer(width = 16)
@@ -248,7 +273,13 @@ fun HotelDetailsScreen(
                                 PrimaryText(
                                     text = "Xem tất cả",
                                     modifier = Modifier.clickable {
-                                        navController.navigate("${Screens.ListPolicies.name}/${Gson().toJson(tengicungduoc)}")
+                                        navController.navigate(
+                                            "${Screens.ListPolicies.name}/${
+                                                Gson().toJson(
+                                                    tengicungduoc
+                                                )
+                                            }"
+                                        )
                                     })
                             }
                             YSpacer(height = 8)

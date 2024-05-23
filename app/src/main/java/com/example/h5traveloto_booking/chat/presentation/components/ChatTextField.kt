@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -26,7 +27,10 @@ import websocket.socketHandler1
 fun ChatTextField(
     text: String,
     modifier: Modifier,
-    onValueChange: (String) -> Unit
+    onclick: () -> Unit = {},
+    onValueChange: (String) -> Unit,
+    focusManager: FocusManager
+
 ) {
     TextField(
         value = text, onValueChange = { onValueChange(it) },
@@ -49,12 +53,9 @@ fun ChatTextField(
             ChatSendButton(
                 Icons.Default.Send,
                 onClick = {
-                    Log.d("ChatTextField", "Send message: $text")
-                    socketHandler1.sendMessage(
-                        SendMessageDTO(
-                            "66472bbdf70ec79d3c5d6709", text
-                        )
-                    )
+                    onclick()
+                    focusManager.clearFocus() // Đóng bàn phím
+
                 },
             )
         },

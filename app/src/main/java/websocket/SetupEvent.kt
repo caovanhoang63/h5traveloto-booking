@@ -11,5 +11,5 @@ fun setupEvent(socketHandler: websocket.SocketHandler) {
     socketHandler.onAuthenticateFail()
     socketHandler.onMessageSent()
     socketHandler.onCannotSendMessage()
-    socketHandler.onNewMessage()
+
 }

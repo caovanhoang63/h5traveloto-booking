@@ -20,8 +20,10 @@ import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.ListHotelsViewModel
 import com.example.h5traveloto_booking.details.presentation.hoteldetails.components.HotelDetailCard
 import com.example.h5traveloto_booking.details.presentation.roomdetails.ListRoomViewModel
+import com.example.h5traveloto_booking.details.presentation.roomdetails.RoomDetailsScreenViewModel
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.NotFoundRoomTypes
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
@@ -31,18 +33,26 @@ import com.example.h5traveloto_booking.util.Result
 import kotlin.math.log
 
 @Composable
-fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltViewModel()) {
+fun ListRooms(
+    navController: NavController,
+    viewModel: ListRoomViewModel = hiltViewModel(),
+
+) {
     LaunchedEffect(Unit) {
         viewModel.getListRooms()
+
     }
     val listRoomResponse = viewModel.ListRoomsResponse.collectAsState().value
     Log.d("ListRooms View", listRoomResponse.toString())
 
+
+
     Scaffold(
         topBar = {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .background(Grey50Color)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Grey50Color)
             ) {
                 Column(modifier = Modifier.padding(top = 21.dp, bottom = 21.dp, start = 27.dp, end = 27.dp)) {
                     Row(
@@ -106,11 +116,13 @@ fun ListRooms(navController: NavController, viewModel: ListRoomViewModel = hiltV
                             val rooms = listRoomResponse.data.data
                             rooms.forEachIndexed { index, hotelDTO ->
                                 RoomDetailCard(roomDTO = rooms[index], navController = navController)
+
                                 if (index < rooms.lastIndex) {
                                     Spacer(modifier = Modifier.height(15.dp))
                                 }
                             }
                         }
+
                         else -> Unit
                     }
                 }
