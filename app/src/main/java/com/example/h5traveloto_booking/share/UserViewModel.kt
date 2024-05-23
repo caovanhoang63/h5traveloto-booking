@@ -2,6 +2,8 @@ package com.example.h5traveloto_booking.share
 
 import androidx.lifecycle.ViewModel
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Avatar
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Profile
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.squareup.moshi.Json
 import javax.inject.Singleton
 

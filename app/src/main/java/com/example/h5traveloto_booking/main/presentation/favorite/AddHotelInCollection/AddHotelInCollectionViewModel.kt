@@ -39,9 +39,11 @@ class AddHotelInCollectionViewModel @Inject constructor(
                 addHotelsDataResponse.value = Result.Error(errorResponse.message)
             }
             else if (it is Exception) {
+                addHotelsDataResponse.value = Result.Error("errorResponse.message")
                 Log.d("AddHotel ViewModel", it.javaClass.name)
             }
         }.collect{
+            Log.d("AddHotel ViewModel", it.data.toString())
             addHotelsDataResponse.value = Result.Success(it)
         }
     }

@@ -63,9 +63,10 @@ class AllFavoriteViewModel @Inject constructor(
                 val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
                 Log.d("AllFavorite ViewModel Error", errorResponse.message)
                 Log.d("AllFavorite ViewModel Error", errorResponse.log)
-                allSavedHotelsDataResponse.value = Result.Error(errorResponse.message)
+                unSavedHotelsDataResponse.value = Result.Error(errorResponse.message)
             }
             else if (it is Exception) {
+                unSavedHotelsDataResponse.value = Result.Error("errorResponse.message")
                 Log.d("AllFavorite ViewModel", it.javaClass.name)
             }
         }.collect{

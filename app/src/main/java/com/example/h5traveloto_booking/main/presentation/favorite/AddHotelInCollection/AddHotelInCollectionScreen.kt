@@ -31,6 +31,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.DataX
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteViewModel
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.HotelItemTag
 import com.example.h5traveloto_booking.main.presentation.favorite.HotelTag
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.ScreenBackGround
 import com.example.h5traveloto_booking.ui_shared_components.*
 import com.example.h5traveloto_booking.util.Result
@@ -40,6 +41,7 @@ import com.example.h5traveloto_booking.util.ui_shared_components.TextBoxSingle
 @Composable
 fun AddHotelInCollectionScreen(navController: NavController,
                                collectionId:String,
+                               new:Boolean,
                                AllViewModel : AllFavoriteViewModel = hiltViewModel(),
                                viewModel: AddHotelInCollectionViewModel= hiltViewModel()
 )
@@ -80,7 +82,9 @@ fun AddHotelInCollectionScreen(navController: NavController,
                     ) {
 
                         Box(modifier = Modifier.fillMaxWidth()) {
-                            PrimaryIconButton(R.drawable.backarrow48, onClick = {navController.navigateUp() /*navController.popBackStack*/},"", modifier = Modifier )
+                            PrimaryIconButton(R.drawable.backarrow48, onClick = {
+
+                            },"", modifier = Modifier )
                             XSpacer(60)
                             Text(
                                 fontSize = 16.sp,
@@ -103,6 +107,10 @@ fun AddHotelInCollectionScreen(navController: NavController,
                                 viewModel.addHotelInCollection(collectionId =collectionId, hotelId = it.id.toString() )
                             }
                         }
+                        repeat(if (new) 4 else 1){
+                            navController.popBackStack()
+                        }
+                       // navController.navigate(Screens.FavoriteScreen.name)
                     },
                         modifier = Modifier
                             .fillMaxWidth(),

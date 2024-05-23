@@ -35,7 +35,6 @@ import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetail
 import com.example.h5traveloto_booking.details.presentation.domain.repository.HotelDetailsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListReviewsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
-import com.example.h5traveloto_booking.details.presentation.domain.repository.RoomFacilitiesDetailsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.usecases.*
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ChangePasswordApi
 import com.example.h5traveloto_booking.main.presentation.data.api.Account.ProfileApi
@@ -130,16 +129,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticateRepository(api: AuthenticateApi): AuthenticateRepository {
+    fun provideAuthenticateRepository(api : AuthenticateApi) : AuthenticateRepository {
         return AuthenticateRepositoryImpl(api)
     }
 
 
     @Provides
     @Singleton
-    fun provideAuthenticateUsesCases(repository: AuthenticateRepository): AuthenticateUseCases {
+    fun provideAuthenticateUsesCases(repository: AuthenticateRepository) : AuthenticateUseCases {
         return AuthenticateUseCases(
-            authenticateUseCase = AuthenticateUseCase(repository),
+            authenticateUseCase =  AuthenticateUseCase(repository),
             renewTokenUseCase = RenewTokenUseCase(repository),
             refreshTokenUseCase = RefreshTokenUseCase(repository)
         )
@@ -147,7 +146,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHotelApi(moshi: Moshi): HotelApi {
+    fun provideHotelApi(moshi: Moshi) : HotelApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -157,7 +156,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHotelRepository(api: HotelApi): HotelRepository {
+    fun provideHotelRepository(api : HotelApi) : HotelRepository {
         return HotelRepositoryImpl(api)
     }
 
@@ -179,7 +178,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCheckExistedApi(moshi: Moshi): CheckExistedApi {
+    fun provideCheckExistedApi(moshi: Moshi) : CheckExistedApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -189,21 +188,21 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCheckExistedRepository(api: CheckExistedApi): CheckExistedRepository {
+    fun provideCheckExistedRepository(api : CheckExistedApi) : CheckExistedRepository {
         return CheckExistedRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideCheckExistedUsesCases(repository: CheckExistedRepository): CheckExistedUseCases {
+    fun provideCheckExistedUsesCases(repository: CheckExistedRepository) : CheckExistedUseCases {
         return CheckExistedUseCases(
-            checkExistedUseCase = CheckExistedUseCase(repository)
+            checkExistedUseCase =  CheckExistedUseCase(repository)
         )
     }
 
     @Provides
     @Singleton
-    fun provideSearchApi(moshi: Moshi): SearchApi {
+    fun provideSearchApi(moshi: Moshi) : SearchApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -213,13 +212,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSearchRepository(api: SearchApi): SearchRepository {
+    fun provideSearchRepository(api : SearchApi) : SearchRepository {
         return SearchRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideSearchUsesCases(repository: SearchRepository): SearchUseCases {
+    fun provideSearchUsesCases(repository: SearchRepository) : SearchUseCases {
         return SearchUseCases(
             listDistrictsUseCase = ListDistrictsUseCase(repository),
             searchSuggestionUseCase = SearchSuggestionUseCase(repository),
@@ -231,7 +230,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProfileApi(moshi: Moshi): ProfileApi {
+    fun provideProfileApi(moshi: Moshi) : ProfileApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -241,13 +240,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(api: ProfileApi): ProfileRepository {
+    fun provideProfileRepository(api : ProfileApi) : ProfileRepository {
         return ProfileRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideAccountUseCases(repository: ProfileRepository): AccountUseCases {
+    fun provideAccountUseCases(repository: ProfileRepository) : AccountUseCases {
         return AccountUseCases(
             getProfileUseCase = ProfileUseCase(repository),
             updateProfileUseCase = UpdateProfileUseCase(repository)
@@ -256,7 +255,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideChangePasswordApi(moshi: Moshi): ChangePasswordApi {
+    fun provideChangePasswordApi(moshi: Moshi) : ChangePasswordApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -266,13 +265,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideChangePasswordRepository(api: ChangePasswordApi): ChangePasswordRepository {
+    fun provideChangePasswordRepository(api : ChangePasswordApi) : ChangePasswordRepository {
         return ChangePasswordRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun providePasswordUseCases(repository: ChangePasswordRepository): PasswordUseCases {
+    fun providePasswordUseCases(repository: ChangePasswordRepository) : PasswordUseCases {
         return PasswordUseCases(
             changePasswordUseCases = ChangePasswordUseCase(repository)
         )
@@ -281,7 +280,7 @@ object AppModule {
     //
     @Provides
     @Singleton
-    fun provideHotelDetailsApi(moshi: Moshi, okHttpClient: OkHttpClient): HotelDetailsApi {
+    fun provideHotelDetailsApi(moshi: Moshi,okHttpClient: OkHttpClient) : HotelDetailsApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
@@ -291,13 +290,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHotelDetailsRepository(api: HotelDetailsApi): HotelDetailsRepository {
+    fun provideHotelDetailsRepository(api : HotelDetailsApi) : HotelDetailsRepository {
         return HotelDetailsRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideHotelDetailsUseCases(repository: HotelDetailsRepository): HotelDetailsUseCases {
+    fun provideHotelDetailsUseCases(repository: HotelDetailsRepository) : HotelDetailsUseCases {
         return HotelDetailsUseCases(
             getHotelDetailsUseCase = HotelDetailsUseCase(repository)
         )
@@ -306,7 +305,7 @@ object AppModule {
     //
     @Provides
     @Singleton
-    fun provideListRoomsApi(moshi: Moshi): ListRoomsApi {
+    fun provideListRoomsApi(moshi: Moshi) : ListRoomsApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -316,13 +315,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideListRoomsRepository(api: ListRoomsApi): ListRoomsRepository {
+    fun provideListRoomsRepository(api : ListRoomsApi) : ListRoomsRepository {
         return ListRoomsRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideListRoomsUseCases(repository: ListRoomsRepository): ListRoomsUseCases {
+    fun provideListRoomsUseCases(repository: ListRoomsRepository) : ListRoomsUseCases {
         return ListRoomsUseCases(
             getListRoomsUseCase = ListRoomsUseCase(repository)
         )
@@ -331,7 +330,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUploadApi(moshi: Moshi): UploadApi {
+    fun provideUploadApi(moshi: Moshi) : UploadApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -341,13 +340,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUploadRepository(api: UploadApi): UploadRepository {
+    fun provideUploadRepository(api : UploadApi) : UploadRepository {
         return UploadRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideUploadUseCases(repository: UploadRepository): UploadUseCases {
+    fun provideUploadUseCases(repository: UploadRepository) : UploadUseCases {
         return UploadUseCases(
             uploadFileUseCase = UploadFileUseCase(repository)
         )
@@ -356,7 +355,7 @@ object AppModule {
     //
     @Provides
     @Singleton
-    fun provideChatList(moshi: Moshi, okHttpClient: OkHttpClient): ChatListApi {
+    fun provideChatList(moshi: Moshi,okHttpClient: OkHttpClient) : ChatListApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
@@ -366,21 +365,20 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideChatListRepository(api: ChatListApi): ChatListRepository {
+    fun provideChatListRepository(api : ChatListApi) : ChatListRepository {
         return ChatListRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideListChatUseCases(repository: ChatListRepository): ChatListUseCases {
+    fun provideListChatUseCases(repository: ChatListRepository) :ChatListUseCases {
         return ChatListUseCases(
             getChatListUseCase = ChatListUseCase(repository)
         )
     }
-
     @Provides
     @Singleton
-    fun provideSocketHandler(): websocket.SocketHandler {
+    fun provideSocketHandler() : websocket.SocketHandler {
         return websocket.SocketHandler()
     }
 
@@ -388,7 +386,7 @@ object AppModule {
     //
     @Provides
     @Singleton
-    fun provideBookingApi(moshi: Moshi, okHttpClient: OkHttpClient): BookingApi {
+    fun provideBookingApi(moshi: Moshi,okHttpClient: OkHttpClient) : BookingApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
@@ -398,22 +396,21 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideBookingRepository(api: BookingApi): BookingRepository {
+    fun provideBookingRepository(api : BookingApi) : BookingRepository {
         return BookingRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideListUserBookingUseCases(repository: BookingRepository): ListUserBookingUseCases {
+    fun provideListUserBookingUseCases(repository: BookingRepository) : ListUserBookingUseCases {
         return ListUserBookingUseCases(
             getListUserBookingUseCase = ListUserBookingUseCase(repository)
         )
     }
-
     //
     @Provides
     @Singleton
-    fun provideListReviews(moshi: Moshi, okHttpClient: OkHttpClient): ListReviewsApi {
+    fun provideListReviews(moshi: Moshi,okHttpClient: OkHttpClient) : ListReviewsApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
@@ -423,13 +420,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideListReviewsRepository(api: ListReviewsApi): ListReviewsRepository {
+    fun provideListReviewsRepository(api : ListReviewsApi) : ListReviewsRepository {
         return ListReviewsRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideListReviewsUseCases(repository: ListReviewsRepository): ListReviewsUseCases {
+    fun provideListReviewsUseCases(repository: ListReviewsRepository) :ListReviewsUseCases {
         return ListReviewsUseCases(
             geListReviewsUseCases = ListReviewsUseCase(repository)
         )
@@ -437,7 +434,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFavoriteApi(moshi: Moshi, okHttpClient: OkHttpClient): FavoriteApi {
+    fun provideFavoriteApi(moshi: Moshi,okHttpClient: OkHttpClient) : FavoriteApi {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient)
@@ -447,20 +444,24 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFavoriteRepository(api: FavoriteApi): FavoriteRepository {
+    fun provideFavoriteRepository(api : FavoriteApi) : FavoriteRepository {
         return FavoriteRepositoryImpl(api)
     }
 
     @Provides
     @Singleton
-    fun provideGetCollectionUseCase(repository: FavoriteRepository): FavoriteUseCases {
+    fun provideFavoriteUseCase(repository: FavoriteRepository) : FavoriteUseCases {
         return FavoriteUseCases(
             getCollectionUseCase = CollectionUseCase(repository),
             getAllSavedHotelsUseCase = AllSavedHotelsUseCase(repository),
             unsaveHotelUseCase = UnSaveHotelUseCase(repository),
             getHotelsByCollectionIdUseCase = GetHotelsByCollectionIdUseCase(repository),
             deleteHotelUseCase = DeleteHotelUseCase(repository),
-            addHotelUseCase = AddHotelUseCase(repository)
+            addHotelUseCase = AddHotelUseCase(repository),
+            createCollectionUseCase = CreateCollectionUseCase(repository),
+            deleteCollectionUseCase = DeleteCollectionUseCase(repository),
+            updateCollectionUseCase = UpdateCollectionUseCase(repository),
+            getCollectionByCollectionIdUseCase = GetCollectionByCollectionIdUseCase(repository)
         )
     }
 

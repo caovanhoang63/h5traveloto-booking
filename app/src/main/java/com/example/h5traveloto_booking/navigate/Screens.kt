@@ -40,5 +40,6 @@ enum class Screens {
     AddHotelInCollectionScreen,
     DetailCollectionScreen,
     AddImageInCollectionScreen,
+    UpdateCollectionScreen,
     RoomDetailsScreen,
 }

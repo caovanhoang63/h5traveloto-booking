@@ -51,6 +51,7 @@ class AccountViewModel @Inject constructor(
             }
             else if (it is Exception) {
                 Log.d("ChangePassword ViewModel", it.javaClass.name)
+                _profileDataResponse.value = Result.Error("loi roi")
             }
         }.collect{
             Log.d("Account ViewModel","Ok")

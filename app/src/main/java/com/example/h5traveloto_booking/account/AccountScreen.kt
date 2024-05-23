@@ -502,9 +502,9 @@ fun SupportAndInformation (){
 }
 @Composable
 fun SignOut(navController: NavController, viewModel: AccountViewModel= hiltViewModel(),context: Context){
-        PrimaryButton(onClick = {/*viewModel.signOut(navController)*/
+        PrimaryButton(onClick = {viewModel.signOut(navController)
           val url = createPayment(id = "1", amount = "100000", navController = navController, context = context)
-            navController.navigate("webview/${Uri.encode(url)}")
+            //navController.navigate("webview/${Uri.encode(url)}")
            // openSdk(context = context)
         } ,"Đăng xuất",modifier = Modifier
             .fillMaxWidth()

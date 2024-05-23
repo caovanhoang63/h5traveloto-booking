@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.favorite
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.scrollable
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
@@ -41,7 +43,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.h5traveloto_booking.R
 import com.example.h5traveloto_booking.account.*
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Avatar
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.CollectionDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Data
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.ScreenBackGround
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -51,6 +55,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
+import com.google.gson.Gson
 import kotlin.math.absoluteValue
 
 
@@ -66,11 +71,21 @@ fun FavoriteScreen(navController: NavController,
     val CollectionDataResponse = viewModel.CollectionDataResponse.collectAsState().value
     when (CollectionDataResponse) {
         is Result.Error -> {
-        }
-        Result.Idle -> {
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    {
+                            Image(
+                                painterResource(id = R.drawable.error404),
+                                contentDescription = "Error",
+                                modifier = Modifier.fillMaxSize()
+                            )
+                    }
+                }
+        is Result.Idle -> {
 
         }
-        Result.Loading -> {
+        is Result.Loading -> {
             CircleLoading()
         }
 
@@ -250,7 +265,7 @@ fun FavoriteScreen(navController: NavController,
 }
 
 @Composable
-fun Album(Data : CollectionDTO,navController: NavController){
+fun Album(data : CollectionDTO,navController: NavController){
     Row( modifier = Modifier
         .fillMaxWidth()
         .padding(10.dp),
@@ -265,21 +280,13 @@ fun Album(Data : CollectionDTO,navController: NavController){
             ClickableText("Xem tất cả", onClick = {})
         }
     }
-    var listData = Data.data
-    var bookmarks2: List<Bookmark> = listOf(
-        Bookmark(id = 1, name = "Bookmark 1", imageRes = R.drawable.bookmark1),
-        Bookmark(id = 2, name = "Bookmark 2", imageRes = R.drawable.bookmark2),
-        Bookmark(id = 3, name = "Bookmark 3", imageRes = R.drawable.bookmark3),
-        Bookmark(id = 4, name = "Bookmark 4", imageRes = R.drawable.bookmark3),
-       // Bookmark(id = 5, name = "Bookmark 5", imageRes = R.drawable.bookmark3),
-    )
-
+    var listData = data.data
     var bookmarks: List<Bookmark2> = listData.map{
         data->
         Bookmark2(
             id=data.id,
             name = data.name,
-            imageRes = data.cover.url
+            imageRes = data.cover?.url
         )
     }
     var listCollection by remember {
@@ -290,21 +297,7 @@ fun Album(Data : CollectionDTO,navController: NavController){
     val checkAdd = EX.id
     Log.d("HEHEHE", EX.id.toString())
     listCollection.add(0,EX)
-    /*LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(5.dp),
-        modifier = Modifier
-            .clickable(onClick = {})
-            .padding(10.dp)
-            .height(270.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        userScrollEnabled = false
-    ){
-        items(bookmarks2){
-                item -> BookmarkItem2(bookmark = item)
-        }
-    }*/
+
     Row( modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 10.dp),
@@ -316,7 +309,22 @@ fun Album(Data : CollectionDTO,navController: NavController){
             elevation = CardDefaults.cardElevation(5.dp),
             colors = CardDefaults.cardColors(Color.White)
         ) {
-            GridColumn(items = listCollection, navController = navController, checkAdd = checkAdd.toString())
+            //GridColumn(items = listCollection, navController = navController, checkAdd = checkAdd.toString())
+            LazyVerticalGrid(
+           columns = GridCells.Fixed(2),
+           contentPadding = PaddingValues(5.dp),
+           modifier = Modifier
+               .clickable(onClick = {})
+               .padding(10.dp)
+               .height(if(listCollection.size <=2) 170.dp else 310.dp),
+           verticalArrangement = Arrangement.spacedBy(16.dp),
+           horizontalArrangement = Arrangement.spacedBy(10.dp),
+           userScrollEnabled = false,
+       ){
+           items(listCollection){
+                   item -> BookmarkItem2(item,listData, navController = navController, modifier = Modifier,checkAdd.toString())
+           }
+       }
         }
     }
 }
@@ -333,15 +341,15 @@ fun GridColumn(
             .padding(10.dp),
            // .height(270.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
         items.chunked(columns).forEach { rowItems ->
-            RowItem(rowItems, navController = navController,checkAdd)
+           // RowItem(rowItems, navController = navController,checkAdd)
         }
     }
 }
 
-@Composable
+/*@Composable
 private fun RowItem(rowItems: List<Bookmark2>,navController: NavController,checkAdd: String) {
     Row(
         modifier = Modifier
@@ -350,10 +358,10 @@ private fun RowItem(rowItems: List<Bookmark2>,navController: NavController,check
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         rowItems.forEach { item ->
-            BookmarkItem2(item,rowItems, navController = navController, modifier = Modifier.weight(0.5f),checkAdd)
+            BookmarkItem2(item,rowItems, navController = navController, modifier = Modifier,checkAdd)
         }
     }
-}
+}*/
 @Composable
 fun HotelSeen(
     hotelList: List<HotelTag>,
@@ -424,6 +432,7 @@ fun ImageCarousel(
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .padding(bottom = 10.dp)
     ) {
         HorizontalPager(
             count = images.size,
@@ -511,7 +520,7 @@ fun BookmarkItem1(
 @Composable
 fun BookmarkItem2(
     bookmark: Bookmark2,
-    Items:List<Bookmark2>,
+    Items:List<Data>,
     navController: NavController,
     modifier: Modifier,
     checkAdd: String
@@ -526,17 +535,19 @@ fun BookmarkItem2(
                 .clickable(indication=null,
                     interactionSource = remember { MutableInteractionSource() },
                     onClick = {
-
                         if(bookmark.id ==checkAdd){
                             navController.navigate(Screens.AddCollectionScreen.name)
                         }else{
-                            navController.navigate("detailcollection/${bookmark.id}")
+                            val data = Items.find { it.id == bookmark.id }
+                            val Collection = Gson().toJson(data)
+                            //val Collection = data?.cover?.url
+                            navController.navigate("detailcollection/${bookmark.id}/${bookmark.name}/${Uri.encode(Collection)}")
                         }
                     }
                 )
         ) {
             AsyncImage(
-                model = bookmark.imageRes,
+                model = bookmark.imageRes ?: R.drawable.example,
                 contentDescription = "Hotel Image",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -590,79 +601,84 @@ fun HotelItemTag(
 
 ) {
     var favoriteState by remember { mutableStateOf(isFavorite) }
-
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .padding(16.dp)
-            .fillMaxWidth()
-    ) {
-        Box(modifier = Modifier.height(180.dp)) {
-            AsyncImage(
-                model = imagePainter,
-                contentDescription = "Hotel Image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.FillBounds
-            )
-            IconButton(
-                onClick = {
-                    favoriteState = !favoriteState
-                    onFavoriteClick()
-                },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(
-                        id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
-                    ),
-                    contentDescription = "Favorite Icon",
-                    tint = if (favoriteState) Color.Red else Color.White
+    Card(modifier = Modifier.wrapContentSize()
+        ,
+        elevation = CardDefaults.cardElevation(5.dp),
+        colors = CardDefaults.cardColors(Color.White)){
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .background(Color.White, shape = RoundedCornerShape(8.dp))
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Box(modifier = Modifier.height(180.dp)) {
+                AsyncImage(
+                    model = imagePainter,
+                    contentDescription = "Hotel Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.FillBounds
                 )
+                IconButton(
+                    onClick = {
+                        favoriteState = !favoriteState
+                        onFavoriteClick()
+                    },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(
+                            id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+                        ),
+                        contentDescription = "Favorite Icon",
+                        tint = if (favoriteState) Color.Red else Color.White
+                    )
+                }
             }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = hotelName,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-       // Spacer(modifier = Modifier.height(4.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            repeat(5) { index ->
-                Icon(
-                    imageVector = ImageVector.vectorResource(
-                        id = if (index < star.toInt()) R.drawable.baseline_star_16
-                        else R.drawable.baseline_star_outline_16
-                    ),
-                    contentDescription = "Star Rating",
-                    tint = if (index < star.toInt()) Color.Yellow else Color.Transparent,
-                    modifier = Modifier.size(16.dp)
-                )
-            }
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically){
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(text = "%.1f/10".format(rating), color = Color.Blue, fontSize = 14.sp,fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(text = "($reviewCount)", color = Color.Gray, fontSize = 14.sp)
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Spacer(modifier = Modifier.width(4.dp))
-
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "${price.formatPrice()} VND",
-                color = Color.Red,
-                fontSize = 14.sp
-            ) // Sử dụng hàm mở rộng để định dạng giá tiền
+                text = hotelName,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            // Spacer(modifier = Modifier.height(4.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                repeat(5) { index ->
+                    Icon(
+                        imageVector = ImageVector.vectorResource(
+                            id = if (index < star.toInt()) R.drawable.baseline_star_16
+                            else R.drawable.baseline_star_outline_16
+                        ),
+                        contentDescription = "Star Rating",
+                        tint = if (index < star.toInt()) Color.Yellow else Color.Transparent,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically){
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "%.1f/10".format(rating), color = Color.Blue, fontSize = 14.sp,fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "($reviewCount)", color = Color.Gray, fontSize = 14.sp)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Text(
+                    text = "${price.formatPrice()} VND",
+                    color = Color.Red,
+                    fontSize = 14.sp
+                ) // Sử dụng hàm mở rộng để định dạng giá tiền
+            }
         }
     }
+
 }
 fun Long.formatPrice(): String {
     val formatter = java.text.DecimalFormat("#,###")

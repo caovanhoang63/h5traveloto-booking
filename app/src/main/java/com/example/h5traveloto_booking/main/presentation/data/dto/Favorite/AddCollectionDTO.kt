@@ -1,15 +1,20 @@
 package com.example.h5traveloto_booking.main.presentation.data.dto.Favorite
 
 
+import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Avatar
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
 data class AddCollectionDTO(
-    @Json(name = "cover")
-    val cover: Cover,
-    @Json(name = "is_private")
-    val isPrivate: Boolean,
-    @Json(name = "name")
-    val name: String
-)
+    val cover: Avatar?=null,
+    val isPrivate: Boolean?=null,
+    val name: String?=null
+){
+    fun toMap(): Map<String, Any> {
+        val map = mutableMapOf<String, Any>()
+        if (cover != null) map["cover"] = cover
+        if (isPrivate != null) map["is_private"] = isPrivate
+        if (name != null) map["name"] = name
+        return map
+    }
+}

@@ -46,6 +46,8 @@ class FavoriteViewModel@Inject constructor(
             }
             else if (it is Exception) {
                 Log.d("Favorite ViewModel", it.javaClass.name)
+                collectionDataResponse.value = Result.Error("errorResponse.message")
+
             }
         }.collect{
             Log.d("Favorite ViewModel","Ok")

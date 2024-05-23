@@ -31,10 +31,13 @@ import com.example.h5traveloto_booking.main.presentation.favorite.AddCollection.
 import com.example.h5traveloto_booking.main.presentation.favorite.AddHotelInCollection.AddHotelInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Data
+import com.example.h5traveloto_booking.main.presentation.favorite.AddImageCollection.AddImageInCollectionScreen
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.AllFavoriteScreen
 import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollection.DetailCollectionScreen
+import com.example.h5traveloto_booking.main.presentation.favorite.UpdateCollectionScreen.UpdateCollectionScreen
 import com.example.h5traveloto_booking.payment.WebViewScreen2
 import com.example.h5traveloto_booking.main.presentation.map.LocationProvider
 import com.google.gson.Gson
@@ -95,22 +98,44 @@ fun AppNavigation(startDestination : String ) {
         composable(route = Screens.AddCollectionScreen.name ) {
             AddCollectionScreen(navController = navController)
         }
-        composable(route = Screens.AddHotelInCollectionScreen.name){
-            AddHotelInCollectionScreen(navController = navController, collectionId = "")
+        composable(route = "${Screens.AddHotelInCollectionScreen.name}/{CollectionId}/{new}"){
+            backStackEntry ->
+            val collectionId = backStackEntry.arguments?.getString("CollectionId")
+            val isNew = Gson().fromJson(backStackEntry.arguments?.getString("new"),Boolean::class.java)
+            if(collectionId!=null)
+                AddHotelInCollectionScreen(navController = navController,collectionId, new =isNew )
         }
-        composable(route = Screens.AddImageInCollectionScreen.name ) {
-            AddImageInCollectionScreen(navController = navController)
+        composable(route = "${Screens.AddImageInCollectionScreen.name}/{CollectionName}") {
+            backStackEntry->
+            val collectionName = backStackEntry.arguments?.getString(("CollectionName"))
+            if(collectionName!=null){
+                AddImageInCollectionScreen(navController = navController,collectionName)
+            }
         }
-        composable(route="detailcollection/{CollectionID}",
-            arguments = listOf(navArgument("CollectionID")
-            {type = NavType.StringType }
-            )
-        ) {
+        composable(route = "${Screens.UpdateCollectionScreen.name}/{collectionName}/{collectionId}/{collection}") {
+            backStackEntry->
+            val collectionId = backStackEntry.arguments?.getString("collectionId")
+            val collectionName = backStackEntry.arguments?.getString("collectionName")
+            val Collection = Gson().fromJson(backStackEntry.arguments?.getString("collection"),Data::class.java)
+
+            if(collectionId!=null&&collectionName!=null)
+            UpdateCollectionScreen(navController = navController,
+                collectionId = collectionId,
+                collectionName = collectionName,
+                collection = Collection)
+        }
+        composable(route="detailcollection/{CollectionID}/{CollectionName}/{Collection}")
+         {
             backStackEntry ->
             val collectionID = backStackEntry.arguments?.getString("CollectionID")
+            val collectionName = backStackEntry.arguments?.getString("CollectionName")
+             val Collection = Gson().fromJson(backStackEntry.arguments?.getString("Collection"),Data::class.java)
             Log.d("hehehee",collectionID.toString())
-            if (collectionID != null) {
-                DetailCollectionScreen(navController = navController, collectionID = collectionID)
+            if (collectionID != null&&collectionName!=null&&Collection!=null ) {
+                DetailCollectionScreen(navController = navController,
+                    collectionID = collectionID,
+                    collectionName =collectionName,
+                    collection = Collection)
             }
         }
         composable(route = "${Screens.BookingScreen.name}/{bookingData}") { backstabEntry ->

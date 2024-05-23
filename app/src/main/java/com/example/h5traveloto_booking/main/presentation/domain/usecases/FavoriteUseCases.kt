@@ -6,5 +6,9 @@ data class FavoriteUseCases(
     val unsaveHotelUseCase: UnSaveHotelUseCase,
     val getHotelsByCollectionIdUseCase: GetHotelsByCollectionIdUseCase,
     val deleteHotelUseCase: DeleteHotelUseCase,
-    val addHotelUseCase : AddHotelUseCase
+    val addHotelUseCase : AddHotelUseCase,
+    val createCollectionUseCase : CreateCollectionUseCase,
+    val deleteCollectionUseCase: DeleteCollectionUseCase,
+    val updateCollectionUseCase : UpdateCollectionUseCase,
+    val getCollectionByCollectionIdUseCase: GetCollectionByCollectionIdUseCase
 )
