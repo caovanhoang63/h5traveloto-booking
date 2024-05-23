@@ -47,4 +47,10 @@ enum class Screens {
     PaymentSuccessScreen,
     PaymentFailedScreen,
     AboutUsScreen,
+
+    //forgot password
+    ForgotPasswordScreen,
+    EmailForgot,
+    PasswordForgot,
+    PinForgot,
 }

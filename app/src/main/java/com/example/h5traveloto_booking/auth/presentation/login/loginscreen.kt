@@ -111,7 +111,10 @@ fun LoginScreen(navController: NavController,
                 Text(
                     text = "Forgot your password",
                     fontSize = 12.sp,
-                    modifier = Modifier.clickable { }
+                    color = PrimaryColor,
+                    modifier = Modifier.clickable {
+                        navController.navigate(Screens.ForgotPasswordScreen.name)
+                    }
                 )
             }
             Spacer(modifier = Modifier.height(40.dp))

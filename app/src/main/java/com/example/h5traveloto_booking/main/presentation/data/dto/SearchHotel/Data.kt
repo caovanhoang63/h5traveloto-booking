@@ -34,6 +34,8 @@ data class Data(
     val star: Int,
     @Json(name = "status")
     val status: Int,
+    @Json(name = "rating")
+    val rating: Float,
     @Json(name = "total_rating")
     val totalRating: Int,
     @Json(name = "total_room_type")

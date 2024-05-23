@@ -20,6 +20,7 @@ import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
 import com.example.h5traveloto_booking.chat.presentation.AllChatScreen
+import com.example.h5traveloto_booking.auth.presentation.forgotpassword.ForgotPasswordScreen
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
 import com.example.h5traveloto_booking.chat.presentation.components.AllChatCard
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingDetailsScreen
