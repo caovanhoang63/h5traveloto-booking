@@ -4,8 +4,13 @@ package com.example.h5traveloto_booking
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.WindowManager
+import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +24,7 @@ import com.example.h5traveloto_booking.details.presentation.roomdetails.RoomDeta
 import com.example.h5traveloto_booking.navigate.AppNavigation
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.navigate.SplashScreen
+import com.example.h5traveloto_booking.share.BackStack
 import com.example.h5traveloto_booking.theme.H5travelotobookingTheme
 import dagger.hilt.android.AndroidEntryPoint
 import websocket.SocketHandler
@@ -32,9 +38,9 @@ class MainActivity @Inject constructor(
 ) : ComponentActivity (
 ) {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             H5travelotobookingTheme {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -44,8 +50,13 @@ class MainActivity @Inject constructor(
             }
         }
     }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
-
+        when (keyCode) {
+            KeyEvent.KEYCODE_BACK -> BackStack.callBackIndexNavBar()
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 }
 
 @Composable

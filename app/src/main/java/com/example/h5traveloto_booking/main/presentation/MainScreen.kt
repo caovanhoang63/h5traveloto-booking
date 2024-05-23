@@ -37,6 +37,7 @@ import com.example.h5traveloto_booking.main.presentation.home.HomeScreen
 import com.example.h5traveloto_booking.main.presentation.homenavigate.HomeNavigation
 import com.example.h5traveloto_booking.main.presentation.schedule.ScheduleScreen
 import com.example.h5traveloto_booking.navigate.Screens
+import com.example.h5traveloto_booking.share.BackStack
 import com.example.h5traveloto_booking.theme.PrimaryColor
 
 
@@ -58,12 +59,11 @@ fun MainScreen(
     profileViewModel: AccountViewModel = hiltViewModel()
 ) {
 
-    LaunchedEffect(Unit){
-        profileViewModel.getProfile()
-    }
+
 
     val mainNavController = rememberNavController()
     var presses by remember { mutableIntStateOf(0) }
+
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
@@ -105,6 +105,30 @@ fun MainScreen(
     )
     var selectedItemIndex by rememberSaveable { (mutableIntStateOf(0)) }
 
+    LaunchedEffect(Unit){
+        profileViewModel.getProfile()
+        BackStack.setIndexNavBar {
+            if(mainNavController.previousBackStackEntry?.destination?.route == Screens.HomeNavigation.name) {
+                selectedItemIndex = 0
+                Log.d("BackStack","$selectedItemIndex")
+            }else if (mainNavController.previousBackStackEntry?.destination?.route == Screens.ScheduleScreen.name) {
+                selectedItemIndex = 1
+                Log.d("BackStack","$selectedItemIndex")
+
+            }else if (mainNavController.previousBackStackEntry?.destination?.route == Screens.FavoriteScreen.name) {
+                selectedItemIndex = 2
+                Log.d("BackStack","$selectedItemIndex")
+
+            }else if (mainNavController.previousBackStackEntry?.destination?.route == Screens.AccountScreen.name) {
+                selectedItemIndex = 3
+                Log.d("BackStack","$selectedItemIndex")
+
+            }
+        }
+    }
+
+
+
     Scaffold(
         bottomBar = {
                     NavigationBar (
@@ -118,9 +142,20 @@ fun MainScreen(
                                 selected = selectedItemIndex == index ,
                                 onClick =  {
                                     selectedItemIndex = index
-                                    mainNavController.navigate(item.route) {
-                                        popUpTo(Screens.HomeNavigation.name) {
-                                            inclusive = false
+                                    if(item.route == Screens.HomeNavigation.name) {
+                                        mainNavController.navigate(item.route) {
+                                            launchSingleTop = true
+                                            popUpTo(Screens.HomeNavigation.name) {
+                                                inclusive = false
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        mainNavController.navigate(item.route) {
+                                            launchSingleTop = true
+                                            popUpTo(item.route) {
+                                                inclusive = false
+                                            }
                                         }
                                     }
                                 },
