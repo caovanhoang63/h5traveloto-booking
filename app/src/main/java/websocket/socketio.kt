@@ -1,16 +1,16 @@
 package websocket
 
 import android.util.Log
-import com.example.h5traveloto_booking.account.personal_information.getRealPathFromUri
 import com.example.h5traveloto_booking.chat.presentation.data.dto.SendMessageDTO
-import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
+import io.socket.emitter.Emitter
 import org.json.JSONObject
 import java.net.URI
 import java.net.URISyntaxException
 import javax.inject.Singleton
+
 
 class SocketHandler {
     private var token = ""
@@ -113,12 +113,40 @@ class SocketHandler {
             Log.d("Cannot Send Message", it.toString())
         }
     }
-    @Synchronized
-    fun onNewMessage() {
-        mSocket.on("new_message") {
-            Log.d("New Message", it.toString())
+
+
+    /*class MessageListener : Emitter.Listener {
+        override fun call(vararg args: Any?) {
+            Log.d("New message",args[0].toString())
         }
     }
+
+    @Synchronized
+    fun onNewMessage() {
+        val messageListener = MessageListener()
+        mSocket.on("new_message", messageListener)
+
+    }*/
+    // Định nghĩa một callback để trả về giá trị của args[0]
+    interface MessageCallback {
+        fun onMessageReceived(message: Any?)
+    }
+
+    class MessageListener(private val callback: MessageCallback) : Emitter.Listener {
+        override fun call(vararg args: Any?) {
+            // Gọi callback khi nhận được tin nhắn mới
+            callback.onMessageReceived(args[0])
+        }
+    }
+
+    @Synchronized
+    fun onNewMessage(callback: MessageCallback) {
+        val messageListener = MessageListener(callback)
+        mSocket.on("new_message", messageListener)
+    }
+
+
+
 
 
 

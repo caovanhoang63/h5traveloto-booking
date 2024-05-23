@@ -6,12 +6,12 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Data(
+    @Json(name = "id")
+    val id: String = "",
     @Json(name = "created_at")
     val createdAt: String = "",
     @Json(name = "from")
     val from: String = "",
-    @Json(name = "id")
-    val id: String = "",
     @Json(name = "is_from_customer")
     val isFromCustomer: Boolean = true,
     @Json(name = "message")
