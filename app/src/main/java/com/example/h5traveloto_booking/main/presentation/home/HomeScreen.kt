@@ -262,6 +262,7 @@ fun HomeScreen(
                                 hotels.forEachIndexed { index, hotelDTO ->
                                     item {
                                         HotelTagLarge(hotelDTO, onClick = {
+                                            viewModel.postClickHotel(hotelDTO.id)
                                             shareDataHotelDetail.setHotelDetails(hotelDTO)
                                             shareDataHotelDetail.setHotelId(hotelDTO.id)
                                             shareDataHotelDetail.LogData()
@@ -286,11 +287,23 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         BoldText("Địa điểm nổi bật")
-                        ClickableText("See all", {})
+                        Text(
+                            text = "See all",
+                            fontSize = 16.sp,
+                            color = if(viewModel.checkDataProminent()) PrimaryColor else Grey500Color,
+                            modifier = Modifier.clickable {
+                                if(viewModel.checkData()){
+                                    shareHotelDataViewModel.setIsCurrentLocation(false)
+                                    shareHotelDataViewModel.setListHotel((listProminentHotel as Result.Success).data)
+                                    shareHotelDataViewModel.setOnClickBooking(false)
+                                    navAppController.navigate(Screens.ListHotels.name)
+                                }
+                            }
+                        )
                     }
                     when(listProminentHotel){
                         is Result.Idle -> {
-
+                            viewModel.setStateProminentHotelLoading()
                         }
                         is Result.Loading -> {
                             Box( contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
@@ -306,11 +319,13 @@ fun HomeScreen(
                                 if(hotels!= null){
                                     hotels.forEachIndexed { index, hotelDTO ->
                                             HotelTagSmall(hotelDTO, onClick = {
+                                                viewModel.postClickHotel(hotelDTO.id)
                                                 shareDataHotelDetail.setHotelDetails(hotelDTO)
                                                 shareDataHotelDetail.setHotelId(hotelDTO.id)
                                                 shareDataHotelDetail.LogData()
                                                 navAppController.navigate(Screens.HotelDetailsScreen.name)
                                             })
+                                            YSpacer(12)
                                         if (index >= 3) {
                                             return@Column
                                         }

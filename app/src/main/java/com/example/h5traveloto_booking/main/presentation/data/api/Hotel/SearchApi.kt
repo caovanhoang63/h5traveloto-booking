@@ -5,6 +5,7 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Search.Suggest
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.SearchRoomTypeDTO
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
@@ -31,5 +32,10 @@ interface SearchApi {
     @GET("search/hotels/prominent")
     suspend fun searchProminentHotels(
         @Query("limit") limit: Int,
+    ) : SearchHotelDTO
+
+    @GET("search/hotels/viewed")
+    suspend fun searchViewedHotels(
+        @Header("Authorization") token : String,
     ) : SearchHotelDTO
 }

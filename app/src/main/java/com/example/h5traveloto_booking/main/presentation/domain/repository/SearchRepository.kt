@@ -13,4 +13,5 @@ interface SearchRepository {
     suspend fun searchHotels(params: SearchHotelParams): SearchHotelDTO
     suspend fun searchRoomTypes(params: SearchRoomTypeParams) : SearchRoomTypeDTO
     suspend fun searchProminentHotels(limit: Int) : SearchHotelDTO
+    suspend fun searchViewedHotels(token: String) : SearchHotelDTO
 }

@@ -5,5 +5,6 @@ data class SearchUseCases (
     val searchSuggestionUseCase: SearchSuggestionUseCase,
     val searchHotelUseCase: SearchHotelUseCase,
     val searchRoomTypeUseCase: SearchRoomTypeUseCase,
-    val getProminentHotelUseCase: GetProminentHotelUseCase
+    val getProminentHotelUseCase: GetProminentHotelUseCase,
+    val searchViewedHotelsUseCase: SearchViewedHotelsUseCase,
 )
