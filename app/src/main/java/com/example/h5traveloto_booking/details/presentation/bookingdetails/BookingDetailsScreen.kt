@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.details.presentation.bookingdetails
 
+import android.util.Log
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,6 +34,7 @@ import com.example.h5traveloto_booking.details.presentation.bookingdetails.compo
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.screens.BookingDetailsScreenViewModel
 import com.example.h5traveloto_booking.details.presentation.data.dto.reviews.CreateReviewDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.Image
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
 import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
@@ -41,6 +43,7 @@ import com.example.h5traveloto_booking.theme.*
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.util.Result
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 
@@ -51,7 +54,6 @@ fun BookingDetailsScreen (
     viewModel: BookingDetailsScreenViewModel = hiltViewModel()
 ) {
     shareDataHotelDetail.setHotelId(userBookingData.hotel.id)
-
 
     val state by remember {
         mutableStateOf(userBookingData.state)
@@ -382,6 +384,94 @@ fun BookingDetailsScreen (
 
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.getRoomTypeById(userBookingData.roomTypeId)
+        viewModel.getRoomTypeFacility(userBookingData.roomTypeId)
+    }
+
+    val isLoadingRoomType = remember {
+        mutableStateOf(true)
+    }
+    val isLoadingRoomTypeFacility = remember {
+        mutableStateOf(true)
+    }
+
+    val roomTypeResponse = viewModel.RoomType.collectAsState().value
+    val roomTypeFacilityResponse = viewModel.RoomTypeFacility.collectAsState().value
+
+    var roomName by remember {
+        mutableStateOf("")
+    }
+    var roomBedDouble by remember {
+        mutableStateOf(0)
+    }
+    var roomBedKing by remember {
+        mutableStateOf(0)
+    }
+    var roomBedQueen by remember {
+        mutableStateOf(0)
+    }
+    var roomBedSingle by remember {
+        mutableStateOf(0)
+    }
+    var roomMaxCustomer by remember {
+        mutableStateOf(0)
+    }
+    var roomImages by remember {
+        mutableStateOf(listOf<com.example.h5traveloto_booking.details.presentation.data.dto.roomtypebyid.Image>())
+    }
+    var roomPrice by remember {
+        mutableStateOf(0)
+    }
+    var roomFreeCancel by remember {
+        mutableStateOf(false)
+    }
+    var roomBreakFast by remember {
+        mutableStateOf(false)
+    }
+    var roomPayInHotel by remember {
+        mutableStateOf(false)
+    }
+
+
+    when (roomTypeResponse) {
+        is Result.Loading -> {
+            Log.d("BookingDetails Screen", "RoomType is loading")
+        }
+        is Result.Error -> {
+            Log.d("BookingDetails Screen", "RoomType error")
+        }
+        is Result.Success -> {
+            Log.d("BookingDetails Screen", "RoomType success")
+            roomName = roomTypeResponse.data.data.name
+            roomBedDouble = roomTypeResponse.data.data.bed.double
+            roomBedKing = roomTypeResponse.data.data.bed.king
+            roomBedQueen = roomTypeResponse.data.data.bed.queen
+            roomBedSingle = roomTypeResponse.data.data.bed.single
+            roomMaxCustomer = roomTypeResponse.data.data.maxCustomer
+            roomImages = if (roomTypeResponse.data.data.images != null) roomTypeResponse.data.data.images
+            else listOf<com.example.h5traveloto_booking.details.presentation.data.dto.roomtypebyid.Image>()
+            roomFreeCancel = roomTypeResponse.data.data.freeCancel
+            roomBreakFast = roomTypeResponse.data.data.breakFast
+            roomPayInHotel = roomTypeResponse.data.data.payInHotel
+            isLoadingRoomType.value = false
+        }
+        else -> Unit
+    }
+    when (roomTypeFacilityResponse) {
+        is Result.Loading -> {
+            Log.d("BookingDetails Screen", "RoomTypeFacility is loading")
+        }
+        is Result.Error -> {
+            Log.d("BookingDetails Screen", "RoomTypeFacility error")
+        }
+        is Result.Success -> {
+            Log.d("BookingDetails Screen", "RoomTypeFacility success")
+            isLoadingRoomTypeFacility.value = false
+        }
+        else -> Unit
+    }
+
     Scaffold (
         topBar = {
             Column (
@@ -414,6 +504,10 @@ fun BookingDetailsScreen (
                     )
                 }
                 Row (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 0.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     when (state) {
@@ -449,7 +543,10 @@ fun BookingDetailsScreen (
                             Text(
                                 text = "đã hết thời gian chờ",
                                 fontSize = 14.sp,
-                                color = Color.Black
+                                color = Color.Black,
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
                         }
                         else -> Unit
@@ -490,378 +587,411 @@ fun BookingDetailsScreen (
             }
         }
     ) { innerPadding ->
-        LazyColumn (
-            modifier = Modifier
-                .padding(innerPadding)
-        ) {
-            item {
-                Column (
-                    modifier = Modifier
-                        .background(color = Grey50Color)
-                        .fillMaxWidth()
-                        .padding(24.dp, 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-                        text = userBookingData.hotel.name,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Divider(
+        if (isLoadingRoomType.value || isLoadingRoomTypeFacility.value) {
+//            Box(contentAlignment = Alignment.Center, modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+//                CircularProgressIndicator()
+//            }
+        } else {
+            LazyColumn (
+                modifier = Modifier
+                    .padding(innerPadding)
+            ) {
+                item {
+                    Column (
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        color = Grey100Color,
-                        thickness = 2.dp
-                    )
-                    Row (
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier
+                            .background(color = Grey50Color)
                             .fillMaxWidth()
-                    ) {
-                        Column (
-                            verticalArrangement = Arrangement.spacedBy(5.dp)
-                        ) {
-                            Text(
-                                text = "Check-in",
-                                color = Grey500Color,
-                                fontSize = 14.sp
-                            )
-                            Text(
-                                text = "Thứ ${shareDataHotelDetail.getStartDate().dayOfWeek.value}, ${shareDataHotelDetail.getStartDate().dayOfMonth} Thg ${shareDataHotelDetail.getStartDate().monthNumber}",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                text = shareDataHotelDetail.getCheckInTime(),
-                                color = Grey500Color,
-                                fontSize = 14.sp
-                            )
-                        }
-                        Column (
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.moon),
-                                contentDescription = "",
-                                tint = PrimaryColor,
-                                modifier = Modifier
-                                    .size(30.dp)
-                            )
-                            YSpacer(20)
-                            Text(
-                                text = "${shareDataHotelDetail.getEndDate().minus(shareDataHotelDetail.getStartDate()).days} night(s)",
-                                color = Grey500Color,
-                                fontSize = 14.sp
-                            )
-                        }
-                        Column (
-                            verticalArrangement = Arrangement.spacedBy(5.dp),
-                            horizontalAlignment = Alignment.End
-                        ) {
-                            Text(
-                                text = "Check-in",
-                                color = Grey500Color,
-                                fontSize = 14.sp,
-                                textAlign = TextAlign.End
-                            )
-                            Text(
-                                text = "Thứ ${shareDataHotelDetail.getEndDate().dayOfWeek.value}, ${shareDataHotelDetail.getEndDate().dayOfMonth} Thg ${shareDataHotelDetail.getEndDate().monthNumber}",
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.End
-                            )
-                            Text(
-                                text = shareDataHotelDetail.getCheckOutTime(),
-                                fontSize = 14.sp,
-                                color = Grey500Color,
-                                textAlign = TextAlign.End
-                            )
-                        }
-                    }
-                }
-            }
-            item {
-                YSpacer(20)
-            }
-            item {
-                Column (
-                    modifier = Modifier
-                        .background(color = Grey50Color)
-                        .fillMaxWidth()
-                        .padding(24.dp, 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-//                        text = "(${userBookingData.roomQuantity}x) ${roomInfo.name}",
-                        text = "(${userBookingData.roomQuantity}x) Ten phong",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Row (
-                        horizontalArrangement = Arrangement.spacedBy(20.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
+                            .padding(24.dp, 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            text = "Loại giường",
-                            fontSize = 14.sp,
-                            color = Grey500Color,
-                            modifier = Modifier
-                                .fillMaxWidth(0.3f)
+                            text = userBookingData.hotel.name,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
                         )
-                        Column (
-                            verticalArrangement = Arrangement.spacedBy(5.dp),
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            color = Grey100Color,
+                            thickness = 2.dp
+                        )
+                        Row (
+                            horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier
                                 .fillMaxWidth()
                         ) {
-//                            if (roomInfo.bed.double > 0) {
-//                                Text(
-//                                    text = "${roomInfo.bed.double} double bed",
-//                                    fontSize = 14.sp,
-//                                )
-//                            }
-//                            if (roomInfo.bed.king > 0) {
-//                                Text(
-//                                    text = "${roomInfo.bed.king} king bed",
-//                                    fontSize = 14.sp,
-//                                )
-//                            }
-//                            if (roomInfo.bed.queen > 0) {
-//                                Text(
-//                                    text = "${roomInfo.bed.queen} queen bed",
-//                                    fontSize = 14.sp,
-//                                )
-//                            }
-//                            if (roomInfo.bed.single > 0) {
-//                                Text(
-//                                    text = "${roomInfo.bed.single} single bed",
-//                                    fontSize = 14.sp,
-//                                )
-//                            }
-                            Text(
-                                text = "1 double bed",
-                                fontSize = 14.sp,
-                            )
-                        }
-
-                    }
-                    Row (
-                        horizontalArrangement = Arrangement.spacedBy(20.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(
-                            text = "Số lượng người",
-                            fontSize = 14.sp,
-                            color = Grey500Color,
-                            modifier = Modifier
-                                .fillMaxWidth(0.3f)
-                        )
-                        Column (
-                            verticalArrangement = Arrangement.spacedBy(5.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-//                            Text(
-//                                text = "${roomInfo.maxCustomer} người/phòng",
-//                                fontSize = 14.sp,
-//                            )
-                            Text(
-                                text = "1 nguoi / phong",
-                                fontSize = 14.sp
-                            )
-                            Text(
-                                text = "(${userBookingData.adults} người lớn, ${userBookingData.children} trẻ em trong ${userBookingData.roomQuantity} phòng)",
-                                fontSize = 14.sp,
-                            )
-                        }
-                    }
-                    Row (
-                        horizontalArrangement = Arrangement.spacedBy(20.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxWidth(0.3f)
-                                .heightIn(0.dp, 80.dp)
-                                .clip(shape = RoundedCornerShape(4.dp)),
-//                            model = if (roomInfo.images != null && roomInfo.images.isNotEmpty()) roomInfo.images[0].url else R.drawable.default_img,
-                            model = R.drawable.default_img,
-                            contentDescription = "Cover Image",
-                            contentScale = ContentScale.Crop
-                        )
-                        Column (
-                            verticalArrangement = Arrangement.spacedBy(5.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Row {
-                                Icon(
-                                    painter = painterResource(R.drawable.lunch),
-                                    contentDescription = "",
-                                    tint = DarkGreenColor,
-                                    modifier = Modifier
-                                        .size(20.dp)
-                                )
-                                XSpacer(10)
+                            Column (
+                                verticalArrangement = Arrangement.spacedBy(5.dp)
+                            ) {
                                 Text(
-                                    text = "Bữa sáng miễn phí",
-                                    color = DarkGreenColor,
+                                    text = "Check-in",
+                                    color = Grey500Color,
                                     fontSize = 14.sp
+                                )
+                                Text(
+                                    text = "Thứ ${shareDataHotelDetail.getStartDate().dayOfWeek.value}, ${shareDataHotelDetail.getStartDate().dayOfMonth} Thg ${shareDataHotelDetail.getStartDate().monthNumber}",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(
+                                    text = shareDataHotelDetail.getCheckInTime(),
+                                    color = Grey500Color,
+                                    fontSize = 14.sp
+                                )
+                            }
+                            Column (
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.moon),
+                                    contentDescription = "",
+                                    tint = PrimaryColor,
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                )
+                                YSpacer(20)
+                                Text(
+                                    text = "${shareDataHotelDetail.getEndDate().minus(shareDataHotelDetail.getStartDate()).days} night(s)",
+                                    color = Grey500Color,
+                                    fontSize = 14.sp
+                                )
+                            }
+                            Column (
+                                verticalArrangement = Arrangement.spacedBy(5.dp),
+                                horizontalAlignment = Alignment.End
+                            ) {
+                                Text(
+                                    text = "Check-in",
+                                    color = Grey500Color,
+                                    fontSize = 14.sp,
+                                    textAlign = TextAlign.End
+                                )
+                                Text(
+                                    text = "Thứ ${shareDataHotelDetail.getEndDate().dayOfWeek.value}, ${shareDataHotelDetail.getEndDate().dayOfMonth} Thg ${shareDataHotelDetail.getEndDate().monthNumber}",
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.End
+                                )
+                                Text(
+                                    text = shareDataHotelDetail.getCheckOutTime(),
+                                    fontSize = 14.sp,
+                                    color = Grey500Color,
+                                    textAlign = TextAlign.End
                                 )
                             }
                         }
                     }
                 }
-            }
-            item {
-                YSpacer(20)
-            }
-            item {
-                Column (
-                    modifier = Modifier
-                        .background(color = Grey50Color)
-                        .fillMaxWidth()
-                        .padding(24.dp, 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-                        text = "Thông tin khách hàng",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                item {
+                    YSpacer(20)
+                }
+                item {
                     Column (
-                        verticalArrangement = Arrangement.spacedBy(5.dp)
-                    ) {
-                        Text(
-                            text = "Tên khách hàng",
-                            color = Grey500Color,
-                            fontSize = 14.sp
-                        )
-                        Row {
-                            Icon(
-                                painter = painterResource(R.drawable.useralt),
-                                contentDescription = "",
-                                tint = Grey500Color,
-                                modifier = Modifier
-                                    .size(20.dp)
-                            )
-                            XSpacer(10)
-                            Text(
-                                text = "${UserShare.User.lastName.toString()} ${UserShare.User.firstName.toString()}",
-                                fontSize = 16.sp
-                            )
-                        }
-                    }
-                    Divider(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        color = Grey100Color,
-                        thickness = 2.dp
-                    )
-                    Column (
-                        verticalArrangement = Arrangement.spacedBy(5.dp)
+                            .background(color = Grey50Color)
+                            .fillMaxWidth()
+                            .padding(24.dp, 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            text = "Email",
-                            color = Grey500Color,
-                            fontSize = 14.sp
+                        text = "(${userBookingData.roomQuantity}x) ${roomName}",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
                         )
-                        Row {
-                            Icon(
-                                painter = painterResource(R.drawable.email),
-                                contentDescription = "",
-                                tint = Grey500Color,
-                                modifier = Modifier
-                                    .size(20.dp)
-                            )
-                            XSpacer(10)
+                        Row (
+                            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
                             Text(
-                                text = UserShare.User.email.toString(),
-                                fontSize = 16.sp
+                                text = "Loại giường",
+                                fontSize = 14.sp,
+                                color = Grey500Color,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.3f)
                             )
+                            Column (
+                                verticalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                            if (roomBedDouble > 0) {
+                                Text(
+                                    text = "${roomBedDouble} double bed",
+                                    fontSize = 14.sp,
+                                )
+                            }
+                            if (roomBedKing > 0) {
+                                Text(
+                                    text = "${roomBedKing} king bed",
+                                    fontSize = 14.sp,
+                                )
+                            }
+                            if (roomBedQueen > 0) {
+                                Text(
+                                    text = "${roomBedQueen} queen bed",
+                                    fontSize = 14.sp,
+                                )
+                            }
+                            if (roomBedSingle > 0) {
+                                Text(
+                                    text = "${roomBedSingle} single bed",
+                                    fontSize = 14.sp,
+                                )
+                            }
+                            }
+
                         }
-                    }
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        color = Grey100Color,
-                        thickness = 2.dp
-                    )
-                    Column (
-                        verticalArrangement = Arrangement.spacedBy(5.dp)
-                    ) {
-                        Text(
-                            text = "Số điện thoại",
-                            color = Grey500Color,
-                            fontSize = 14.sp
-                        )
-                        Row {
-                            Icon(
-                                painter = painterResource(R.drawable.telephone),
-                                contentDescription = "",
-                                tint = Grey500Color,
-                                modifier = Modifier
-                                    .size(20.dp)
-                            )
-                            XSpacer(10)
+                        Row (
+                            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
                             Text(
-                                text = UserShare.User.phone.toString(),
-                                fontSize = 16.sp
+                                text = "Số lượng người",
+                                fontSize = 14.sp,
+                                color = Grey500Color,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.3f)
                             )
+                            Column (
+                                verticalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = "${roomMaxCustomer} người/phòng",
+                                    fontSize = 14.sp,
+                                )
+                                Text(
+                                    text = "(${userBookingData.adults} người lớn, ${userBookingData.children} trẻ em trong ${userBookingData.roomQuantity} phòng)",
+                                    fontSize = 14.sp,
+                                )
+                            }
+                        }
+                        Row (
+                            horizontalArrangement = Arrangement.spacedBy(20.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            AsyncImage(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.3f)
+                                    .heightIn(0.dp, 80.dp)
+                                    .clip(shape = RoundedCornerShape(4.dp)),
+                                model = if (roomImages.isNotEmpty()) roomImages[0].url else R.drawable.default_img,
+                                contentDescription = "Cover Image",
+                                contentScale = ContentScale.Crop
+                            )
+                            Column (
+                                verticalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            ) {
+                                Row {
+                                    Icon(
+                                        painter = painterResource(R.drawable.lunch),
+                                        contentDescription = "",
+                                        tint = DarkGreenColor,
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                    )
+                                    XSpacer(10)
+                                    Text(
+                                        text = if (roomBreakFast) "Bữa sáng miễn phí"
+                                        else "Không có bữa sáng",
+                                        color = if (roomBreakFast) DarkGreenColor
+                                        else Color.Red,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                                if (roomPayInHotel) {
+                                    Row {
+                                        Icon(
+                                            painter = painterResource(R.drawable.baseline_access_time_24),
+                                            contentDescription = "",
+                                            tint = PrimaryColor,
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                        )
+                                        XSpacer(10)
+                                        Text(
+                                            text = "Thanh toán tại khách sạn",
+                                            color = DarkGreenColor,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
+                                Row {
+                                    Icon(
+                                        painter = painterResource(R.drawable.check),
+                                        contentDescription = "",
+                                        tint = DarkGreenColor,
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                    )
+                                    XSpacer(10)
+                                    Text(
+                                        text = if (roomFreeCancel) "Miễn phí hủy phòng"
+                                            else "Có phí trả phòng",
+                                        color = if (roomFreeCancel) DarkGreenColor
+                                                else Color.Red,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            }
                         }
                     }
                 }
-            }
-            item {
-                YSpacer(20)
-            }
-            item {
-                Column (
-                    modifier = Modifier
-                        .background(color = Grey50Color)
-                        .fillMaxWidth()
-                        .padding(24.dp, 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-                        text = "Tổng tiền",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    ObjectAndPrice(
-//                        text = "(${userBookingData.roomQuantity}x) ${roomInfo.name}",
-                        text = "(${userBookingData.roomQuantity}x) Ten phong",
-//                        price = roomInfo.price.toLong() * userBookingData.roomQuantity
-                        price = (1000000 * userBookingData.roomQuantity).toLong()
-                    )
-                    Divider(
+                item {
+                    YSpacer(20)
+                }
+                item {
+                    Column (
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        color = Grey100Color,
-                        thickness = 2.dp
-                    )
-                    Row (
-                        modifier = Modifier
-                            .padding(12.dp)
+                            .background(color = Grey50Color)
                             .fillMaxWidth()
+                            .padding(24.dp, 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            text = "Total",
+                            text = "Thông tin khách hàng",
                             fontSize = 16.sp,
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
+                            fontWeight = FontWeight.Bold
                         )
+                        Column (
+                            verticalArrangement = Arrangement.spacedBy(5.dp)
+                        ) {
+                            Text(
+                                text = "Tên khách hàng",
+                                color = Grey500Color,
+                                fontSize = 14.sp
+                            )
+                            Row {
+                                Icon(
+                                    painter = painterResource(R.drawable.useralt),
+                                    contentDescription = "",
+                                    tint = Grey500Color,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                                XSpacer(10)
+                                Text(
+                                    text = if (UserShare.User.firstName != null) "${UserShare.User.lastName.toString()} ${UserShare.User.firstName.toString()}"
+                                    else "",
+                                    fontSize = 16.sp
+                                )
+                            }
+                        }
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            color = Grey100Color,
+                            thickness = 2.dp
+                        )
+                        Column (
+                            verticalArrangement = Arrangement.spacedBy(5.dp)
+                        ) {
+                            Text(
+                                text = "Email",
+                                color = Grey500Color,
+                                fontSize = 14.sp
+                            )
+                            Row {
+                                Icon(
+                                    painter = painterResource(R.drawable.email),
+                                    contentDescription = "",
+                                    tint = Grey500Color,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                                XSpacer(10)
+                                Text(
+                                    text = if(UserShare.User.email != null) UserShare.User.email.toString()
+                                    else "",
+                                    fontSize = 16.sp
+                                )
+                            }
+                        }
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            color = Grey100Color,
+                            thickness = 2.dp
+                        )
+                        Column (
+                            verticalArrangement = Arrangement.spacedBy(5.dp)
+                        ) {
+                            Text(
+                                text = "Số điện thoại",
+                                color = Grey500Color,
+                                fontSize = 14.sp
+                            )
+                            Row {
+                                Icon(
+                                    painter = painterResource(R.drawable.telephone),
+                                    contentDescription = "",
+                                    tint = Grey500Color,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                                XSpacer(10)
+                                Text(
+                                    text = if (UserShare.User.phone != null) UserShare.User.phone.toString()
+                                    else "",
+                                    fontSize = 16.sp
+                                )
+                            }
+                        }
+                    }
+                }
+                item {
+                    YSpacer(20)
+                }
+                item {
+                    Column (
+                        modifier = Modifier
+                            .background(color = Grey50Color)
+                            .fillMaxWidth()
+                            .padding(24.dp, 24.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
                         Text(
-                            text = "${userBookingData.totalAmount} VND",
+                            text = "Tổng tiền",
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.End,
-                            modifier = Modifier
-                                .fillMaxWidth()
+                            fontWeight = FontWeight.Bold
                         )
+                        ObjectAndPrice(
+                            text = "(${userBookingData.roomQuantity}x) ${roomName}",
+                            price = roomPrice.toLong() * userBookingData.roomQuantity
+                        )
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            color = Grey100Color,
+                            thickness = 2.dp
+                        )
+                        Row (
+                            modifier = Modifier
+                                .padding(12.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "Total",
+                                fontSize = 16.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5f)
+                            )
+                            Text(
+                                text = "${userBookingData.totalAmount} VND",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.End,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+                        }
                     }
                 }
             }

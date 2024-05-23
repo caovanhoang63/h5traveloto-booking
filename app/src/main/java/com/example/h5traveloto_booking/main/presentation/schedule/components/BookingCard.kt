@@ -143,22 +143,22 @@ public fun BookingCard(
                         color = Grey500Color,
                         fontSize = 12.sp,
                         modifier = Modifier
-                            .fillMaxWidth(0.6f),
+                            .fillMaxWidth(),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
-                    if (isStatusVisible) {
-                        Text(
-                            text = "Thành công",
-                            color = GreenColor,
-                            fontSize = 12.sp,
-                            textAlign = TextAlign.End,
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-                    }
+//                    if (isStatusVisible) {
+//                        Text(
+//                            text = "Thành công",
+//                            color = GreenColor,
+//                            fontSize = 12.sp,
+//                            textAlign = TextAlign.End,
+//                            modifier = Modifier
+//                                .fillMaxWidth(),
+//                            overflow = TextOverflow.Ellipsis,
+//                            maxLines = 1
+//                        )
+//                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.main.presentation.schedule.components
 
+import android.net.Uri
 import android.util.Log
 import androidx.collection.mutableIntSetOf
 import androidx.compose.foundation.BorderStroke
@@ -23,6 +24,7 @@ import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDayState
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
+import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey50Color
 import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.theme.SecondaryColor
@@ -42,6 +44,7 @@ import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.Cal
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.CalendarView
 import com.example.h5traveloto_booking.ui_shared_components.my_calendar.view.HorizontalCalendarView
 import com.example.h5traveloto_booking.util.FromStringtoDate
+import com.google.gson.Gson
 //import io.wojciechosak.calendar.animation.CalendarAnimator
 //import io.wojciechosak.calendar.config.CalendarConfig
 //import io.wojciechosak.calendar.config.DayState
@@ -58,7 +61,7 @@ import kotlinx.datetime.*
 @Composable
 public fun BookingCalendar (
     bookingList: List<UserBookingDTO>,
-    navController: NavController
+    navController: NavController,
 ) {
     val startDate by remember { mutableStateOf(LocalDate.today()) }
     val selectedDates = remember { mutableStateListOf<LocalDate>() }
@@ -258,6 +261,9 @@ public fun BookingCalendar (
                     }
                     if (bookingsInDate.size > 1) {
                         isShowBottomSheet.value = true
+                    }
+                    else {
+                        navController.navigate("${Screens.BookingDetailsScreen.name}/${Uri.encode(Gson().toJson(bookingsInDate.first()))}")
                     }
                     Log.d("Booking Calendar", bookingsInDate.size.toString())
                     Log.d("Booking Calendar", mapBookingDayState[it[0]]!!.booking_id.size.toString())

@@ -155,6 +155,7 @@ public fun BookingScreen (
                                             onClick = {
                                                 bookingState.value = states[index]
                                                 showMenuState.value = false
+                                                viewModel.getUserBookings(state = bookingState.value)
                                             },
                                             modifier = Modifier
                                         )
