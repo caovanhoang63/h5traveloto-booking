@@ -500,7 +500,8 @@ object AppModule {
     @Singleton
     fun provideRoomFacilitiesDetailsUseCases(repository: RoomFacilitiesDetailsRepository): RoomFacilitiesDetailsUseCases {
         return RoomFacilitiesDetailsUseCases(
-             getRoomFacilitiesDetailsUseCase = RoomFacilitiesDetailsUseCase(repository)
+            getRoomFacilitiesDetailsUseCase = RoomFacilitiesDetailsUseCase(repository),
+            getRoomTypeByIdUseCase = GetRoomTypeByIdUseCase(repository)
         )
     }
     //

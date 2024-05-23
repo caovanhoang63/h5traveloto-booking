@@ -5,6 +5,7 @@ import com.example.h5traveloto_booking.details.presentation.data.api.listRooms.L
 import com.example.h5traveloto_booking.details.presentation.data.`class`.ListRoomsParams
 import com.example.h5traveloto_booking.details.presentation.data.dto.listRooms.ListRoomDTO
 import com.example.h5traveloto_booking.details.presentation.data.dto.roomFacilitiesDetails.RoomFacilitiesDetailsDTO
+import com.example.h5traveloto_booking.details.presentation.data.dto.roomtypebyid.RoomTypeByIdDTO
 import com.example.h5traveloto_booking.details.presentation.domain.repository.ListRoomsRepository
 import com.example.h5traveloto_booking.details.presentation.domain.repository.RoomFacilitiesDetailsRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,11 @@ class RoomFacilitiesDetailsRepositoryImpl @Inject constructor(
         return withContext(Dispatchers.Default) {
             api.getRoomFacilitiesDetails(roomTypeId)
         }
+    }
 
+    override suspend fun getRoomTypeById(roomTypeId: String): RoomTypeByIdDTO {
+        return withContext(Dispatchers.Default) {
+            api.getRoomTypeById(roomTypeId)
+        }
     }
 }
