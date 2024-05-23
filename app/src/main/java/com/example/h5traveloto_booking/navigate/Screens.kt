@@ -42,4 +42,6 @@ enum class Screens {
     AddImageInCollectionScreen,
     UpdateCollectionScreen,
     RoomDetailsScreen,
+    AllChatCard,
+    AllChatScreen,
 }

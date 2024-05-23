@@ -17,7 +17,9 @@ import com.example.h5traveloto_booking.auth.presentation.signup.SignUpScreen
 import com.example.h5traveloto_booking.main.presentation.MainScreen
 import com.example.h5traveloto_booking.account.personal_information.PersonalInformationScreen
 import com.example.h5traveloto_booking.account.personal_information.UpdateInformation.UpdateInformationScreen
+import com.example.h5traveloto_booking.chat.presentation.AllChatScreen
 import com.example.h5traveloto_booking.chat.presentation.ChatScreen
+import com.example.h5traveloto_booking.chat.presentation.components.AllChatCard
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingDetailsScreen
 import com.example.h5traveloto_booking.details.presentation.bookingdetails.BookingScreen
 import com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO
@@ -182,5 +184,9 @@ fun AppNavigation(startDestination : String ) {
             RoomDetailsScreen(navController = navController, Object = Object)
 
         }
+        composable(route = Screens.AllChatScreen.name ) {
+            AllChatScreen(navController = navController)
+        }
+
     }
 }

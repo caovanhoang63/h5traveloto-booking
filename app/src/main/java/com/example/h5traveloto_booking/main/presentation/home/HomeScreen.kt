@@ -144,7 +144,7 @@ fun HomeScreen(
                 }
                 Column {
                     PrimaryIconButton(DrawableId = R.drawable.message_circle, onClick = {
-
+                        navAppController.navigate(Screens.AllChatScreen.name)
                     }, alt = "")
                 }
             }
