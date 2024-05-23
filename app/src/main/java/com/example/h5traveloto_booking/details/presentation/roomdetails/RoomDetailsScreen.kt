@@ -39,15 +39,13 @@ import com.example.h5traveloto_booking.util.Result
 fun RoomDetailsScreen(
     navController: NavController,
     viewModel: RoomDetailsScreenViewModel = hiltViewModel(),
-    /*
-        Object: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data,
-    */
+    Object: com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data,
 ) {
     LaunchedEffect(Unit) {
-        viewModel.getRoomFacilitiesDetails()
+        viewModel.getRoomFacilitiesDetails(Object.id)
     }
     val roomFacilitiesDetailsResponse = viewModel.RoomFacilitiesDetailsResponse.collectAsState().value
-    val Object = shareDataHotelDetail.getRoomDTO()
+//    val Object = shareDataHotelDetail.getRoomDTO()
     var imageOpen by remember {
         mutableStateOf(false)
     }

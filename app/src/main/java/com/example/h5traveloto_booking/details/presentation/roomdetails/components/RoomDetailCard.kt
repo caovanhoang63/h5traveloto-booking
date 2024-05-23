@@ -1,5 +1,6 @@
 package com.example.h5traveloto_booking.details.presentation.roomdetails.components
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -133,9 +134,7 @@ fun RoomDetailCard(
                                         Gson().toJson(roomDTO.images)
                                     }"
                                 )
-                                shareDataHotelDetail.setRoomTypeId(roomDTO.id)
-                                shareDataHotelDetail.setRoomDTO(roomDTO)
-//                                navController.navigate("${Screens.RoomDetailsScreen.name}/${Gson().toJson(roomDTO)}")
+                                navController.navigate("${Screens.RoomDetailsScreen.name}/${Uri.encode(Gson().toJson(roomDTO))}")
                                 navController.navigate(Screens.RoomDetailsScreen.name)
                             } catch (e: Exception) {
                                 Log.e("RoomDetailCard", "Error navigating to RoomDetailsScreen", e)

@@ -36,11 +36,11 @@ class RoomDetailsScreenViewModel @Inject constructor(
     val RoomFacilitiesDetailsResponse = _RoomFacilitiesDetailsResponse.asStateFlow()
 
     fun getRoomFacilitiesDetails(
-
+        roomTypeID:String
     ) = viewModelScope.launch {
         val token = sharedPrefManager.getToken()
         val bearerToken = "Bearer $token"
-        useCases.getRoomFacilitiesDetailsUseCase(shareDataHotelDetail.getRoomTypeId()).onStart {
+        useCases.getRoomFacilitiesDetailsUseCase(roomTypeID).onStart {
             _RoomFacilitiesDetailsResponse.value = Result.Loading
             Log.d("RoomFacilitiesDetails ViewModel", "Loading")
 
@@ -49,8 +49,8 @@ class RoomDetailsScreenViewModel @Inject constructor(
                 Log.d("RoomFacilitiesDetails ViewModel", "catch")
                 Log.d("RoomFacilitiesDetails ViewModel", "hehe")
                 val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
-                Log.d("ListRooms ViewModel Error", errorResponse.message)
-                Log.d("ListRooms ViewModel Error", errorResponse.log)
+                Log.d("RoomFacilitiesDetails ViewModel Error", errorResponse.message)
+                Log.d("RoomFacilitiesDetails ViewModel Error", errorResponse.log)
                 _RoomFacilitiesDetailsResponse.value = Result.Error(errorResponse.message)
             }
             _RoomFacilitiesDetailsResponse.value = Result.Error(it.message.toString())

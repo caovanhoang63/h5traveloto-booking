@@ -143,7 +143,9 @@ fun HomeScreen(
                         })
                 }
                 Column {
-                    PrimaryIconButton(DrawableId = R.drawable.notifyicon, onClick = {}, alt = "")
+                    PrimaryIconButton(DrawableId = R.drawable.message_circle, onClick = {
+
+                    }, alt = "")
                 }
             }
         }

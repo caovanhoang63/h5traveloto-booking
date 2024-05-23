@@ -144,14 +144,11 @@ fun AppNavigation(startDestination : String ) {
             WebViewScreen3(url = url, scheme = "resultactivity",onPaymentResult = onPaymentResult)
         }
 
-        /*composable(route ="${Screens.RoomDetailsScreen.name}/{Object}" ) {
+        composable(route ="${Screens.RoomDetailsScreen.name}/{Object}" ) {
                 backStackEntry ->
             val Object = Gson().fromJson(backStackEntry.arguments?.getString("Object"), com.example.h5traveloto_booking.main.presentation.data.dto.SearchRoomType.Data::class.java)
             RoomDetailsScreen(navController = navController, Object = Object)
 
-        }*/
-        composable(route = Screens.RoomDetailsScreen.name) {
-            RoomDetailsScreen(navController = navController)
         }
     }
 }
