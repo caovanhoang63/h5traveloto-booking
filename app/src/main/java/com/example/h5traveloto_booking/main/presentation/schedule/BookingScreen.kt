@@ -33,10 +33,18 @@ import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBo
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.Grey100Color
+import com.example.h5traveloto_booking.theme.Grey50Color
+import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.BoldText
 import com.example.h5traveloto_booking.ui_shared_components.PrimaryIconButton
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import com.example.h5traveloto_booking.ui_shared_components.my_calendar.utils.today
+import com.example.h5traveloto_booking.util.FromDatetoString
 import com.example.h5traveloto_booking.util.Result
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Local
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,17 +68,59 @@ public fun BookingScreen (
         "pending",
         "paid",
         "canceled",
-        "check-out",
+        "checked-out",
         "expired"
     )
     val bookingState = remember {
-        mutableStateOf(states[0])
+        mutableStateOf(states[1])
+    }
+    val isPayInHotel = remember {
+        mutableStateOf(false)
+    }
+    val isShowDateRangePicker = remember {
+        mutableStateOf(false)
+    }
+    val start = remember {
+        mutableStateOf(LocalDate.today())
+    }
+    val end = remember {
+        mutableStateOf(LocalDate.today())
+    }
+    val isAllDate = remember {
+        mutableStateOf(true)
     }
 
     LaunchedEffect(Unit) {
-        viewModel.getUserBookings(state = "expired")
+        viewModel.getUserBookings(state = bookingState.value)
     }
     val listBookingResponse = viewModel.UserBookingsResponse.collectAsState().value
+
+    if (isShowDateRangePicker.value) {
+        com.example.h5traveloto_booking.ui_shared_components.DateRangePicker(
+            start = LocalDate.today(),
+            end = LocalDate.today().plus(1, DateTimeUnit.DAY),
+            onDismiss = {
+                isShowDateRangePicker.value = false
+                isAllDate.value = true
+                viewModel.getUserBookings(
+                    state = bookingState.value,
+                    payInHotel = isPayInHotel.value,
+                )
+            },
+            onCompleted = { startDate, endDate ->
+                isShowDateRangePicker.value = false
+                isAllDate.value = false
+                start.value = startDate
+                end.value = endDate
+                viewModel.getUserBookings(
+                    state = bookingState.value,
+                    payInHotel = isPayInHotel.value,
+                    startDate = FromDatetoString(start.value),
+                    endDate = FromDatetoString(end.value)
+                )
+            }
+        )
+    }
 
     Scaffold (
         modifier = Modifier
@@ -125,7 +175,7 @@ public fun BookingScreen (
                                     indication = null
                                 )
                                 .padding(5.dp)
-                                .width(100.dp)
+//                                .width(100.dp)
                                 .height(40.dp)
                                 .clip(RoundedCornerShape(10.dp))
                                 .background(Grey100Color)
@@ -136,6 +186,8 @@ public fun BookingScreen (
                                     fontSize = 14.sp,
                                     color = Color.Black,
                                     textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .padding(5.dp)
                                 )
                                 DropdownMenu(
                                     expanded = showMenuState.value,
@@ -155,7 +207,19 @@ public fun BookingScreen (
                                             onClick = {
                                                 bookingState.value = states[index]
                                                 showMenuState.value = false
-                                                viewModel.getUserBookings(state = bookingState.value)
+                                                if (isAllDate.value) {
+                                                    viewModel.getUserBookings(
+                                                        state = bookingState.value,
+                                                        payInHotel = isPayInHotel.value
+                                                    )
+                                                } else {
+                                                    viewModel.getUserBookings(
+                                                        state = bookingState.value,
+                                                        payInHotel = isPayInHotel.value,
+                                                        startDate = FromDatetoString(start.value),
+                                                        endDate = FromDatetoString(end.value)
+                                                    )
+                                                }
                                             },
                                             modifier = Modifier
                                         )
@@ -164,7 +228,74 @@ public fun BookingScreen (
                             }
                         }
                     }
-
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .clickable(
+                                onClick = {
+                                    isShowDateRangePicker.value = true
+                                },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            )
+                            .padding(5.dp)
+                            .height(40.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(
+                                if (isAllDate.value) PrimaryColor
+                            else Grey50Color)
+                    ) {
+                        Text(
+                            text = "Mọi ngày",
+                            fontSize = 14.sp,
+                            color = if (isAllDate.value) Color.White
+                            else Color.Black,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
+                    }
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .clickable(
+                                onClick = {
+                                    isPayInHotel.value = !isPayInHotel.value
+                                    if (isAllDate.value) {
+                                        viewModel.getUserBookings(
+                                            state = bookingState.value,
+                                            payInHotel = isPayInHotel.value
+                                        )
+                                    } else {
+                                        viewModel.getUserBookings(
+                                            state = bookingState.value,
+                                            payInHotel = isPayInHotel.value,
+                                            startDate = FromDatetoString(start.value),
+                                            endDate = FromDatetoString(end.value)
+                                        )
+                                    }
+                                },
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            )
+                            .padding(5.dp)
+                            .height(40.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(
+                                if (isPayInHotel.value) PrimaryColor
+                                else Grey50Color
+                            )
+                    ) {
+                        Text(
+                            text = "Trả tại khách sạn",
+                            fontSize = 14.sp,
+                            color = if (isPayInHotel.value) Color.White
+                            else Color.Black,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(5.dp)
+                        )
+                    }
                 }
             }
 
