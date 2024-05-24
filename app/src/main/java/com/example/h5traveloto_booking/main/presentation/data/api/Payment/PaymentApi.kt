@@ -1,8 +1,10 @@
 package com.example.h5traveloto_booking.main.presentation.data.api.Payment
 
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Response
+import com.example.h5traveloto_booking.main.presentation.data.dto.Payment.CheckDealDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Payment.LinkPaymentDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Payment.SuccessPaymentDTO
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface PaymentApi {
@@ -27,4 +29,10 @@ interface PaymentApi {
     suspend fun successPayment(
         @Path("booking_id") bookingId: String,
     ):SuccessPaymentDTO
+
+    @POST("bookings/checkdeal/{deal-id}")
+    suspend fun checkDeal(
+        @Path("deal-id") dealId: String,
+        @Body requestBody: RequestBody
+    ):CheckDealDTO
 }
