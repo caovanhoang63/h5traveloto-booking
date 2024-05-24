@@ -110,10 +110,10 @@ class ListHotelsViewModel @Inject constructor(
                     is Result.Success -> {
                         val hotelList = result.data.data
                         val sortedHotelList = when (selectedOption) {
-                            "Giá thấp đến cao" -> hotelList?.sortedBy { it.displayPrice }
-                            "Giá cao đến thấp" -> hotelList?.sortedByDescending { it.displayPrice }
-                            "Xếp hạng cao đến thấp" -> hotelList?.sortedByDescending { it.star }
-                            "Xếp hạng thấp đến cao" -> hotelList?.sortedBy { it.star }
+                            "Giá thấp đến cao" -> hotelList?.sortedByDescending { it.displayPrice }
+                            "Giá cao đến thấp" -> hotelList?.sortedBy { it.displayPrice }
+                            "Đánh giá cao đến thấp" -> hotelList?.sortedByDescending { it.rating }
+                            "Đánh giá thấp đến cao" -> hotelList?.sortedBy { it.rating }
                             else -> hotelList
                         }
                         _listHotelSearch.value = Result.Success(result.data.copy(data = sortedHotelList))

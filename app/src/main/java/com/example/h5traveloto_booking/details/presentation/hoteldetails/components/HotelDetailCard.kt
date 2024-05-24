@@ -185,7 +185,7 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data, click: (hotel
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.End
                 ) {
-                    PrimaryText(text = "${hotelDTO.totalRating} (${hotelDTO.totalRating})")
+                    PrimaryText(text = "${hotelDTO.rating} (${hotelDTO.totalRating} đánh giá)")
                     MultiColorText(
                         Triple("${hotelDTO.displayPrice?.formatPrice()} VND", PrimaryColor, FontWeight.Bold),
                         Triple("/đêm", Grey500Color, FontWeight.Normal)

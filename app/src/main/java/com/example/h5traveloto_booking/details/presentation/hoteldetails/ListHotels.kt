@@ -44,7 +44,7 @@ fun ListHotels(
     viewModel: ListHotelsViewModel = hiltViewModel()
 
 ) {
-    val radioOption = listOf("Giá thấp đến cao", "Giá cao đến thấp", "Xếp hạng cao đến thấp", "Xếp hạng thấp đến cao")
+    val radioOption = listOf("Giá thấp đến cao", "Giá cao đến thấp", "Đánh giá cao đến thấp", "Đánh giá thấp đến cao")
     var isSortSheetOpened by remember { mutableStateOf(false) }
     var isSortSelected by remember { mutableStateOf("Giá thấp đến cao") }
     var isFilterSheetOpened by remember { mutableStateOf(false) }
@@ -219,10 +219,7 @@ fun ListHotels(
                     }
                     YSpacer(15)
                     Row(modifier = Modifier.fillMaxWidth()) {
-                        PrimaryIconButton(DrawableId = R.drawable.filter, onClick = {
-                            isFilterSheetOpened = true
-                        }, alt = "")
-                        XSpacer(25)
+
                         PrimaryIconButton(
                             DrawableId = R.drawable.sort,
                             onClick = {

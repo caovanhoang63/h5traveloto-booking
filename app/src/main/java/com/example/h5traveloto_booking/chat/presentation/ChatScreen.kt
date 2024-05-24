@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -38,7 +39,7 @@ import websocket.socketHandler1
 fun ChatScreen(
     navController: NavController,
     viewModel: ChatListViewModel = hiltViewModel(),
-    chatRoomviewModel: ChatRoomViewModel = hiltViewModel()
+    chatRoomviewModel: ChatRoomViewModel = hiltViewModel(),
 ) {
     var a by remember { mutableStateOf("") }
 
@@ -167,7 +168,10 @@ fun ChatScreen(
                             when (chatListResponse) {
                                 is Result.Loading -> {
                                     Log.d("ChatList", "dang load")
-                                    androidx.compose.material.CircularProgressIndicator()
+                                    /*androidx.compose.material.CircularProgressIndicator()*/
+                                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+                                        CircularProgressIndicator()
+                                    }
 
                                 }
 
@@ -188,7 +192,8 @@ fun ChatScreen(
                                     })
                                     try {
                                         /*val b =// Chuyển đổi JSON sang đối tượng*/
-                                        val b: com.example.h5traveloto_booking.chat.presentation.data.dto.Data? = jsonAdapter.fromJson(a)
+                                        val b: com.example.h5traveloto_booking.chat.presentation.data.dto.Data? =
+                                            jsonAdapter.fromJson(a)
                                         Log.d("ChatList b", b.toString())
                                         if (isRender) {
                                             messages = messages + b!!
