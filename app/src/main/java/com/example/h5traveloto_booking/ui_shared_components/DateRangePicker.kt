@@ -256,7 +256,7 @@ public fun DateRangePicker(
                             .fillMaxWidth(0.33f)
                     ) {
                         Text(
-                            text = "Check-In",
+                            text = "Bắt đầu",
                             color = Grey500Color,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
@@ -274,7 +274,7 @@ public fun DateRangePicker(
                             .fillMaxWidth(0.55f)
                     ) {
                         Text(
-                            text = "Check-Out",
+                            text = "Kết thúc",
                             color = Grey500Color,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
