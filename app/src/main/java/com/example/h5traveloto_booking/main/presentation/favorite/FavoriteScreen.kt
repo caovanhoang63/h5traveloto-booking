@@ -46,6 +46,7 @@ import com.example.h5traveloto_booking.account.*
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.Avatar
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.CollectionDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Data
+import com.example.h5traveloto_booking.main.presentation.home.components.ScrollingText
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.theme.ScreenBackGround
 import com.example.h5traveloto_booking.ui_shared_components.*
@@ -67,8 +68,10 @@ fun FavoriteScreen(navController: NavController,
 {
     LaunchedEffect(Unit){
         viewModel.getCollectionData()
+        viewModel.getHotelViewed()
     }
     val CollectionDataResponse = viewModel.CollectionDataResponse.collectAsState().value
+    val listHotelViewed = viewModel.ListHotelViewed.collectAsState().value
     when (CollectionDataResponse) {
         is Result.Error -> {
                     Column(
@@ -256,7 +259,30 @@ fun FavoriteScreen(navController: NavController,
                             )
                         )
                         Album(CollectionDataResponse.data, navController = navController)
-                        HotelSeen(hotelList)
+                        //HotelSeen()
+                        when(listHotelViewed){
+                            is Result.Error -> {
+                                Column(
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                {
+                                    Image(
+                                        painterResource(id = R.drawable.error404),
+                                        contentDescription = "Error",
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                }
+                            }
+                            is Result.Idle -> {
+                            }
+                            is Result.Loading -> {
+                                CircleLoading()
+                            }
+                            is Result.Success -> {
+                                if(listHotelViewed.data.data != null)
+                                    HotelSeen(listHotelViewed.data.data)
+                            }
+                        }
                     }
                 }
             )
@@ -364,7 +390,7 @@ private fun RowItem(rowItems: List<Bookmark2>,navController: NavController,check
 }*/
 @Composable
 fun HotelSeen(
-    hotelList: List<HotelTag>,
+    hotelList: List<com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data>,
     ) {
     Row(
         modifier = Modifier
@@ -379,8 +405,9 @@ fun HotelSeen(
         XSpacer(width = 3)
             BoldText20(text = "Khách sạn đã xem gần đây")
     }
-    ImageCarousel(images =hotelList )
+    ImageCarousel(images = hotelList)
 }
+
 @Composable
 fun FavoriteItem(
     title: String,
@@ -424,7 +451,7 @@ fun FavoriteItem(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ImageCarousel(
-    images: List<HotelTag>,
+    images: List<com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.Data>,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState()
@@ -442,14 +469,14 @@ fun ImageCarousel(
         ) { page ->
             Column {
                 HotelItemTag(
-                    hotelName = images[page].hotelName,
+                    hotelName = images[page].name,
                     rating = images[page].rating,
-                    reviewCount = images[page].reviewCount,
-                    isFavorite =images[page].isFavorite,
+                    reviewCount = images[page].totalRating,
+                    isFavorite = true,
                     onFavoriteClick = { /*TODO*/ },
-                    imagePainter =images[page].imageRes,
+                    imagePainter =images[page].images[0].url,
                     star = images[page].star,
-                    price = images[page].price
+                    price = images[page].displayPrice?.toLong() ?: 0
                 )
             }
 
@@ -640,12 +667,7 @@ fun HotelItemTag(
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = hotelName,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
+            ScrollingText(hotelName, Modifier.fillMaxWidth())
             // Spacer(modifier = Modifier.height(4.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 repeat(5) { index ->

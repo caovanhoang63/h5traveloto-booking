@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.CollectionDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.CollectionUseCase
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.FavoriteUseCases
+import com.example.h5traveloto_booking.main.presentation.domain.usecases.SearchUseCases
 import com.example.h5traveloto_booking.share.UserShare
 import com.example.h5traveloto_booking.util.ErrorResponse
 import com.example.h5traveloto_booking.util.Result
@@ -25,10 +27,14 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel@Inject constructor(
     private val usecases : FavoriteUseCases,
+    private val searchUseCases: SearchUseCases,
     private val sharedPrefManager: SharedPrefManager
 ): ViewModel() {
     private val collectionDataResponse = MutableStateFlow<Result<CollectionDTO>>(Result.Idle)
     val CollectionDataResponse = collectionDataResponse.asStateFlow()
+
+    private val _listHotelViewed = MutableStateFlow<Result<SearchHotelDTO>>(Result.Idle)
+    val ListHotelViewed = _listHotelViewed.asStateFlow()
 
     fun getCollectionData() = viewModelScope.launch {
 
@@ -57,4 +63,30 @@ class FavoriteViewModel@Inject constructor(
         }
     }
 
+    fun getHotelViewed() = viewModelScope.launch {
+        val token = sharedPrefManager.getToken()
+        val bearerToken = "Bearer $token"
+
+        searchUseCases.searchViewedHotelsUseCase(bearerToken).onStart {
+            Log.d("Home Search ViewModel:", "Start")
+            _listHotelViewed.value = Result.Loading
+        }
+            .catch {
+                if(it is HttpException){
+                    Log.d("Home Search ViewModel:", "catch")
+                    //Log.d("ChangePassword ViewModel E", it.message.toString())
+                    Log.d("Home Search ViewModel:", "hehe")
+                    val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                    Log.d("Home Search ViewModel:", errorResponse.message)
+                    _listHotelViewed.value = Result.Error(errorResponse.message)
+                }
+                else if (it is Exception) {
+                    Log.d("Home Search ViewModel:", it.javaClass.name)
+                }
+            }
+            .collect { res ->
+                Log.d("Home Search ViewModel:", "Success")
+                _listHotelViewed.value = Result.Success(res)
+            }
+    }
 }
