@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.BookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.UserBookingDTO
+import com.example.h5traveloto_booking.main.presentation.home.components.HotelTagBooked
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCalendar
 import com.example.h5traveloto_booking.main.presentation.schedule.components.BookingCard
 import com.example.h5traveloto_booking.navigate.Screens
@@ -121,12 +122,12 @@ public fun CalendarScreen (
                         }
                     }
                     items(listCalendarBooking.value) { bookingData ->
-                        BookingCard(
-                            false,
+                        HotelTagBooked(
+                            isStatusVisible = true,
                             bookingData = bookingData,
                             navController = parentNavController
                         )
-                        YSpacer(height = 10)
+                        YSpacer(height = 16)
                     }
                 }
             }
