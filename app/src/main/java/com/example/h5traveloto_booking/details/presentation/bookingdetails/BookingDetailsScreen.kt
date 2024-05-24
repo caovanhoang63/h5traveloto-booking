@@ -542,7 +542,7 @@ fun BookingDetailsScreen (
                                 textAlign = TextAlign.Center
                             )
                         }
-                        "check-out" -> {
+                        "checked-out" -> {
                             Text(
                                 text = "đã trả phòng",
                                 fontSize = 14.sp,
@@ -569,7 +569,7 @@ fun BookingDetailsScreen (
         },
         bottomBar = {
             when (state) {
-                "check-out" -> {
+                "checked-out" -> {
                     Row {
                         Text(
                             text = "Chúc mừng bạn đã hoàn thành chuyến đi của mình, để lại đánh giá để ghi lại trải nghệm của bạn",
