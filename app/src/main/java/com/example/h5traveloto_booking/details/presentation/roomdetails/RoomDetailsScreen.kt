@@ -51,7 +51,8 @@ fun RoomDetailsScreen(
         adults = shareDataHotelDetail.getAdults(),
         children = shareDataHotelDetail.getChildren(),
         startDate = shareDataHotelDetail.getStartDateString(),
-        endDate = shareDataHotelDetail.getEndDateString()
+        endDate = shareDataHotelDetail.getEndDateString(),
+        price = Object.price
     )
     Log.d("booking", bookingData.hotelId)
     Log.d("booking", bookingData.roomTypeId)

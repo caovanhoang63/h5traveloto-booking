@@ -18,5 +18,6 @@ class CreateBookingDTO (
     @Json(name = "start_date")
     val startDate: String,
     @Json(name = "end_date")
-    val endDate: String
+    val endDate: String,
+    val price : Int? = 0,
 )

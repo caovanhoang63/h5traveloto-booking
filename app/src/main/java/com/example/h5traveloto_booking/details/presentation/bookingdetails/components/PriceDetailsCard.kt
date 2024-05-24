@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.h5traveloto_booking.R
+import com.example.h5traveloto_booking.main.presentation.data.dto.Booking.CreateBookingDTO
 import com.example.h5traveloto_booking.theme.Grey100Color
 import com.example.h5traveloto_booking.theme.Grey500Color
 import com.example.h5traveloto_booking.theme.Grey50Color
@@ -35,7 +36,9 @@ import com.example.h5traveloto_booking.ui_shared_components.XSpacer
 
 @Composable
 fun PriceDetailsCard (
-
+    bookingData:CreateBookingDTO,
+    roomName:String,
+    roomPrice:Int,
 ) {
     val showPriceDetails = remember {
         mutableStateOf(false)
@@ -90,7 +93,7 @@ fun PriceDetailsCard (
                 )
             }
             Text(
-                text = "1000000 VND",
+                text = "${bookingData.price?.toLong()} VND",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -108,8 +111,8 @@ fun PriceDetailsCard (
             )
             Column {
                 ObjectAndPrice(
-                    text = "(1x) Phòng vjp kinh",
-                    price = 100000
+                    text = "(${bookingData.roomQuantity}x) ${roomName}",
+                    price = bookingData.price?.toLong() ?: 0
                 )
             }
         }
