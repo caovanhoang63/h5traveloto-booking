@@ -21,3 +21,25 @@ class CreateBookingDTO (
     val endDate: String,
     val price : Int? = 0,
 )
+
+data class CreateBookingDTO2 (
+    val hotelId: String? =null,
+    val roomTypeId: String? =null,
+    val roomQuantity: Int? =null,
+    val adults: Int? =null,
+    val children: Int? =null,
+    val startDate: String? =null,
+    val endDate: String? =null,
+){
+    fun toMap(): Map<String, Any> {
+        val map = mutableMapOf<String, Any>()
+        if (hotelId != null) map["hotel_id"] = hotelId
+        if (roomTypeId != null) map["room_type_id"] = roomTypeId
+        if (roomQuantity != null) map["room_quantity"] = roomQuantity
+        if (adults != null) map["adults"] = adults
+        if (children != null) map["children"] = children
+        if (startDate != null) map["start_date"] = startDate
+        if (endDate != null) map["end_date"] = endDate
+        return map
+    }
+}

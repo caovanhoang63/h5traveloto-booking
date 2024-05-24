@@ -632,7 +632,8 @@ object AppModule {
             getLinkPaymentUseCase = GetLinkPaymentUseCase(repository),
             executePaymentUseCase = ExecutePaymentUseCase(repository),
             cancelPaymentUseCase = CancelPaymentUseCase(repository),
-            successPaymentUseCase = SuccessPaymentUseCase(repository)
+            successPaymentUseCase = SuccessPaymentUseCase(repository),
+            checkDealUseCase = CheckDealUseCase(repository)
         )
     }
 

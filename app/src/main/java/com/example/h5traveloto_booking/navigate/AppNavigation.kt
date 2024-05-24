@@ -190,6 +190,7 @@ fun AppNavigation(startDestination : String ,
                     "FaildBackAction" -> {
                         // Xử lý khi thanh toán thất bại
                         Log.d("URL","hehe")
+                        paymentViewModel.cancelPayment(TxnShare.TxnID)
                         navController.navigate(Screens.PaymentFailedScreen.name)
                         //navController.navigate(Screens.AccountScreen.name)
                         //  navController.navigateUp()

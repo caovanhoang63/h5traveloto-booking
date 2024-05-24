@@ -5,4 +5,5 @@ data class PaymentUseCases(
     val executePaymentUseCase: ExecutePaymentUseCase,
     val cancelPaymentUseCase : CancelPaymentUseCase,
     val successPaymentUseCase : SuccessPaymentUseCase,
+    val checkDealUseCase: CheckDealUseCase
 )

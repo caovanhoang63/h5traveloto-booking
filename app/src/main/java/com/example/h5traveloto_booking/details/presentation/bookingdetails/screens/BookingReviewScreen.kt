@@ -594,13 +594,13 @@ fun BookingReviewScreen (
                         .padding(24.dp, 24.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ){
-                    Row(
+                    /*Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Box(
+                        *//*Box(
                             modifier = Modifier.fillMaxWidth(),
                         ) {
                             Row(modifier = Modifier.align(Alignment.CenterStart)){
@@ -630,9 +630,9 @@ fun BookingReviewScreen (
                             ) {
                                 Text(text = "Áp dụng", color = Color.White)
                             }
-                        }
+                        }*//*
                         // Uncomment và điều chỉnh đoạn mã này nếu bạn muốn hiển thị thông tin giảm giá
-                        /*
+                        *//*
                         if (isCouponApplied) {
                             Text(
                                 text = "Giảm giá: -${discountAmount} VND",
@@ -641,8 +641,8 @@ fun BookingReviewScreen (
                                 modifier = Modifier.padding(top = 8.dp)
                             )
                         }
-                        */
-                    }
+                        *//*
+                    }*/
                 }
 
             }
