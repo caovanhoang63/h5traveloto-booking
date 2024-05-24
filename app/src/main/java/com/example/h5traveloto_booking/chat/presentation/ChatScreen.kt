@@ -55,7 +55,7 @@ fun ChatScreen(
         mutableStateOf(true)
     }
     var isRender by remember {
-        mutableStateOf(true)
+        mutableIntStateOf(1)
     }
     LaunchedEffect(Unit) {
         chatRoomviewModel.getChatRoom(getChat = { roomId ->
@@ -70,7 +70,15 @@ fun ChatScreen(
     var roomId by remember {
         mutableStateOf("")
     };
+    socketHandler1.onNewMessage(object : SocketHandler.MessageCallback {
+        override fun onMessageReceived(message: Any?) {
+            Log.d("New message", message.toString())
+            a = message.toString()
+            Log.d("ChatList a", a)
+            isRender = 1 // Đặt isRender = true mỗi khi nhận được một tin nhắn mới
 
+        }
+    })
 
     val chatRoomResponse = chatRoomviewModel.ChatRoomResponse.collectAsState().value
 
@@ -125,7 +133,6 @@ fun ChatScreen(
                     val sendMessage = com.example.h5traveloto_booking.chat.presentation.data.dto.SendMessageDTO(
                         message = message,
                         room_id = roomId,
-
                         );
                     socketHandler1.sendMessage(sendMessage)
                     message = ""
@@ -181,23 +188,15 @@ fun ChatScreen(
 
                                 is Result.Success -> {
                                     //
-                                    socketHandler1.onNewMessage(object : SocketHandler.MessageCallback {
-                                        override fun onMessageReceived(message: Any?) {
-                                            Log.d("New message", message.toString())
-                                            a = message.toString()
-                                            Log.d("ChatList a", a)
-                                            isRender = true // Đặt isRender = true mỗi khi nhận được một tin nhắn mới
 
-                                        }
-                                    })
                                     try {
                                         /*val b =// Chuyển đổi JSON sang đối tượng*/
                                         val b: com.example.h5traveloto_booking.chat.presentation.data.dto.Data? =
                                             jsonAdapter.fromJson(a)
                                         Log.d("ChatList b", b.toString())
-                                        if (isRender) {
+                                        if (isRender==1) {
                                             messages = messages + b!!
-                                            isRender = false
+                                            isRender ++
                                         }
                                         Log.d("ChatList message", messages.toString())
                                     } catch (e: Exception) {
