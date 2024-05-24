@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -38,7 +39,7 @@ import websocket.socketHandler1
 fun ChatScreen(
     navController: NavController,
     viewModel: ChatListViewModel = hiltViewModel(),
-    chatRoomviewModel: ChatRoomViewModel = hiltViewModel()
+    chatRoomviewModel: ChatRoomViewModel = hiltViewModel(),
 ) {
     var a by remember { mutableStateOf("") }
 
@@ -54,7 +55,7 @@ fun ChatScreen(
         mutableStateOf(true)
     }
     var isRender by remember {
-        mutableStateOf(true)
+        mutableIntStateOf(1)
     }
     LaunchedEffect(Unit) {
         chatRoomviewModel.getChatRoom(getChat = { roomId ->
@@ -69,7 +70,15 @@ fun ChatScreen(
     var roomId by remember {
         mutableStateOf("")
     };
+    socketHandler1.onNewMessage(object : SocketHandler.MessageCallback {
+        override fun onMessageReceived(message: Any?) {
+            Log.d("New message", message.toString())
+            a = message.toString()
+            Log.d("ChatList a", a)
+            isRender = 1 // Đặt isRender = true mỗi khi nhận được một tin nhắn mới
 
+        }
+    })
 
     val chatRoomResponse = chatRoomviewModel.ChatRoomResponse.collectAsState().value
 
@@ -124,7 +133,6 @@ fun ChatScreen(
                     val sendMessage = com.example.h5traveloto_booking.chat.presentation.data.dto.SendMessageDTO(
                         message = message,
                         room_id = roomId,
-
                         );
                     socketHandler1.sendMessage(sendMessage)
                     message = ""
@@ -167,7 +175,10 @@ fun ChatScreen(
                             when (chatListResponse) {
                                 is Result.Loading -> {
                                     Log.d("ChatList", "dang load")
-                                    androidx.compose.material.CircularProgressIndicator()
+                                    /*androidx.compose.material.CircularProgressIndicator()*/
+                                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+                                        CircularProgressIndicator()
+                                    }
 
                                 }
 
@@ -177,22 +188,15 @@ fun ChatScreen(
 
                                 is Result.Success -> {
                                     //
-                                    socketHandler1.onNewMessage(object : SocketHandler.MessageCallback {
-                                        override fun onMessageReceived(message: Any?) {
-                                            Log.d("New message", message.toString())
-                                            a = message.toString()
-                                            Log.d("ChatList a", a)
-                                            isRender = true // Đặt isRender = true mỗi khi nhận được một tin nhắn mới
 
-                                        }
-                                    })
                                     try {
                                         /*val b =// Chuyển đổi JSON sang đối tượng*/
-                                        val b: com.example.h5traveloto_booking.chat.presentation.data.dto.Data? = jsonAdapter.fromJson(a)
+                                        val b: com.example.h5traveloto_booking.chat.presentation.data.dto.Data? =
+                                            jsonAdapter.fromJson(a)
                                         Log.d("ChatList b", b.toString())
-                                        if (isRender) {
+                                        if (isRender==1) {
                                             messages = messages + b!!
-                                            isRender = false
+                                            isRender ++
                                         }
                                         Log.d("ChatList message", messages.toString())
                                     } catch (e: Exception) {

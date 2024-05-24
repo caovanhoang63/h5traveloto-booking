@@ -16,6 +16,8 @@ import com.example.h5traveloto_booking.theme.PrimaryColor
 import com.example.h5traveloto_booking.ui_shared_components.GreyText
 import com.example.h5traveloto_booking.ui_shared_components.GreyText16
 import com.example.h5traveloto_booking.ui_shared_components.YSpacer
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun HotelDetailFeedback(text: String, author: String, rating: String, createdDate: String) {
@@ -26,8 +28,8 @@ fun HotelDetailFeedback(text: String, author: String, rating: String, createdDat
             containerColor = Grey50Color, //Card background color
         ),
     ) {
-        LazyColumn(Modifier.padding(15.dp)) {
-            item {
+        Column(Modifier.padding(15.dp)) {
+
                 Text(
                     text = author,
                     textAlign = androidx.compose.ui.text.style.TextAlign.End,
@@ -47,11 +49,18 @@ fun HotelDetailFeedback(text: String, author: String, rating: String, createdDat
                             Triple("/10", Grey500Color, androidx.compose.ui.text.font.FontWeight.Normal)
                         )
                     }
-                    GreyText16(text = createdDate)
+                    GreyText16(text = convertDateFormat(createdDate))
                 }
                 ExpandingText(longText = text, minimizedMaxLines = 3)
-            }
+
         }
 
+
     }
+}
+fun convertDateFormat(isoDateString: String): String {
+    val parser = DateTimeFormatter.ISO_DATE_TIME
+    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    val dateTime = LocalDateTime.parse(isoDateString, parser)
+    return formatter.format(dateTime)
 }

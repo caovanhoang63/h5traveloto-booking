@@ -2,6 +2,7 @@ package com.example.h5traveloto_booking.details.presentation.hoteldetails.compon
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -55,46 +56,48 @@ fun ListReviews(
             }
         },
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
-            when (listReviewsResponse) {
-                is Result.Loading -> {
-                    Log.d("List Reviews", "dang load")
+            item {
+                when (listReviewsResponse) {
+                    is Result.Loading -> {
+                        Log.d("List Reviews", "dang load")
 
-                    // Hieu ung load
-                    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                        CircularProgressIndicator()
+                        // Hieu ung load
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                            CircularProgressIndicator()
 
+                        }
                     }
-                }
 
-                is Result.Error -> {
-                    Log.d("List Reviews ", "loi roi")
-                    NotFoundReview()
-                }
-
-                is Result.Success -> {
-                    Log.d("List Reviews", "thanh cong")
-                    val reviews = listReviewsResponse.data.data
-                    reviews.forEach() {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        HotelDetailFeedback(
-                            text = it.comment,
-                            author = "${it.user.lastName} ${it.user.firstName}",
-                            rating = it.rating.toString(),
-                            createdDate = it.createdAt
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
-
+                    is Result.Error -> {
+                        Log.d("List Reviews ", "loi roi")
+                        NotFoundReview()
                     }
-                }
 
-                else -> Unit
+                    is Result.Success -> {
+                        Log.d("List Reviews", "thanh cong")
+                        val reviews = listReviewsResponse.data.data
+                        reviews.forEach() {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            HotelDetailFeedback(
+                                text = it.comment,
+                                author = "${it.user.lastName} ${it.user.firstName}",
+                                rating = it.rating.toString(),
+                                createdDate = it.createdAt
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            HorizontalDivider(thickness = 0.8.dp, color = Color.LightGray)
+
+                        }
+                    }
+
+                    else -> Unit
+                }
             }
             /*HotelDetailFeedback(text = "phong nhu cai lon  tao vay do", author = "Hoang Cao")
             Spacer(modifier = Modifier.height(16.dp))

@@ -421,7 +421,7 @@ fun BookingDetailsScreen (
         mutableStateOf(listOf<com.example.h5traveloto_booking.details.presentation.data.dto.roomtypebyid.Image>())
     }
     var roomPrice by remember {
-        mutableStateOf(0)
+        mutableLongStateOf(0)
     }
     var roomFreeCancel by remember {
         mutableStateOf(false)
@@ -454,6 +454,7 @@ fun BookingDetailsScreen (
             roomFreeCancel = roomTypeResponse.data.data.freeCancel
             roomBreakFast = roomTypeResponse.data.data.breakFast
             roomPayInHotel = roomTypeResponse.data.data.payInHotel
+            roomPrice =  roomTypeResponse.data.data.price.toLong()
             isLoadingRoomType.value = false
         }
         else -> Unit
@@ -480,7 +481,7 @@ fun BookingDetailsScreen (
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 16.dp),
+                        .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -506,7 +507,7 @@ fun BookingDetailsScreen (
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 0.dp),
+                        .padding(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -515,35 +516,47 @@ fun BookingDetailsScreen (
                             Text(
                                 text = "đang đặt phòng",
                                 fontSize = 14.sp,
-                                color = Color.Black
+                                color = PrimaryColor,
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
                         }
                         "paid" -> {
                             Text(
                                 text = "đã thanh toán",
                                 fontSize = 14.sp,
-                                color = Color.Black
+                                color = DarkGreenColor,
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
                         }
                         "canceled" -> {
                             Text(
                                 text = "đã hủy",
                                 fontSize = 14.sp,
-                                color = Color.Black
+                                color = RedColor,
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
                         }
-                        "check-out" -> {
+                        "checked-out" -> {
                             Text(
                                 text = "đã trả phòng",
                                 fontSize = 14.sp,
-                                color = Color.Black
+                                color = GreenColor,
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Center
                             )
                         }
                         "expired" -> {
                             Text(
                                 text = "đã hết thời gian chờ",
                                 fontSize = 14.sp,
-                                color = Color.Black,
+                                color = OrangeColor,
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 textAlign = TextAlign.Center
@@ -555,35 +568,120 @@ fun BookingDetailsScreen (
             }
         },
         bottomBar = {
-            if (state == "check-out") {
-                Row {
-                    Text(
-                        text = "Chúc mừng bạn đã hoàn thành chuyến đi của mình, để lại một đánh giá để ghi lại trải nghệm của bạn",
-                        fontSize = 14.sp,
-                        color = SecondaryColor,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier
-                            .padding(horizontal = 24.dp, vertical = 10.dp)
-                            .fillMaxWidth(0.6f),
-                    )
+            when (state) {
+                "checked-out" -> {
+                    Row {
+                        Text(
+                            text = "Chúc mừng bạn đã hoàn thành chuyến đi của mình, để lại đánh giá để ghi lại trải nghệm của bạn",
+                            fontSize = 14.sp,
+                            color = SecondaryColor,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp, vertical = 10.dp)
+                                .fillMaxWidth(0.6f),
+                        )
+                        Button(
+                            onClick = {
+                                showRateDialog.value = true
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp, vertical = 10.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(SecondaryColor)
+                        ) {
+                            Text(
+                                text = "Đánh giá ngay",
+                                fontSize = 14.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+                "pending" -> {
                     Button(
                         onClick = {
-                            showRateDialog.value = true
+                            /*tiep tuc thanh toan*/
                         },
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(65.dp)
                             .padding(horizontal = 24.dp, vertical = 10.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(SecondaryColor)
+                        colors = ButtonDefaults.buttonColors(OrangeColor)
                     ) {
                         Text(
-                            text = "Đánh giá ngay",
-                            fontSize = 14.sp,
-                            color = Color.White,
-                            textAlign = TextAlign.Center
+                            text = "Tiếp tục thanh toán",
+                            fontSize = 16.sp,
+                            color = Color.White
                         )
                     }
                 }
+                "expire" -> {
+                    Row {
+                        Text(
+                            text = "Thời gian đặt phòng đã hết",
+                            fontSize = 14.sp,
+                            color = SecondaryColor,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp, vertical = 10.dp)
+                                .fillMaxWidth(0.6f),
+                        )
+                        Button(
+                            onClick = {
+                                showRateDialog.value = true
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp, vertical = 10.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(OrangeColor)
+                        ) {
+                            Text(
+                                text = "Đặt lại",
+                                fontSize = 14.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+                "canceled" -> {
+                    Row {
+                        Text(
+                            text = "Phòng bạn đặt đã bị hủy",
+                            fontSize = 14.sp,
+                            color = SecondaryColor,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp, vertical = 10.dp)
+                                .fillMaxWidth(0.6f),
+                        )
+                        Button(
+                            onClick = {
+                                showRateDialog.value = true
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 24.dp, vertical = 10.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(OrangeColor)
+                        ) {
+                            Text(
+                                text = "Đặt lại",
+                                fontSize = 14.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+                "paid" -> {
+
+                }
+                else -> Unit
             }
         }
     ) { innerPadding ->
@@ -652,7 +750,7 @@ fun BookingDetailsScreen (
                                 )
                                 YSpacer(20)
                                 Text(
-                                    text = "${shareDataHotelDetail.getEndDate().minus(shareDataHotelDetail.getStartDate()).days} night(s)",
+                                    text = "${shareDataHotelDetail.getEndDate().minus(shareDataHotelDetail.getStartDate()).days} đêm",
                                     color = Grey500Color,
                                     fontSize = 14.sp
                                 )
@@ -793,7 +891,8 @@ fun BookingDetailsScreen (
                                     Icon(
                                         painter = painterResource(R.drawable.lunch),
                                         contentDescription = "",
-                                        tint = DarkGreenColor,
+                                        tint = if (roomBreakFast) DarkGreenColor
+                                        else RedColor,
                                         modifier = Modifier
                                             .size(20.dp)
                                     )
@@ -802,7 +901,7 @@ fun BookingDetailsScreen (
                                         text = if (roomBreakFast) "Bữa sáng miễn phí"
                                         else "Không có bữa sáng",
                                         color = if (roomBreakFast) DarkGreenColor
-                                        else Color.Red,
+                                        else RedColor,
                                         fontSize = 14.sp
                                     )
                                 }
@@ -818,7 +917,7 @@ fun BookingDetailsScreen (
                                         XSpacer(10)
                                         Text(
                                             text = "Thanh toán tại khách sạn",
-                                            color = DarkGreenColor,
+                                            color = PrimaryColor,
                                             fontSize = 14.sp
                                         )
                                     }
@@ -827,7 +926,8 @@ fun BookingDetailsScreen (
                                     Icon(
                                         painter = painterResource(R.drawable.check),
                                         contentDescription = "",
-                                        tint = DarkGreenColor,
+                                        tint = if (roomFreeCancel) DarkGreenColor
+                                        else RedColor,
                                         modifier = Modifier
                                             .size(20.dp)
                                     )
@@ -836,7 +936,7 @@ fun BookingDetailsScreen (
                                         text = if (roomFreeCancel) "Miễn phí hủy phòng"
                                             else "Có phí trả phòng",
                                         color = if (roomFreeCancel) DarkGreenColor
-                                                else Color.Red,
+                                                else RedColor,
                                         fontSize = 14.sp
                                     )
                                 }

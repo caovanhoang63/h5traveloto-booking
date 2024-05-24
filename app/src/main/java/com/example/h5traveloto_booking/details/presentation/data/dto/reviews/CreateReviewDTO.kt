@@ -11,6 +11,6 @@ data class CreateReviewDTO(
     val comment: String,
     @Json(name = "room_type_id")
     val roomTypeId: String,
-    @Json(name = "rate")
+    @Json(name = "rating")
     val rate: Int
 )
