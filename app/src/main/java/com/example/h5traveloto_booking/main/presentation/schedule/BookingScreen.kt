@@ -178,13 +178,13 @@ public fun BookingScreen (
 //                                .width(100.dp)
                                 .height(40.dp)
                                 .clip(RoundedCornerShape(10.dp))
-                                .background(Grey100Color)
+                                .background(PrimaryColor)
                         ) {
                             Column {
                                 Text(
                                     text = "${stateNames.getOrNull(states.indexOf(bookingState.value))}",
                                     fontSize = 14.sp,
-                                    color = Color.Black,
+                                    color = Color.White,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier
                                         .padding(5.dp)
@@ -242,13 +242,13 @@ public fun BookingScreen (
                             .height(40.dp)
                             .clip(RoundedCornerShape(10.dp))
                             .background(
-                                if (isAllDate.value) PrimaryColor
+                                if (!isAllDate.value) PrimaryColor
                             else Grey50Color)
                     ) {
                         Text(
                             text = "Mọi ngày",
                             fontSize = 14.sp,
-                            color = if (isAllDate.value) Color.White
+                            color = if (!isAllDate.value) Color.White
                             else Color.Black,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
