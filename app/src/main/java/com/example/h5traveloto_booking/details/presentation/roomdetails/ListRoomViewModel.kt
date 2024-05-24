@@ -37,11 +37,17 @@ class ListRoomViewModel @Inject constructor(
     fun setListRoomTypeParams(
         startDate: String,
         endDate: String,
-        hotelId: String
+        hotelId: String,
+        roomQuantity: Int,
+        adults: Int,
+        children: Int
     ) {
         listRoomTypeParams.startDate = startDate
         listRoomTypeParams.endDate = endDate
         listRoomTypeParams.hotelId = hotelId
+        listRoomTypeParams.roomQuantity = roomQuantity
+        listRoomTypeParams.adults = adults
+        listRoomTypeParams.children = children
     }
     fun getListRooms(
 
@@ -49,7 +55,14 @@ class ListRoomViewModel @Inject constructor(
         val token = sharedPrefManager.getToken()
         val bearerToken = "Bearer $token"
         Log.d("ListRooms ViewModel", listRoomTypeParams.toMap().toString())
-        setListRoomTypeParams(shareDataHotelDetail.getStartDateString(), shareDataHotelDetail.getEndDateString(), shareDataHotelDetail.getHotelId())
+        setListRoomTypeParams(
+            startDate = shareDataHotelDetail.getStartDateString(),
+            endDate = shareDataHotelDetail.getEndDateString(),
+            hotelId = shareDataHotelDetail.getHotelId(),
+            roomQuantity = shareDataHotelDetail.getRoomQuantity(),
+            adults = shareDataHotelDetail.getAdults(),
+            children = shareDataHotelDetail.getChildren()
+        )
         Log.d("ListRooms Params", listRoomTypeParams.toMap().toString())
         useCases.searchRoomTypeUseCase(listRoomTypeParams).onStart {
             _ListRoomsResponse.value = Result.Loading
@@ -60,14 +73,15 @@ class ListRoomViewModel @Inject constructor(
                 Log.d("ListRooms ViewModel", "catch")
                 Log.d("ListRooms ViewModel", "hehe")
                 val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
-                Log.d("ListRooms ViewModel Error", errorResponse.message)
-                Log.d("ListRooms ViewModel Error", errorResponse.log)
+                Log.d("ListRooms ViewModel", errorResponse.message)
+                Log.d("ListRooms ViewModel", errorResponse.log)
                 _ListRoomsResponse.value = Result.Error(errorResponse.message)
             }
+            Log.d("ListRooms ViewModel", it.message.toString())
             _ListRoomsResponse.value = Result.Error(it.message.toString())
         }
         .collect {
-            Log.d("ListRooms Success", it.data.toString())
+            Log.d("ListRooms ViewModel", it.data.toString())
             _ListRoomsResponse.value = Result.Success(it)
         }
     }

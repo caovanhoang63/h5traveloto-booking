@@ -36,6 +36,8 @@ import com.example.h5traveloto_booking.details.presentation.hoteldetails.compone
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomDetailCard
 import com.example.h5traveloto_booking.details.presentation.roomdetails.components.RoomFacilitiesList
 import com.example.h5traveloto_booking.main.presentation.favorite.AllFavorite.formatPrice
+import com.example.h5traveloto_booking.main.presentation.favorite.DetailCollection.DetailCollectionViewModel
+import com.example.h5traveloto_booking.main.presentation.favorite.FavoriteViewModel
 
 import com.example.h5traveloto_booking.navigate.Screens
 import com.example.h5traveloto_booking.share.shareDataHotelDetail
@@ -53,21 +55,34 @@ import com.google.gson.Gson
 fun HotelDetailsScreen(
     navController: NavController,
     viewModel: HotelDetailsScreenViewModel = hiltViewModel(),
-    hotelFacilitiesDetailsViewModel: HotelFacilitiesDetailsViewModel = hiltViewModel()
+    hotelFacilitiesDetailsViewModel: HotelFacilitiesDetailsViewModel = hiltViewModel(),
+    favoriteViewModel: FavoriteViewModel = hiltViewModel(),
+    unsaveViewModel: DetailCollectionViewModel = hiltViewModel(),
 
-) {
+    ) {
     LaunchedEffect(Unit) {
         hotelFacilitiesDetailsViewModel.getHotelFacilitiesDetails()
         viewModel.getHotelDetails()
         viewModel.getListReviews()
+
     }
     val  listHotelFacilitiesDetails = hotelFacilitiesDetailsViewModel.hotelacilitiesDetailsResponse.collectAsState().value
     val HotelDetailsResponse = viewModel.HotelDetailsResponse.collectAsState().value
 
     val hotelInfo = shareDataHotelDetail.getHotelDetails();
-
-    val listReviewsResponse = viewModel.ListReviewsResponse.collectAsState().value
+    val Response = favoriteViewModel.IsSavedResponse.collectAsState().value
     var favoriteState by remember { mutableStateOf(false) }
+
+    LaunchedEffect(HotelDetailsResponse){
+        favoriteViewModel.isSaved(hotelInfo?.id.toString())
+        when(Response){
+            is Result.Success ->{
+                favoriteState = Response.data.data
+            }
+            else ->Unit
+        }
+    }
+    val listReviewsResponse = viewModel.ListReviewsResponse.collectAsState().value
     var tengicungduoc: com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO? =
         null
     val imageUrlList = hotelInfo!!.images.map { it.url }
@@ -191,7 +206,13 @@ fun HotelDetailsScreen(
                                     .height(32.dp)
                                     .background(
                                         color = Color.White, shape = RoundedCornerShape(50.dp)
-                                    ), onClick = { favoriteState = !favoriteState }, content = {
+                                    ), onClick = {
+                                        if(favoriteState){
+                                            unsaveViewModel.unsaveHotel(hotelInfo.id)
+                                        }else {
+                                            favoriteViewModel.save(hotelId = hotelInfo.id)
+                                        }
+                                        favoriteState = !favoriteState }, content = {
                                     Icon(
                                         imageVector = ImageVector.vectorResource(
                                             id = if (favoriteState) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24

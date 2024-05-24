@@ -15,4 +15,6 @@ interface FavoriteRepository {
     suspend fun deleteCollection(collectionId: String):Response
     suspend fun updateCollection(collectionId: String,data: AddCollectionDTO):Response
     suspend fun getCollectionByCollectionId(id: String): Collection
+    suspend fun isSaved(hotelId: String):Response
+    suspend fun save(hotelId: String):Response
 }

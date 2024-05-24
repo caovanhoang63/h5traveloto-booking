@@ -62,4 +62,15 @@ interface FavoriteApi {
     suspend fun getCollectionByCollectionId(
         @Path("collection-id") collectionId: String
     ): Collection
+
+
+    @GET("hotels/{hotel-id}/saved")
+    suspend fun isSaved(
+        @Path("hotel-id") hotelId: String
+    ):Response
+
+    @POST("hotels/{hotel-id}/save")
+    suspend fun save(
+        @Path("hotel-id") hotelId: String
+    ):Response
 }

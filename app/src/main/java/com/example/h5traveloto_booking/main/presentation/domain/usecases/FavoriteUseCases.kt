@@ -10,5 +10,7 @@ data class FavoriteUseCases(
     val createCollectionUseCase : CreateCollectionUseCase,
     val deleteCollectionUseCase: DeleteCollectionUseCase,
     val updateCollectionUseCase : UpdateCollectionUseCase,
-    val getCollectionByCollectionIdUseCase: GetCollectionByCollectionIdUseCase
+    val getCollectionByCollectionIdUseCase: GetCollectionByCollectionIdUseCase,
+    val isSavedUseCase: IsSavedUseCase,
+    val saveUseCase :SaveUseCase,
 )
