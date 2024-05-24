@@ -115,8 +115,8 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text(text = "Current location")
-                    Spacer(modifier = Modifier.height(4.dp))
+                    /*Text(text = "Current location")
+                    Spacer(modifier = Modifier.height(4.dp))*/
                     MenuDown(items =
                         if (listDistrict is Result.Success) {
                             listDistrict.data.districts
@@ -182,7 +182,7 @@ fun HomeScreen(
                                 modifier = Modifier.size(20.dp)
                             )
                             Text(
-                                text = "Search Hotels",
+                                text = "Tìm kiếm khách sạn",
                                 fontSize = 14.sp,
                                 color = Grey500Color,
                                 modifier = Modifier
@@ -211,7 +211,7 @@ fun HomeScreen(
                             text = "Vị trí gần bạn"
                         )
                         Text(
-                            text = "See all",
+                            text = "Xem tất cả",
                             fontSize = 16.sp,
                             color = if(viewModel.checkData()) PrimaryColor else Grey500Color,
                             modifier = Modifier.clickable {
@@ -288,7 +288,7 @@ fun HomeScreen(
                     ) {
                         BoldText("Địa điểm nổi bật")
                         Text(
-                            text = "See all",
+                            text = "Xem tất cả",
                             fontSize = 16.sp,
                             color = if(viewModel.checkDataProminent()) PrimaryColor else Grey500Color,
                             modifier = Modifier.clickable {

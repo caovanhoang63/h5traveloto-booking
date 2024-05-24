@@ -81,13 +81,23 @@ fun HomeSearchScreen(
                     .padding(21.dp, 0.dp, 21.dp, 0.dp)
                     .height(64.dp)
             ) {
-                PrimaryIconButton(
-                    DrawableId = R.drawable.backbutton,
-                    onClick = { navController.popBackStack() },
-                    alt = "",
-                )
-                Text(text = "Accommodation", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
-                PrimaryIconButton(DrawableId = R.drawable.more, onClick = {}, alt = "Back")
+
+
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    PrimaryIconButton(
+                        DrawableId = R.drawable.backbutton,
+                        onClick = { navController.popBackStack() },
+                        alt = "",
+                    )
+                    Text(
+                        text = "Tìm kiếm",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+
+                }
             }
         }
 
@@ -262,7 +272,7 @@ fun HomeSearchScreen(
                                     viewModel.bookingNow()
                                     navAppNavController.navigate(Screens.ListHotels.name)
                                     shareDataHotelDetail.setSearchText(location)
-                                    shareDataHotelDetail.setSelectedStartDate(viewModel.getStartDate().toString(),)
+                                    shareDataHotelDetail.setSelectedStartDate(viewModel.getStartDate().toString())
                                     shareDataHotelDetail.setPersonOption(adult, child, room)
                                 },
                                 modifier = Modifier
@@ -291,11 +301,11 @@ fun HomeSearchScreen(
                     ) {
                         BoldText("Đã xem gần đây")
                         Text(
-                            text = "See all",
+                            text = "Xem tất cả",
                             fontSize = 16.sp,
-                            color = if(viewModel.checkDataViewed()) PrimaryColor else Grey500Color,
+                            color = if (viewModel.checkDataViewed()) PrimaryColor else Grey500Color,
                             modifier = Modifier.clickable {
-                                if(viewModel.checkDataViewed()){
+                                if (viewModel.checkDataViewed()) {
                                     shareHotelDataViewModel.setIsCurrentLocation(false)
                                     shareHotelDataViewModel.setListHotel((listHotelViewed as Result.Success).data)
                                     shareHotelDataViewModel.setOnClickBooking(false)
@@ -305,21 +315,27 @@ fun HomeSearchScreen(
                         )
                     }
                     YSpacer(16)
-                    when(listHotelViewed){
+                    when (listHotelViewed) {
                         is Result.Error -> {
                             NotFoundHotel()
                         }
+
                         is Result.Idle -> {
                         }
+
                         is Result.Loading -> {
-                            Box(Modifier.fillMaxWidth().height(200.dp)) {
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp)) {
                                 CircleLoading()
                             }
                         }
+
                         is Result.Success -> {
                             val listHotel = listHotelViewed.data.data
-                            Column(modifier = Modifier.padding(0.dp,0.dp,0.dp,0.dp)) {
-                                if(listHotel != null){
+                            Column(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp)) {
+                                if (listHotel != null) {
                                     listHotel.forEachIndexed { index, hotel ->
                                         HotelTagSmall(
                                             hotelDTO = hotel,
@@ -331,7 +347,7 @@ fun HomeSearchScreen(
                                             }
                                         )
                                         YSpacer(16)
-                                        if(index >= 3){
+                                        if (index >= 3) {
                                             return@Column
                                         }
                                     }

@@ -125,7 +125,6 @@ class SocketHandler {
     fun onNewMessage() {
         val messageListener = MessageListener()
         mSocket.on("new_message", messageListener)
-
     }*/
     // Định nghĩa một callback để trả về giá trị của args[0]
     interface MessageCallback {

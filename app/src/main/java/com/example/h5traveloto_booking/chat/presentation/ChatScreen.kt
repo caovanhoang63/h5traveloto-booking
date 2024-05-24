@@ -113,7 +113,6 @@ fun ChatScreen(
                     .padding(start = 24.dp, end = 24.dp, top = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
-
             ) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     PrimaryIconButton(
