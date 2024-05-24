@@ -276,7 +276,7 @@ fun HotelItemTag(
                     Text(text = "Xóa khỏi bộ sưu tập")
                     Icon(
                         imageVector = ImageVector.vectorResource(
-                            id = R.drawable.baseline_add_circle_outline_24
+                            id = R.drawable.baseline_playlist_remove_24
                         ),
                         contentDescription = "Favorite Icon",
                         tint = Color.Blue

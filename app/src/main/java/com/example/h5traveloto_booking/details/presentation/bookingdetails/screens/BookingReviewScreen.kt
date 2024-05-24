@@ -293,7 +293,7 @@ fun BookingReviewScreen (
                                 text = "${
                                     shareDataHotelDetail.getEndDate()
                                         .minus(shareDataHotelDetail.getStartDate()).days.toString()
-                                }/night(s)",
+                                }/đêm",
                                 color = Grey500Color,
                                 fontSize = 14.sp
                             )
