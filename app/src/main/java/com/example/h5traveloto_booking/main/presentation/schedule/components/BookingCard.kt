@@ -98,27 +98,7 @@ public fun BookingCard(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
-//                    Row (
-//                        modifier = Modifier
-//                            .fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.End
-//                    ) {
-//                        Text(
-//                            text = "${bookingData.finalAmount} VND",
-//                            color = PrimaryColor,
-//                            fontSize = 13.sp,
-//                            fontWeight = FontWeight.Bold,
-//                            overflow = TextOverflow.Ellipsis,
-//                            maxLines = 1
-//                        )
-//                        Text(
-//                            text = " /đêm",
-//                            color = Grey500Color,
-//                            fontSize = 12.sp,
-//                            overflow = TextOverflow.Ellipsis,
-//                            maxLines = 1
-//                        )
-//                    }
+
                 }
                 YSpacer(height = 5)
                 Row {

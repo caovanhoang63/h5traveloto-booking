@@ -483,7 +483,7 @@ fun BookingDetailsScreen (
                         .fillMaxWidth()
                         .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Box(
                         modifier = Modifier
@@ -495,14 +495,19 @@ fun BookingDetailsScreen (
                             alt = ""
                         )
                     }
-                    Text(
-                        text = "Chi tiết đặt phòng",
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth(0.75f)
-                    )
+                            .fillMaxWidth(0.75f),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text(
+                            text = "Chi tiết đặt phòng",
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            fontSize = 16.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
                 Row (
                     modifier = Modifier
