@@ -109,7 +109,7 @@ fun DetailCollectionScreen(navController: NavController,
             ) {
                 Box(modifier = Modifier.fillMaxWidth()){
                     PrimaryIconButton(R.drawable.backarrow48,
-                        onClick = {navController.navigateUp()/* navController.popBackStack*/},
+                        onClick = { navController.popBackStack()},
                         "",
                         modifier = Modifier )
                     XSpacer(60)

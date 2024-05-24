@@ -493,7 +493,9 @@ object AppModule {
             createCollectionUseCase = CreateCollectionUseCase(repository),
             deleteCollectionUseCase = DeleteCollectionUseCase(repository),
             updateCollectionUseCase = UpdateCollectionUseCase(repository),
-            getCollectionByCollectionIdUseCase = GetCollectionByCollectionIdUseCase(repository)
+            getCollectionByCollectionIdUseCase = GetCollectionByCollectionIdUseCase(repository),
+            isSavedUseCase = IsSavedUseCase(repository),
+            saveUseCase = SaveUseCase(repository)
         )
     }
 

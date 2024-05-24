@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.h5traveloto_booking.main.presentation.data.dto.Account.ProfileDTO
 import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.CollectionDTO
+import com.example.h5traveloto_booking.main.presentation.data.dto.Favorite.Response
 import com.example.h5traveloto_booking.main.presentation.data.dto.SearchHotel.SearchHotelDTO
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.CollectionUseCase
 import com.example.h5traveloto_booking.main.presentation.domain.usecases.FavoriteUseCases
@@ -15,10 +16,7 @@ import com.example.h5traveloto_booking.util.Result
 import com.example.h5traveloto_booking.util.SharedPrefManager
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -81,6 +79,7 @@ class FavoriteViewModel@Inject constructor(
                     _listHotelViewed.value = Result.Error(errorResponse.message)
                 }
                 else if (it is Exception) {
+                    _listHotelViewed.value = Result.Error("errorResponse.message")
                     Log.d("Home Search ViewModel:", it.javaClass.name)
                 }
             }
@@ -88,5 +87,58 @@ class FavoriteViewModel@Inject constructor(
                 Log.d("Home Search ViewModel:", "Success")
                 _listHotelViewed.value = Result.Success(res)
             }
+    }
+
+
+    private val isSavedResponse = MutableStateFlow<Result<Response>>(Result.Idle)
+    val IsSavedResponse = isSavedResponse.asStateFlow()
+    fun isSaved(hotelId:String)= viewModelScope.launch {
+        usecases.isSavedUseCase(hotelId).onStart {
+            isSavedResponse.value = Result.Loading
+        }.catch {
+            if(it is HttpException){
+                Log.d("Favorite ViewModel", "catch")
+                //Log.d("ChangePassword ViewModel E", it.message.toString())
+                Log.d("Favorite ViewModel", "hehe")
+                val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                Log.d("Favorite ViewModel Error", errorResponse.message)
+                Log.d("Favorite ViewModel Error", errorResponse.log)
+                isSavedResponse.value = Result.Error(errorResponse.message)
+            }
+            else if (it is Exception) {
+                Log.d("Favorite ViewModel", it.javaClass.name)
+                isSavedResponse.value = Result.Error("errorResponse.message")
+
+            }
+        }.collect{
+            isSavedResponse.value = Result.Success(it)
+        }
+    }
+
+
+
+    private val saveResponse = MutableStateFlow<Result<Response>>(Result.Idle)
+    val SaveResponse = saveResponse.asStateFlow()
+    fun save(hotelId:String)= viewModelScope.launch {
+        usecases.saveUseCase(hotelId).onStart {
+            saveResponse.value = Result.Loading
+        }.catch {
+            if(it is HttpException){
+                Log.d("Favorite ViewModel", "catch")
+                //Log.d("ChangePassword ViewModel E", it.message.toString())
+                Log.d("Favorite ViewModel", "hehe")
+                val errorResponse = Gson().fromJson(it.response()?.errorBody()!!.string(), ErrorResponse::class.java)
+                Log.d("Favorite ViewModel Error", errorResponse.message)
+                Log.d("Favorite ViewModel Error", errorResponse.log)
+                saveResponse.value = Result.Error(errorResponse.message)
+            }
+            else if (it is Exception) {
+                Log.d("Favorite ViewModel", it.javaClass.name)
+                saveResponse.value = Result.Error("errorResponse.message")
+
+            }
+        }.collect{
+            saveResponse.value = Result.Success(it)
+        }
     }
 }

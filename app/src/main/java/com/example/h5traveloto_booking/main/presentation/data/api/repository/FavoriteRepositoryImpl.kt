@@ -88,4 +88,16 @@ class FavoriteRepositoryImpl @Inject constructor(
             api.getCollectionByCollectionId(id)
         }
     }
+
+    override suspend fun isSaved(hotelId: String): Response {
+        return withContext(Dispatchers.Default){
+            api.isSaved(hotelId)
+        }
+    }
+
+    override suspend fun save(hotelId: String): Response {
+        return withContext(Dispatchers.Default){
+            api.save(hotelId)
+        }
+    }
 }

@@ -43,5 +43,6 @@ data class Data(
     @Json(name = "updated_at")
     val updatedAt: String,
     @Json(name = "ward")
-    val ward: Ward
+    val ward: Ward,
+    var isFavorite: Boolean = false
 )

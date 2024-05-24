@@ -107,9 +107,13 @@ fun AddHotelInCollectionScreen(navController: NavController,
                                 viewModel.addHotelInCollection(collectionId =collectionId, hotelId = it.id.toString() )
                             }
                         }
-                        repeat(if (new) 4 else 1){
+                        if (new){
+                            navController.popBackStack(route = Screens.MainScreen.name, inclusive = false)
+                        }
+                        else {
                             navController.popBackStack()
                         }
+
                        // navController.navigate(Screens.FavoriteScreen.name)
                     },
                         modifier = Modifier
