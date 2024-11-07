@@ -166,7 +166,7 @@ fun HotelDetailCard2(navController: NavController, hotelDTO: Data, click: (hotel
                 ) {
                     Text(text = hotelDTO.name, style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold))
                     YSpacer(5)
-                    GreyText(text = hotelDTO.district.name + ", " + hotelDTO.province.name)
+                    GreyText(text = hotelDTO.district.name + ", " + (hotelDTO.province?.name ?: ""))
                     YSpacer(5)
                     Row {
                         Icon(

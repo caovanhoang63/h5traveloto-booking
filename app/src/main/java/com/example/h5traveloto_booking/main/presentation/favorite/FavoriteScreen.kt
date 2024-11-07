@@ -337,7 +337,7 @@ fun ImageCarousel(
             itemSpacing = 16.dp
         ) { page ->
             Column {
-                HotelItemTag(
+                /*HotelItemTag(
                     hotelName = images[page].name,
                     rating = images[page].rating,
                     reviewCount = images[page].totalRating,
@@ -347,7 +347,7 @@ fun ImageCarousel(
                     star = images[page].star,
                     price = images[page].displayPrice?.toLong() ?: 0,
                     hotelId = images[page].id
-                )
+                )*/
             }
 
         }

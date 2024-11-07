@@ -37,7 +37,7 @@ data class Data(
     @Json(name = "total_room")
     val totalRoom: Int,
     @Json(name = "description")
-    val description: String,
+    val description: String? ="",
     @Json(name = "updated_at")
     val updatedAt: String
 )

@@ -85,9 +85,9 @@ fun HotelDetailsScreen(
     val listReviewsResponse = viewModel.ListReviewsResponse.collectAsState().value
     var tengicungduoc: com.example.h5traveloto_booking.details.presentation.data.dto.hotelDetails.HotelDetailsDTO? =
         null
-    val imageUrlList = hotelInfo!!.images.map { it.url }
+    val imageUrlList = hotelInfo!!.images?.map { it.url }
     var currentImageUrl by remember {
-        mutableStateOf(imageUrlList[0])
+        mutableStateOf(imageUrlList?.get(0) ?:"" )
     }
     var isLogoOpen by remember {
         mutableStateOf(false)
@@ -96,7 +96,7 @@ fun HotelDetailsScreen(
         mutableStateOf(false)
     }
     when (isLogoOpen) {
-        true -> DialogWithImage(onDismissRequest = { isLogoOpen = false }, imageURL = hotelInfo.logo.url)
+        true -> hotelInfo.logo?.let { DialogWithImage(onDismissRequest = { isLogoOpen = false }, imageURL = it.url) }
         false -> {}
     }
     when (isImageOpen) {
@@ -190,7 +190,7 @@ fun HotelDetailsScreen(
                                 contentAlignment = Alignment.TopEnd,
                             ) {
                                 AsyncImage(
-                                    model = hotelInfo!!.logo.url,
+                                    model = hotelInfo!!.logo?.url,
                                     contentDescription = null,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -241,7 +241,7 @@ fun HotelDetailsScreen(
                                     contentScale = ContentScale.Crop
                                 )
                                 XSpacer(width = 10)
-                                GreyText(text = "${hotelInfo!!.district.fullName}, ${hotelInfo.province.fullName}")
+                                GreyText(text = "${hotelInfo!!.district.fullName}, ${hotelInfo.province?.fullName}")
                             }
                             YSpacer(height = 16)
                             BoldText(text = "Mô Tả Khách Sạn")
@@ -274,19 +274,21 @@ fun HotelDetailsScreen(
                             YSpacer(height = 8)
                             LazyRow(modifier = Modifier.fillMaxWidth()) {
                                 item {
-                                    imageUrlList.forEachIndexed { index, imageDTO ->
-                                        AsyncImage(
-                                            model = imageDTO,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .width(98.dp)
-                                                .height(82.dp)
-                                                .clip(RoundedCornerShape(8.dp))
-                                                .clickable { currentImageUrl = imageDTO; isImageOpen = true },
-                                            contentScale = ContentScale.Crop,
-                                        )
-                                        XSpacer(width = 16)
+                                    if (imageUrlList != null) {
+                                        imageUrlList.forEachIndexed { index, imageDTO ->
+                                            AsyncImage(
+                                                model = imageDTO,
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .width(98.dp)
+                                                    .height(82.dp)
+                                                    .clip(RoundedCornerShape(8.dp))
+                                                    .clickable { currentImageUrl = imageDTO; isImageOpen = true },
+                                                contentScale = ContentScale.Crop,
+                                            )
+                                            XSpacer(width = 16)
 
+                                        }
                                     }
                                 }
 

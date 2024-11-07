@@ -54,7 +54,7 @@ fun HotelTagLarge(
         Column (modifier = Modifier.background(Color.White)){
             AsyncImage(
                 modifier = Modifier.height(209.dp).fillMaxWidth(),
-                model = hotelDTO.images[0].url,
+                model = hotelDTO.images?.get(0)?.url,
                 contentDescription = "Hotel image",
                 contentScale = ContentScale.FillBounds,
             )
@@ -75,7 +75,7 @@ fun HotelTagLarge(
                 }
                 YSpacer(8)
 
-                GreyText("${hotelDTO.district.fullName}, ${hotelDTO.province.fullName}")
+                GreyText("${hotelDTO.district.fullName}, ${hotelDTO.province?.fullName}")
 
                 YSpacer(8)
                 Row {

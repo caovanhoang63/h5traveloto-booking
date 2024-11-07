@@ -259,7 +259,7 @@ fun RoomDetailsScreen(
                     YSpacer(height = 10)
 
                     BoldText20(text = "Về Phòng này")
-                    GreyText16(text = Object.description)
+                    GreyText16(text = "")
 
                 }
             }

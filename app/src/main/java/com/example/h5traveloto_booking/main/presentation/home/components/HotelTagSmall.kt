@@ -59,7 +59,7 @@ fun HotelTagSmall(
                         .size(84.dp)
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp)),
-                    model = hotelDTO.images[0].url,
+                    model = hotelDTO.images?.get(0)?.url,
                     contentDescription = "Hotel image",
                     contentScale = ContentScale.FillBounds,
                 )
@@ -79,8 +79,10 @@ fun HotelTagSmall(
                     YSpacer(4)
 
                     Row {
-                        repeat(hotelDTO.star) {
-                            Star()
+                        hotelDTO.star?.let {
+                            repeat(it) {
+                                Star()
+                            }
                         }
                         XSpacer(4)
                         BoldText("${hotelDTO.star}")
